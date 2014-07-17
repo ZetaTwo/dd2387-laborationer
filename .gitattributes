@@ -1,0 +1,14 @@
+# Replace CRLF with LF in all text files
+
+**/README text
+**/*.md
+**/*.MD
+
+**/makefile text
+**/Makefile text
+
+**/*.cpp text
+**/*.h text
+**/*.in text
+**/*.sh text
+**/*.txt text
