@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vector", "vector\vector.vcxproj", "{8E9A09C3-3C63-40EC-B18D-9F2FE2DBF43F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vector_tests", "vector_tests\vector_tests.vcxproj", "{C15CADFC-8589-4EED-9C01-C1978452C5A7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8E9A09C3-3C63-40EC-B18D-9F2FE2DBF43F} = {8E9A09C3-3C63-40EC-B18D-9F2FE2DBF43F}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8E9A09C3-3C63-40EC-B18D-9F2FE2DBF43F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{8E9A09C3-3C63-40EC-B18D-9F2FE2DBF43F}.Debug|Win32.Build.0 = Debug|Win32
+		{8E9A09C3-3C63-40EC-B18D-9F2FE2DBF43F}.Release|Win32.ActiveCfg = Release|Win32
+		{8E9A09C3-3C63-40EC-B18D-9F2FE2DBF43F}.Release|Win32.Build.0 = Release|Win32
+		{C15CADFC-8589-4EED-9C01-C1978452C5A7}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C15CADFC-8589-4EED-9C01-C1978452C5A7}.Debug|Win32.Build.0 = Debug|Win32
+		{C15CADFC-8589-4EED-9C01-C1978452C5A7}.Release|Win32.ActiveCfg = Release|Win32
+		{C15CADFC-8589-4EED-9C01-C1978452C5A7}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
