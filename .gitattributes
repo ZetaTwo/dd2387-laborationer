@@ -12,3 +12,6 @@
 **/*.in text
 **/*.sh text
 **/*.txt text
+
+# Don't touch non-text files
+**/*.pdf -text
