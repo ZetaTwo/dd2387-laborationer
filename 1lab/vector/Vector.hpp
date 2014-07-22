@@ -11,6 +11,7 @@ public:
 	Vector();
 	Vector(const Vector<T> &other);
 	Vector(const std::initializer_list<T> &list);
+  Vector(Vector<T>&& other); //Move
 	explicit Vector(size_t size);
 	Vector(size_t size, T element);
 	~Vector();
@@ -18,12 +19,13 @@ public:
 	//Operators
 	T& operator[](size_t index);
 	const T operator[](size_t index) const;
-	Vector<T> &operator=(const Vector<T> & other);
-	Vector<T> &operator=(const std::initializer_list<T> &list);
+	Vector<T>& operator=(const Vector<T> & other);
+	Vector<T>& operator=(const std::initializer_list<T> &list);
+  Vector<T>& operator=(Vector<T>&& other); //Move
 
 	//Modify vector
-	Vector<T> &push_back(T element);
-	Vector<T> &insert(size_t index, T element);
+	Vector<T> &push_back(const T& element);
+	Vector<T> &insert(size_t index, const T& element);
 	Vector<T> &erase(size_t index);
 	Vector<T> &clear();
 	Vector<T> &sort(bool ascending = true);
@@ -36,6 +38,8 @@ private:
 	std::unique_ptr<T*> data; //A pointer to the vector data
 	int count; //Actual number of elements in the vector
 	int max_size; //Allocated memory for elements. Will be 2^n for some n
+
+  void increase_memory();
 
 	const int DEFAULT_SIZE = 16;
 };
@@ -130,4 +134,9 @@ bool Vector<T>::exists(const T &element) const {
 template<typename T>
 size_t Vector<T>::size() const {
 	return -1;
+}
+
+template<typename T>
+void Vector<T>::increase_memory() {
+
 }

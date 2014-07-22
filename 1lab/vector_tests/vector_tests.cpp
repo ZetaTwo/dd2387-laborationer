@@ -36,6 +36,11 @@ TEST(Vector, InitlistConstructor) {
 	EXPECT_EQ(4, int_vector.size());
 }
 
+TEST(Vector, MoveConstructor) {
+  //TODO: Create test for move constructor
+  EXPECT_TRUE(false);
+}
+
 TEST(Vector, SizeConstructor) {
 	const size_t size = 32;
 
@@ -151,6 +156,11 @@ TEST(Vector, AssignmentOperatorList) {
 	EXPECT_EQ(15, int_vector[2]);
 	EXPECT_EQ(16, int_vector[3]);
 	EXPECT_EQ(4, int_vector.size());
+}
+
+TEST(Vector, AssignmentOperatorMove) {
+  //TODO: Create test for move operator
+  EXPECT_TRUE(false);
 }
 
 TEST(Vector, PushBack) {
