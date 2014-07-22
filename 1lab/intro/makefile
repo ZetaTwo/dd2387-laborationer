@@ -1,7 +1,7 @@
 default: test_hello
 
 bin/%: %.cpp
-	g++ -o $@ $^
+	g++ -g -o $@ $^
 
 test_hello: bin/hello
 	$^
