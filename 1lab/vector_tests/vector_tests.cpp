@@ -81,7 +81,7 @@ TEST(Vector, ConstructorRepeat) {
   }
 }
 
-TEST(Vector, OperatorBracket) {
+TEST(Vector, OperatorBracketWrite) {
   const size_t size = 4;
 
   Vector<int> int_vector(size);
