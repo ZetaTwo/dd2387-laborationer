@@ -177,6 +177,7 @@ Vector<T>& Vector<T>::erase(size_t index) {
 
 template<typename T>
 Vector<T>& Vector<T>::clear() {
+  count = 0;
   return *this;
 }
 
