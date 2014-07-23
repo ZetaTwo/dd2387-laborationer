@@ -2,6 +2,8 @@
 
 #include <memory> //unique_ptr<T>
 #include <stdexcept>
+#include <initializer_list>
+#include <cmath>
 
 template<typename T> 
 class Vector
@@ -35,38 +37,52 @@ public:
 	bool exists(const T &element) const;
 	size_t size() const;
 private:
-	std::unique_ptr<T*> data; //A pointer to the vector data
-	int count; //Actual number of elements in the vector
-	int max_size; //Allocated memory for elements. Will be 2^n for some n
+  const int DEFAULT_SIZE = 16;
 
-  void increase_memory();
+  size_t count; //Actual number of elements in the vector
+  size_t max_size; //Allocated memory for elements. Will be 2^n for some n
+  std::unique_ptr<T[]> data; //A pointer to the vector data
 
-	const int DEFAULT_SIZE = 16;
+  void increase_memory(int num_elements, bool copy = true); //Increases memory to fit at least num_elements number of elements
 };
 
 template<typename T>
-Vector<T>::Vector() {
+Vector<T>::Vector() : count(0), max_size(DEFAULT_SIZE), data(new T[max_size]) {
 
 }
 
 template<typename T>
-Vector<T>::Vector(const Vector<T> &other) {
-
+Vector<T>::Vector(const Vector<T> &other) : count(other.count), max_size(other.max_size), data(new T[max_size]) {
+  for (size_t i = 0; i < count; ++i)
+  {
+    data[i] = other.data[i];
+  }
 }
 
 template<typename T>
-Vector<T>::Vector(const std::initializer_list<T> &list) {
-
+Vector<T>::Vector(const std::initializer_list<T> &list) : count(list.size()), max_size(1 << static_cast<int>(ceil(log2(count)))), data(new T[max_size]) {
+  size_t i;
+  std::initializer_list<T>::iterator item;
+  for (i = 0, item = list.begin(); item != list.end(); ++i, ++item)
+  {
+    data[i] = *item;
+  }
 }
 
 template<typename T>
-Vector<T>::Vector(size_t size) {
-
+Vector<T>::Vector(size_t size) : count(size), max_size(1 << static_cast<int>(ceil(log2(count)))), data(new T[max_size]) {
+  for (size_t i = 0; i < count; ++i)
+  {
+    data[i] = T();
+  }
 }
 
 template<typename T>
-Vector<T>::Vector(size_t size, T element) {
-
+Vector<T>::Vector(size_t size, T element) : count(size), max_size(1 << static_cast<int>(ceil(log2(count)))), data(new T[max_size]) {
+  for (size_t i = 0; i < count; ++i)
+  {
+    data[i] = element;
+  }
 }
 
 template<typename T>
@@ -76,33 +92,62 @@ Vector<T>::~Vector() {
 
 template<typename T>
 T& Vector<T>::operator[](size_t index) {
-	T value = T();
-	return value;
+  if (index < 0 || index >= count) {
+    throw std::out_of_range("Index out of range");
+  }
+	return data[index];
 }
 
 template<typename T>
 const T Vector<T>::operator[](size_t index) const {
-	T value = T();
-	return value;
+  if (index < 0 || index >= count) {
+    throw std::out_of_range("Index out of range");
+  }
+
+  return data[index];
 }
 
 template<typename T>
 Vector<T> & Vector<T>::operator=(const Vector<T> & other) {
+  if (&other == this) {
+    return  *this;
+  }
+
+  if (other.count > max_size) {
+    increase_memory(other.count, false);
+  }
+
+  count = other.size();
+  for (size_t i = 0; i < other.count; ++i)
+  {
+    data[i] = other[i];
+  }
+
 	return *this;
 }
 
 template<typename T>
 Vector<T> & Vector<T>::operator=(const std::initializer_list<T> &list) {
+  if (list.size > max_size) {
+    increase_memory(list.size, false);
+  }
+
+  count = other.size();
+  for (size_t i = 0; i < other.c; i++)
+  {
+    data[i] = list[i];
+  }
+
 	return *this;
 }
 
 template<typename T>
-Vector<T> & Vector<T>::push_back(T element) {
+Vector<T> & Vector<T>::push_back(const T& element) {
 	return *this;
 }
 
 template<typename T>
-Vector<T> & Vector<T>::insert(size_t index, T element) {
+Vector<T> & Vector<T>::insert(size_t index, const T& element) {
 	return *this;
 }
 
@@ -133,10 +178,24 @@ bool Vector<T>::exists(const T &element) const {
 
 template<typename T>
 size_t Vector<T>::size() const {
-	return -1;
+	return count;
 }
 
 template<typename T>
-void Vector<T>::increase_memory() {
+void Vector<T>::increase_memory(int num_elements, bool copy = true) {
+  size_t new_max_size = (1 << static_cast<int>(ceil(log2(num_elements))));
+  if (new_max_size < max_size) {
+    throw std::invalid_argument("Vector already large enough");
+  }
 
+  std::unique_ptr<T[]> new_data(new T[new_max_size]);
+
+  if (copy) {
+    for (size_t i = 0; i < count; i++)
+    {
+      new_data[i] = data[i];
+    }
+  }
+
+  data = std::move(new_data);
 }

@@ -1,13 +1,13 @@
 #include <gtest/gtest.h>
 #include "../vector/Vector.hpp"
 
-TEST(Vector, DefaultConstructor) {
+TEST(Vector, ConstructorDefault) {
 	EXPECT_NO_THROW({
 		Vector<int> int_vector;
 	});
 }
 
-TEST(Vector, CopyConstructor) {
+TEST(Vector, ConstructorCopy) {
 	const size_t size = 4;
 	Vector<int> int_vector1(size);
 
@@ -26,7 +26,7 @@ TEST(Vector, CopyConstructor) {
 	EXPECT_EQ(15, int_vector2[3]);
 }
 
-TEST(Vector, InitlistConstructor) {
+TEST(Vector, ConstructorInitlist) {
 	Vector<int> int_vector({ 13, 14, 15, 16 });
 
 	EXPECT_EQ(13, int_vector[0]);
@@ -36,12 +36,15 @@ TEST(Vector, InitlistConstructor) {
 	EXPECT_EQ(4, int_vector.size());
 }
 
-TEST(Vector, MoveConstructor) {
-  //TODO: Create test for move constructor
-  EXPECT_TRUE(false);
+TEST(Vector, ConstructorMove) {
+  std::unique_ptr<Vector<int> > int_vector1(new Vector<int> ({ 13, 14, 15, 16 }));
+
+  EXPECT_EQ(13, (*int_vector1)[0]);
+  std::unique_ptr<Vector<int> > int_vector2(std::move(int_vector1));
+  EXPECT_EQ(13, (*int_vector2)[0]);
 }
 
-TEST(Vector, SizeConstructor) {
+TEST(Vector, ConstructorSize) {
 	const size_t size = 32;
 
 	Vector<int> int_vector(size);
@@ -53,24 +56,14 @@ TEST(Vector, SizeConstructor) {
 	}
 }
 
-TEST(Vector, SizeConstructorZero) {
+TEST(Vector, ConstructorZeroSize) {
 	const size_t size = 0;
 
 	Vector<int> int_vector(size);
 	EXPECT_EQ(size, int_vector.size());
 }
 
-TEST(Vector, SizeConstructorRange) {
-	const size_t size = -16;
-
-	ASSERT_THROW({
-		Vector<int> int_vector(size);
-	},
-	std::invalid_argument);
-	
-}
-
-TEST(Vector, RepeatConstructor) {
+TEST(Vector, ConstructorRepeat) {
 	const size_t size = 4;
 
 	Vector<int> int_vector(size, 13);
@@ -79,7 +72,6 @@ TEST(Vector, RepeatConstructor) {
 		EXPECT_EQ(13, int_vector[i]);
 	}
 }
-
 
 TEST(Vector, OperatorBracket) {
 	const size_t size = 4;
@@ -159,8 +151,11 @@ TEST(Vector, AssignmentOperatorList) {
 }
 
 TEST(Vector, AssignmentOperatorMove) {
-  //TODO: Create test for move operator
-  EXPECT_TRUE(false);
+  std::unique_ptr<Vector<int> > int_vector1(new Vector<int>({ 13, 14, 15, 16 }));
+
+  EXPECT_EQ(13, (*int_vector1)[0]);
+  std::unique_ptr<Vector<int> > int_vector2 = std::move(int_vector1);
+  EXPECT_EQ(13, (*int_vector2)[0]);
 }
 
 TEST(Vector, PushBack) {
