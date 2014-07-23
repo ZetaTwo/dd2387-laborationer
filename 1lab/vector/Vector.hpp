@@ -162,6 +162,16 @@ Vector<T>& Vector<T>::insert(size_t index, const T& element) {
 
 template<typename T>
 Vector<T>& Vector<T>::erase(size_t index) {
+  if(index >= count) {
+    std::stringstream msg;
+    msg << "Attempted to insert at index " << index << ", expected < " << count;
+    throw std::out_of_range(msg.str());
+  }
+  for(size_t i = index; i < count; ++i) {
+    data[i] = data[i+1];
+    //data[i] = data[++i]; // TODO: Try this instead of ++i in for loop
+  }
+  --count;
   return *this;
 }
 
