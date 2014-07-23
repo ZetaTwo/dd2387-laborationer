@@ -12,18 +12,28 @@ TEST(Vector, ConstructorCopy) {
   Vector<int> int_vector1(size);
 
   int_vector1[1] = 13;
-  Vector<int> int_vector2(int_vector1);
   int_vector1[2] = 14;
-  int_vector2[3] = 15;
 
-  EXPECT_EQ(13, int_vector1[1]);
-  EXPECT_EQ(13, int_vector2[1]);
+  Vector<int> int_vector2(int_vector1);
 
+  for(int i=0; i<int_vector1.size(); ++i) {
+    EXPECT_EQ(int_vector1[i], int_vector2[i]);
+  }
+
+  int_vector1[1] = 12;
+
+  int_vector2[1] = 23;
+  int_vector2[3] = 25;
+
+  EXPECT_EQ(0, int_vector1[0]);
+  EXPECT_EQ(12, int_vector1[1]);
   EXPECT_EQ(14, int_vector1[2]);
   EXPECT_EQ(0, int_vector1[3]);
 
-  EXPECT_EQ(0, int_vector2[2]);
-  EXPECT_EQ(15, int_vector2[3]);
+  EXPECT_EQ(0, int_vector2[0]);
+  EXPECT_EQ(23, int_vector2[1]);
+  EXPECT_EQ(14, int_vector2[2]);
+  EXPECT_EQ(25, int_vector2[3]);
 }
 
 TEST(Vector, ConstructorInitlist) {
