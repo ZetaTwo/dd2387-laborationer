@@ -9,33 +9,33 @@ template<typename T>
 class Vector
 {
 public:
-	//Constructors & destructors
-	Vector();
-	Vector(const Vector<T> &other);
-	Vector(const std::initializer_list<T> &list);
+  //Constructors & destructors
+  Vector();
+  Vector(const Vector<T> &other);
+  Vector(const std::initializer_list<T> &list);
   Vector(Vector<T>&& other); //Move
-	explicit Vector(size_t size);
-	Vector(size_t size, T element);
-	~Vector();
+  explicit Vector(size_t size);
+  Vector(size_t size, T element);
+  ~Vector();
 
-	//Operators
-	T& operator[](size_t index);
-	const T operator[](size_t index) const;
-	Vector<T>& operator=(const Vector<T> & other);
-	Vector<T>& operator=(const std::initializer_list<T> &list);
+  //Operators
+  T& operator[](size_t index);
+  const T operator[](size_t index) const;
+  Vector<T>& operator=(const Vector<T> & other);
+  Vector<T>& operator=(const std::initializer_list<T> &list);
   Vector<T>& operator=(Vector<T>&& other); //Move
 
-	//Modify vector
-	Vector<T> &push_back(const T& element);
-	Vector<T> &insert(size_t index, const T& element);
-	Vector<T> &erase(size_t index);
-	Vector<T> &clear();
-	Vector<T> &sort(bool ascending = true);
-	Vector<T> &unique_sort(bool ascending = true);
+  //Modify vector
+  Vector<T> &push_back(const T& element);
+  Vector<T> &insert(size_t index, const T& element);
+  Vector<T> &erase(size_t index);
+  Vector<T> &clear();
+  Vector<T> &sort(bool ascending = true);
+  Vector<T> &unique_sort(bool ascending = true);
 
-	//Lookup in vector
-	bool exists(const T &element) const;
-	size_t size() const;
+  //Lookup in vector
+  bool exists(const T &element) const;
+  size_t size() const;
 private:
   const int DEFAULT_SIZE = 16;
 
@@ -95,7 +95,7 @@ T& Vector<T>::operator[](size_t index) {
   if (index < 0 || index >= count) {
     throw std::out_of_range("Index out of range");
   }
-	return data[index];
+  return data[index];
 }
 
 template<typename T>
@@ -123,7 +123,7 @@ Vector<T> & Vector<T>::operator=(const Vector<T> & other) {
     data[i] = other[i];
   }
 
-	return *this;
+  return *this;
 }
 
 template<typename T>
@@ -138,47 +138,47 @@ Vector<T> & Vector<T>::operator=(const std::initializer_list<T> &list) {
     data[i] = list[i];
   }
 
-	return *this;
+  return *this;
 }
 
 template<typename T>
 Vector<T> & Vector<T>::push_back(const T& element) {
-	return *this;
+  return *this;
 }
 
 template<typename T>
 Vector<T> & Vector<T>::insert(size_t index, const T& element) {
-	return *this;
+  return *this;
 }
 
 template<typename T>
 Vector<T> & Vector<T>::erase(size_t index) {
-	return *this;
+  return *this;
 }
 
 template<typename T>
 Vector<T> & Vector<T>::clear() {
-	return *this;
+  return *this;
 }
 
 template<typename T>
 Vector<T> & Vector<T>::sort(bool ascending) {
-	return *this;
+  return *this;
 }
 
 template<typename T>
 Vector<T> & Vector<T>::unique_sort(bool ascending) {
-	return *this;
+  return *this;
 }
 
 template<typename T>
 bool Vector<T>::exists(const T &element) const {
-	return false;
+  return false;
 }
 
 template<typename T>
 size_t Vector<T>::size() const {
-	return count;
+  return count;
 }
 
 template<typename T>
