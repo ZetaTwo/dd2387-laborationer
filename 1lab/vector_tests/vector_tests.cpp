@@ -203,10 +203,6 @@ TEST(Vector, InsertRange) {
 	Vector<int> int_vector(size);
 
 	EXPECT_THROW({
-		int_vector.insert(-1, 13);
-	}, std::out_of_range);
-
-	EXPECT_THROW({
 		int_vector.insert(size, 13);
 	}, std::out_of_range);
 }
@@ -226,10 +222,6 @@ TEST(Vector, Erase) {
 TEST(Vector, EraseRange) {
 	const size_t size = 4;
 	Vector<int> int_vector(size);
-
-	EXPECT_THROW({
-		int_vector.erase(-1);
-	}, std::out_of_range);
 
 	EXPECT_THROW({
 		int_vector.erase(size);
