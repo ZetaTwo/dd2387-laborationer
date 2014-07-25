@@ -208,12 +208,8 @@ Vector<T>& Vector<T>::unique_sort(bool ascending) {
 
 template<typename T>
 bool Vector<T>::exists(const T& element) const {
-  for(size_t i = 0; i < count; ++i) {
-    if(data[i] == element) {
-      return true;
-    }
-  }
-  return false;
+  T* end = data.get() + count;
+  return std::find(data.get(), end, element) != end;
 }
 
 template<typename T>
