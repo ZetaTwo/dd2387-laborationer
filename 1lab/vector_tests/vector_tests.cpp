@@ -317,7 +317,7 @@ TEST(Vector, SortUniqueDescending) {
   int_vector[2] = 30;
   int_vector[3] = 10;
 
-  int_vector.unique_sort();
+  int_vector.unique_sort(false);
 
   EXPECT_EQ(3, int_vector.size());
 
