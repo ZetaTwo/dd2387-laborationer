@@ -331,8 +331,10 @@ TEST(Vector, ExistsTrue) {
   Vector<int> int_vector(size);
 
   int_vector[2] = 13;
-
   EXPECT_TRUE(int_vector.exists(13));
+
+  int_vector[3] = 15;
+  EXPECT_TRUE(int_vector.exists(15));
 }
 
 TEST(Vector, ExistsFalse) {
