@@ -50,7 +50,7 @@ TEST(Vector, ConstructorSize) {
   Vector<int> int_vector(size);
   EXPECT_EQ(size, int_vector.size());
 
-  for (size_t i = 0; i < size; i++) {
+  for(size_t i = 0; i < size; i++) {
     EXPECT_EQ(0, int_vector[i]);
   }
 }
@@ -66,7 +66,7 @@ TEST(Vector, ConstructorRepeat) {
   const size_t size = 4;
 
   Vector<int> int_vector(size, 13);
-  for (size_t i = 0; i < size; i++) {
+  for(size_t i = 0; i < size; i++) {
     EXPECT_EQ(13, int_vector[i]);
   }
 }
