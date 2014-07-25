@@ -62,7 +62,7 @@ Vector<T>::Vector(const Vector<T> &other) : count(other.count), max_size(other.m
 template<typename T>
 Vector<T>::Vector(const std::initializer_list<T> &list) : count(list.size()), max_size(1 << static_cast<int>(ceil(log2(count)))), data(new T[max_size]) {
   size_t i;
-  std::initializer_list<T>::iterator item;
+  typename std::initializer_list<T>::iterator item;
   for (i = 0, item = list.begin(); item != list.end(); ++i, ++item)
   {
     data[i] = *item;
@@ -132,8 +132,8 @@ Vector<T> & Vector<T>::operator=(const std::initializer_list<T> &list) {
     increase_memory(list.size, false);
   }
 
-  count = other.size();
-  for (size_t i = 0; i < other.c; i++)
+  count = list.size();
+  for (size_t i = 0; i < list.count; i++)
   {
     data[i] = list[i];
   }
@@ -162,12 +162,12 @@ Vector<T> & Vector<T>::clear() {
 }
 
 template<typename T>
-Vector<T> & Vector<T>::sort(bool ascending = true) {
+Vector<T> & Vector<T>::sort(bool ascending) {
 	return *this;
 }
 
 template<typename T>
-Vector<T> & Vector<T>::unique_sort(bool ascending = true) {
+Vector<T> & Vector<T>::unique_sort(bool ascending) {
 	return *this;
 }
 
@@ -182,7 +182,7 @@ size_t Vector<T>::size() const {
 }
 
 template<typename T>
-void Vector<T>::increase_memory(int num_elements, bool copy = true) {
+void Vector<T>::increase_memory(int num_elements, bool copy) {
   size_t new_max_size = (1 << static_cast<int>(ceil(log2(num_elements))));
   if (new_max_size < max_size) {
     throw std::invalid_argument("Vector already large enough");
