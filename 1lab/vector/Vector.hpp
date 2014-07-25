@@ -4,6 +4,7 @@
 #include <stdexcept>
 #include <initializer_list>
 #include <cmath>
+#include <sstream>
 
 template<typename T> 
 class Vector {
@@ -139,6 +140,23 @@ Vector<T>& Vector<T>::push_back(const T& element) {
 
 template<typename T>
 Vector<T>& Vector<T>::insert(size_t index, const T& element) {
+  if(index > count) {
+    std::stringstream msg;
+    msg << "Attempted to insert at index " << index << ", expected <= " << count;
+    throw std::out_of_range(msg.str());
+  }
+  if(max_size < count + 1) {
+    increase_memory(count + 1, false);
+  }
+
+  for(size_t i = count; i > index; --i) {
+    data[i] = data[i-1];
+    //data[i] = data[--i]; // TODO: Try this instead of --i in for loop
+  }
+
+  data[index] = element;
+  ++count;
+
   return *this;
 }
 
