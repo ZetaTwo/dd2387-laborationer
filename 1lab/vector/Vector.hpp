@@ -196,6 +196,13 @@ Vector<T>& Vector<T>::sort(bool ascending) {
 
 template<typename T>
 Vector<T>& Vector<T>::unique_sort(bool ascending) {
+  sort(ascending);
+
+  T* begin = data.get();
+  T* end = data.get() + count;
+  T* new_end = std::unique(begin, end);
+
+  count = new_end - begin;
   return *this;
 }
 
