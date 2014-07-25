@@ -132,8 +132,8 @@ Vector<T> & Vector<T>::operator=(const std::initializer_list<T> &list) {
     increase_memory(list.size, false);
   }
 
-  count = other.size();
-  for (size_t i = 0; i < other.c; i++)
+  count = list.size();
+  for (size_t i = 0; i < list.count; i++)
   {
     data[i] = list[i];
   }
