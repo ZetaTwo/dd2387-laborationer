@@ -206,4 +206,5 @@ void Vector<T>::increase_memory(int num_elements, bool copy) {
   }
 
   data = std::move(new_data);
+  max_size = new_max_size;
 }
