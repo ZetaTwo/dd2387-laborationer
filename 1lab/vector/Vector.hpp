@@ -11,8 +11,8 @@ class Vector
 public:
   //Constructors & destructors
   Vector();
-  Vector(const Vector<T> &other);
-  Vector(const std::initializer_list<T> &list);
+  Vector(const Vector<T>& other);
+  Vector(const std::initializer_list<T>& list);
   Vector(Vector<T>&& other); //Move
   explicit Vector(size_t size);
   Vector(size_t size, T element);
@@ -21,20 +21,20 @@ public:
   //Operators
   T& operator[](size_t index);
   const T operator[](size_t index) const;
-  Vector<T>& operator=(const Vector<T> & other);
-  Vector<T>& operator=(const std::initializer_list<T> &list);
+  Vector<T>& operator=(const Vector<T>& other);
+  Vector<T>& operator=(const std::initializer_list<T>& list);
   Vector<T>& operator=(Vector<T>&& other); //Move
 
   //Modify vector
-  Vector<T> &push_back(const T& element);
-  Vector<T> &insert(size_t index, const T& element);
-  Vector<T> &erase(size_t index);
-  Vector<T> &clear();
-  Vector<T> &sort(bool ascending = true);
-  Vector<T> &unique_sort(bool ascending = true);
+  Vector<T>& push_back(const T& element);
+  Vector<T>& insert(size_t index, const T& element);
+  Vector<T>& erase(size_t index);
+  Vector<T>& clear();
+  Vector<T>& sort(bool ascending = true);
+  Vector<T>& unique_sort(bool ascending = true);
 
   //Lookup in vector
-  bool exists(const T &element) const;
+  bool exists(const T& element) const;
   size_t size() const;
 private:
   const int DEFAULT_SIZE = 16;
@@ -52,7 +52,7 @@ Vector<T>::Vector() : count(0), max_size(DEFAULT_SIZE), data(new T[max_size]) {
 }
 
 template<typename T>
-Vector<T>::Vector(const Vector<T> &other) : count(other.count), max_size(other.max_size), data(new T[max_size]) {
+Vector<T>::Vector(const Vector<T>& other) : count(other.count), max_size(other.max_size), data(new T[max_size]) {
   for (size_t i = 0; i < count; ++i)
   {
     data[i] = other.data[i];
@@ -60,7 +60,7 @@ Vector<T>::Vector(const Vector<T> &other) : count(other.count), max_size(other.m
 }
 
 template<typename T>
-Vector<T>::Vector(const std::initializer_list<T> &list) : count(list.size()), max_size(1 << static_cast<int>(ceil(log2(count)))), data(new T[max_size]) {
+Vector<T>::Vector(const std::initializer_list<T>& list) : count(list.size()), max_size(1 << static_cast<int>(ceil(log2(count)))), data(new T[max_size]) {
   size_t i;
   typename std::initializer_list<T>::iterator item;
   for (i = 0, item = list.begin(); item != list.end(); ++i, ++item)
@@ -108,7 +108,7 @@ const T Vector<T>::operator[](size_t index) const {
 }
 
 template<typename T>
-Vector<T> & Vector<T>::operator=(const Vector<T> & other) {
+Vector<T>& Vector<T>::operator=(const Vector<T>& other) {
   if (&other == this) {
     return  *this;
   }
@@ -127,7 +127,7 @@ Vector<T> & Vector<T>::operator=(const Vector<T> & other) {
 }
 
 template<typename T>
-Vector<T> & Vector<T>::operator=(const std::initializer_list<T> &list) {
+Vector<T>& Vector<T>::operator=(const std::initializer_list<T>& list) {
   if (list.size > max_size) {
     increase_memory(list.size, false);
   }
@@ -142,37 +142,37 @@ Vector<T> & Vector<T>::operator=(const std::initializer_list<T> &list) {
 }
 
 template<typename T>
-Vector<T> & Vector<T>::push_back(const T& element) {
+Vector<T>& Vector<T>::push_back(const T& element) {
   return *this;
 }
 
 template<typename T>
-Vector<T> & Vector<T>::insert(size_t index, const T& element) {
+Vector<T>& Vector<T>::insert(size_t index, const T& element) {
   return *this;
 }
 
 template<typename T>
-Vector<T> & Vector<T>::erase(size_t index) {
+Vector<T>& Vector<T>::erase(size_t index) {
   return *this;
 }
 
 template<typename T>
-Vector<T> & Vector<T>::clear() {
+Vector<T>& Vector<T>::clear() {
   return *this;
 }
 
 template<typename T>
-Vector<T> & Vector<T>::sort(bool ascending) {
+Vector<T>& Vector<T>::sort(bool ascending) {
   return *this;
 }
 
 template<typename T>
-Vector<T> & Vector<T>::unique_sort(bool ascending) {
+Vector<T>& Vector<T>::unique_sort(bool ascending) {
   return *this;
 }
 
 template<typename T>
-bool Vector<T>::exists(const T &element) const {
+bool Vector<T>::exists(const T& element) const {
   return false;
 }
 
