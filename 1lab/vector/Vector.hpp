@@ -193,6 +193,11 @@ Vector<T>& Vector<T>::unique_sort(bool ascending) {
 
 template<typename T>
 bool Vector<T>::exists(const T& element) const {
+  for(size_t i = 0; i < count; ++i) {
+    if(data[i] == element) {
+      return true;
+    }
+  }
   return false;
 }
 
