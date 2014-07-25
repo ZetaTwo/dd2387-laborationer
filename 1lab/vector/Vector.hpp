@@ -5,6 +5,7 @@
 #include <initializer_list>
 #include <cmath>
 #include <sstream>
+#include <algorithm> //sort
 
 template<typename T> 
 class Vector {
@@ -183,6 +184,13 @@ Vector<T>& Vector<T>::clear() {
 
 template<typename T>
 Vector<T>& Vector<T>::sort(bool ascending) {
+  T* begin = data.get();
+  T* end = data.get() + count;
+  if(ascending) {
+    std::sort(begin, end);
+  } else {
+    std::sort(begin, end, [](const T& a, const T& b) { return b < a; });
+  }
   return *this;
 }
 
