@@ -201,7 +201,7 @@ TEST(Vector, InsertEnd) {
   Vector<int> int_vector(size);
 
   EXPECT_EQ(0, int_vector[1]);
-  int_vector.insert(int_vector.size()-1, 13);
+  int_vector.insert(int_vector.size(), 13);
   EXPECT_EQ(13, int_vector[size]);
   EXPECT_EQ(size + 1, int_vector.size());
 }
@@ -211,7 +211,7 @@ TEST(Vector, InsertRange) {
   Vector<int> int_vector(size);
 
   EXPECT_THROW({
-    int_vector.insert(size, 13);
+    int_vector.insert(size+2, 13);
   }, std::out_of_range);
 }
 
