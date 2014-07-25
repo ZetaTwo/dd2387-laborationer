@@ -135,7 +135,7 @@ Vector<T>& Vector<T>::operator=(const std::initializer_list<T>& list) {
 
 template<typename T>
 Vector<T>& Vector<T>::push_back(const T& element) {
-  return *this;
+  return insert(count, element);
 }
 
 template<typename T>
