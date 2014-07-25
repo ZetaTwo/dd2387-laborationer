@@ -6,8 +6,7 @@
 #include <cmath>
 
 template<typename T> 
-class Vector
-{
+class Vector {
 public:
   //Constructors & destructors
   Vector();
@@ -53,8 +52,7 @@ Vector<T>::Vector() : count(0), max_size(DEFAULT_SIZE), data(new T[max_size]) {
 
 template<typename T>
 Vector<T>::Vector(const Vector<T>& other) : count(other.count), max_size(other.max_size), data(new T[max_size]) {
-  for (size_t i = 0; i < count; ++i)
-  {
+  for (size_t i = 0; i < count; ++i) {
     data[i] = other.data[i];
   }
 }
@@ -63,24 +61,21 @@ template<typename T>
 Vector<T>::Vector(const std::initializer_list<T>& list) : count(list.size()), max_size(1 << static_cast<int>(ceil(log2(count)))), data(new T[max_size]) {
   size_t i;
   typename std::initializer_list<T>::iterator item;
-  for (i = 0, item = list.begin(); item != list.end(); ++i, ++item)
-  {
+  for (i = 0, item = list.begin(); item != list.end(); ++i, ++item) {
     data[i] = *item;
   }
 }
 
 template<typename T>
 Vector<T>::Vector(size_t size) : count(size), max_size(1 << static_cast<int>(ceil(log2(count)))), data(new T[max_size]) {
-  for (size_t i = 0; i < count; ++i)
-  {
+  for (size_t i = 0; i < count; ++i) {
     data[i] = T();
   }
 }
 
 template<typename T>
 Vector<T>::Vector(size_t size, T element) : count(size), max_size(1 << static_cast<int>(ceil(log2(count)))), data(new T[max_size]) {
-  for (size_t i = 0; i < count; ++i)
-  {
+  for (size_t i = 0; i < count; ++i) {
     data[i] = element;
   }
 }
@@ -118,8 +113,7 @@ Vector<T>& Vector<T>::operator=(const Vector<T>& other) {
   }
 
   count = other.size();
-  for (size_t i = 0; i < other.count; ++i)
-  {
+  for (size_t i = 0; i < other.count; ++i) {
     data[i] = other[i];
   }
 
@@ -133,8 +127,7 @@ Vector<T>& Vector<T>::operator=(const std::initializer_list<T>& list) {
   }
 
   count = list.size();
-  for (size_t i = 0; i < list.count; i++)
-  {
+  for (size_t i = 0; i < list.count; i++) {
     data[i] = list[i];
   }
 
@@ -191,8 +184,7 @@ void Vector<T>::increase_memory(int num_elements, bool copy) {
   std::unique_ptr<T[]> new_data(new T[new_max_size]);
 
   if (copy) {
-    for (size_t i = 0; i < count; i++)
-    {
+    for (size_t i = 0; i < count; i++) {
       new_data[i] = data[i];
     }
   }
