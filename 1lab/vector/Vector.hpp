@@ -162,12 +162,12 @@ Vector<T> & Vector<T>::clear() {
 }
 
 template<typename T>
-Vector<T> & Vector<T>::sort(bool ascending = true) {
+Vector<T> & Vector<T>::sort(bool ascending) {
 	return *this;
 }
 
 template<typename T>
-Vector<T> & Vector<T>::unique_sort(bool ascending = true) {
+Vector<T> & Vector<T>::unique_sort(bool ascending) {
 	return *this;
 }
 
@@ -182,7 +182,7 @@ size_t Vector<T>::size() const {
 }
 
 template<typename T>
-void Vector<T>::increase_memory(int num_elements, bool copy = true) {
+void Vector<T>::increase_memory(int num_elements, bool copy) {
   size_t new_max_size = (1 << static_cast<int>(ceil(log2(num_elements))));
   if (new_max_size < max_size) {
     throw std::invalid_argument("Vector already large enough");
