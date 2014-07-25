@@ -47,7 +47,6 @@ private:
 
 template<typename T>
 Vector<T>::Vector() : count(0), max_size(DEFAULT_SIZE), data(new T[max_size]) {
-
 }
 
 template<typename T>
@@ -82,7 +81,6 @@ Vector<T>::Vector(size_t size, T element) : count(size), max_size(1 << static_ca
 
 template<typename T>
 Vector<T>::~Vector() {
-
 }
 
 template<typename T>
