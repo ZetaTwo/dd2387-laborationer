@@ -186,6 +186,18 @@ TEST(Vector, Insert) {
   EXPECT_EQ(size + 1, int_vector.size());
 }
 
+TEST(Vector, InsertALotOfItems) {
+  const size_t size = 1;
+  const size_t final_size = 10000;
+  Vector<int> int_vector(size);
+
+  while(int_vector.size() < final_size) {
+    int_vector.insert(int_vector.size(), int_vector.size());
+  }
+
+  EXPECT_EQ(final_size, int_vector.size());
+}
+
 TEST(Vector, InsertBeginning) {
   const size_t size = 4;
   Vector<int> int_vector(size);
