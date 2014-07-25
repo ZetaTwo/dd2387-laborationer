@@ -62,7 +62,7 @@ Vector<T>::Vector(const Vector<T> &other) : count(other.count), max_size(other.m
 template<typename T>
 Vector<T>::Vector(const std::initializer_list<T> &list) : count(list.size()), max_size(1 << static_cast<int>(ceil(log2(count)))), data(new T[max_size]) {
   size_t i;
-  std::initializer_list<T>::iterator item;
+  typename std::initializer_list<T>::iterator item;
   for (i = 0, item = list.begin(); item != list.end(); ++i, ++item)
   {
     data[i] = *item;
