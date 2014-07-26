@@ -150,9 +150,8 @@ Vector<T>& Vector<T>::insert(size_t index, const T& element) {
     increase_memory(count + 1);
   }
 
-  for(size_t i = count; i > index; --i) {
-    data[i] = data[i-1];
-    //data[i] = data[--i]; // TODO: Try this instead of --i in for loop
+  for(size_t i = count; i > index; ) {
+    data[i] = data[--i];
   }
 
   data[index] = element;
@@ -168,9 +167,8 @@ Vector<T>& Vector<T>::erase(size_t index) {
     msg << "Attempted to insert at index " << index << ", expected < " << count;
     throw std::out_of_range(msg.str());
   }
-  for(size_t i = index; i < count; ++i) {
-    data[i] = data[i+1];
-    //data[i] = data[++i]; // TODO: Try this instead of ++i in for loop
+  for(size_t i = index; i < count; ) {
+    data[i] = data[++i];
   }
   --count;
   return *this;
