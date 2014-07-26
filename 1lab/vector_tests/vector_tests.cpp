@@ -169,16 +169,14 @@ TEST(Vector, AssignmentOperatorMove) {
 TEST(Vector, PushBack) {
   Vector<int> int_vector;
 
-  for (size_t i = 0; i < 32; i++)
-  {
+  for(size_t i = 0; i < 32; i++) {
     EXPECT_EQ(i, int_vector.size());
     int_vector.push_back(i);
     EXPECT_EQ(i, int_vector[i]);
     EXPECT_EQ(i+1, int_vector.size());
   }
 
-  for (size_t i = 0; i < 32; i++)
-  {
+  for(size_t i = 0; i < 32; i++) {
     EXPECT_EQ(i, int_vector[i]);
   }
 }
