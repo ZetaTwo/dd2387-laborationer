@@ -16,7 +16,7 @@ TEST(Vector, ConstructorCopy) {
 
   Vector<int> int_vector2(int_vector1);
 
-  for(int i = 0; i < int_vector1.size(); ++i) {
+  for(size_t i = 0; i < int_vector1.size(); ++i) {
     EXPECT_EQ(int_vector1[i], int_vector2[i]);
   }
 
