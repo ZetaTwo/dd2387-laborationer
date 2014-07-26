@@ -38,7 +38,7 @@ public:
   bool exists(const T& element) const;
   size_t size() const;
 private:
-  const int DEFAULT_SIZE = 16;
+  static const int DEFAULT_SIZE = 16;
 
   size_t count; //Actual number of elements in the vector
   size_t max_size; //Allocated memory for elements. Will be 2^n for some n
