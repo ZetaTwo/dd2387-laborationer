@@ -15,8 +15,8 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Vector.hpp">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="kth_cprog_vektor.cpp">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
