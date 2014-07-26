@@ -147,7 +147,7 @@ Vector<T>& Vector<T>::insert(size_t index, const T& element) {
     throw std::out_of_range(msg.str());
   }
   if(max_size < count + 1) {
-    increase_memory(count + 1, false);
+    increase_memory(count + 1);
   }
 
   for(size_t i = count; i > index; --i) {
