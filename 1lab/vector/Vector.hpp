@@ -38,7 +38,7 @@ public:
   bool exists(const T& element) const;
   size_t size() const;
 private:
-  static const int DEFAULT_SIZE = 16;
+  const int DEFAULT_SIZE = 16;
 
   size_t count; //Actual number of elements in the vector
   size_t max_size; //Allocated memory for elements. Will be 2^n for some n
@@ -147,7 +147,7 @@ Vector<T>& Vector<T>::insert(size_t index, const T& element) {
     throw std::out_of_range(msg.str());
   }
   if(max_size < count + 1) {
-    increase_memory(count + 1);
+    increase_memory(count + 1, false);
   }
 
   for(size_t i = count; i > index; --i) {

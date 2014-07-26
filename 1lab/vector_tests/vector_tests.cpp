@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "../vector/kth_cprog_vektor.cpp"
+#include "../vector/Vector.hpp"
 
 TEST(Vector, ConstructorDefault) {
   EXPECT_NO_THROW({
@@ -16,7 +16,7 @@ TEST(Vector, ConstructorCopy) {
 
   Vector<int> int_vector2(int_vector1);
 
-  for(size_t i = 0; i < int_vector1.size(); ++i) {
+  for(int i = 0; i < int_vector1.size(); ++i) {
     EXPECT_EQ(int_vector1[i], int_vector2[i]);
   }
 
@@ -167,20 +167,13 @@ TEST(Vector, AssignmentOperatorMove) {
 }
 
 TEST(Vector, PushBack) {
-  Vector<int> int_vector;
+  const size_t size = 4;
+  Vector<int> int_vector(size);
 
-  for (size_t i = 0; i < 32; i++)
-  {
-    EXPECT_EQ(i, int_vector.size());
-    int_vector.push_back(i);
-    EXPECT_EQ(i, int_vector[i]);
-    EXPECT_EQ(i+1, int_vector.size());
-  }
+  int_vector.push_back(13);
 
-  for (size_t i = 0; i < 32; i++)
-  {
-    EXPECT_EQ(i, int_vector[i]);
-  }
+  EXPECT_EQ(size + 1, int_vector.size());
+  EXPECT_EQ(13, int_vector[size]);
 }
 
 TEST(Vector, Insert) {
