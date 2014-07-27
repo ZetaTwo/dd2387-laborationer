@@ -11,3 +11,7 @@ TEST(Hypercube, DefaultConstructorDim5) { Hypercube<byte, 5> h; }
 TEST(Hypercube, DefaultConstructorDim6) { Hypercube<byte, 6> h; }
 // Memory consumption increases exponentially - with Vector default size 16 a
 // Hypercube<byte, 6> is ~16 MB and <byte, 7> is ~260 MB
+
+TEST(Hypercube, SizeConstructorDim1) { Hypercube<byte, 1> h(3); }
+TEST(Hypercube, SizeConstructorDim2) { Hypercube<byte, 2> h(3); }
+TEST(Hypercube, SizeConstructorDim3) { Hypercube<byte, 3> h(3); }
