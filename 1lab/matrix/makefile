@@ -5,14 +5,22 @@ testcode    = example_test.h
 CXX=g++
 CPPFLAGS=-std=c++11 -lgtest
 
-run_%: %
+run_test: test run_compiler_tests
 	./$<
+
+run_given_test: given_test
+	./$<
+
+run_compiler_tests: $(patsubst compiler_tests/%.cpp,run_compiler_test_%,$(wildcard compiler_tests/*.cpp))
+run_compiler_test_%: compiler_tests/%.cpp Matrix.o
+	! $(CXX) -I . $^ -o /dev/stdout &>/dev/null
 
 clean:
 	rm -f \
 		*test \
 		testcode.cpp \
-		*.o
+		*.o \
+		compiler_test_failure
 
 test_matrix.o: test_matrix.cpp
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c -o $@ $^
