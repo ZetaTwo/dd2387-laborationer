@@ -5,14 +5,20 @@ testcode    = example_test.h
 CXX=g++
 CPPFLAGS=-std=c++11 -lgtest
 
-run_given_test: given_test
+run_%: %
 	./$<
 
 clean:
 	rm -f \
-		given_test \
+		*test \
 		testcode.cpp \
 		*.o
+
+test_matrix.o: test_matrix.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c -o $@ $^
+
+test: test_runner.cpp test_matrix.o Matrix.o
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $@ $^
 
 testcode.cpp: $(testcode)
 	python2 $(cxxtestpath)cxxtestgen.py --error-printer -o testcode.cpp $(testcode)
