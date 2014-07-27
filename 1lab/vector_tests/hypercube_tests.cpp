@@ -48,3 +48,28 @@ TEST(Hypercube, IsAHypercube) {
     }
   }
 }
+
+TEST(Hypercube, IndexOperatorAssignmentWorks) {
+  Hypercube<byte, 3> h(5);
+  h[1][2][3] = 127;
+  h[3][1][2] = 128;
+  h[2][3][1] = 129;
+  EXPECT_EQ(127, h[1][2][3]);
+  EXPECT_EQ(128, h[3][1][2]);
+  EXPECT_EQ(129, h[2][3][1]);
+}
+
+TEST(Hypercube, PartialAssignment) {
+  // Copied from lab instructions
+
+  Hypercube<int, 3> n(7); // kub med 7*7*7 element
+  Hypercube<int, 6> m(5); // sex dimensioner, 5*5*...*5 element
+  m[1][3][2][1][4][0] = 7;
+
+  Hypercube<int, 3> t(5);
+  t = m[1][3][2]; // tilldela med del av m
+
+  t[1][4][0] = 2; // ändra t, ändra inte m
+  EXPECT_EQ(7, m[1][3][2][1][4][0]);
+  EXPECT_EQ(2, t[1][4][0]);
+}
