@@ -10,6 +10,16 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vector_tests", "vector_test
 		{8E9A09C3-3C63-40EC-B18D-9F2FE2DBF43F} = {8E9A09C3-3C63-40EC-B18D-9F2FE2DBF43F}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "matrix", "matrix\matrix.vcxproj", "{EE15344B-7A90-4B7E-B8C2-49BE9B1E5373}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8E9A09C3-3C63-40EC-B18D-9F2FE2DBF43F} = {8E9A09C3-3C63-40EC-B18D-9F2FE2DBF43F}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "matrix_tests", "matrix_tests\matrix_tests.vcxproj", "{C6CF0A12-B3A2-488D-9844-D4D99E09F848}"
+	ProjectSection(ProjectDependencies) = postProject
+		{EE15344B-7A90-4B7E-B8C2-49BE9B1E5373} = {EE15344B-7A90-4B7E-B8C2-49BE9B1E5373}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -24,6 +34,14 @@ Global
 		{C15CADFC-8589-4EED-9C01-C1978452C5A7}.Debug|Win32.Build.0 = Debug|Win32
 		{C15CADFC-8589-4EED-9C01-C1978452C5A7}.Release|Win32.ActiveCfg = Release|Win32
 		{C15CADFC-8589-4EED-9C01-C1978452C5A7}.Release|Win32.Build.0 = Release|Win32
+		{EE15344B-7A90-4B7E-B8C2-49BE9B1E5373}.Debug|Win32.ActiveCfg = Debug|Win32
+		{EE15344B-7A90-4B7E-B8C2-49BE9B1E5373}.Debug|Win32.Build.0 = Debug|Win32
+		{EE15344B-7A90-4B7E-B8C2-49BE9B1E5373}.Release|Win32.ActiveCfg = Release|Win32
+		{EE15344B-7A90-4B7E-B8C2-49BE9B1E5373}.Release|Win32.Build.0 = Release|Win32
+		{C6CF0A12-B3A2-488D-9844-D4D99E09F848}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C6CF0A12-B3A2-488D-9844-D4D99E09F848}.Debug|Win32.Build.0 = Debug|Win32
+		{C6CF0A12-B3A2-488D-9844-D4D99E09F848}.Release|Win32.ActiveCfg = Release|Win32
+		{C6CF0A12-B3A2-488D-9844-D4D99E09F848}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
