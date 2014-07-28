@@ -120,7 +120,7 @@ TEST(Vector, OperatorBracketConst) {
   EXPECT_EQ(13, int_vector[3]);
 }
 
-TEST(Vector, AssignmentOperator) {
+TEST(Vector, OperatorAssignment) {
   const size_t size = 4;
   Vector<int> int_vector1(size);
 
@@ -139,7 +139,7 @@ TEST(Vector, AssignmentOperator) {
   EXPECT_EQ(15, int_vector2[3]);
 }
 
-TEST(Vector, AssignmentOperatorSelf) {
+TEST(Vector, OperatorAssignmentSelf) {
   Vector<int> int_vector = { 13, 14, 15, 16 };
 
   EXPECT_EQ(13, int_vector[0]);
@@ -157,7 +157,7 @@ TEST(Vector, AssignmentOperatorSelf) {
   EXPECT_EQ(16, int_vector[3]);
 }
 
-TEST(Vector, AssignmentOperatorList) {
+TEST(Vector, OperatorAssignmentList) {
   Vector<int> int_vector = { 13, 14, 15, 16 };
 
   EXPECT_EQ(13, int_vector[0]);
@@ -167,7 +167,7 @@ TEST(Vector, AssignmentOperatorList) {
   EXPECT_EQ(4, int_vector.size());
 }
 
-TEST(Vector, AssignmentOperatorMove) {
+TEST(Vector, OperatorAssignmentMove) {
   std::unique_ptr<Vector<int> > int_vector1(new Vector<int>({ 13, 14, 15, 16 }));
 
   EXPECT_EQ(13, (*int_vector1)[0]);
