@@ -140,12 +140,21 @@ TEST(Vector, AssignmentOperator) {
 }
 
 TEST(Vector, AssignmentOperatorSelf) {
-  const size_t size = 4;
-  Vector<int> int_vector1(size, 13);
+  Vector<int> int_vector = { 13, 14, 15, 16 };
 
-  int_vector1 = int_vector1;
-  EXPECT_EQ(size, int_vector1.size());
-  EXPECT_EQ(13, int_vector1[3]);
+  EXPECT_EQ(13, int_vector[0]);
+  EXPECT_EQ(14, int_vector[1]);
+  EXPECT_EQ(15, int_vector[2]);
+  EXPECT_EQ(16, int_vector[3]);
+
+  int_vector = int_vector;
+
+  EXPECT_EQ(4, int_vector.size());
+
+  EXPECT_EQ(13, int_vector[0]);
+  EXPECT_EQ(14, int_vector[1]);
+  EXPECT_EQ(15, int_vector[2]);
+  EXPECT_EQ(16, int_vector[3]);
 }
 
 TEST(Vector, AssignmentOperatorList) {
