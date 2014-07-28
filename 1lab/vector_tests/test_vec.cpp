@@ -26,9 +26,9 @@ int main()
         std::cout << e.what() << std::endl;
     }
 
-#if 0
+#if 1
     // Diverse saker att testa
-    e[5] = 3;              // fel: (kompilerar ej) tilldelning till const
+    //e[5] = 3;              // fel: (kompilerar ej) tilldelning till const
     b = b;                 // hmm: se till att inte minnet som skall behållas frigörs
 #endif
 
