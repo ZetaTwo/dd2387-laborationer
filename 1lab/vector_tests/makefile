@@ -18,3 +18,9 @@ hypercube_tests.o: hypercube_tests.cpp ../vector/hypercube.hpp
 
 run_test_hypercube: test_runner.cpp hypercube_tests.o
 	${CXX} ${CPPFLAGS} ${CXXFLAGS} -o $@ $^
+
+test_template_vec: test_template_vec.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $@ $^
+
+valgrind_test_template_vec: test_template_vec
+	valgrind --tool=memcheck --leak-check=yes --track-origins=yes ./$<
