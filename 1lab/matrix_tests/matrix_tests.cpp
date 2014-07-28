@@ -267,5 +267,5 @@ TEST(Matrix, OperatorOstream) {
   
   ss << matrix1;
 
-  EXPECT_EQ(matrix1, string1);
+  EXPECT_EQ(ss.str(), string1);
 }

@@ -53,6 +53,6 @@ class Matrix
     friend std::istream& operator>> ( std::istream&, Matrix& );
 };
 
-std::istream& operator>> ( std::istream&, Matrix& );
-std::ostream& operator<< ( std::ostream&, Matrix& );
-Matrix operator* ( int, const Matrix& );
+std::istream& operator>> ( std::istream& stream, Matrix& matrix);
+std::ostream& operator<< (std::ostream& stream, Matrix& matrix);
+Matrix operator* ( int factor, const Matrix& matrix);
