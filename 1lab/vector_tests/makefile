@@ -1,5 +1,5 @@
 CXX=g++
-CPPFLAGS=-std=c++11 -lgtest
+CPPFLAGS = -g -std=c++11 -lgtest
 
 test: run_test
 	./$<
