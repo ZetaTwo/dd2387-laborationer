@@ -20,4 +20,11 @@ public:
         int result = must_follow_a(vek, 4, 'a', 'b');
         TS_ASSERT_EQUALS( result, 1);
     }
+
+    void test_expect_it_to_return_2( void )
+    {
+        char vek[] = {'a', 'b', 'a', 'b', 'x'};
+        int result = must_follow_a(vek, 4, 'a', 'b');
+        TS_ASSERT_EQUALS(result, 2);
+    }
 };
