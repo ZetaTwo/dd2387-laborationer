@@ -19,6 +19,9 @@ test_hello: bin/hello
 	./$< 3 C++ | diff /dev/stdin test_hello/test.3_C++.txt
 	./$< 2 | diff /dev/stdin test_hello/test.2.txt
 
+%.out:	%.cpp
+	g++ -g -std=c++0x -Wall $*.cpp -o $*.out
+
 1.2b.cpp: test_must_follow_a.cpp
 	$(CXXTEST) --error-printer -o $@ $<
 
