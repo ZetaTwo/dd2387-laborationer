@@ -122,13 +122,15 @@ Vector<T>& Vector<T>::operator=(const Vector<T>& other) {
 
 template<typename T>
 Vector<T>& Vector<T>::operator=(const std::initializer_list<T>& list) {
-  if(list.size > max_size) {
-    increase_memory(list.size, false);
+  if(list.size() > max_size) {
+    increase_memory(list.size(), false);
   }
 
   count = list.size();
-  for(size_t i = 0; i < list.count; i++) {
-    data[i] = list[i];
+  size_t i;
+  typename std::initializer_list<T>::iterator item;
+  for(i = 0, item = list.begin(); item != list.end(); ++i, ++item) {
+    data[i] = *item;
   }
 
   return *this;
