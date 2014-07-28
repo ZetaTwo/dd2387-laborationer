@@ -28,5 +28,8 @@ test_vec: test_vec.cpp ../vector/Vector_int.o
 test_template_vec: test_template_vec.cpp
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $@ $^
 
+valgrind_test_vec: test_vec
+	valgrind --tool=memcheck --leak-check=yes --track-origins=yes ./$<
+
 valgrind_test_template_vec: test_template_vec
 	valgrind --tool=memcheck --leak-check=yes --track-origins=yes ./$<
