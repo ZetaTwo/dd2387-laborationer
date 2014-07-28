@@ -27,4 +27,11 @@ public:
         int result = must_follow_a(vek, 4, 'a', 'b');
         TS_ASSERT_EQUALS(result, 2);
     }
+
+    void test_make_sure_it_doesnt_look_outside_the_given_range( void )
+    {
+        char vek[] = {'b', 'b', 'a', 'b', 'b'};
+        int result = must_follow_a(vek, 3, 'a', 'b');
+        TS_ASSERT_EQUALS(result, 0);
+    }
 };
