@@ -83,6 +83,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="test_runner.cpp" />
+    <ClCompile Include="vector_iterator_tests.cpp" />
     <ClCompile Include="vector_tests.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

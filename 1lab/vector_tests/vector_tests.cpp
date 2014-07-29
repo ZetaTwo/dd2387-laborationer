@@ -366,3 +366,69 @@ TEST(Vector, Size) {
 
   EXPECT_EQ(size, int_vector.size());
 }
+
+TEST(Vector, ItrBeginEnd) {
+  Vector<int> vector1({ 1, 2, 3, 4 });
+  Vector<int> vector2;
+
+  for (Vector<int>::iterator itr = vector1.begin(); itr != vector1.end(); ++itr)
+  {
+    vector2.push_back(*itr);
+  }
+
+  EXPECT_EQ(vector1.size(), vector2.size());
+  EXPECT_EQ(vector1[0], vector2[0]);
+  EXPECT_EQ(vector1[1], vector2[1]);
+  EXPECT_EQ(vector1[2], vector2[2]);
+  EXPECT_EQ(vector1[3], vector2[3]);
+}
+
+TEST(Vector, ItrCBeginEnd) {
+  const Vector<int> vector1({ 1, 2, 3, 4 });
+  Vector<int> vector2;
+
+  for (Vector<int>::const_iterator itr = vector1.begin(); itr != vector1.end(); ++itr)
+  {
+    vector2.push_back(*itr);
+  }
+
+  EXPECT_EQ(vector1.size(), vector2.size());
+  EXPECT_EQ(vector1[0], vector2[0]);
+  EXPECT_EQ(vector1[1], vector2[1]);
+  EXPECT_EQ(vector1[2], vector2[2]);
+  EXPECT_EQ(vector1[3], vector2[3]);
+}
+
+TEST(Vector, ItrRBeginEnd) {
+  Vector<int> vector1({ 1, 2, 3, 4 });
+  Vector<int> vector2({ 4, 3, 2, 1 });
+  Vector<int> vector3;
+
+  for (Vector<int>::reverse_iterator itr = vector1.rbegin(); itr != vector1.rend(); ++itr)
+  {
+    vector3.push_back(*itr);
+  }
+
+  EXPECT_EQ(vector2.size(), vector3.size());
+  EXPECT_EQ(vector2[0], vector3[0]);
+  EXPECT_EQ(vector2[1], vector3[1]);
+  EXPECT_EQ(vector2[2], vector3[2]);
+  EXPECT_EQ(vector2[3], vector3[3]);
+}
+
+TEST(Vector, ItrRCBeginEnd) {
+  const Vector<int> vector1({ 1, 2, 3, 4 });
+  Vector<int> vector2({ 4, 3, 2, 1 });
+  Vector<int> vector3;
+
+  for (Vector<int>::const_reverse_iterator itr = vector1.rbegin(); itr != vector1.rend(); ++itr)
+  {
+    vector3.push_back(*itr);
+  }
+
+  EXPECT_EQ(vector2.size(), vector3.size());
+  EXPECT_EQ(vector2[0], vector3[0]);
+  EXPECT_EQ(vector2[1], vector3[1]);
+  EXPECT_EQ(vector2[2], vector3[2]);
+  EXPECT_EQ(vector2[3], vector3[3]);
+}

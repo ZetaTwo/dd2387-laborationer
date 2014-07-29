@@ -37,7 +37,61 @@ public:
   //Lookup in vector
   bool exists(const T& element) const;
   size_t size() const;
+
+  //Iterators
+  class iterator : public std::iterator<std::random_access_iterator_tag, T>
+  {
+    T* p;
+  public:
+    iterator() {}
+    iterator(T* x) :p(x) {}
+    iterator(const iterator& mit) : p(mit.p) {}
+    iterator& operator++() { ++p; return *this; }
+    iterator operator++(T) { iterator tmp(*this); operator++(); return tmp; }
+    iterator& operator--() { --p; return *this; }
+    iterator operator--(T) { iterator tmp(*this); operator--(); return tmp; }
+    iterator operator-(size_t index) const { iterator tmp(*this); tmp.p -= index; return tmp; }
+    iterator operator-(const iterator &other) const { iterator tmp(*this); tmp.p -= other.p; return tmp; }
+    bool operator==(const iterator& rhs) const { return p == rhs.p; }
+    bool operator!=(const iterator& rhs) const { return p != rhs.p; }
+    T& operator[](size_t index) { return *(p+index); }
+    T& operator*() { return *p; }
+  };
+
+  class const_iterator : public std::iterator<std::random_access_iterator_tag, const T>
+  {
+    T* p;
+  public:
+    const_iterator() {}
+    const_iterator(T* x) : p(x) {}
+    const_iterator(const const_iterator& mit) : p(mit.p) {}
+    const_iterator& operator++() { ++p; return *this; }
+    const_iterator operator++(T) { const_iterator tmp(*this); operator++(); return tmp; }
+    const_iterator& operator--() { --p; return *this; }
+    const_iterator operator--(T) { const_iterator tmp(*this); operator--(); return tmp; }
+    const_iterator operator-(size_t index) const { const_iterator tmp(*this); tmp.p -= index; return tmp; }
+    const_iterator operator-(const const_iterator& other) const { const_iterator tmp(*this); tmp.p -= other.p; return tmp; }
+    bool operator==(const const_iterator& rhs) const { return p == rhs.p; }
+    bool operator!=(const const_iterator& rhs) const { return p != rhs.p; }
+    T& operator[](size_t index) { return *(p + index); }
+    T& operator*() { return *p; }
+  };
+
+  typedef std::reverse_iterator<iterator> reverse_iterator;
+  typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
+
+  iterator begin();
+  iterator end();
+  const_iterator begin() const;
+  const_iterator end() const;
+
+  reverse_iterator rbegin();
+  reverse_iterator rend();
+  const_reverse_iterator rbegin() const;
+  const_reverse_iterator rend() const;
+
 private:
+
   static const int DEFAULT_SIZE = 16;
 
   size_t count; //Actual number of elements in the vector
@@ -47,6 +101,7 @@ private:
   void increase_memory(int num_elements, bool copy = true); //Increases memory to fit at least num_elements number of elements
 };
 
+//Member implementations
 template<typename T>
 Vector<T>::Vector() : count(0), max_size(DEFAULT_SIZE), data(new T[max_size]) {
 }
@@ -234,4 +289,44 @@ void Vector<T>::increase_memory(int num_elements, bool copy) {
 
   data = std::move(new_data);
   max_size = new_max_size;
+}
+
+template<typename T>
+typename Vector<T>::iterator Vector<T>::begin() {
+  return iterator(&data[0]);
+}
+
+template<typename T>
+typename Vector<T>::iterator Vector<T>::end() {
+  return iterator(&data[count]);
+}
+
+template<typename T>
+typename Vector<T>::reverse_iterator Vector<T>::rbegin() {
+  return reverse_iterator(&data[count]);
+}
+
+template<typename T>
+typename Vector<T>::reverse_iterator Vector<T>::rend() {
+  return reverse_iterator(&data[0]);
+}
+
+template<typename T>
+typename Vector<T>::const_iterator Vector<T>::begin() const {
+  return const_iterator(&data[0]);
+}
+
+template<typename T>
+typename Vector<T>::const_iterator Vector<T>::end() const {
+  return const_iterator(&data[count]);
+}
+
+template<typename T>
+typename Vector<T>::const_reverse_iterator Vector<T>::rbegin() const {
+  return const_reverse_iterator(&data[count]);
+}
+
+template<typename T>
+typename Vector<T>::const_reverse_iterator Vector<T>::rend() const {
+  return const_reverse_iterator(&data[0]);
 }
