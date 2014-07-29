@@ -52,7 +52,7 @@ TEST(Matrix, ConstructorSize2ZeroY) {
 }
 
 TEST(Matrix, ConstructorSerialized) {
-  Matrix matrix("[ 1 2 -3 ; 5 6 7 ]");
+  Matrix matrix("       [ 1 2 -3 ; 5 6 7 ]");
   EXPECT_EQ(2, matrix.rows());
   EXPECT_EQ(3, matrix.cols());
 }

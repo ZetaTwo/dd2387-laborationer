@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <stdexcept>
+#include <sstream>
 #include "../vector/kth_cprog_vektor.cpp"
 
 class Matrix
@@ -14,6 +15,7 @@ class Matrix
     public:
       matrix_row(std::size_t size = 0) : Vector<int>(size) {}
       using Vector<int>::operator [];
+      using Vector<int>::const_iterator;
     private:
       friend std::istream& operator>>(std::istream&, Matrix&);
     };
@@ -49,7 +51,7 @@ class Matrix
     std::size_t                 m_cols;
     Vector<matrix_row>        m_vectors;
     
-    void add_row();            // Non mandatory help function
+    void from_string(std::stringstream data);
     friend std::istream& operator>> (std::istream&, Matrix&);
 };
 
