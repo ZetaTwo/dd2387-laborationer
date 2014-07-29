@@ -249,8 +249,9 @@ TEST(Vector, Erase) {
   int_vector[2] = 14;
 
   int_vector.erase(1);
-  EXPECT_EQ(14, int_vector[1]);
   EXPECT_EQ(size - 1, int_vector.size());
+  EXPECT_EQ(14, int_vector[1]);
+  
 }
 
 TEST(Vector, EraseRange) {
