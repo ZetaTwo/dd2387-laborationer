@@ -47,15 +47,16 @@ public:
     iterator(T* x) :p(x) {}
     iterator(const iterator& mit) : p(mit.p) {}
     iterator& operator++() { ++p; return *this; }
-    iterator operator++(T) { iterator tmp(*this); operator++(); return tmp; }
+    iterator operator++(int) { iterator tmp(*this); operator++(); return tmp; }
     iterator& operator--() { --p; return *this; }
-    iterator operator--(T) { iterator tmp(*this); operator--(); return tmp; }
+    iterator operator--(int) { iterator tmp(*this); operator--(); return tmp; }
     iterator operator-(size_t index) const { iterator tmp(*this); tmp.p -= index; return tmp; }
     iterator operator-(const iterator &other) const { iterator tmp(*this); tmp.p -= other.p; return tmp; }
     bool operator==(const iterator& rhs) const { return p == rhs.p; }
     bool operator!=(const iterator& rhs) const { return p != rhs.p; }
     T& operator[](size_t index) { return *(p+index); }
     T& operator*() { return *p; }
+    T* operator->() const { return p; }
   };
 
   class const_iterator : public std::iterator<std::random_access_iterator_tag, const T>
@@ -66,15 +67,16 @@ public:
     const_iterator(T* x) : p(x) {}
     const_iterator(const const_iterator& mit) : p(mit.p) {}
     const_iterator& operator++() { ++p; return *this; }
-    const_iterator operator++(T) { const_iterator tmp(*this); operator++(); return tmp; }
+    const_iterator operator++(int) { const_iterator tmp(*this); operator++(); return tmp; }
     const_iterator& operator--() { --p; return *this; }
-    const_iterator operator--(T) { const_iterator tmp(*this); operator--(); return tmp; }
+    const_iterator operator--(int) { const_iterator tmp(*this); operator--(); return tmp; }
     const_iterator operator-(size_t index) const { const_iterator tmp(*this); tmp.p -= index; return tmp; }
     const_iterator operator-(const const_iterator& other) const { const_iterator tmp(*this); tmp.p -= other.p; return tmp; }
     bool operator==(const const_iterator& rhs) const { return p == rhs.p; }
     bool operator!=(const const_iterator& rhs) const { return p != rhs.p; }
     T& operator[](size_t index) { return *(p + index); }
     T& operator*() { return *p; }
+    T const * operator->() const { return p; }
   };
 
   typedef std::reverse_iterator<iterator> reverse_iterator;
@@ -156,6 +158,7 @@ const T Vector<T>::operator[](size_t index) const {
 
   return data[index];
 }
+
 
 template<typename T>
 Vector<T>& Vector<T>::operator=(const Vector<T>& other) {
