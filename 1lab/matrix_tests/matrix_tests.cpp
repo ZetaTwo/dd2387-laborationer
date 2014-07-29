@@ -28,11 +28,11 @@ TEST(Matrix, ConstructorSizeZero) {
 }
 
 TEST(Matrix, ConstructorSize2) {
-  const size_t size_x = 3, size_y = 4;
+  const size_t size_rows = 3, size_cols = 4;
 
-  Matrix matrix(size_x, size_y);
-  EXPECT_EQ(size_y, matrix.rows());
-  EXPECT_EQ(size_x, matrix.cols());
+  Matrix matrix(size_rows, size_cols);
+  EXPECT_EQ(size_rows, matrix.rows());
+  EXPECT_EQ(size_cols, matrix.cols());
 }
 
 TEST(Matrix, ConstructorSize2ZeroX) {
@@ -122,7 +122,7 @@ TEST(Matrix, OperatorNequalTrueValue) {
   EXPECT_TRUE(matrix1 != matrix2);
 }
 
-TEST(Matrix, OperatorEqualTrueSize) {
+TEST(Matrix, OperatorNequalTrueSize) {
   Matrix matrix1("[ 1 2 -3 ; 5 6 7 ]");
   Matrix matrix2("[ 1 2 ; 5 6 ]");
 
