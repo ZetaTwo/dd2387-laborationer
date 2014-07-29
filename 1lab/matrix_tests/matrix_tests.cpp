@@ -165,10 +165,10 @@ TEST(Matrix, OperatorMultiplication) {
 
 TEST(Matrix, OperatorMultiplicationSize) {
   Matrix matrix1("[ 1 2 3 ; 4 5 6 ]");
-  Matrix matrix2("[ 7 8 ; 9 10; 11 12 ]");
+  Matrix matrix2("[ 7 8 ; 9 10 ]");
 
   EXPECT_THROW({
-    Matrix matrix3 = matrix2 * matrix1;
+    Matrix matrix3 = matrix1 * matrix2;
   }, std::invalid_argument);
 }
 
@@ -191,7 +191,7 @@ TEST(Matrix, OperatorMultiplicationScalar2) {
 TEST(Matrix, OperatorSubtraction) {
   Matrix matrix1("[ 1 2 -3 ; 5 6 7 ]");
   Matrix matrix2("[ 2 -3 1 ; -6 5 7 ]");
-  Matrix matrix3("[ -1 1 -4; 11 1 0 ]");
+  Matrix matrix3("[ -1 5 -4; 11 1 0 ]");
 
   Matrix matrix4 = matrix1 - matrix2;
   EXPECT_EQ(matrix3, matrix4);
@@ -222,7 +222,7 @@ TEST(Matrix, Transpose) {
 
 TEST(Matrix, OperatorIndex) {
   Matrix matrix1("[ 1 2 -3 ; 5 6 7 ]");
-  EXPECT_EQ(-3, matrix1[0][2]);
+  EXPECT_EQ(6, matrix1[1][1]);
 }
 
 TEST(Matrix, OperatorIndexRange) {

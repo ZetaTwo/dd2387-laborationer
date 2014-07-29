@@ -62,54 +62,127 @@ bool Matrix::operator==(const Matrix& other) const
 
 bool Matrix::operator!=(const Matrix& other) const
 {
-  return false;
+  return !(*this == other);
 }
 
 Matrix Matrix::operator+(const Matrix& other) const
 {
-  Matrix a;
-  return a;
+  if (rows() != other.rows() || cols() != other.cols()) {
+    throw std::invalid_argument("Matrices must be of same size");
+  }
+
+  Matrix result(rows(), cols());
+
+  typedef Vector<matrix_row>::const_iterator row_iter;
+  typedef matrix_row::const_iterator col_iter;
+
+  Vector<matrix_row>::iterator res_row = result.m_vectors.begin();
+  for (row_iter row = m_vectors.begin(), other_row = other.m_vectors.begin();
+    row != m_vectors.end(); row++, other_row++, res_row++)
+  {
+    matrix_row::iterator res_col = res_row->begin();
+    for (col_iter col = row->begin(), other_col = other_row->begin();
+      col != row->end(); col++, other_col++, res_col++) {
+      *res_col = *col + *other_col;
+    }
+  }
+
+  return result;
 }
 
 Matrix Matrix::operator*(const Matrix& other) const
 {
-  Matrix a;
-  return a;
+  if (cols() != other.rows()) {
+    throw std::invalid_argument("Matrices must be of compatible sizes");
+  }
+
+  Matrix result(rows(), other.cols());
+
+  for (index i = 0; i < result.rows(); i++) {
+    for (index j = 0; j < result.cols(); j++) {
+      for (index k = 0; k < cols(); k++) {
+        result[i][j] += m_vectors[i][k] * other.m_vectors[k][j];
+      }
+    }
+  }    
+
+  return result;
 }
 
 Matrix Matrix::operator*(int factor) const
 {
-  Matrix a;
-  return a;
+  Matrix result(rows(), cols());
+
+  typedef Vector<matrix_row>::const_iterator row_iter;
+  typedef matrix_row::const_iterator col_iter;
+
+  Vector<matrix_row>::iterator res_row = result.m_vectors.begin();
+  for (row_iter row = m_vectors.begin(); row != m_vectors.end(); row++, res_row++)
+  {
+    matrix_row::iterator res_col = res_row->begin();
+    for (col_iter col = row->begin(); col != row->end(); col++, res_col++) {
+      *res_col = factor * *col;
+    }
+  }
+
+  return result;
 }
 
-Matrix Matrix::operator-(const Matrix&) const
+Matrix Matrix::operator-(const Matrix& other) const
 {
-  Matrix a;
-  return a;
+  if (rows() != other.rows() || cols() != other.cols()) {
+    throw std::invalid_argument("Matrices must be of same size");
+  }
+
+  Matrix result(rows(), cols());
+
+  typedef Vector<matrix_row>::const_iterator row_iter;
+  typedef matrix_row::const_iterator col_iter;
+
+  Vector<matrix_row>::iterator res_row = result.m_vectors.begin();
+  for (row_iter row = m_vectors.begin(), other_row = other.m_vectors.begin();
+    row != m_vectors.end(); row++, other_row++, res_row++)
+  {
+    matrix_row::iterator res_col = res_row->begin();
+    for (col_iter col = row->begin(), other_col = other_row->begin();
+      col != row->end(); col++, other_col++, res_col++) {
+      *res_col = *col - *other_col;
+    }
+  }
+
+  return result;
 }
 
 Matrix Matrix::operator-() const
 {
-  Matrix a;
-  return a;
+  Matrix zero(rows(), cols());
+
+  return zero - *this;
 }
 
 Matrix Matrix::transpose() const
 {
-  Matrix a;
-  return a;
+  Matrix result(cols(), rows());
+
+  for (size_t y = 0; y < rows(); y++)
+  {
+    for (size_t x = 0; x < cols(); x++)
+    {
+      result[x][y] = m_vectors[y][x];
+    }
+  }
+
+  return result;
 }
 
 Matrix::matrix_row& Matrix::operator[](index i)
 {
-  return m_vectors[0];
+  return m_vectors[i];
 }
 
 const Matrix::matrix_row& Matrix::operator[](index i) const
 {
-  Matrix a;
-  return a[0];
+  return m_vectors[i];
 }
 
 std::size_t Matrix::rows() const
@@ -169,13 +242,33 @@ std::istream& operator>>(std::istream& stream, Matrix& matrix)
   throw std::invalid_argument("Malformed matrix");
 }
 
-std::ostream& operator<<(std::ostream& stream, Matrix& matrix)
+std::ostream& operator<<(std::ostream& stream, const Matrix& matrix)
 {
+  stream << "[ ";
+
+  typedef Vector<Matrix::matrix_row>::const_iterator row_iter;
+  typedef Matrix::matrix_row::const_iterator col_iter;
+
+  bool first = true;
+  for (row_iter row = matrix.m_vectors.begin(); row != matrix.m_vectors.end(); row++)
+  {
+    if (first) {
+      first = false;
+    }
+    else {
+      stream << "; ";
+    }
+    for (col_iter col = row->begin(); col != row->end(); col++) {
+      stream << *col << " ";
+    } 
+  }
+
+  stream << "]";
+
   return stream;
 }
 
 Matrix operator*(int factor, const Matrix& matrix)
 {
-  Matrix a;
-  return a;
+  return matrix * factor;
 }

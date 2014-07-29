@@ -15,9 +15,13 @@ class Matrix
     public:
       matrix_row(std::size_t size = 0) : Vector<int>(size) {}
       using Vector<int>::operator [];
+      using Vector<int>::iterator;
       using Vector<int>::const_iterator;
+      using Vector<int>::begin;
+      using Vector<int>::end;
     private:
-      friend std::istream& operator>>(std::istream&, Matrix&);
+      friend std::istream& operator>>(std::istream& stream, Matrix& matrix);
+      friend std::ostream& operator<< (std::ostream& stream, const Matrix& matrix);
     };
 
     Matrix();
@@ -52,9 +56,10 @@ class Matrix
     Vector<matrix_row>        m_vectors;
     
     void from_string(std::stringstream data);
-    friend std::istream& operator>> (std::istream&, Matrix&);
+    friend std::istream& operator>> (std::istream& stream, Matrix& matrix);
+    friend std::ostream& operator<< (std::ostream& stream, const Matrix& matrix);
 };
 
 std::istream& operator>> ( std::istream& stream, Matrix& matrix);
-std::ostream& operator<< (std::ostream& stream, Matrix& matrix);
+std::ostream& operator<< (std::ostream& stream, const Matrix& matrix);
 Matrix operator* ( int factor, const Matrix& matrix);
