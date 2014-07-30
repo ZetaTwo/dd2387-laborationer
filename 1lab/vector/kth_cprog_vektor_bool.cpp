@@ -23,6 +23,13 @@ public:
   Vector<bool>& operator=(const std::initializer_list<bool>& list);
   Vector<bool>& operator=(Vector<bool>&& other); //Move
 
+  Vector<bool> operator~() const;
+  Vector<bool> operator&(const Vector<bool>& other) const;
+  Vector<bool> operator|(const Vector<bool>& other) const;
+  Vector<bool> operator^(const Vector<bool>& other) const;
+  bool operator==(const Vector<bool>& other) const;
+  bool operator!=(const Vector<bool>& other) const;
+
   //Modify vector
   Vector<bool>& push_back(const bool& element);
   Vector<bool>& insert(size_t index, const bool& element);
@@ -34,6 +41,10 @@ public:
   //Lookup in vector
   bool exists(const bool& element) const;
   size_t size() const;
+
+  size_t weight1() const;
+  size_t weight2() const;
+  size_t weight3() const;
 
   //Iterators
 private:
@@ -251,6 +262,81 @@ Vector<bool>& Vector<bool>::operator=(Vector<bool>&& other)
   return *this;
 }
 
+Vector<bool> Vector<bool>::operator~() const {
+  Vector<bool> result(count);
+  for (size_t i = 0; i <= size() / (MAX_SUBINDEX + 1); i++)
+  {
+    result.data[i] = ~data[i];
+  }
+
+  return result;
+}
+Vector<bool> Vector<bool>::operator&(const Vector<bool>& other) const {
+  if (size() != other.size()) {
+    throw std::invalid_argument("Vectors must be of same size");
+  }
+
+  Vector<bool> result(count);
+  for (size_t i = 0; i <= count / (MAX_SUBINDEX + 1); i++)
+  {
+    result.data[i] = data[i] & other.data[i];
+  }
+
+  return result;
+}
+Vector<bool> Vector<bool>::operator|(const Vector<bool>& other) const {
+  if (size() != other.size()) {
+    throw std::invalid_argument("Vectors must be of same size");
+  }
+
+  Vector<bool> result(count);
+  for (size_t i = 0; i <= count / (MAX_SUBINDEX + 1); i++)
+  {
+    result.data[i] = data[i] | other.data[i];
+  }
+
+  return result;
+}
+Vector<bool> Vector<bool>::operator^(const Vector<bool>& other) const {
+  if (size() != other.size()) {
+    throw std::invalid_argument("Vectors must be of same size");
+  }
+
+  Vector<bool> result(count);
+  for (size_t i = 0; i <= count / (MAX_SUBINDEX + 1); i++)
+  {
+    result.data[i] = data[i] ^ other.data[i];
+  }
+
+  return result;
+}
+
+bool Vector<bool>::operator==(const Vector<bool>& other) const {
+  if (size() != other.size()) {
+    return false;
+  }
+
+  //Check all except last element
+  for (size_t i = 0; i < count / (MAX_SUBINDEX + 1); i++)
+  {
+    if (data[i] != other.data[i]) {
+      return false;
+    }
+  }
+
+  //Check last element
+  if (data[count / (MAX_SUBINDEX + 1)] & (1 << count % MAX_SUBINDEX) != 
+    other.data[count / (MAX_SUBINDEX + 1)] & (1 << count % MAX_SUBINDEX)) {
+    return false;
+  }
+
+  return true;
+}
+
+bool Vector<bool>::operator!=(const Vector<bool>& other) const {
+  return !(*this == other);
+}
+
 Vector<bool>& Vector<bool>::push_back(const bool& element)
 {
   return *this;
@@ -287,6 +373,48 @@ size_t Vector<bool>::size() const
   return 0;
 }
 
+size_t Vector<bool>::weight1() const {
+  size_t result = 0;
+
+  for (size_t i = 0; i <= size() / (MAX_SUBINDEX + 1); i++)
+  {
+    size_t count = data[i] - ((data[i] >> 1) & 033333333333) - ((data[i] >> 2) & 011111111111);
+    result += ((count + (count >> 3)) & 030707070707) % 63;
+  }
+
+  return result;
+}
+
+size_t Vector<bool>::weight2() const {
+  size_t result = 0;
+
+  for (size_t i = 0; i <= size() / (MAX_SUBINDEX + 1); i++)
+  {
+    while (data[i] > 0) {         // until all bits are zero
+      if ((data[i] & 1) == 1)     // check lower bit
+        result++;
+      data[i] >>= 1;              // shift bits, removing lower bit
+    }
+  }
+
+  return result;
+}
+
+size_t Vector<bool>::weight3() const {
+  size_t result = 0;
+
+  for (size_t i = 0; i <= size() / (MAX_SUBINDEX + 1); i++)
+  {
+    while (data[i] > 0) {         // until all bits are zero
+      if ((data[i] & (1 << (sizeof(storage_type)-1))) == (1 << (sizeof(storage_type)-1)))     // check upper bit
+        result++;
+      data[i] <<= 1;              // shift bits, removing upper bit
+    }
+  }
+
+  return result;
+}
+
 Vector<bool>::iterator Vector<bool>::begin() {
   return iterator(&data[0], 0);
 }
@@ -319,4 +447,3 @@ Vector<bool>::const_reverse_iterator Vector<bool>::rend() const {
   return const_reverse_iterator(const_iterator(&data[0], 0));
 }
 
-//Iterator implementations
