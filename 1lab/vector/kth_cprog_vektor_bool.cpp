@@ -85,10 +85,9 @@ private:
 public:
   bool_proxy(storage_type* element, subindex_type index) : element(element), index(index) {}
   bool_proxy& operator=(const bool& value) {
-    if (value) {
+    if(value) {
       *element |= 1 << index;
-    }
-    else {
+    } else {
       *element &= ~(1 << index);
     }
   }
@@ -97,8 +96,7 @@ public:
   }
 };
 
-class Vector<bool>::const_iterator : public std::iterator<std::random_access_iterator_tag, const bool>
-{
+class Vector<bool>::const_iterator : public std::iterator<std::random_access_iterator_tag, const bool> {
 private:
   storage_type* element;
   subindex_type index;
@@ -108,7 +106,7 @@ public:
   const_iterator(storage_type* element, subindex_type index) : element(element), index(index) {}
   const_iterator(const const_iterator& mit) : element(mit.element), index(mit.index) {}
   const_iterator& operator++() {
-    if (++index > MAX_SUBINDEX) {
+    if(++index > MAX_SUBINDEX) {
       ++element;
       index = 0;
     }
@@ -116,11 +114,10 @@ public:
   }
   const_iterator operator++(int) { const_iterator tmp(*this); operator++(); return tmp; }
   const_iterator& operator--() {
-    if (index == 0) {
+    if(index == 0) {
       --element;
       index = MAX_SUBINDEX;
-    }
-    else {
+    } else {
       --index;
     }
     return *this;
@@ -150,8 +147,7 @@ public:
   }
 };
 
-class Vector<bool>::iterator : public Vector<bool>::const_iterator
-{
+class Vector<bool>::iterator : public Vector<bool>::const_iterator {
   storage_type const* element;
   subindex_type index;
 
@@ -160,7 +156,7 @@ public:
   iterator(storage_type* element, subindex_type index) : element(element), index(index) {}
   iterator(const iterator& mit) : element(mit.element), index(mit.index) {}
   iterator& operator++() {
-    if (++index > MAX_SUBINDEX) {
+    if(++index > MAX_SUBINDEX) {
       ++element;
       index = 0;
     }
@@ -168,11 +164,10 @@ public:
   }
   iterator operator++(int) { iterator tmp(*this); operator++(); return tmp; }
   iterator& operator--() {
-    if (index == 0) {
+    if(index == 0) {
       --element;
       index = MAX_SUBINDEX;
-    }
-    else {
+    } else {
       --index;
     }
     return *this;
@@ -203,39 +198,25 @@ public:
 };
 
 //Member implementations
-Vector<bool>::Vector()
-{
-
+Vector<bool>::Vector() {
 }
 
-Vector<bool>::Vector(const Vector<bool>& other)
-{
-
+Vector<bool>::Vector(const Vector<bool>& other) {
 }
 
-Vector<bool>::Vector(const std::initializer_list<bool>& list)
-{
-
+Vector<bool>::Vector(const std::initializer_list<bool>& list) {
 }
 
-Vector<bool>::Vector(Vector<bool>&& other)
-{
-
+Vector<bool>::Vector(Vector<bool>&& other) {
 }
 
-Vector<bool>::Vector(size_t size)
-{
-
+Vector<bool>::Vector(size_t size) {
 }
 
-Vector<bool>::Vector(size_t size, bool element)
-{
-
+Vector<bool>::Vector(size_t size, bool element) {
 }
 
-Vector<bool>::~Vector()
-{
-
+Vector<bool>::~Vector() {
 }
 
 bool& Vector<bool>::operator[](size_t index) {
@@ -247,64 +228,57 @@ const bool Vector<bool>::operator[](size_t index) const {
   return false;
 }
 
-Vector<bool>& Vector<bool>::operator=(const Vector<bool>& other)
-{
+Vector<bool>& Vector<bool>::operator=(const Vector<bool>& other) {
   return *this;
 }
 
-Vector<bool>& Vector<bool>::operator=(const std::initializer_list<bool>& list)
-{
+Vector<bool>& Vector<bool>::operator=(const std::initializer_list<bool>& list) {
   return *this;
 }
 
-Vector<bool>& Vector<bool>::operator=(Vector<bool>&& other)
-{
+Vector<bool>& Vector<bool>::operator=(Vector<bool>&& other) {
   return *this;
 }
 
 Vector<bool> Vector<bool>::operator~() const {
   Vector<bool> result(count);
-  for (size_t i = 0; i <= size() / (MAX_SUBINDEX + 1); i++)
-  {
+  for(size_t i = 0; i <= size() / (MAX_SUBINDEX + 1); i++) {
     result.data[i] = ~data[i];
   }
 
   return result;
 }
 Vector<bool> Vector<bool>::operator&(const Vector<bool>& other) const {
-  if (size() != other.size()) {
+  if(size() != other.size()) {
     throw std::invalid_argument("Vectors must be of same size");
   }
 
   Vector<bool> result(count);
-  for (size_t i = 0; i <= count / (MAX_SUBINDEX + 1); i++)
-  {
+  for(size_t i = 0; i <= count / (MAX_SUBINDEX + 1); i++) {
     result.data[i] = data[i] & other.data[i];
   }
 
   return result;
 }
 Vector<bool> Vector<bool>::operator|(const Vector<bool>& other) const {
-  if (size() != other.size()) {
+  if(size() != other.size()) {
     throw std::invalid_argument("Vectors must be of same size");
   }
 
   Vector<bool> result(count);
-  for (size_t i = 0; i <= count / (MAX_SUBINDEX + 1); i++)
-  {
+  for(size_t i = 0; i <= count / (MAX_SUBINDEX + 1); i++) {
     result.data[i] = data[i] | other.data[i];
   }
 
   return result;
 }
 Vector<bool> Vector<bool>::operator^(const Vector<bool>& other) const {
-  if (size() != other.size()) {
+  if(size() != other.size()) {
     throw std::invalid_argument("Vectors must be of same size");
   }
 
   Vector<bool> result(count);
-  for (size_t i = 0; i <= count / (MAX_SUBINDEX + 1); i++)
-  {
+  for(size_t i = 0; i <= count / (MAX_SUBINDEX + 1); i++) {
     result.data[i] = data[i] ^ other.data[i];
   }
 
@@ -312,20 +286,19 @@ Vector<bool> Vector<bool>::operator^(const Vector<bool>& other) const {
 }
 
 bool Vector<bool>::operator==(const Vector<bool>& other) const {
-  if (size() != other.size()) {
+  if(size() != other.size()) {
     return false;
   }
 
   //Check all except last element
-  for (size_t i = 0; i < count / (MAX_SUBINDEX + 1); i++)
-  {
-    if (data[i] != other.data[i]) {
+  for(size_t i = 0; i < count / (MAX_SUBINDEX + 1); i++) {
+    if(data[i] != other.data[i]) {
       return false;
     }
   }
 
   //Check last element
-  if (((data[count / (MAX_SUBINDEX + 1)]) & (1 << count % MAX_SUBINDEX)) != 
+  if(((data[count / (MAX_SUBINDEX + 1)]) & (1 << count % MAX_SUBINDEX)) !=
     ((other.data[count / (MAX_SUBINDEX + 1)]) & (1 << count % MAX_SUBINDEX))) {
     return false;
   }
@@ -337,13 +310,11 @@ bool Vector<bool>::operator!=(const Vector<bool>& other) const {
   return !(*this == other);
 }
 
-Vector<bool>& Vector<bool>::push_back(const bool& element)
-{
+Vector<bool>& Vector<bool>::push_back(const bool& element) {
   return *this;
 }
 
-Vector<bool>& Vector<bool>::insert(size_t index, const bool& element)
-{
+Vector<bool>& Vector<bool>::insert(size_t index, const bool& element) {
   return *this;
 }
 
@@ -363,21 +334,18 @@ Vector<bool>& Vector<bool>::unique_sort(bool ascending) {
   return *this;
 }
 
-bool Vector<bool>::exists(const bool& element) const
-{
+bool Vector<bool>::exists(const bool& element) const {
   return false;
 }
 
-size_t Vector<bool>::size() const
-{
+size_t Vector<bool>::size() const {
   return 0;
 }
 
 size_t Vector<bool>::weight1() const {
   size_t result = 0;
 
-  for (size_t i = 0; i <= size() / (MAX_SUBINDEX + 1); i++)
-  {
+  for(size_t i = 0; i <= size() / (MAX_SUBINDEX + 1); i++) {
     size_t count = data[i] - ((data[i] >> 1) & 033333333333) - ((data[i] >> 2) & 011111111111);
     result += ((count + (count >> 3)) & 030707070707) % 63;
   }
@@ -388,10 +356,9 @@ size_t Vector<bool>::weight1() const {
 size_t Vector<bool>::weight2() const {
   size_t result = 0;
 
-  for (size_t i = 0; i <= size() / (MAX_SUBINDEX + 1); i++)
-  {
-    while (data[i] > 0) {         // until all bits are zero
-      if ((data[i] & 1) == 1)     // check lower bit
+  for(size_t i = 0; i <= size() / (MAX_SUBINDEX + 1); i++) {
+    while(data[i] > 0) {         // until all bits are zero
+      if((data[i] & 1) == 1)     // check lower bit
         result++;
       data[i] >>= 1;              // shift bits, removing lower bit
     }
@@ -403,10 +370,9 @@ size_t Vector<bool>::weight2() const {
 size_t Vector<bool>::weight3() const {
   size_t result = 0;
 
-  for (size_t i = 0; i <= size() / (MAX_SUBINDEX + 1); i++)
-  {
-    while (data[i] > 0) {         // until all bits are zero
-      if ((data[i] & (1 << (sizeof(storage_type)-1))) == (1 << (sizeof(storage_type)-1)))     // check upper bit
+  for(size_t i = 0; i <= size() / (MAX_SUBINDEX + 1); i++) {
+    while(data[i] > 0) {         // until all bits are zero
+      if((data[i] & (1 << (sizeof(storage_type)-1))) == (1 << (sizeof(storage_type)-1)))     // check upper bit
         result++;
       data[i] <<= 1;              // shift bits, removing upper bit
     }
