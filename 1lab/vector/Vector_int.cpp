@@ -115,8 +115,8 @@ Vector& Vector::erase(size_t index) {
     msg << "Attempted to insert at index " << index << ", expected < " << count;
     throw std::out_of_range(msg.str());
   }
-  for(size_t i = index; i < count; ) {
-    data[i] = data[++i];
+  for(size_t i = index; i < count; ++i) {
+    data[i] = data[i+1];
   }
   --count;
   return *this;
