@@ -198,7 +198,7 @@ public:
 };
 
 //Member implementations
-Vector<bool>::Vector() {
+Vector<bool>::Vector() : count(0), max_size(DEFAULT_SIZE), data(new uint32_t[1]) {
 }
 
 Vector<bool>::Vector(const Vector<bool>& other) {
