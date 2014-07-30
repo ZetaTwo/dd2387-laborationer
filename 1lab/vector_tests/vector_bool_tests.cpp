@@ -208,7 +208,8 @@ TEST(VectorBool, InsertALotOfItems) {
   const size_t final_size = 1024;
   Vec vector(size);
 
-  while (vector.size() < final_size) {
+  for (size_t i = 0; i < final_size; i++)
+  {
     vector.insert(vector.size(), true);
   }
 
