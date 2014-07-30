@@ -358,8 +358,9 @@ size_t Vector<bool>::weight2() const {
 
   for(size_t i = 0; i <= size() / (MAX_SUBINDEX + 1); i++) {
     while(data[i] > 0) {         // until all bits are zero
-      if((data[i] & 1) == 1)     // check lower bit
+      if((data[i] & 1) == 1) {   // check lower bit
         result++;
+      }
       data[i] >>= 1;              // shift bits, removing lower bit
     }
   }
@@ -372,8 +373,9 @@ size_t Vector<bool>::weight3() const {
 
   for(size_t i = 0; i <= size() / (MAX_SUBINDEX + 1); i++) {
     while(data[i] > 0) {         // until all bits are zero
-      if((data[i] & (1 << (sizeof(storage_type)-1))) == (1 << (sizeof(storage_type)-1)))     // check upper bit
+      if((data[i] & (1 << (sizeof(storage_type)-1))) == (1 << (sizeof(storage_type)-1))) {   // check upper bit
         result++;
+      }
       data[i] <<= 1;              // shift bits, removing upper bit
     }
   }
