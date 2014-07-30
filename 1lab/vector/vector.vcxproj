@@ -80,6 +80,9 @@
   <ItemGroup>
     <ClInclude Include="kth_cprog_vektor.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="kth_cprog_vektor_bool.cpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
