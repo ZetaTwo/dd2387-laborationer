@@ -10,8 +10,11 @@ test_hypercube: run_test_hypercube
 vector_tests.o: vector_tests.cpp ../vector/kth_cprog_vektor.cpp
 	${CXX} ${CPPFLAGS} ${CXXFLAGS} -c -o $@ $<
 
-run_test: test_runner.cpp vector_tests.o
+run_test: test_runner.cpp vector_tests.o vector_bool_tests.o
 	${CXX} ${CPPFLAGS} ${CXXFLAGS} -o $@ $^
+
+vector_bool_tests.o: vector_bool_tests.cpp ../vector/kth_cprog_vektor_bool.cpp
+	${CXX} ${CPPFLAGS} ${CXXFLAGS} -c -o $@ $<
 
 valgrind: run_test
 	valgrind --tool=memcheck --leak-check=yes --track-origins=yes ./$<
