@@ -2,6 +2,10 @@
 
 template <>
 class Vector<bool> {
+  typedef unsigned int storage_type;
+  typedef unsigned char subindex_type;
+  static const subindex_type MAX_SUBINDEX = 8 * sizeof(storage_type)-1;
+
 public:
   //Constructors & destructors
   Vector();
@@ -32,45 +36,11 @@ public:
   size_t size() const;
 
   //Iterators
-  class iterator : public std::iterator<std::random_access_iterator_tag, bool>
-  {
-    bool* p;
-  public:
-    iterator() {}
-    iterator(bool* x) :p(x) {}
-    iterator(const iterator& mit) : p(mit.p) {}
-    iterator& operator++() { ++p; return *this; }
-    iterator operator++(int) { iterator tmp(*this); operator++(); return tmp; }
-    iterator& operator--() { --p; return *this; }
-    iterator operator--(int) { iterator tmp(*this); operator--(); return tmp; }
-    iterator operator-(size_t index) const { iterator tmp(*this); tmp.p -= index; return tmp; }
-    size_t operator-(const iterator &other) const { return p - other.p; }
-    bool operator==(const iterator& rhs) const { return p == rhs.p; }
-    bool operator!=(const iterator& rhs) const { return p != rhs.p; }
-    bool& operator[](size_t index) { return *(p + index); }
-    bool& operator*() { return *p; }
-    bool* operator->() const { return p; }
-  };
-
-  class const_iterator : public std::iterator<std::random_access_iterator_tag, const bool>
-  {
-    bool* p;
-  public:
-    const_iterator() {}
-    const_iterator(bool* x) : p(x) {}
-    const_iterator(const const_iterator& mit) : p(mit.p) {}
-    const_iterator& operator++() { ++p; return *this; }
-    const_iterator operator++(int) { const_iterator tmp(*this); operator++(); return tmp; }
-    const_iterator& operator--() { --p; return *this; }
-    const_iterator operator--(int) { const_iterator tmp(*this); operator--(); return tmp; }
-    const_iterator operator-(size_t index) const { const_iterator tmp(*this); tmp.p -= index; return tmp; }
-    size_t operator-(const const_iterator& other) const { return p - other.p; }
-    bool operator==(const const_iterator& rhs) const { return p == rhs.p; }
-    bool operator!=(const const_iterator& rhs) const { return p != rhs.p; }
-    bool& operator[](size_t index) { return *(p + index); }
-    bool& operator*() { return *p; }
-    bool const * operator->() const { return p; }
-  };
+private:
+  class bool_proxy;
+public:
+  class const_iterator;
+  class iterator;
 
   typedef std::reverse_iterator<iterator> reverse_iterator;
   typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
@@ -91,9 +61,134 @@ private:
 
   size_t count; //Actual number of elements in the vector
   size_t max_size; //Allocated memory for elements. Will be 2^n for some n
-  std::unique_ptr<unsigned int[]> data; //A pointer to the vector data (Note: 8*sizeof(unsigned int) elements per index)
+  std::unique_ptr<storage_type[]> data; //A pointer to the vector data (Note: 8*sizeof(unsigned int) elements per index)
 
   void increase_memory(int num_elements, bool copy = true); //Increases memory to fit at least num_elements number of elements
+};
+
+//Iterator classes
+class Vector<bool>::bool_proxy {
+private:
+  storage_type* element;
+  subindex_type index;
+public:
+  bool_proxy(storage_type* element, subindex_type index) : element(element), index(index) {}
+  bool_proxy& operator=(const bool& value) {
+    if (value) {
+      *element |= 1 << index;
+    }
+    else {
+      *element &= ~(1 << index);
+    }
+  }
+  operator const bool & () const {
+    return ((*element) & (1 << index)) != 0;
+  }
+};
+
+class Vector<bool>::const_iterator : public std::iterator<std::random_access_iterator_tag, const bool>
+{
+private:
+  storage_type* element;
+  subindex_type index;
+  
+public:
+  const_iterator() {}
+  const_iterator(storage_type* element, subindex_type index) : element(element), index(index) {}
+  const_iterator(const const_iterator& mit) : element(mit.element), index(mit.index) {}
+  const_iterator& operator++() {
+    if (++index > MAX_SUBINDEX) {
+      ++element;
+      index = 0;
+    }
+    return *this;
+  }
+  const_iterator operator++(int) { const_iterator tmp(*this); operator++(); return tmp; }
+  const_iterator& operator--() {
+    if (index == 0) {
+      --element;
+      index = MAX_SUBINDEX;
+    }
+    else {
+      --index;
+    }
+    return *this;
+  }
+  const_iterator operator--(int) { const_iterator tmp(*this); operator--(); return tmp; }
+  const_iterator operator-(size_t offset) const {
+    const_iterator tmp(*this);
+    tmp.index -= (offset % MAX_SUBINDEX);
+    tmp.element -= (offset / MAX_SUBINDEX);
+    return tmp;
+  }
+  size_t operator-(const const_iterator& other) const {
+
+    return (MAX_SUBINDEX + 1)*(element - other.element) + (index - other.index);
+  }
+  bool operator==(const const_iterator& rhs) const { 
+    return element == rhs.element && index == rhs.index;
+  }
+  bool operator!=(const const_iterator& rhs) const { 
+    return !(*this == rhs);
+  }
+  bool_proxy& operator[](size_t index) {
+    return bool_proxy(element, index);
+  }
+  bool operator*() {
+    return bool_proxy(element, index);
+  }
+};
+
+class Vector<bool>::iterator : public Vector<bool>::const_iterator
+{
+  storage_type const* element;
+  subindex_type index;
+
+public:
+  iterator() {}
+  iterator(storage_type* element, subindex_type index) : element(element), index(index) {}
+  iterator(const iterator& mit) : element(mit.element), index(mit.index) {}
+  iterator& operator++() {
+    if (++index > MAX_SUBINDEX) {
+      ++element;
+      index = 0;
+    }
+    return *this;
+  }
+  iterator operator++(int) { iterator tmp(*this); operator++(); return tmp; }
+  iterator& operator--() {
+    if (index == 0) {
+      --element;
+      index = MAX_SUBINDEX;
+    }
+    else {
+      --index;
+    }
+    return *this;
+  }
+  iterator operator--(int) { iterator tmp(*this); operator--(); return tmp; }
+  iterator operator-(size_t offset) const {
+    iterator tmp(*this);
+    tmp.index -= (offset % MAX_SUBINDEX);
+    tmp.element -= (offset / MAX_SUBINDEX);
+    return tmp;
+  }
+  size_t operator-(const iterator& other) const {
+
+    return (MAX_SUBINDEX + 1)*(element - other.element) + (index - other.index);
+  }
+  bool operator==(const iterator& rhs) const {
+    return element == rhs.element && index == rhs.index;
+  }
+  bool operator!=(const iterator& rhs) const {
+    return !(*this == rhs);
+  }
+  bool operator[](size_t index) {
+    return ((*element) & (1 << index)) != 0;
+  }
+  bool operator*() {
+    return ((*element) & (1 << index)) != 0;
+  }
 };
 
 //Member implementations
@@ -193,43 +288,35 @@ size_t Vector<bool>::size() const
 }
 
 Vector<bool>::iterator Vector<bool>::begin() {
-  bool a;
-  return iterator(&a);
+  return iterator(&data[0], 0);
 }
 
 Vector<bool>::iterator Vector<bool>::end() {
-  bool a;
-  return iterator(&a);
+  return iterator(&data[count / (MAX_SUBINDEX + 1)], count % MAX_SUBINDEX);
 }
 
 Vector<bool>::const_iterator Vector<bool>::begin() const {
-  bool a;
-  return const_iterator(&a);
+  return const_iterator(&data[0], 0);
 }
 
 Vector<bool>::const_iterator Vector<bool>::end() const {
-  bool a;
-  return const_iterator(&a);
+  return const_iterator(&data[count / (MAX_SUBINDEX + 1)], count % MAX_SUBINDEX);
 }
 
 Vector<bool>::reverse_iterator Vector<bool>::rbegin() {
-  bool a;
-  return reverse_iterator(&a);
+  return reverse_iterator(iterator(&data[count / (MAX_SUBINDEX + 1)], count % MAX_SUBINDEX));
 }
 
 Vector<bool>::reverse_iterator Vector<bool>::rend() {
-  bool a;
-  return reverse_iterator(&a);
+  return reverse_iterator(iterator(&data[0], 0));
 }
 
 Vector<bool>::const_reverse_iterator Vector<bool>::rbegin() const {
-  bool a;
-  return const_reverse_iterator(&a);
+  return const_reverse_iterator(const_iterator(&data[count / (MAX_SUBINDEX + 1)], count % MAX_SUBINDEX));
 }
 
 Vector<bool>::const_reverse_iterator Vector<bool>::rend() const {
-  bool a;
-  return const_reverse_iterator(&a);
+  return const_reverse_iterator(const_iterator(&data[0], 0));
 }
 
 //Iterator implementations
