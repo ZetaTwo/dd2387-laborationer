@@ -135,6 +135,15 @@
 // tar ett argument deklareras som explicit. Varför? Ange ett
 // exempel där det annars kan bli dumt.
 
+Annars kan buggar orsakar av att parametrar implicit castas till andra typer.
+Om vi har en klass A med en konstruktor A(int b) och en funktion C med två signaturer, C(int d) och C(const A& e)
+och vi anropar C(3) så kan det bli att vi anropar C(A(3)), dvs den andra varianten istället för den första.
+Med explicit kan inte detta hända
 
 // operatorn[] måste vara en konstant medlemsfunktion i vissa
 // fall. När och varför? Hur kopierar man vektorn?
+
+Operatorn[] måste returnera olika typer när man arbetar med en const resp icke-const Vector.
+När Vectorn inte är const ska en referens lämnas så att man kan göra tilldelningar till element, t.ex.: a[1] = 2;
+Nät Vectorn är const så ska det förgående exemplet inte fungera men man måste fortfarande kunna läsa elementen, t.ex.: int a = b[1];
+Därför måste detta inte returnera en referens och vi behöver två olika versioner av operatorn.
