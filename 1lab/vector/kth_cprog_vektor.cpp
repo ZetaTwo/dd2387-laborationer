@@ -51,7 +51,7 @@ public:
     iterator& operator--() { --p; return *this; }
     iterator operator--(int) { iterator tmp(*this); operator--(); return tmp; }
     iterator operator-(size_t index) const { iterator tmp(*this); tmp.p -= index; return tmp; }
-    iterator operator-(const iterator &other) const { iterator tmp(*this); tmp.p -= other.p; return tmp; }
+    size_t operator-(const iterator &other) const { return p - other.p; }
     bool operator==(const iterator& rhs) const { return p == rhs.p; }
     bool operator!=(const iterator& rhs) const { return p != rhs.p; }
     T& operator[](size_t index) { return *(p+index); }
@@ -71,7 +71,7 @@ public:
     const_iterator& operator--() { --p; return *this; }
     const_iterator operator--(int) { const_iterator tmp(*this); operator--(); return tmp; }
     const_iterator operator-(size_t index) const { const_iterator tmp(*this); tmp.p -= index; return tmp; }
-    const_iterator operator-(const const_iterator& other) const { const_iterator tmp(*this); tmp.p -= other.p; return tmp; }
+    size_t operator-(const const_iterator& other) const { return p - other.p; }
     bool operator==(const const_iterator& rhs) const { return p == rhs.p; }
     bool operator!=(const const_iterator& rhs) const { return p != rhs.p; }
     T& operator[](size_t index) { return *(p + index); }
