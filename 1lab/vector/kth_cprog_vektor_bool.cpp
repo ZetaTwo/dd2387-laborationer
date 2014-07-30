@@ -1,10 +1,12 @@
 #include "kth_cprog_vektor.cpp"
+#include <climits> // CHAR_BIT
 
 template <>
 class Vector<bool> {
   typedef unsigned int storage_type;
   typedef unsigned char subindex_type;
-  static const subindex_type MAX_SUBINDEX = 8 * sizeof(storage_type)-1;
+  static const size_t STORAGE_CELL_SIZE = sizeof(storage_type) * CHAR_BIT;
+  static const subindex_type MAX_SUBINDEX = STORAGE_CELL_SIZE - 1;
 
 public:
   //Constructors & destructors
@@ -198,7 +200,7 @@ public:
 };
 
 //Member implementations
-Vector<bool>::Vector() : count(0), max_size(DEFAULT_SIZE), data(new uint32_t[1]) {
+Vector<bool>::Vector() : count(0), max_size(DEFAULT_SIZE), data(new storage_type[logicalToStorageSize(max_size)]) {
 }
 
 Vector<bool>::Vector(const Vector<bool>& other) {
