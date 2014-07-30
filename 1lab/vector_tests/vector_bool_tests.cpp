@@ -435,3 +435,128 @@ TEST(VectorBool, ItrRCBeginEnd) {
   EXPECT_EQ(vector2[2], vector3[2]);
   EXPECT_EQ(vector2[3], vector3[3]);
 }
+
+TEST(VectorBool, OperatorNot) {
+  const Vec vector1({ true, false, true, false });
+  const Vec vector2({ false, true, false, true });
+
+  EXPECT_EQ(vector1, ~vector2);
+}
+
+TEST(VectorBool, OperatorAnd) {
+  const Vec vector1({ true, false, true, true });
+  const Vec vector2({ false, true, false, true });
+  const Vec vector3({ false, false, false, true });
+
+  EXPECT_EQ(vector3, vector1 & vector2);
+}
+
+TEST(VectorBool, OperatorAndSize) {
+  const Vec vector1({ true, false, true, true });
+  const Vec vector2({ false, true, false });
+
+  EXPECT_THROW({
+    Vec vector3 = vector1 & vector2;
+  }, std::invalid_argument);
+}
+
+TEST(VectorBool, OperatorOr) {
+  const Vec vector1({ true, false, true, false });
+  const Vec vector2({ false, true, false, false });
+  const Vec vector3({ true, true, true, false });
+
+  EXPECT_EQ(vector3, vector1 | vector2);
+}
+
+TEST(VectorBool, OperatorOrSize) {
+  const Vec vector1({ true, false, true, true });
+  const Vec vector2({ false, true, false });
+
+  EXPECT_THROW({
+    Vec vector3 = vector1 | vector2;
+  }, std::invalid_argument);
+}
+
+TEST(VectorBool, OperatorXor) {
+  const Vec vector1({ true, false, true, false });
+  const Vec vector2({ false, true, true, false });
+  const Vec vector3({ true, true, false, false });
+
+  EXPECT_EQ(vector3, vector1 ^ vector2);
+}
+
+TEST(VectorBool, OperatorXorSize) {
+  const Vec vector1({ true, false, true, true });
+  const Vec vector2({ false, true, false });
+
+  EXPECT_THROW({
+    Vec vector3 = vector1 ^ vector2;
+  }, std::invalid_argument);
+}
+
+TEST(VectorBool, OperatorEqualFalseSize) {
+  const Vec vector1({ true, false, true, true });
+  const Vec vector2({ false, true, false });
+
+  EXPECT_NE(vector1, vector2);
+}
+
+TEST(VectorBool, OperatorEqualFalseValue) {
+  const Vec vector1({ true, false, true, true });
+  const Vec vector2({ false, true, false, true });
+
+  EXPECT_NE(vector1, vector2);
+}
+
+TEST(VectorBool, OperatorEqualTrue) {
+  const Vec vector1({ true, false, true, true });
+  const Vec vector2({ true, false, true, true });
+
+  EXPECT_EQ(vector1, vector2);
+}
+
+TEST(VectorBool, OperatorEqualEdgeCase) {
+  Vec vector1({ true, false, true, true, false });
+  Vec vector2({ true, false, true, true, true });
+
+  vector1.erase(vector1.size());
+  vector2.erase(vector2.size());
+
+  EXPECT_EQ(vector1, vector2);
+}
+
+TEST(VectorBool, Weight1) {
+  const Vec vector1({
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+  });
+
+  EXPECT_EQ(20, vector1.weight1());
+}
+
+TEST(VectorBool, Weight2) {
+  const Vec vector1({
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+  });
+
+  EXPECT_EQ(20, vector1.weight2());
+}
+
+TEST(VectorBool, Weight3) {
+  const Vec vector1({
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+  });
+
+  EXPECT_EQ(20, vector1.weight3());
+}
