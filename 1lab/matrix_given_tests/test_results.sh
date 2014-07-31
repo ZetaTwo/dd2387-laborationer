@@ -1,0 +1,9 @@
+make runtest01 >/dev/null && ./runtest01 > result; echo $?
+make runtest02 >/dev/null && ./runtest02 >> result; echo $?
+make runtest03 >/dev/null && ./runtest03 >> result; echo $?
+make runtest04 >/dev/null && ./runtest04 >> result; echo $?
+make runtest05 >/dev/null && ./runtest05 >> result; echo $?
+make runtest06 >/dev/null && ./runtest06 >> result; echo $?
+make runtest07 >/dev/null && ./runtest07 >> result; echo $?
+make runtest08 >/dev/null && ./runtest08 >> result; echo $?
+make runtest09 >/dev/null && ./runtest09 >> result; echo $?

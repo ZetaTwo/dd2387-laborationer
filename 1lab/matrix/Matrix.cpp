@@ -177,11 +177,19 @@ Matrix Matrix::transpose() const
 
 Matrix::matrix_row& Matrix::operator[](index i)
 {
+  if (i >= rows()) {
+    throw std::out_of_range("Index must be less than number of rows");
+  }
+
   return m_vectors[i];
 }
 
 const Matrix::matrix_row& Matrix::operator[](index i) const
 {
+  if (i >= rows()) {
+    throw std::out_of_range("Index must be less than number of rows");
+  }
+
   return m_vectors[i];
 }
 
@@ -256,7 +264,7 @@ std::ostream& operator<<(std::ostream& stream, const Matrix& matrix)
       first = false;
     }
     else {
-      stream << "; ";
+      stream << "\n; ";
     }
     for (col_iter col = row->begin(); col != row->end(); col++) {
       stream << *col << " ";
