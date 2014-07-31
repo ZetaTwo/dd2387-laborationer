@@ -325,8 +325,8 @@ bool Vector<bool>::operator==(const Vector<bool>& other) const {
   }
 
   //Check last element
-  if (data[count / (MAX_SUBINDEX + 1)] & (1 << count % MAX_SUBINDEX) != 
-    other.data[count / (MAX_SUBINDEX + 1)] & (1 << count % MAX_SUBINDEX)) {
+  if (((data[count / (MAX_SUBINDEX + 1)]) & (1 << count % MAX_SUBINDEX)) != 
+    ((other.data[count / (MAX_SUBINDEX + 1)]) & (1 << count % MAX_SUBINDEX))) {
     return false;
   }
 
