@@ -3,6 +3,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <sstream>
+#include <vector>
 #include "../vector/kth_cprog_vektor.cpp"
 
 class Matrix
@@ -10,15 +11,17 @@ class Matrix
  public:
     typedef size_t index;
 
-    class matrix_row : private Vector<int>
+    //typedef std::vector<int> vector_base;
+    typedef Vector<int> vector_base;
+    class matrix_row : private vector_base
     {
     public:
-      matrix_row(std::size_t size = 0) : Vector<int>(size) {}
-      using Vector<int>::operator [];
-      using Vector<int>::iterator;
-      using Vector<int>::const_iterator;
-      using Vector<int>::begin;
-      using Vector<int>::end;
+      matrix_row(std::size_t size = 0) : vector_base(size) {}
+      using vector_base::operator [];
+      using vector_base::iterator;
+      using vector_base::const_iterator;
+      using vector_base::begin;
+      using vector_base::end;
     private:
       friend std::istream& operator>>(std::istream& stream, Matrix& matrix);
       friend std::ostream& operator<< (std::ostream& stream, const Matrix& matrix);

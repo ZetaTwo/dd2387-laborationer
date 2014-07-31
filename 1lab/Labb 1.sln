@@ -20,6 +20,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "matrix_tests", "matrix_test
 		{EE15344B-7A90-4B7E-B8C2-49BE9B1E5373} = {EE15344B-7A90-4B7E-B8C2-49BE9B1E5373}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "matrix_given_tests", "matrix_given_tests\matrix_given_tests.vcxproj", "{73CE88A6-A3FC-40A6-9AB0-87A46D37D8AF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -42,6 +44,8 @@ Global
 		{C6CF0A12-B3A2-488D-9844-D4D99E09F848}.Debug|Win32.Build.0 = Debug|Win32
 		{C6CF0A12-B3A2-488D-9844-D4D99E09F848}.Release|Win32.ActiveCfg = Release|Win32
 		{C6CF0A12-B3A2-488D-9844-D4D99E09F848}.Release|Win32.Build.0 = Release|Win32
+		{73CE88A6-A3FC-40A6-9AB0-87A46D37D8AF}.Debug|Win32.ActiveCfg = Debug|Win32
+		{73CE88A6-A3FC-40A6-9AB0-87A46D37D8AF}.Release|Win32.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

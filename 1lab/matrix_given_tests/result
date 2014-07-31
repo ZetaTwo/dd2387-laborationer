@@ -1,0 +1,441 @@
+[==========] Running 9 tests from 1 test case.
+[----------] Global test environment set-up.
+[----------] 9 tests from Matrix
+[ RUN      ] Matrix.Case1
+matrix_tests.cpp:44: Failure
+Value of: MatrixToString(matrix4)
+  Actual: "[ 25 28 \n; 73 82 ]"
+Expected: "[ 58 64 \n; 139 154 ]"
+Which is: "[ 58 64 
+; 139 154 ]"
+matrix_tests.cpp:45: Failure
+Value of: MatrixCompare(matrix3, matrix4)
+  Actual: false
+Expected: true
+[  FAILED  ] Matrix.Case1 (1 ms)
+[ RUN      ] Matrix.Case2
+[       OK ] Matrix.Case2 (0 ms)
+[ RUN      ] Matrix.Case3
+[       OK ] Matrix.Case3 (0 ms)
+[ RUN      ] Matrix.Case4
+[       OK ] Matrix.Case4 (0 ms)
+[ RUN      ] Matrix.Case5
+[       OK ] Matrix.Case5 (0 ms)
+[ RUN      ] Matrix.Case6
+[       OK ] Matrix.Case6 (0 ms)
+[ RUN      ] Matrix.Case7
+[       OK ] Matrix.Case7 (0 ms)
+[ RUN      ] Matrix.Case8
+[       OK ] Matrix.Case8 (0 ms)
+[ RUN      ] Matrix.Case9
+[       OK ] Matrix.Case9 (0 ms)
+[----------] 9 tests from Matrix (2 ms total)
+
+[----------] Global test environment tear-down
+[==========] 9 tests from 1 test case ran. (4 ms total)
+[  PASSED  ] 8 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] Matrix.Case1
+
+ 1 FAILED TEST
+[==========] Running 9 tests from 1 test case.
+[----------] Global test environment set-up.
+[----------] 9 tests from Matrix
+[ RUN      ] Matrix.Case1
+[       OK ] Matrix.Case1 (0 ms)
+[ RUN      ] Matrix.Case2
+matrix_tests.cpp:51: Failure
+Value of: MatrixToString(matrix1)
+  Actual: "[ 1 2 \n; 5 6 ]"
+Expected: "[ 1 2 -3 \n; 5 6 7 ]"
+Which is: "[ 1 2 -3 
+; 5 6 7 ]"
+[  FAILED  ] Matrix.Case2 (1 ms)
+[ RUN      ] Matrix.Case3
+[       OK ] Matrix.Case3 (0 ms)
+[ RUN      ] Matrix.Case4
+[       OK ] Matrix.Case4 (0 ms)
+[ RUN      ] Matrix.Case5
+[       OK ] Matrix.Case5 (0 ms)
+[ RUN      ] Matrix.Case6
+matrix_tests.cpp:82: Failure
+Value of: MatrixToString(matrix2)
+  Actual: "[ 1 2 \n; 5 6 ]"
+Expected: "[ 1 2 -3 \n; 5 6 7 ]"
+Which is: "[ 1 2 -3 
+; 5 6 7 ]"
+matrix_tests.cpp:83: Failure
+Value of: MatrixCompare(matrix1, matrix2)
+  Actual: false
+Expected: true
+[  FAILED  ] Matrix.Case6 (0 ms)
+[ RUN      ] Matrix.Case7
+[       OK ] Matrix.Case7 (0 ms)
+[ RUN      ] Matrix.Case8
+[       OK ] Matrix.Case8 (0 ms)
+[ RUN      ] Matrix.Case9
+[       OK ] Matrix.Case9 (1 ms)
+[----------] 9 tests from Matrix (3 ms total)
+
+[----------] Global test environment tear-down
+[==========] 9 tests from 1 test case ran. (4 ms total)
+[  PASSED  ] 7 tests.
+[  FAILED  ] 2 tests, listed below:
+[  FAILED  ] Matrix.Case2
+[  FAILED  ] Matrix.Case6
+
+ 2 FAILED TESTS
+[==========] Running 9 tests from 1 test case.
+[----------] Global test environment set-up.
+[----------] 9 tests from Matrix
+[ RUN      ] Matrix.Case1
+matrix_tests.cpp:45: Failure
+Value of: MatrixCompare(matrix3, matrix4)
+  Actual: false
+Expected: true
+[  FAILED  ] Matrix.Case1 (0 ms)
+[ RUN      ] Matrix.Case2
+[       OK ] Matrix.Case2 (0 ms)
+[ RUN      ] Matrix.Case3
+matrix_tests.cpp:58: Failure
+Value of: MatrixToString(matrix1)
+  Actual: "[ 0 0 0 \n; 0 0 0 ]"
+Expected: "[ 1 2 3 \n; 4 5 6 ]"
+Which is: "[ 1 2 3 
+; 4 5 6 ]"
+[  FAILED  ] Matrix.Case3 (1 ms)
+[ RUN      ] Matrix.Case4
+[       OK ] Matrix.Case4 (0 ms)
+[ RUN      ] Matrix.Case5
+matrix_tests.cpp:74: Failure
+Value of: MatrixCompare(matrix3, matrix4)
+  Actual: false
+Expected: true
+[  FAILED  ] Matrix.Case5 (0 ms)
+[ RUN      ] Matrix.Case6
+matrix_tests.cpp:83: Failure
+Value of: MatrixCompare(matrix1, matrix2)
+  Actual: false
+Expected: true
+[  FAILED  ] Matrix.Case6 (0 ms)
+[ RUN      ] Matrix.Case7
+matrix_tests.cpp:92: Failure
+Value of: MatrixCompare(matrix2, matrix3)
+  Actual: false
+Expected: true
+[  FAILED  ] Matrix.Case7 (1 ms)
+[ RUN      ] Matrix.Case8
+[       OK ] Matrix.Case8 (0 ms)
+[ RUN      ] Matrix.Case9
+[       OK ] Matrix.Case9 (0 ms)
+[----------] 9 tests from Matrix (3 ms total)
+
+[----------] Global test environment tear-down
+[==========] 9 tests from 1 test case ran. (4 ms total)
+[  PASSED  ] 4 tests.
+[  FAILED  ] 5 tests, listed below:
+[  FAILED  ] Matrix.Case1
+[  FAILED  ] Matrix.Case3
+[  FAILED  ] Matrix.Case5
+[  FAILED  ] Matrix.Case6
+[  FAILED  ] Matrix.Case7
+
+ 5 FAILED TESTS
+[==========] Running 9 tests from 1 test case.
+[----------] Global test environment set-up.
+[----------] 9 tests from Matrix
+[ RUN      ] Matrix.Case1
+matrix_tests.cpp:44: Failure
+Value of: MatrixToString(matrix4)
+  Actual: "[ 58 64 3 \n; 139 154 6 \n; 11 12 1 ]"
+Expected: "[ 58 64 \n; 139 154 ]"
+Which is: "[ 58 64 
+; 139 154 ]"
+matrix_tests.cpp:45: Failure
+Value of: MatrixCompare(matrix3, matrix4)
+  Actual: false
+Expected: true
+[  FAILED  ] Matrix.Case1 (1 ms)
+[ RUN      ] Matrix.Case2
+matrix_tests.cpp:51: Failure
+Value of: MatrixToString(matrix1)
+  Actual: "[ 1 2 -3 \n; 5 6 7 \n; 0 0 1 ]"
+Expected: "[ 1 2 -3 \n; 5 6 7 ]"
+Which is: "[ 1 2 -3 
+; 5 6 7 ]"
+[  FAILED  ] Matrix.Case2 (0 ms)
+[ RUN      ] Matrix.Case3
+matrix_tests.cpp:57: Failure
+Value of: MatrixToString(matrix1)
+  Actual: "[ 1 2 3 \n; 4 5 6 \n; 0 0 1 ]"
+Expected: "[ 1 2 3 \n; 4 5 6 ]"
+Which is: "[ 1 2 3 
+; 4 5 6 ]"
+matrix_tests.cpp:58: Failure
+Value of: MatrixToString(matrix1)
+  Actual: "[ 1 2 3 \n; 4 5 6 \n; 0 0 1 ]"
+Expected: "[ 1 2 3 \n; 4 5 6 ]"
+Which is: "[ 1 2 3 
+; 4 5 6 ]"
+[  FAILED  ] Matrix.Case3 (0 ms)
+[ RUN      ] Matrix.Case4
+matrix_tests.cpp:64: Failure
+Value of: MatrixToString(matrix1)
+  Actual: "[ 1 2 3 \n; 4 5 6 \n; 0 0 1 ]"
+Expected: "[ 1 2 3 \n; 4 5 6 ]"
+Which is: "[ 1 2 3 
+; 4 5 6 ]"
+[  FAILED  ] Matrix.Case4 (0 ms)
+[ RUN      ] Matrix.Case5
+matrix_tests.cpp:73: Failure
+Value of: MatrixToString(matrix4)
+  Actual: "[ 3 -1 -2 \n; -1 11 14 \n; 0 0 2 ]"
+Expected: "[ 3 -1 -2 \n; -1 11 14 ]"
+Which is: "[ 3 -1 -2 
+; -1 11 14 ]"
+matrix_tests.cpp:74: Failure
+Value of: MatrixCompare(matrix3, matrix4)
+  Actual: false
+Expected: true
+[  FAILED  ] Matrix.Case5 (1 ms)
+[ RUN      ] Matrix.Case6
+matrix_tests.cpp:82: Failure
+Value of: MatrixToString(matrix2)
+  Actual: "[ 1 2 -3 \n; 5 6 7 \n; 0 0 1 ]"
+Expected: "[ 1 2 -3 \n; 5 6 7 ]"
+Which is: "[ 1 2 -3 
+; 5 6 7 ]"
+[  FAILED  ] Matrix.Case6 (0 ms)
+[ RUN      ] Matrix.Case7
+matrix_tests.cpp:91: Failure
+Value of: MatrixToString(matrix3)
+  Actual: "[ -1 -2 3 \n; -5 -6 -7 \n; 0 0 -1 ]"
+Expected: "[ -1 -2 3 \n; -5 -6 -7 ]"
+Which is: "[ -1 -2 3 
+; -5 -6 -7 ]"
+matrix_tests.cpp:92: Failure
+Value of: MatrixCompare(matrix2, matrix3)
+  Actual: false
+Expected: true
+[  FAILED  ] Matrix.Case7 (1 ms)
+[ RUN      ] Matrix.Case8
+matrix_tests.cpp:100: Failure
+Value of: MatrixCompare(matrix2, matrix3)
+  Actual: false
+Expected: true
+[  FAILED  ] Matrix.Case8 (0 ms)
+[ RUN      ] Matrix.Case9
+matrix_tests.cpp:115: Failure
+Value of: m_o2.rows()
+  Actual: 3
+Expected: 2
+matrix_tests.cpp:116: Failure
+Value of: m_o2.cols()
+  Actual: 3
+Expected: 2
+matrix_tests.cpp:117: Failure
+Value of: MatrixCompare(m_o2, m_result)
+  Actual: false
+Expected: true
+[  FAILED  ] Matrix.Case9 (0 ms)
+[----------] 9 tests from Matrix (5 ms total)
+
+[----------] Global test environment tear-down
+[==========] 9 tests from 1 test case ran. (6 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 9 tests, listed below:
+[  FAILED  ] Matrix.Case1
+[  FAILED  ] Matrix.Case2
+[  FAILED  ] Matrix.Case3
+[  FAILED  ] Matrix.Case4
+[  FAILED  ] Matrix.Case5
+[  FAILED  ] Matrix.Case6
+[  FAILED  ] Matrix.Case7
+[  FAILED  ] Matrix.Case8
+[  FAILED  ] Matrix.Case9
+
+ 9 FAILED TESTS
+[==========] Running 9 tests from 1 test case.
+[----------] Global test environment set-up.
+[----------] 9 tests from Matrix
+[ RUN      ] Matrix.Case1
+[       OK ] Matrix.Case1 (0 ms)
+[ RUN      ] Matrix.Case2
+[       OK ] Matrix.Case2 (0 ms)
+[ RUN      ] Matrix.Case3
+[       OK ] Matrix.Case3 (0 ms)
+[ RUN      ] Matrix.Case4
+[       OK ] Matrix.Case4 (0 ms)
+[ RUN      ] Matrix.Case5
+matrix_tests.cpp:73: Failure
+Value of: MatrixToString(matrix4)
+  Actual: "[ 3 -1 0 \n; -1 11 0 ]"
+Expected: "[ 3 -1 -2 \n; -1 11 14 ]"
+Which is: "[ 3 -1 -2 
+; -1 11 14 ]"
+matrix_tests.cpp:74: Failure
+Value of: MatrixCompare(matrix3, matrix4)
+  Actual: false
+Expected: true
+[  FAILED  ] Matrix.Case5 (0 ms)
+[ RUN      ] Matrix.Case6
+[       OK ] Matrix.Case6 (0 ms)
+[ RUN      ] Matrix.Case7
+[       OK ] Matrix.Case7 (0 ms)
+[ RUN      ] Matrix.Case8
+[       OK ] Matrix.Case8 (0 ms)
+[ RUN      ] Matrix.Case9
+[       OK ] Matrix.Case9 (0 ms)
+[----------] 9 tests from Matrix (2 ms total)
+
+[----------] Global test environment tear-down
+[==========] 9 tests from 1 test case ran. (3 ms total)
+[  PASSED  ] 8 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] Matrix.Case5
+
+ 1 FAILED TEST
+[==========] Running 9 tests from 1 test case.
+[----------] Global test environment set-up.
+[----------] 9 tests from Matrix
+[ RUN      ] Matrix.Case1
+[       OK ] Matrix.Case1 (0 ms)
+[ RUN      ] Matrix.Case2
+[       OK ] Matrix.Case2 (0 ms)
+[ RUN      ] Matrix.Case3
+[       OK ] Matrix.Case3 (0 ms)
+[ RUN      ] Matrix.Case4
+[       OK ] Matrix.Case4 (0 ms)
+[ RUN      ] Matrix.Case5
+[       OK ] Matrix.Case5 (0 ms)
+[ RUN      ] Matrix.Case6
+matrix_tests.cpp:82: Failure
+Value of: MatrixToString(matrix2)
+  Actual: "[ 0 0 0 \n; 5 6 7 ]"
+Expected: "[ 1 2 -3 \n; 5 6 7 ]"
+Which is: "[ 1 2 -3 
+; 5 6 7 ]"
+matrix_tests.cpp:83: Failure
+Value of: MatrixCompare(matrix1, matrix2)
+  Actual: false
+Expected: true
+[  FAILED  ] Matrix.Case6 (1 ms)
+[ RUN      ] Matrix.Case7
+[       OK ] Matrix.Case7 (0 ms)
+[ RUN      ] Matrix.Case8
+[       OK ] Matrix.Case8 (0 ms)
+[ RUN      ] Matrix.Case9
+[       OK ] Matrix.Case9 (0 ms)
+[----------] 9 tests from Matrix (3 ms total)
+
+[----------] Global test environment tear-down
+[==========] 9 tests from 1 test case ran. (3 ms total)
+[  PASSED  ] 8 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] Matrix.Case6
+
+ 1 FAILED TEST
+[==========] Running 9 tests from 1 test case.
+[----------] Global test environment set-up.
+[----------] 9 tests from Matrix
+[ RUN      ] Matrix.Case1
+[       OK ] Matrix.Case1 (0 ms)
+[ RUN      ] Matrix.Case2
+[       OK ] Matrix.Case2 (1 ms)
+[ RUN      ] Matrix.Case3
+[       OK ] Matrix.Case3 (0 ms)
+[ RUN      ] Matrix.Case4
+[       OK ] Matrix.Case4 (0 ms)
+[ RUN      ] Matrix.Case5
+[       OK ] Matrix.Case5 (0 ms)
+[ RUN      ] Matrix.Case6
+[       OK ] Matrix.Case6 (0 ms)
+[ RUN      ] Matrix.Case7
+matrix_tests.cpp:91: Failure
+Value of: MatrixToString(matrix3)
+  Actual: "[ 0 -2 3 \n; 0 -6 -7 ]"
+Expected: "[ -1 -2 3 \n; -5 -6 -7 ]"
+Which is: "[ -1 -2 3 
+; -5 -6 -7 ]"
+matrix_tests.cpp:92: Failure
+Value of: MatrixCompare(matrix2, matrix3)
+  Actual: false
+Expected: true
+[  FAILED  ] Matrix.Case7 (1 ms)
+[ RUN      ] Matrix.Case8
+[       OK ] Matrix.Case8 (0 ms)
+[ RUN      ] Matrix.Case9
+[       OK ] Matrix.Case9 (0 ms)
+[----------] 9 tests from Matrix (2 ms total)
+
+[----------] Global test environment tear-down
+[==========] 9 tests from 1 test case ran. (2 ms total)
+[  PASSED  ] 8 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] Matrix.Case7
+
+ 1 FAILED TEST
+[==========] Running 9 tests from 1 test case.
+[----------] Global test environment set-up.
+[----------] 9 tests from Matrix
+[ RUN      ] Matrix.Case1
+[       OK ] Matrix.Case1 (0 ms)
+[ RUN      ] Matrix.Case2
+[       OK ] Matrix.Case2 (0 ms)
+[ RUN      ] Matrix.Case3
+[       OK ] Matrix.Case3 (1 ms)
+[ RUN      ] Matrix.Case4
+[       OK ] Matrix.Case4 (0 ms)
+[ RUN      ] Matrix.Case5
+[       OK ] Matrix.Case5 (0 ms)
+[ RUN      ] Matrix.Case6
+[       OK ] Matrix.Case6 (0 ms)
+[ RUN      ] Matrix.Case7
+[       OK ] Matrix.Case7 (0 ms)
+[ RUN      ] Matrix.Case8
+unknown file: Failure
+C++ exception with description "Matrix dimensions does not match (2, 3) (1, 1)" thrown in the test body.
+[  FAILED  ] Matrix.Case8 (1 ms)
+[ RUN      ] Matrix.Case9
+[       OK ] Matrix.Case9 (0 ms)
+[----------] 9 tests from Matrix (3 ms total)
+
+[----------] Global test environment tear-down
+[==========] 9 tests from 1 test case ran. (4 ms total)
+[  PASSED  ] 8 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] Matrix.Case8
+
+ 1 FAILED TEST
+[==========] Running 9 tests from 1 test case.
+[----------] Global test environment set-up.
+[----------] 9 tests from Matrix
+[ RUN      ] Matrix.Case1
+[       OK ] Matrix.Case1 (0 ms)
+[ RUN      ] Matrix.Case2
+[       OK ] Matrix.Case2 (0 ms)
+[ RUN      ] Matrix.Case3
+[       OK ] Matrix.Case3 (0 ms)
+[ RUN      ] Matrix.Case4
+[       OK ] Matrix.Case4 (0 ms)
+[ RUN      ] Matrix.Case5
+[       OK ] Matrix.Case5 (0 ms)
+[ RUN      ] Matrix.Case6
+[       OK ] Matrix.Case6 (0 ms)
+[ RUN      ] Matrix.Case7
+[       OK ] Matrix.Case7 (0 ms)
+[ RUN      ] Matrix.Case8
+[       OK ] Matrix.Case8 (0 ms)
+[ RUN      ] Matrix.Case9
+unknown file: Failure
+C++ exception with description "vector::_M_range_check" thrown in the test body.
+[  FAILED  ] Matrix.Case9 (1 ms)
+[----------] 9 tests from Matrix (5 ms total)
+
+[----------] Global test environment tear-down
+[==========] 9 tests from 1 test case ran. (6 ms total)
+[  PASSED  ] 8 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] Matrix.Case9
+
+ 1 FAILED TEST
