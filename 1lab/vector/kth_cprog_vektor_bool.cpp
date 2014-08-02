@@ -219,7 +219,10 @@ Vector<bool>::Vector(const std::initializer_list<bool>& list) {
 Vector<bool>::Vector(Vector<bool>&& other) {
 }
 
-Vector<bool>::Vector(size_t size) {
+Vector<bool>::Vector(size_t size) : count(size), max_size(1 << static_cast<int>(ceil(log2(count)))), data(new storage_type[logicalToStorageSize(max_size)]) {
+  for(size_t i = 0; i < max_size / STORAGE_CELL_SIZE; ++i) {
+    data[i] = 0;
+  }
 }
 
 Vector<bool>::Vector(size_t size, bool element) : count(size), max_size(1 << static_cast<int>(ceil(log2(count)))), data(new storage_type[logicalToStorageSize(max_size)]) {
