@@ -86,12 +86,21 @@ TEST(VectorBool, ConstructorZeroSize) {
   EXPECT_EQ(size, vector.size());
 }
 
-TEST(VectorBool, ConstructorRepeat) {
-  const size_t size = 4;
+TEST(VectorBool, ConstructorRepeatFalse) {
+  const size_t size = 130;
+
+  Vec vector(size, false);
+  for (size_t i = 0; i < size; i++) {
+    EXPECT_FALSE(vector[i]);
+  }
+}
+
+TEST(VectorBool, ConstructorRepeatTrue) {
+  const size_t size = 130;
 
   Vec vector(size, true);
   for (size_t i = 0; i < size; i++) {
-    EXPECT_EQ(true, vector[i]);
+    EXPECT_TRUE(vector[i]);
   }
 }
 
