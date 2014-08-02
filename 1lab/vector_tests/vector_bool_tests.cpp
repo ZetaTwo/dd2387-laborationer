@@ -152,6 +152,24 @@ TEST(VectorBool, OperatorBracketConstAllTrue) {
   }
 }
 
+TEST(VectorBool, OperatorBracketConstAlternatingTrueFirst) {
+  std::initializer_list<bool> list = {true, false, true, false, true, false};
+  const Vec vector(list);
+  for(size_t i = 0; i < list.size(); ) {
+    EXPECT_TRUE(vector[i++]);
+    EXPECT_FALSE(vector[i++]);
+  }
+}
+
+TEST(VectorBool, OperatorBracketConstAlternatingFalseFirst) {
+  std::initializer_list<bool> list = {false, true, false, true, false, true};
+  const Vec vector(list);
+  for(size_t i = 0; i < list.size(); ) {
+    EXPECT_FALSE(vector[i++]);
+    EXPECT_TRUE(vector[i++]);
+  }
+}
+
 TEST(VectorBool, OperatorAssignment) {
   const size_t size = 4;
   Vec vector1(size);
