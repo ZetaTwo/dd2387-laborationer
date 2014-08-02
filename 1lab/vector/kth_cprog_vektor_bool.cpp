@@ -133,7 +133,7 @@ public:
   }
   size_t operator-(const const_iterator& other) const {
 
-    return (MAX_SUBINDEX + 1)*(element - other.element) + (index - other.index);
+    return STORAGE_CELL_SIZE * (element - other.element) + (index - other.index);
   }
   bool operator==(const const_iterator& rhs) const { 
     return element == rhs.element && index == rhs.index;
@@ -183,7 +183,7 @@ public:
   }
   size_t operator-(const iterator& other) const {
 
-    return (MAX_SUBINDEX + 1)*(element - other.element) + (index - other.index);
+    return STORAGE_CELL_SIZE * (element - other.element) + (index - other.index);
   }
   bool operator==(const iterator& rhs) const {
     return element == rhs.element && index == rhs.index;
@@ -244,7 +244,7 @@ Vector<bool>& Vector<bool>::operator=(Vector<bool>&& other) {
 
 Vector<bool> Vector<bool>::operator~() const {
   Vector<bool> result(count);
-  for(size_t i = 0; i <= size() / (MAX_SUBINDEX + 1); i++) {
+  for(size_t i = 0; i <= size() / STORAGE_CELL_SIZE; i++) {
     result.data[i] = ~data[i];
   }
 
@@ -256,7 +256,7 @@ Vector<bool> Vector<bool>::operator&(const Vector<bool>& other) const {
   }
 
   Vector<bool> result(count);
-  for(size_t i = 0; i <= count / (MAX_SUBINDEX + 1); i++) {
+  for(size_t i = 0; i <= count / STORAGE_CELL_SIZE; i++) {
     result.data[i] = data[i] & other.data[i];
   }
 
@@ -268,7 +268,7 @@ Vector<bool> Vector<bool>::operator|(const Vector<bool>& other) const {
   }
 
   Vector<bool> result(count);
-  for(size_t i = 0; i <= count / (MAX_SUBINDEX + 1); i++) {
+  for(size_t i = 0; i <= count / STORAGE_CELL_SIZE; i++) {
     result.data[i] = data[i] | other.data[i];
   }
 
@@ -280,7 +280,7 @@ Vector<bool> Vector<bool>::operator^(const Vector<bool>& other) const {
   }
 
   Vector<bool> result(count);
-  for(size_t i = 0; i <= count / (MAX_SUBINDEX + 1); i++) {
+  for(size_t i = 0; i <= count / STORAGE_CELL_SIZE; i++) {
     result.data[i] = data[i] ^ other.data[i];
   }
 
@@ -293,15 +293,15 @@ bool Vector<bool>::operator==(const Vector<bool>& other) const {
   }
 
   //Check all except last element
-  for(size_t i = 0; i < count / (MAX_SUBINDEX + 1); i++) {
+  for(size_t i = 0; i < count / STORAGE_CELL_SIZE; i++) {
     if(data[i] != other.data[i]) {
       return false;
     }
   }
 
   //Check last element
-  if(((data[count / (MAX_SUBINDEX + 1)]) & (1 << count % MAX_SUBINDEX)) !=
-    ((other.data[count / (MAX_SUBINDEX + 1)]) & (1 << count % MAX_SUBINDEX))) {
+  if(((data[count / STORAGE_CELL_SIZE]) & (1 << count % MAX_SUBINDEX)) !=
+    ((other.data[count / STORAGE_CELL_SIZE]) & (1 << count % MAX_SUBINDEX))) {
     return false;
   }
 
@@ -347,7 +347,7 @@ size_t Vector<bool>::size() const {
 size_t Vector<bool>::weight1() const {
   size_t result = 0;
 
-  for(size_t i = 0; i <= size() / (MAX_SUBINDEX + 1); i++) {
+  for(size_t i = 0; i <= size() / STORAGE_CELL_SIZE; i++) {
     size_t count = data[i] - ((data[i] >> 1) & 033333333333) - ((data[i] >> 2) & 011111111111);
     result += ((count + (count >> 3)) & 030707070707) % 63;
   }
@@ -358,7 +358,7 @@ size_t Vector<bool>::weight1() const {
 size_t Vector<bool>::weight2() const {
   size_t result = 0;
 
-  for(size_t i = 0; i <= size() / (MAX_SUBINDEX + 1); i++) {
+  for(size_t i = 0; i <= size() / STORAGE_CELL_SIZE; i++) {
     while(data[i] > 0) {         // until all bits are zero
       if((data[i] & 1) == 1) {   // check lower bit
         result++;
@@ -373,7 +373,7 @@ size_t Vector<bool>::weight2() const {
 size_t Vector<bool>::weight3() const {
   size_t result = 0;
 
-  for(size_t i = 0; i <= size() / (MAX_SUBINDEX + 1); i++) {
+  for(size_t i = 0; i <= size() / STORAGE_CELL_SIZE; i++) {
     while(data[i] > 0) {         // until all bits are zero
       if((data[i] & (1 << (sizeof(storage_type)-1))) == (1 << (sizeof(storage_type)-1))) {   // check upper bit
         result++;
@@ -390,7 +390,7 @@ Vector<bool>::iterator Vector<bool>::begin() {
 }
 
 Vector<bool>::iterator Vector<bool>::end() {
-  return iterator(&data[count / (MAX_SUBINDEX + 1)], count % MAX_SUBINDEX);
+  return iterator(&data[count / STORAGE_CELL_SIZE], count % MAX_SUBINDEX);
 }
 
 Vector<bool>::const_iterator Vector<bool>::begin() const {
@@ -398,11 +398,11 @@ Vector<bool>::const_iterator Vector<bool>::begin() const {
 }
 
 Vector<bool>::const_iterator Vector<bool>::end() const {
-  return const_iterator(&data[count / (MAX_SUBINDEX + 1)], count % MAX_SUBINDEX);
+  return const_iterator(&data[count / STORAGE_CELL_SIZE], count % MAX_SUBINDEX);
 }
 
 Vector<bool>::reverse_iterator Vector<bool>::rbegin() {
-  return reverse_iterator(iterator(&data[count / (MAX_SUBINDEX + 1)], count % MAX_SUBINDEX));
+  return reverse_iterator(iterator(&data[count / STORAGE_CELL_SIZE], count % MAX_SUBINDEX));
 }
 
 Vector<bool>::reverse_iterator Vector<bool>::rend() {
@@ -410,7 +410,7 @@ Vector<bool>::reverse_iterator Vector<bool>::rend() {
 }
 
 Vector<bool>::const_reverse_iterator Vector<bool>::rbegin() const {
-  return const_reverse_iterator(const_iterator(&data[count / (MAX_SUBINDEX + 1)], count % MAX_SUBINDEX));
+  return const_reverse_iterator(const_iterator(&data[count / STORAGE_CELL_SIZE], count % MAX_SUBINDEX));
 }
 
 Vector<bool>::const_reverse_iterator Vector<bool>::rend() const {
