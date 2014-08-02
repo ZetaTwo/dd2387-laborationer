@@ -210,7 +210,10 @@ inline size_t roundUp(size_t size, size_t denominator) {
 Vector<bool>::Vector() : count(0), max_size(DEFAULT_SIZE), data(new storage_type[logicalToStorageSize(max_size)]) {
 }
 
-Vector<bool>::Vector(const Vector<bool>& other) {
+Vector<bool>::Vector(const Vector<bool>& other) : count(other.count), max_size(other.max_size), data(new storage_type[max_size / STORAGE_CELL_SIZE]) {
+  for(size_t i = 0; i <= max_size / STORAGE_CELL_SIZE; ++i) {
+    data[i] = other.data[i];
+  }
 }
 
 Vector<bool>::Vector(const std::initializer_list<bool>& list) : count(list.size()), max_size(1 << static_cast<int>(ceil(log2(count)))), data(new storage_type[max_size / STORAGE_CELL_SIZE]) {
