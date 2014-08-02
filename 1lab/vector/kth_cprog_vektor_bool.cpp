@@ -213,7 +213,29 @@ Vector<bool>::Vector() : count(0), max_size(DEFAULT_SIZE), data(new storage_type
 Vector<bool>::Vector(const Vector<bool>& other) {
 }
 
-Vector<bool>::Vector(const std::initializer_list<bool>& list) {
+Vector<bool>::Vector(const std::initializer_list<bool>& list) : count(list.size()), max_size(1 << static_cast<int>(ceil(log2(count)))), data(new storage_type[max_size / STORAGE_CELL_SIZE]) {
+  size_t listIndex;
+  std::initializer_list<bool>::iterator item;
+
+  size_t cellIndex = 0;
+  size_t cellSubindex = 0;
+  storage_type cellData = 0;
+
+  for(listIndex = 0, item = list.begin(); item != list.end(); ++item, ++listIndex, ++cellSubindex) {
+    if(*item) {
+      cellData += (1 << cellSubindex);
+    }
+
+    if(cellSubindex == STORAGE_CELL_SIZE) {
+      data[cellIndex++] = cellData;
+      cellData = 0;
+      cellSubindex = 0;
+    }
+  }
+
+  if(cellData != 0) {
+    data[cellIndex] = cellData;
+  }
 }
 
 Vector<bool>::Vector(Vector<bool>&& other) {
