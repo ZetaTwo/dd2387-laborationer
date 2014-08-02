@@ -232,7 +232,12 @@ bool& Vector<bool>::operator[](size_t index) {
 }
 
 const bool Vector<bool>::operator[](size_t index) const {
-  return false;
+  if(index >= count) {
+    std::stringstream msg;
+    msg << "Index out of range: " << index << "(expected range 0 - " << (count-1) << ", inclusive)";
+    throw std::out_of_range(msg.str());
+  }
+  return (data[index / STORAGE_CELL_SIZE] >> (index % STORAGE_CELL_SIZE)) % 2;
 }
 
 Vector<bool>& Vector<bool>::operator=(const Vector<bool>& other) {
