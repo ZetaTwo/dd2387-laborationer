@@ -77,6 +77,7 @@ private:
   std::unique_ptr<storage_type[]> data; //A pointer to the vector data (Note: 8*sizeof(unsigned int) elements per index)
 
   void increase_memory(int num_elements, bool copy = true); //Increases memory to fit at least num_elements number of elements
+  inline size_t logicalToStorageSize(const size_t size) const; // How many storage cells (integers) are needed for this many bools
 };
 
 //Iterator classes
@@ -198,6 +199,10 @@ public:
     return ((*element) & (1 << index)) != 0;
   }
 };
+
+inline size_t roundUp(size_t size, size_t denominator) {
+  return size % denominator ? size / denominator + 1 : size / denominator;
+}
 
 //Member implementations
 Vector<bool>::Vector() : count(0), max_size(DEFAULT_SIZE), data(new storage_type[logicalToStorageSize(max_size)]) {
@@ -383,6 +388,10 @@ size_t Vector<bool>::weight3() const {
   }
 
   return result;
+}
+
+inline size_t Vector<bool>::logicalToStorageSize(const size_t logicalSize) const {
+  return roundUp(logicalSize, STORAGE_CELL_SIZE);
 }
 
 Vector<bool>::iterator Vector<bool>::begin() {
