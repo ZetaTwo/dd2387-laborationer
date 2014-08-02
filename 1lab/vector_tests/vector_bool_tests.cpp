@@ -121,7 +121,26 @@ TEST(VectorBool, OperatorBracketWrite) {
   EXPECT_EQ(true, vector[3]);
 }
 
-TEST(VectorBool, OperatorBracketRange) {
+TEST(VectorBool, OperatorBracketWriteRange) {
+  const size_t size = 4;
+  Vec vector(size);
+
+  EXPECT_THROW({
+    vector[size] = false;
+  }, std::out_of_range);
+  EXPECT_THROW({
+    vector[size] = true;
+  }, std::out_of_range);
+
+  EXPECT_THROW({
+    vector[-1] = false;
+  }, std::out_of_range);
+  EXPECT_THROW({
+    vector[-1] = true;
+  }, std::out_of_range);
+}
+
+TEST(VectorBool, OperatorBracketConstRange) {
   const size_t size = 4;
   Vec vector(size);
 
