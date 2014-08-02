@@ -142,7 +142,7 @@ public:
   bool operator!=(const const_iterator& rhs) const { 
     return !(*this == rhs);
   }
-  bool_proxy& operator[](size_t index) {
+  bool_proxy operator[](size_t index) {
     return bool_proxy(element, index);
   }
   bool operator*() {
