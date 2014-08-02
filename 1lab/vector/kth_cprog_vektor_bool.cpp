@@ -220,7 +220,18 @@ Vector<bool>::Vector(Vector<bool>&& other) {
 Vector<bool>::Vector(size_t size) {
 }
 
-Vector<bool>::Vector(size_t size, bool element) {
+Vector<bool>::Vector(size_t size, bool element) : count(size), max_size(1 << static_cast<int>(ceil(log2(count)))), data(new storage_type[logicalToStorageSize(max_size)]) {
+  storage_type value = 0;
+  if(element) {
+    value = 1;
+    for(size_t i = 1; i < STORAGE_CELL_SIZE; ++i) {
+      value = (value << 1) + 1;
+    }
+  }
+
+  for(size_t i = 0; i < logicalToStorageSize(max_size); ++i) {
+    data[i] = value;
+  }
 }
 
 Vector<bool>::~Vector() {
