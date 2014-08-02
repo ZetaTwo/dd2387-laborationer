@@ -440,6 +440,30 @@ size_t Vector<bool>::weight3() const {
   return result;
 }
 
+void Vector<bool>::increase_memory(int num_elements, bool copy) { //Increases memory to fit at least num_elements number of elements
+  size_t previous_storage_size = logicalToStorageSize(max_size);
+
+  size_t new_max_size = (1 << static_cast<int>(ceil(log2(num_elements))));
+  if(new_max_size < STORAGE_CELL_SIZE) {
+    new_max_size = STORAGE_CELL_SIZE;
+  }
+
+  if(new_max_size < max_size) {
+    throw std::invalid_argument("Vector already large enough");
+  }
+
+  std::unique_ptr<storage_type[]> new_data(new storage_type[logicalToStorageSize(new_max_size)]);
+
+  if(copy) {
+    for(size_t i = 0; i < previous_storage_size; i++) {
+      new_data[i] = data[i];
+    }
+  }
+
+  data = std::move(new_data);
+  max_size = new_max_size;
+}
+
 inline size_t Vector<bool>::logicalToStorageSize(const size_t logicalSize) const {
   return roundUp(logicalSize, STORAGE_CELL_SIZE);
 }
