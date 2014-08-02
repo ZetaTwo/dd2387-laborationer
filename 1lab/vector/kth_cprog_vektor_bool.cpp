@@ -8,6 +8,8 @@ class Vector<bool> {
   static const size_t STORAGE_CELL_SIZE = sizeof(storage_type) * CHAR_BIT;
   static const subindex_type MAX_SUBINDEX = STORAGE_CELL_SIZE - 1;
 
+  class bool_proxy;
+
 public:
   //Constructors & destructors
   Vector();
@@ -19,7 +21,7 @@ public:
   ~Vector();
 
   //Operators
-  bool& operator[](size_t index);
+  bool_proxy operator[](size_t index);
   const bool operator[](size_t index) const;
   Vector<bool>& operator=(const Vector<bool>& other);
   Vector<bool>& operator=(const std::initializer_list<bool>& list);
@@ -49,8 +51,6 @@ public:
   size_t weight3() const;
 
   //Iterators
-private:
-  class bool_proxy;
 public:
   class const_iterator;
   class iterator;
@@ -226,9 +226,13 @@ Vector<bool>::Vector(size_t size, bool element) {
 Vector<bool>::~Vector() {
 }
 
-bool& Vector<bool>::operator[](size_t index) {
-  bool a = true;
-  return a;
+Vector<bool>::bool_proxy Vector<bool>::operator[](size_t index) {
+  if(index >= count) {
+    std::stringstream msg;
+    msg << "Index out of range: " << index << "(expected range 0 - " << (count-1) << ", inclusive)";
+    throw std::out_of_range(msg.str());
+  }
+  return bool_proxy(data.get() + (index / STORAGE_CELL_SIZE), index % STORAGE_CELL_SIZE);
 }
 
 const bool Vector<bool>::operator[](size_t index) const {
