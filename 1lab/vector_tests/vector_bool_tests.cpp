@@ -125,13 +125,22 @@ TEST(VectorBool, OperatorBracketRange) {
   }, std::out_of_range);
 }
 
-TEST(VectorBool, OperatorBracketConst) {
-  const Vec vector(4, true);
+TEST(VectorBool, OperatorBracketConstAllFalse) {
+  const size_t size = 130;
+  const Vec vector(size, false);
 
-  EXPECT_EQ(true, vector[0]);
-  EXPECT_EQ(true, vector[1]);
-  EXPECT_EQ(true, vector[2]);
-  EXPECT_EQ(true, vector[3]);
+  for(size_t i = 0; i < size; ++i) {
+    EXPECT_FALSE(vector[i]);
+  }
+}
+
+TEST(VectorBool, OperatorBracketConstAllTrue) {
+  const size_t size = 130;
+  const Vec vector(size, true);
+
+  for(size_t i = 0; i < size; ++i) {
+    EXPECT_TRUE(vector[i]);
+  }
 }
 
 TEST(VectorBool, OperatorAssignment) {
