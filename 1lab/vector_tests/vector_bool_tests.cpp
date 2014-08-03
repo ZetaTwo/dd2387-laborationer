@@ -14,18 +14,6 @@ INSTANTIATE_TEST_CASE_P(VectorBool, SizeBoolTest, Combine(Range(static_cast<size
 
 typedef Vector<bool> Vec;
 
-TEST(VectorBool, InternalRoundupFunction) {
-  const size_t STORAGE_CELL_SIZE = 32;
-  EXPECT_EQ(0, roundUp(0, STORAGE_CELL_SIZE));
-  for(size_t s = 1; s <= 32; ++s) {
-    EXPECT_EQ(1, roundUp(s, STORAGE_CELL_SIZE));
-  }
-  for(size_t s = 33; s <= 64; ++s) {
-    EXPECT_EQ(2, roundUp(s, STORAGE_CELL_SIZE));
-  }
-  EXPECT_EQ(3, roundUp(65, STORAGE_CELL_SIZE));
-}
-
 TEST(VectorBool, ConstructorDefault) {
   EXPECT_NO_THROW({
     Vec vector;
