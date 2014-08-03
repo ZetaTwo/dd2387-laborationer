@@ -77,7 +77,6 @@ private:
   std::unique_ptr<storage_type[]> data; //A pointer to the vector data (Note: 8*sizeof(unsigned int) elements per index)
 
   void increase_memory(int num_elements, bool copy = true); //Increases memory to fit at least num_elements number of elements
-  inline size_t logical_to_storage_size(const size_t size) const; // How many storage blocks (integers) are needed for this many bools
   inline size_t storage_size() const; // How many storage blocks are allocated
 };
 
@@ -202,10 +201,6 @@ public:
     return ((*element) & (1 << index)) != 0;
   }
 };
-
-inline size_t roundUp(size_t size, size_t denominator) {
-  return size % denominator ? size / denominator + 1 : size / denominator;
-}
 
 //Member implementations
 Vector<bool>::Vector() : count(0), max_size(DEFAULT_SIZE), data(new storage_type[storage_size()]) {
@@ -444,6 +439,7 @@ size_t Vector<bool>::weight3() const {
 void Vector<bool>::increase_memory(int num_elements, bool copy) { //Increases memory to fit at least num_elements number of elements
   size_t previous_storage_size = storage_size();
 
+  // This will align to multiples of STORAGE_BLOCK_SIZE so long as STORAGE_BLOCK_SIZE is a power of 2
   size_t new_max_size = (1 << static_cast<int>(ceil(log2(num_elements))));
   if(new_max_size < STORAGE_BLOCK_SIZE) {
     new_max_size = STORAGE_BLOCK_SIZE;
@@ -453,7 +449,8 @@ void Vector<bool>::increase_memory(int num_elements, bool copy) { //Increases me
     throw std::invalid_argument("Vector already large enough");
   }
 
-  std::unique_ptr<storage_type[]> new_data(new storage_type[logical_to_storage_size(new_max_size)]);
+  max_size = new_max_size;
+  std::unique_ptr<storage_type[]> new_data(new storage_type[storage_size()]);
 
   if(copy) {
     for(size_t i = 0; i < previous_storage_size; i++) {
@@ -462,11 +459,6 @@ void Vector<bool>::increase_memory(int num_elements, bool copy) { //Increases me
   }
 
   data = std::move(new_data);
-  max_size = new_max_size;
-}
-
-inline size_t Vector<bool>::logical_to_storage_size(const size_t logicalSize) const {
-  return roundUp(logicalSize, STORAGE_BLOCK_SIZE);
 }
 
 inline size_t Vector<bool>::storage_size() const {
