@@ -368,7 +368,7 @@ bool Vector<bool>::exists(const bool& element) const {
 }
 
 size_t Vector<bool>::size() const {
-  return 0;
+  return count;
 }
 
 size_t Vector<bool>::weight1() const {
