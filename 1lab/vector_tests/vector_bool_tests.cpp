@@ -69,7 +69,7 @@ TEST(VectorBool, ConstructorMove) {
 }
 
 TEST(VectorBool, ConstructorSize) {
-  const size_t size = 32;
+  const size_t size = 130;
 
   Vec vector(size);
   EXPECT_EQ(size, vector.size());
