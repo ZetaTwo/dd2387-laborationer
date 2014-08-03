@@ -77,7 +77,7 @@ private:
   std::unique_ptr<storage_type[]> data; //A pointer to the vector data (Note: 8*sizeof(unsigned int) elements per index)
 
   void increase_memory(int num_elements, bool copy = true); //Increases memory to fit at least num_elements number of elements
-  inline size_t logicalToStorageSize(const size_t size) const; // How many storage cells (integers) are needed for this many bools
+  inline size_t logical_to_storage_size(const size_t size) const; // How many storage cells (integers) are needed for this many bools
 };
 
 //Iterator classes
@@ -207,7 +207,7 @@ inline size_t roundUp(size_t size, size_t denominator) {
 }
 
 //Member implementations
-Vector<bool>::Vector() : count(0), max_size(DEFAULT_SIZE), data(new storage_type[logicalToStorageSize(max_size)]) {
+Vector<bool>::Vector() : count(0), max_size(DEFAULT_SIZE), data(new storage_type[logical_to_storage_size(max_size)]) {
 }
 
 Vector<bool>::Vector(const Vector<bool>& other) : count(other.count), max_size(other.max_size), data(new storage_type[max_size / STORAGE_CELL_SIZE]) {
@@ -244,13 +244,13 @@ Vector<bool>::Vector(const std::initializer_list<bool>& list) : count(list.size(
 Vector<bool>::Vector(Vector<bool>&& other) {
 }
 
-Vector<bool>::Vector(size_t size) : count(size), max_size(1 << static_cast<int>(ceil(log2(count)))), data(new storage_type[logicalToStorageSize(max_size)]) {
+Vector<bool>::Vector(size_t size) : count(size), max_size(1 << static_cast<int>(ceil(log2(count)))), data(new storage_type[logical_to_storage_size(max_size)]) {
   for(size_t i = 0; i < max_size / STORAGE_CELL_SIZE; ++i) {
     data[i] = 0;
   }
 }
 
-Vector<bool>::Vector(size_t size, bool element) : count(size), max_size(1 << static_cast<int>(ceil(log2(count)))), data(new storage_type[logicalToStorageSize(max_size)]) {
+Vector<bool>::Vector(size_t size, bool element) : count(size), max_size(1 << static_cast<int>(ceil(log2(count)))), data(new storage_type[logical_to_storage_size(max_size)]) {
   storage_type value = 0;
   if(element) {
     value = 1;
@@ -259,7 +259,7 @@ Vector<bool>::Vector(size_t size, bool element) : count(size), max_size(1 << sta
     }
   }
 
-  for(size_t i = 0; i < logicalToStorageSize(max_size); ++i) {
+  for(size_t i = 0; i < logical_to_storage_size(max_size); ++i) {
     data[i] = value;
   }
 }
@@ -441,7 +441,7 @@ size_t Vector<bool>::weight3() const {
 }
 
 void Vector<bool>::increase_memory(int num_elements, bool copy) { //Increases memory to fit at least num_elements number of elements
-  size_t previous_storage_size = logicalToStorageSize(max_size);
+  size_t previous_storage_size = logical_to_storage_size(max_size);
 
   size_t new_max_size = (1 << static_cast<int>(ceil(log2(num_elements))));
   if(new_max_size < STORAGE_CELL_SIZE) {
@@ -452,7 +452,7 @@ void Vector<bool>::increase_memory(int num_elements, bool copy) { //Increases me
     throw std::invalid_argument("Vector already large enough");
   }
 
-  std::unique_ptr<storage_type[]> new_data(new storage_type[logicalToStorageSize(new_max_size)]);
+  std::unique_ptr<storage_type[]> new_data(new storage_type[logical_to_storage_size(new_max_size)]);
 
   if(copy) {
     for(size_t i = 0; i < previous_storage_size; i++) {
@@ -464,7 +464,7 @@ void Vector<bool>::increase_memory(int num_elements, bool copy) { //Increases me
   max_size = new_max_size;
 }
 
-inline size_t Vector<bool>::logicalToStorageSize(const size_t logicalSize) const {
+inline size_t Vector<bool>::logical_to_storage_size(const size_t logicalSize) const {
   return roundUp(logicalSize, STORAGE_CELL_SIZE);
 }
 
