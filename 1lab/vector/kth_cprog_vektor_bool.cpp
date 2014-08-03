@@ -96,7 +96,7 @@ public:
 
     return *this;
   }
-  operator const bool & () const {
+  operator const bool () const {
     return ((*element) & (1 << index)) != 0;
   }
 };
