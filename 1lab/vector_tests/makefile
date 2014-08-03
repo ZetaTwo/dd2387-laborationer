@@ -1,5 +1,5 @@
 CXX=g++
-CPPFLAGS = -g -std=c++11 -lgtest
+CPPFLAGS = -g -std=c++11 -lgtest -Wall
 
 test: run_test
 	./$<
