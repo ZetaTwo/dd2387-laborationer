@@ -5,8 +5,8 @@ template <>
 class Vector<bool> {
   typedef unsigned int storage_type;
   typedef unsigned char subindex_type;
-  static const size_t STORAGE_CELL_SIZE = sizeof(storage_type) * CHAR_BIT;
-  static const subindex_type MAX_SUBINDEX = STORAGE_CELL_SIZE - 1;
+  static const size_t STORAGE_BLOCK_SIZE = sizeof(storage_type) * CHAR_BIT;
+  static const subindex_type MAX_SUBINDEX = STORAGE_BLOCK_SIZE - 1;
 
   class bool_proxy;
 
@@ -77,7 +77,7 @@ private:
   std::unique_ptr<storage_type[]> data; //A pointer to the vector data (Note: 8*sizeof(unsigned int) elements per index)
 
   void increase_memory(int num_elements, bool copy = true); //Increases memory to fit at least num_elements number of elements
-  inline size_t logical_to_storage_size(const size_t size) const; // How many storage cells (integers) are needed for this many bools
+  inline size_t logical_to_storage_size(const size_t size) const; // How many storage blocks (integers) are needed for this many bools
 };
 
 //Iterator classes
@@ -136,7 +136,7 @@ public:
   }
   size_t operator-(const const_iterator& other) const {
 
-    return STORAGE_CELL_SIZE * (element - other.element) + (index - other.index);
+    return STORAGE_BLOCK_SIZE * (element - other.element) + (index - other.index);
   }
   bool operator==(const const_iterator& rhs) const { 
     return element == rhs.element && index == rhs.index;
@@ -186,7 +186,7 @@ public:
   }
   size_t operator-(const iterator& other) const {
 
-    return STORAGE_CELL_SIZE * (element - other.element) + (index - other.index);
+    return STORAGE_BLOCK_SIZE * (element - other.element) + (index - other.index);
   }
   bool operator==(const iterator& rhs) const {
     return element == rhs.element && index == rhs.index;
@@ -210,34 +210,34 @@ inline size_t roundUp(size_t size, size_t denominator) {
 Vector<bool>::Vector() : count(0), max_size(DEFAULT_SIZE), data(new storage_type[logical_to_storage_size(max_size)]) {
 }
 
-Vector<bool>::Vector(const Vector<bool>& other) : count(other.count), max_size(other.max_size), data(new storage_type[max_size / STORAGE_CELL_SIZE]) {
-  for(size_t i = 0; i <= max_size / STORAGE_CELL_SIZE; ++i) {
+Vector<bool>::Vector(const Vector<bool>& other) : count(other.count), max_size(other.max_size), data(new storage_type[max_size / STORAGE_BLOCK_SIZE]) {
+  for(size_t i = 0; i <= max_size / STORAGE_BLOCK_SIZE; ++i) {
     data[i] = other.data[i];
   }
 }
 
-Vector<bool>::Vector(const std::initializer_list<bool>& list) : count(list.size()), max_size(1 << static_cast<int>(ceil(log2(count)))), data(new storage_type[max_size / STORAGE_CELL_SIZE]) {
+Vector<bool>::Vector(const std::initializer_list<bool>& list) : count(list.size()), max_size(1 << static_cast<int>(ceil(log2(count)))), data(new storage_type[max_size / STORAGE_BLOCK_SIZE]) {
   size_t listIndex;
   std::initializer_list<bool>::iterator item;
 
-  size_t cellIndex = 0;
-  size_t cellSubindex = 0;
-  storage_type cellData = 0;
+  size_t blockIndex = 0;
+  size_t blockSubindex = 0;
+  storage_type blockData = 0;
 
-  for(listIndex = 0, item = list.begin(); item != list.end(); ++item, ++listIndex, ++cellSubindex) {
+  for(listIndex = 0, item = list.begin(); item != list.end(); ++item, ++listIndex, ++blockSubindex) {
     if(*item) {
-      cellData += (1 << cellSubindex);
+      blockData += (1 << blockSubindex);
     }
 
-    if(cellSubindex == STORAGE_CELL_SIZE) {
-      data[cellIndex++] = cellData;
-      cellData = 0;
-      cellSubindex = 0;
+    if(blockSubindex == STORAGE_BLOCK_SIZE) {
+      data[blockIndex++] = blockData;
+      blockData = 0;
+      blockSubindex = 0;
     }
   }
 
-  if(cellData != 0) {
-    data[cellIndex] = cellData;
+  if(blockData != 0) {
+    data[blockIndex] = blockData;
   }
 }
 
@@ -245,7 +245,7 @@ Vector<bool>::Vector(Vector<bool>&& other) {
 }
 
 Vector<bool>::Vector(size_t size) : count(size), max_size(1 << static_cast<int>(ceil(log2(count)))), data(new storage_type[logical_to_storage_size(max_size)]) {
-  for(size_t i = 0; i < max_size / STORAGE_CELL_SIZE; ++i) {
+  for(size_t i = 0; i < max_size / STORAGE_BLOCK_SIZE; ++i) {
     data[i] = 0;
   }
 }
@@ -254,7 +254,7 @@ Vector<bool>::Vector(size_t size, bool element) : count(size), max_size(1 << sta
   storage_type value = 0;
   if(element) {
     value = 1;
-    for(size_t i = 1; i < STORAGE_CELL_SIZE; ++i) {
+    for(size_t i = 1; i < STORAGE_BLOCK_SIZE; ++i) {
       value = (value << 1) + 1;
     }
   }
@@ -273,7 +273,7 @@ Vector<bool>::bool_proxy Vector<bool>::operator[](size_t index) {
     msg << "Index out of range: " << index << "(expected range 0 - " << (count-1) << ", inclusive)";
     throw std::out_of_range(msg.str());
   }
-  return bool_proxy(data.get() + (index / STORAGE_CELL_SIZE), index % STORAGE_CELL_SIZE);
+  return bool_proxy(data.get() + (index / STORAGE_BLOCK_SIZE), index % STORAGE_BLOCK_SIZE);
 }
 
 const bool Vector<bool>::operator[](size_t index) const {
@@ -282,7 +282,7 @@ const bool Vector<bool>::operator[](size_t index) const {
     msg << "Index out of range: " << index << "(expected range 0 - " << (count-1) << ", inclusive)";
     throw std::out_of_range(msg.str());
   }
-  return ((data[index / STORAGE_CELL_SIZE] >> (index % STORAGE_CELL_SIZE)) % 2) > 0;
+  return ((data[index / STORAGE_BLOCK_SIZE] >> (index % STORAGE_BLOCK_SIZE)) % 2) > 0;
 }
 
 Vector<bool>& Vector<bool>::operator=(const Vector<bool>& other) {
@@ -299,7 +299,7 @@ Vector<bool>& Vector<bool>::operator=(Vector<bool>&& other) {
 
 Vector<bool> Vector<bool>::operator~() const {
   Vector<bool> result(count);
-  for(size_t i = 0; i <= size() / STORAGE_CELL_SIZE; i++) {
+  for(size_t i = 0; i <= size() / STORAGE_BLOCK_SIZE; i++) {
     result.data[i] = ~data[i];
   }
 
@@ -311,7 +311,7 @@ Vector<bool> Vector<bool>::operator&(const Vector<bool>& other) const {
   }
 
   Vector<bool> result(count);
-  for(size_t i = 0; i <= count / STORAGE_CELL_SIZE; i++) {
+  for(size_t i = 0; i <= count / STORAGE_BLOCK_SIZE; i++) {
     result.data[i] = data[i] & other.data[i];
   }
 
@@ -323,7 +323,7 @@ Vector<bool> Vector<bool>::operator|(const Vector<bool>& other) const {
   }
 
   Vector<bool> result(count);
-  for(size_t i = 0; i <= count / STORAGE_CELL_SIZE; i++) {
+  for(size_t i = 0; i <= count / STORAGE_BLOCK_SIZE; i++) {
     result.data[i] = data[i] | other.data[i];
   }
 
@@ -335,7 +335,7 @@ Vector<bool> Vector<bool>::operator^(const Vector<bool>& other) const {
   }
 
   Vector<bool> result(count);
-  for(size_t i = 0; i <= count / STORAGE_CELL_SIZE; i++) {
+  for(size_t i = 0; i <= count / STORAGE_BLOCK_SIZE; i++) {
     result.data[i] = data[i] ^ other.data[i];
   }
 
@@ -348,15 +348,15 @@ bool Vector<bool>::operator==(const Vector<bool>& other) const {
   }
 
   //Check all except last element
-  for(size_t i = 0; i < count / STORAGE_CELL_SIZE; i++) {
+  for(size_t i = 0; i < count / STORAGE_BLOCK_SIZE; i++) {
     if(data[i] != other.data[i]) {
       return false;
     }
   }
 
   //Check last element
-  if(((data[count / STORAGE_CELL_SIZE]) & (1 << count % MAX_SUBINDEX)) !=
-    ((other.data[count / STORAGE_CELL_SIZE]) & (1 << count % MAX_SUBINDEX))) {
+  if(((data[count / STORAGE_BLOCK_SIZE]) & (1 << count % MAX_SUBINDEX)) !=
+    ((other.data[count / STORAGE_BLOCK_SIZE]) & (1 << count % MAX_SUBINDEX))) {
     return false;
   }
 
@@ -402,7 +402,7 @@ size_t Vector<bool>::size() const {
 size_t Vector<bool>::weight1() const {
   size_t result = 0;
 
-  for(size_t i = 0; i <= size() / STORAGE_CELL_SIZE; i++) {
+  for(size_t i = 0; i <= size() / STORAGE_BLOCK_SIZE; i++) {
     size_t count = data[i] - ((data[i] >> 1) & 033333333333) - ((data[i] >> 2) & 011111111111);
     result += ((count + (count >> 3)) & 030707070707) % 63;
   }
@@ -413,7 +413,7 @@ size_t Vector<bool>::weight1() const {
 size_t Vector<bool>::weight2() const {
   size_t result = 0;
 
-  for(size_t i = 0; i <= size() / STORAGE_CELL_SIZE; i++) {
+  for(size_t i = 0; i <= size() / STORAGE_BLOCK_SIZE; i++) {
     while(data[i] > 0) {         // until all bits are zero
       if((data[i] & 1) == 1) {   // check lower bit
         result++;
@@ -428,7 +428,7 @@ size_t Vector<bool>::weight2() const {
 size_t Vector<bool>::weight3() const {
   size_t result = 0;
 
-  for(size_t i = 0; i <= size() / STORAGE_CELL_SIZE; i++) {
+  for(size_t i = 0; i <= size() / STORAGE_BLOCK_SIZE; i++) {
     while(data[i] > 0) {         // until all bits are zero
       if((data[i] & (1 << (sizeof(storage_type)-1))) == (1 << (sizeof(storage_type)-1))) {   // check upper bit
         result++;
@@ -444,8 +444,8 @@ void Vector<bool>::increase_memory(int num_elements, bool copy) { //Increases me
   size_t previous_storage_size = logical_to_storage_size(max_size);
 
   size_t new_max_size = (1 << static_cast<int>(ceil(log2(num_elements))));
-  if(new_max_size < STORAGE_CELL_SIZE) {
-    new_max_size = STORAGE_CELL_SIZE;
+  if(new_max_size < STORAGE_BLOCK_SIZE) {
+    new_max_size = STORAGE_BLOCK_SIZE;
   }
 
   if(new_max_size < max_size) {
@@ -465,7 +465,7 @@ void Vector<bool>::increase_memory(int num_elements, bool copy) { //Increases me
 }
 
 inline size_t Vector<bool>::logical_to_storage_size(const size_t logicalSize) const {
-  return roundUp(logicalSize, STORAGE_CELL_SIZE);
+  return roundUp(logicalSize, STORAGE_BLOCK_SIZE);
 }
 
 Vector<bool>::iterator Vector<bool>::begin() {
@@ -473,7 +473,7 @@ Vector<bool>::iterator Vector<bool>::begin() {
 }
 
 Vector<bool>::iterator Vector<bool>::end() {
-  return iterator(&data[count / STORAGE_CELL_SIZE], count % MAX_SUBINDEX);
+  return iterator(&data[count / STORAGE_BLOCK_SIZE], count % MAX_SUBINDEX);
 }
 
 Vector<bool>::const_iterator Vector<bool>::begin() const {
@@ -481,11 +481,11 @@ Vector<bool>::const_iterator Vector<bool>::begin() const {
 }
 
 Vector<bool>::const_iterator Vector<bool>::end() const {
-  return const_iterator(&data[count / STORAGE_CELL_SIZE], count % MAX_SUBINDEX);
+  return const_iterator(&data[count / STORAGE_BLOCK_SIZE], count % MAX_SUBINDEX);
 }
 
 Vector<bool>::reverse_iterator Vector<bool>::rbegin() {
-  return reverse_iterator(iterator(&data[count / STORAGE_CELL_SIZE], count % MAX_SUBINDEX));
+  return reverse_iterator(iterator(&data[count / STORAGE_BLOCK_SIZE], count % MAX_SUBINDEX));
 }
 
 Vector<bool>::reverse_iterator Vector<bool>::rend() {
@@ -493,7 +493,7 @@ Vector<bool>::reverse_iterator Vector<bool>::rend() {
 }
 
 Vector<bool>::const_reverse_iterator Vector<bool>::rbegin() const {
-  return const_reverse_iterator(const_iterator(&data[count / STORAGE_CELL_SIZE], count % MAX_SUBINDEX));
+  return const_reverse_iterator(const_iterator(&data[count / STORAGE_BLOCK_SIZE], count % MAX_SUBINDEX));
 }
 
 Vector<bool>::const_reverse_iterator Vector<bool>::rend() const {
