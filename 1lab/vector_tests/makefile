@@ -7,6 +7,13 @@ test: run_test
 test_hypercube: run_test_hypercube
 	./$<
 
+clean:
+	rm -f \
+		*.o \
+		run_test* \
+		test_vec \
+		test_template_vec
+
 vector_tests.o: vector_tests.cpp ../vector/kth_cprog_vektor.cpp
 	${CXX} ${CPPFLAGS} ${CXXFLAGS} -c -o $@ $<
 
