@@ -73,7 +73,7 @@ private:
   static const int DEFAULT_SIZE = 16;
 
   size_t count; //Actual number of elements in the vector
-  size_t max_size; //Allocated memory for elements. Will be 2^n for some n
+  size_t max_size; //Allocated memory for elements. Will be STORAGE_BLOCK_SIZE*2^n for some n
   std::unique_ptr<storage_type[]> data; //A pointer to the vector data (Note: 8*sizeof(unsigned int) elements per index)
 
   void increase_memory(int num_elements, bool copy = true); //Increases memory to fit at least num_elements number of elements
