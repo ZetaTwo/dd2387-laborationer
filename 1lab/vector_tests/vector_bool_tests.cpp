@@ -628,3 +628,7 @@ TEST(VectorBool, Weight3) {
 
   EXPECT_EQ(20, vector1.weight3());
 }
+
+TEST(VectorBool, StreamInput) {
+  std::cout << Vec({true, false, true, false, false, true, true, false}) << std::endl;
+}

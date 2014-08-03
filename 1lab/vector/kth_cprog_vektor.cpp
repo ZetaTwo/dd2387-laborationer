@@ -103,6 +103,9 @@ private:
   void increase_memory(int num_elements, bool copy = true); //Increases memory to fit at least num_elements number of elements
 };
 
+template<typename T>
+std::ostream& operator<<(std::ostream& os, const Vector<T>& vector);
+
 //Member implementations
 template<typename T>
 Vector<T>::Vector() : count(0), max_size(DEFAULT_SIZE), data(new T[max_size]) {
@@ -332,4 +335,17 @@ typename Vector<T>::const_reverse_iterator Vector<T>::rbegin() const {
 template<typename T>
 typename Vector<T>::const_reverse_iterator Vector<T>::rend() const {
   return const_reverse_iterator(&data[0]);
+}
+
+template<typename T>
+std::ostream& operator<<(std::ostream& os, const Vector<T>& vector) {
+  os << "[";
+  if(vector.size() > 0) {
+    os << vector[0];
+    for(auto item = ++vector.begin(); item != vector.end(); ++item) {
+      os << ", " << *item;
+    }
+  }
+  os << "]";
+  return os;
 }
