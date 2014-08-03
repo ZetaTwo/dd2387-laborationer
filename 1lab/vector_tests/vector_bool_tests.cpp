@@ -30,13 +30,13 @@ TEST(VectorBool, ConstructorCopy) {
 
   Vec vector2(vector1);
 
+  EXPECT_EQ(vector1.size(), vector2.size());
   for (size_t i = 0; i < vector1.size(); ++i) {
     EXPECT_EQ(vector1[i], vector2[i]);
   }
 
   vector1[1] = true;
 
-  vector2[1] = false;
   vector2[3] = true;
 
   EXPECT_EQ(false, vector1[0]);
@@ -46,7 +46,7 @@ TEST(VectorBool, ConstructorCopy) {
 
   EXPECT_EQ(false, vector2[0]);
   EXPECT_EQ(false, vector2[1]);
-  EXPECT_EQ(false, vector2[2]);
+  EXPECT_EQ(true, vector2[2]);
   EXPECT_EQ(true, vector2[3]);
 }
 
