@@ -78,6 +78,7 @@ private:
 
   void increase_memory(int num_elements, bool copy = true); //Increases memory to fit at least num_elements number of elements
   inline size_t logical_to_storage_size(const size_t size) const; // How many storage blocks (integers) are needed for this many bools
+  inline size_t storage_size() const; // How many storage blocks are allocated
 };
 
 //Iterator classes
@@ -466,6 +467,10 @@ void Vector<bool>::increase_memory(int num_elements, bool copy) { //Increases me
 
 inline size_t Vector<bool>::logical_to_storage_size(const size_t logicalSize) const {
   return roundUp(logicalSize, STORAGE_BLOCK_SIZE);
+}
+
+inline size_t Vector<bool>::storage_size() const {
+  return max_size / STORAGE_BLOCK_SIZE;
 }
 
 Vector<bool>::iterator Vector<bool>::begin() {
