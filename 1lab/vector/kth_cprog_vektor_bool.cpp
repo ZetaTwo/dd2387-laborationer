@@ -213,7 +213,7 @@ Vector<bool>::Vector(const Vector<bool>& other) : count(other.count), max_size(o
   }
 }
 
-Vector<bool>::Vector(const std::initializer_list<bool>& list) : count(list.size()), max_size(1 << static_cast<int>(ceil(log2(count)))), data(new storage_type[storage_size()]) {
+Vector<bool>::Vector(const std::initializer_list<bool>& list) : count(list.size()), max_size(initial_size(count)), data(new storage_type[storage_size()]) {
   size_t listIndex;
   std::initializer_list<bool>::iterator item;
 
@@ -241,13 +241,13 @@ Vector<bool>::Vector(const std::initializer_list<bool>& list) : count(list.size(
 Vector<bool>::Vector(Vector<bool>&& other) {
 }
 
-Vector<bool>::Vector(size_t size) : count(size), max_size(1 << static_cast<int>(ceil(log2(count)))), data(new storage_type[storage_size()]) {
+Vector<bool>::Vector(size_t size) : count(size), max_size(initial_size(count)), data(new storage_type[storage_size()]) {
   for(size_t i = 0; i < storage_size(); ++i) {
     data[i] = 0;
   }
 }
 
-Vector<bool>::Vector(size_t size, bool element) : count(size), max_size(1 << static_cast<int>(ceil(log2(count)))), data(new storage_type[storage_size()]) {
+Vector<bool>::Vector(size_t size, bool element) : count(size), max_size(initial_size(count)), data(new storage_type[storage_size()]) {
   const storage_type value = element ? STORAGE_BLOCK_ALL_TRUE : 0;
   for(size_t i = 0; i < storage_size(); ++i) {
     data[i] = value;
@@ -434,12 +434,7 @@ size_t Vector<bool>::weight3() const {
 void Vector<bool>::increase_memory(int num_elements, bool copy) { //Increases memory to fit at least num_elements number of elements
   size_t previous_storage_size = storage_size();
 
-  // This will align to multiples of STORAGE_BLOCK_SIZE so long as STORAGE_BLOCK_SIZE is a power of 2
-  size_t new_max_size = (1 << static_cast<int>(ceil(log2(num_elements))));
-  if(new_max_size < STORAGE_BLOCK_SIZE) {
-    new_max_size = STORAGE_BLOCK_SIZE;
-  }
-
+  size_t new_max_size = initial_size(num_elements);
   if(new_max_size < max_size) {
     throw std::invalid_argument("Vector already large enough");
   }
