@@ -278,7 +278,7 @@ const bool Vector<bool>::operator[](size_t index) const {
     msg << "Index out of range: " << index << " (expected range 0 - " << (count-1) << ", inclusive)";
     throw std::out_of_range(msg.str());
   }
-  return ((data[index / STORAGE_BLOCK_SIZE] >> (index % STORAGE_BLOCK_SIZE)) % 2) > 0;
+  return (data[index / STORAGE_BLOCK_SIZE] & (1 << index)) != 0;
 }
 
 Vector<bool>& Vector<bool>::operator=(const Vector<bool>& other) {
