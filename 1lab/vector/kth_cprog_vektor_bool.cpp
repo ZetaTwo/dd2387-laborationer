@@ -206,13 +206,13 @@ public:
 Vector<bool>::Vector() : count(0), max_size(DEFAULT_SIZE), data(new storage_type[storage_size()]) {
 }
 
-Vector<bool>::Vector(const Vector<bool>& other) : count(other.count), max_size(other.max_size), data(new storage_type[max_size / STORAGE_BLOCK_SIZE]) {
-  for(size_t i = 0; i <= max_size / STORAGE_BLOCK_SIZE; ++i) {
+Vector<bool>::Vector(const Vector<bool>& other) : count(other.count), max_size(other.max_size), data(new storage_type[storage_size()]) {
+  for(size_t i = 0; i <= storage_size(); ++i) {
     data[i] = other.data[i];
   }
 }
 
-Vector<bool>::Vector(const std::initializer_list<bool>& list) : count(list.size()), max_size(1 << static_cast<int>(ceil(log2(count)))), data(new storage_type[max_size / STORAGE_BLOCK_SIZE]) {
+Vector<bool>::Vector(const std::initializer_list<bool>& list) : count(list.size()), max_size(1 << static_cast<int>(ceil(log2(count)))), data(new storage_type[storage_size()]) {
   size_t listIndex;
   std::initializer_list<bool>::iterator item;
 
@@ -241,7 +241,7 @@ Vector<bool>::Vector(Vector<bool>&& other) {
 }
 
 Vector<bool>::Vector(size_t size) : count(size), max_size(1 << static_cast<int>(ceil(log2(count)))), data(new storage_type[storage_size()]) {
-  for(size_t i = 0; i < max_size / STORAGE_BLOCK_SIZE; ++i) {
+  for(size_t i = 0; i < storage_size(); ++i) {
     data[i] = 0;
   }
 }
