@@ -376,6 +376,7 @@ Vector<bool>& Vector<bool>::erase(size_t index) {
 }
 
 Vector<bool>& Vector<bool>::clear() {
+  count = 0;
   return *this;
 }
 
