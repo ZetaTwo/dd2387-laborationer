@@ -118,6 +118,15 @@ TEST_P(SizeTest, OperatorBracketWriteRange) {
   const size_t size = GetParam();
   Vec vector(size);
 
+  if(size > 0) {
+    EXPECT_NO_THROW({
+      vector[0] = false;
+      vector[0] = true;
+      vector[size-1] = false;
+      vector[size-1] = true;
+    });
+  }
+
   EXPECT_THROW({
     vector[size] = false;
   }, std::out_of_range);
@@ -136,6 +145,13 @@ TEST_P(SizeTest, OperatorBracketWriteRange) {
 TEST_P(SizeTest, OperatorBracketConstRange) {
   const size_t size = GetParam();
   Vec vector(size);
+
+  if(size > 0) {
+    EXPECT_NO_THROW({
+      vector[0];
+      vector[size-1];
+    });
+  }
 
   EXPECT_THROW({
     vector[size];
