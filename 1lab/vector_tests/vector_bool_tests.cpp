@@ -164,21 +164,13 @@ TEST_P(SizeTest, OperatorBracketConstRange) {
   }, std::out_of_range);
 }
 
-TEST_P(SizeTest, OperatorBracketConstAllFalse) {
-  const size_t size = GetParam();
-  const Vec vector(size, false);
+TEST_P(SizeBoolTest, OperatorBracketConstAllEqual) {
+  const size_t size = std::get<0>(GetParam());
+  const size_t value = std::get<1>(GetParam());
+  const Vec vector(size, value);
 
   for(size_t i = 0; i < size; ++i) {
-    EXPECT_FALSE(vector[i]);
-  }
-}
-
-TEST_P(SizeTest, OperatorBracketConstAllTrue) {
-  const size_t size = GetParam();
-  const Vec vector(size, true);
-
-  for(size_t i = 0; i < size; ++i) {
-    EXPECT_TRUE(vector[i]);
+    EXPECT_EQ(value, vector[i]);
   }
 }
 
