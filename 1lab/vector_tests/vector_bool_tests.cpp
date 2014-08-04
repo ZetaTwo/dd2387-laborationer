@@ -1,8 +1,16 @@
 #include <gtest/gtest.h>
 #include "../vector/kth_cprog_vektor_bool.cpp"
 
-class SizeTest : public ::testing::TestWithParam<size_t> {};
-INSTANTIATE_TEST_CASE_P(VectorBool, SizeTest, ::testing::Range(static_cast<size_t>(0), static_cast<size_t>(3000)));
+using ::testing::TestWithParam;
+using ::testing::Range;
+using ::testing::Bool;
+using ::testing::Combine;
+
+class SizeTest : public TestWithParam<size_t> {};
+INSTANTIATE_TEST_CASE_P(VectorBool, SizeTest, Range(static_cast<size_t>(0), static_cast<size_t>(3000)));
+
+class SizeBoolTest : public TestWithParam<std::tuple<size_t, bool> > {};
+INSTANTIATE_TEST_CASE_P(VectorBool, SizeBoolTest, Combine(Range(static_cast<size_t>(0), static_cast<size_t>(3000)), Bool()));
 
 typedef Vector<bool> Vec;
 
@@ -81,19 +89,13 @@ TEST_P(SizeTest, ConstructorSize) {
   }
 }
 
-TEST_P(SizeTest, ConstructorRepeatFalse) {
-  const size_t size = GetParam();
-  Vec vector(size, false);
+TEST_P(SizeBoolTest, ConstructorRepeat) {
+  const size_t size = std::get<0>(GetParam());
+  const bool value = std::get<1>(GetParam());
+  Vec vector(size, value);
+  EXPECT_EQ(size, vector.size());
   for (size_t i = 0; i < size; i++) {
-    EXPECT_FALSE(vector[i]);
-  }
-}
-
-TEST_P(SizeTest, ConstructorRepeatTrue) {
-  const size_t size = GetParam();
-  Vec vector(size, true);
-  for (size_t i = 0; i < size; i++) {
-    EXPECT_TRUE(vector[i]);
+    EXPECT_EQ(value, vector[i]);
   }
 }
 
