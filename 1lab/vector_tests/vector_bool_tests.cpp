@@ -166,7 +166,7 @@ TEST_P(SizeTest, OperatorBracketConstRange) {
 
 TEST_P(SizeBoolTest, OperatorBracketConstAllEqual) {
   const size_t size = std::get<0>(GetParam());
-  const size_t value = std::get<1>(GetParam());
+  const bool value = std::get<1>(GetParam());
   const Vec vector(size, value);
 
   for(size_t i = 0; i < size; ++i) {
