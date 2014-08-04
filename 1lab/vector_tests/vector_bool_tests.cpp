@@ -1,6 +1,9 @@
 #include <gtest/gtest.h>
 #include "../vector/kth_cprog_vektor_bool.cpp"
 
+class SizeTest : public ::testing::TestWithParam<size_t> {};
+INSTANTIATE_TEST_CASE_P(VectorBool, SizeTest, ::testing::Range(static_cast<size_t>(0), static_cast<size_t>(3000)));
+
 typedef Vector<bool> Vec;
 
 TEST(VectorBool, InternalRoundupFunction) {
@@ -68,29 +71,26 @@ TEST(VectorBool, ConstructorMove) {
   EXPECT_EQ(true, (*vector2)[0]);
 }
 
-TEST(VectorBool, ConstructorSize) {
-  for(size_t size : {0, 1, 2, 3, 4, 5, 10, 15, 16, 17, 31, 32, 33, 63, 64, 65, 127, 128, 129, 1023, 1024, 1025}) {
-    Vec vector(size);
-    EXPECT_EQ(size, vector.size());
+TEST_P(SizeTest, ConstructorSize) {
+  const size_t size = GetParam();
+  Vec vector(size);
+  EXPECT_EQ(size, vector.size());
 
-    for(size_t i = 0; i < size; ++i) {
-      EXPECT_EQ(false, vector[i]);
-    }
+  for(size_t i = 0; i < size; ++i) {
+    EXPECT_EQ(false, vector[i]);
   }
 }
 
-TEST(VectorBool, ConstructorRepeatFalse) {
-  const size_t size = 130;
-
+TEST_P(SizeTest, ConstructorRepeatFalse) {
+  const size_t size = GetParam();
   Vec vector(size, false);
   for (size_t i = 0; i < size; i++) {
     EXPECT_FALSE(vector[i]);
   }
 }
 
-TEST(VectorBool, ConstructorRepeatTrue) {
-  const size_t size = 130;
-
+TEST_P(SizeTest, ConstructorRepeatTrue) {
+  const size_t size = GetParam();
   Vec vector(size, true);
   for (size_t i = 0; i < size; i++) {
     EXPECT_TRUE(vector[i]);
@@ -114,8 +114,8 @@ TEST(VectorBool, OperatorBracketWrite) {
   EXPECT_EQ(true, vector[3]);
 }
 
-TEST(VectorBool, OperatorBracketWriteRange) {
-  const size_t size = 4;
+TEST_P(SizeTest, OperatorBracketWriteRange) {
+  const size_t size = GetParam();
   Vec vector(size);
 
   EXPECT_THROW({
@@ -133,8 +133,8 @@ TEST(VectorBool, OperatorBracketWriteRange) {
   }, std::out_of_range);
 }
 
-TEST(VectorBool, OperatorBracketConstRange) {
-  const size_t size = 4;
+TEST_P(SizeTest, OperatorBracketConstRange) {
+  const size_t size = GetParam();
   Vec vector(size);
 
   EXPECT_THROW({
@@ -146,8 +146,8 @@ TEST(VectorBool, OperatorBracketConstRange) {
   }, std::out_of_range);
 }
 
-TEST(VectorBool, OperatorBracketConstAllFalse) {
-  const size_t size = 130;
+TEST_P(SizeTest, OperatorBracketConstAllFalse) {
+  const size_t size = GetParam();
   const Vec vector(size, false);
 
   for(size_t i = 0; i < size; ++i) {
@@ -155,8 +155,8 @@ TEST(VectorBool, OperatorBracketConstAllFalse) {
   }
 }
 
-TEST(VectorBool, OperatorBracketConstAllTrue) {
-  const size_t size = 130;
+TEST_P(SizeTest, OperatorBracketConstAllTrue) {
+  const size_t size = GetParam();
   const Vec vector(size, true);
 
   for(size_t i = 0; i < size; ++i) {
@@ -327,8 +327,8 @@ TEST(VectorBool, EraseRange) {
   }, std::out_of_range);
 }
 
-TEST(VectorBool, Clear) {
-  const size_t size = 4;
+TEST_P(SizeTest, Clear) {
+  const size_t size = GetParam();
   Vec vector(size);
 
   vector.clear();
@@ -405,26 +405,24 @@ TEST(VectorBool, SortUniqueDescending) {
 
 TEST(VectorBool, ExistsTrue) {
   const size_t size = 4;
-  Vec vector(size);
-
+  Vec vector(size, false);
   vector[2] = true;
+
   EXPECT_TRUE(vector.exists(true));
 
   vector[3] = false;
   EXPECT_TRUE(vector.exists(false));
 }
 
-TEST(VectorBool, ExistsFalse) {
-  const size_t size = 4;
-  Vec vector(size);
-
-  vector[2] = false;
+TEST_P(SizeTest, ExistsFalse) {
+  const size_t size = GetParam();
+  Vec vector(size, false);
 
   EXPECT_FALSE(vector.exists(true));
 }
 
-TEST(VectorBool, Size) {
-  const size_t size = 4;
+TEST_P(SizeTest, Size) {
+  const size_t size = GetParam();
   Vec vector(size);
 
   EXPECT_EQ(size, vector.size());
