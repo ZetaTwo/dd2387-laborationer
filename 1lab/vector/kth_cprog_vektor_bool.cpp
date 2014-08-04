@@ -266,7 +266,7 @@ Vector<bool>::~Vector() {
 Vector<bool>::bool_proxy Vector<bool>::operator[](size_t index) {
   if(index >= count) {
     std::stringstream msg;
-    msg << "Index out of range: " << index << "(expected range 0 - " << (count-1) << ", inclusive)";
+    msg << "Index out of range: " << index << " (expected range 0 - " << (count-1) << ", inclusive)";
     throw std::out_of_range(msg.str());
   }
   return bool_proxy(data.get() + (index / STORAGE_BLOCK_SIZE), index % STORAGE_BLOCK_SIZE);
@@ -275,7 +275,7 @@ Vector<bool>::bool_proxy Vector<bool>::operator[](size_t index) {
 const bool Vector<bool>::operator[](size_t index) const {
   if(index >= count) {
     std::stringstream msg;
-    msg << "Index out of range: " << index << "(expected range 0 - " << (count-1) << ", inclusive)";
+    msg << "Index out of range: " << index << " (expected range 0 - " << (count-1) << ", inclusive)";
     throw std::out_of_range(msg.str());
   }
   return ((data[index / STORAGE_BLOCK_SIZE] >> (index % STORAGE_BLOCK_SIZE)) % 2) > 0;
