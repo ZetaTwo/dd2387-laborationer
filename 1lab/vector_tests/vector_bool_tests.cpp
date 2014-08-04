@@ -69,21 +69,14 @@ TEST(VectorBool, ConstructorMove) {
 }
 
 TEST(VectorBool, ConstructorSize) {
-  const size_t size = 130;
+  for(size_t size : {0, 1, 2, 3, 4, 5, 10, 15, 16, 17, 31, 32, 33, 63, 64, 65, 127, 128, 129, 1023, 1024, 1025}) {
+    Vec vector(size);
+    EXPECT_EQ(size, vector.size());
 
-  Vec vector(size);
-  EXPECT_EQ(size, vector.size());
-
-  for (size_t i = 0; i < size; i++) {
-    EXPECT_EQ(false, vector[i]);
+    for(size_t i = 0; i < size; ++i) {
+      EXPECT_EQ(false, vector[i]);
+    }
   }
-}
-
-TEST(VectorBool, ConstructorZeroSize) {
-  const size_t size = 0;
-
-  Vec vector(size);
-  EXPECT_EQ(size, vector.size());
 }
 
 TEST(VectorBool, ConstructorRepeatFalse) {
