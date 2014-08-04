@@ -78,6 +78,7 @@ private:
 
   void increase_memory(int num_elements, bool copy = true); //Increases memory to fit at least num_elements number of elements
   inline size_t storage_size() const; // How many storage blocks are allocated
+  const size_t initial_size(const size_t& minimumSize) const; // Return a suitable max_size >= minimumSize
 };
 
 //Iterator classes
@@ -458,6 +459,11 @@ void Vector<bool>::increase_memory(int num_elements, bool copy) { //Increases me
 inline size_t Vector<bool>::storage_size() const {
   return max_size / STORAGE_BLOCK_SIZE;
 }
+
+inline const size_t Vector<bool>::initial_size(const size_t& minimumSize) const {
+  return STORAGE_BLOCK_SIZE << static_cast<int>(ceil(log2(std::max(1.0, minimumSize/static_cast<double>(STORAGE_BLOCK_SIZE)))));
+}
+
 
 Vector<bool>::iterator Vector<bool>::begin() {
   return iterator(&data[0], 0);
