@@ -70,7 +70,7 @@ public:
 
 private:
 
-  static const int DEFAULT_SIZE = 16;
+  static const int DEFAULT_SIZE = STORAGE_BLOCK_SIZE;
 
   size_t count; //Actual number of elements in the vector
   size_t max_size; //Allocated memory for elements. Will be STORAGE_BLOCK_SIZE*2^n for some n
