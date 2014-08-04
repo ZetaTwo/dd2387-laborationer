@@ -77,7 +77,7 @@ TEST_P(SizeTest, ConstructorSize) {
   EXPECT_EQ(size, vector.size());
 
   for(size_t i = 0; i < size; ++i) {
-    EXPECT_EQ(false, vector[i]);
+    EXPECT_FALSE(vector[i]);
   }
 }
 
