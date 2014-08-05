@@ -181,21 +181,24 @@ TEST(VectorBool, OperatorBracketConstAlternatingFalseFirst) {
 }
 
 TEST(VectorBool, OperatorAssignment) {
-  const size_t size = 4;
-  Vec vector1(size);
-
-  vector1[1] = true;
+  Vec vector1({false, true, false, false});
   Vec vector2 = vector1;
-  vector1[2] = false;
+
+  EXPECT_EQ(vector1.size(), vector2.size());
+  for(size_t i = 0; i < vector1.size(); ++i) {
+    EXPECT_EQ(vector1[i], vector2[i]);
+  }
+
+  vector1[0] = true;
+
+  vector2[1] = false;
   vector2[3] = true;
 
+  EXPECT_EQ(true, vector1[0]);
   EXPECT_EQ(true, vector1[1]);
-  EXPECT_EQ(false, vector2[1]);
-
-  EXPECT_EQ(false, vector1[2]);
   EXPECT_EQ(false, vector1[3]);
 
-  EXPECT_EQ(false, vector2[2]);
+  EXPECT_EQ(false, vector2[1]);
   EXPECT_EQ(true, vector2[3]);
 }
 
