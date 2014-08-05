@@ -276,6 +276,19 @@ const bool Vector<bool>::operator[](size_t index) const {
 }
 
 Vector<bool>& Vector<bool>::operator=(const Vector<bool>& other) {
+  if(&other == this) {
+    return *this;
+  }
+
+  if(other.count > max_size) {
+    increase_memory(other.count, false);
+  }
+
+  count = other.size();
+  for(size_t i = 0; i < other.storage_size(); ++i) {
+    data[i] = other.data[i];
+  }
+
   return *this;
 }
 
