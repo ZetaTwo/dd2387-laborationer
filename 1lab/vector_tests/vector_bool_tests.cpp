@@ -16,6 +16,9 @@ INSTANTIATE_TEST_CASE_P(VectorBool, SizeSizeTest, Combine(Range(static_cast<size
 class SizeBoolTest : public TestWithParam<std::tuple<size_t, bool> > {};
 INSTANTIATE_TEST_CASE_P(VectorBool, SizeBoolTest, Combine(Range(static_cast<size_t>(0), static_cast<size_t>(3000)), Bool()));
 
+class SizeSizeBoolTest : public TestWithParam<std::tuple<size_t, size_t, bool> > {};
+INSTANTIATE_TEST_CASE_P(VectorBool, SizeSizeBoolTest, Combine(Range(static_cast<size_t>(0), static_cast<size_t>(100)), Range(static_cast<size_t>(0), static_cast<size_t>(100)), Bool()));
+
 typedef Vector<bool> Vec;
 
 TEST(VectorBool, ConstructorDefault) {
@@ -513,22 +516,18 @@ TEST(VectorBool, SortUniqueDescending) {
   EXPECT_EQ(false, vector[1]);
 }
 
-TEST(VectorBool, ExistsTrue) {
-  const size_t size = 4;
-  Vec vector(size, false);
-  vector[2] = true;
+TEST_P(SizeSizeBoolTest, Exists) {
+  const size_t size = std::get<0>(GetParam());
+  const size_t needle_index = std::get<1>(GetParam());
+  const size_t needle_value = std::get<2>(GetParam());
 
-  EXPECT_TRUE(vector.exists(true));
+  if(needle_index < size) {
+    Vec vector(size, !needle_value);
+    ASSERT_FALSE(vector.exists(needle_value));
 
-  vector[3] = false;
-  EXPECT_TRUE(vector.exists(false));
-}
-
-TEST_P(SizeTest, ExistsFalse) {
-  const size_t size = GetParam();
-  Vec vector(size, false);
-
-  EXPECT_FALSE(vector.exists(true));
+    vector[needle_index] = needle_value;
+    EXPECT_TRUE(vector.exists(needle_value));
+  }
 }
 
 TEST_P(SizeTest, Size) {
