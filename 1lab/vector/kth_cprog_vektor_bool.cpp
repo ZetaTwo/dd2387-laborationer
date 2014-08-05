@@ -435,7 +435,32 @@ Vector<bool>& Vector<bool>::insert(const size_t index, const bool& element) {
   return *this;
 }
 
-Vector<bool>& Vector<bool>::erase(size_t index) {
+Vector<bool>& Vector<bool>::erase(const size_t index) {
+  if(index >= count) {
+    std::stringstream msg;
+    msg << "Attempted to erase index " << index << ", expected < " << count;
+    throw std::out_of_range(msg.str());
+  }
+
+  const size_t erase_storage_index = index / STORAGE_BLOCK_SIZE;
+  const size_t erase_subindex = index % STORAGE_BLOCK_SIZE;
+
+  const storage_type lowerBits = erase_subindex == 0 ? 0 : data[erase_storage_index] % (1 << erase_subindex);
+  const storage_type upperBits = erase_storage_index == storage_size() ? 0 : (data[erase_storage_index] >> (erase_subindex + 1)) << erase_subindex;
+  data[erase_storage_index] = lowerBits | upperBits;
+  if(erase_storage_index < storage_size()) {
+    data[erase_storage_index] |= (data[erase_storage_index+1] & 1) << MAX_SUBINDEX;
+  }
+
+  for(size_t storage_index = erase_storage_index+1; storage_index < storage_size(); ++storage_index) {
+    data[storage_index] >>= 1;
+    if(storage_index + 1 < storage_size()) {
+      data[storage_index] |= (data[storage_index+1] & 1) << MAX_SUBINDEX;
+    }
+  }
+
+  --count;
+
   return *this;
 }
 
