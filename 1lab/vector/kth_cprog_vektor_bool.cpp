@@ -70,13 +70,13 @@ public:
 
 private:
 
-  static const int DEFAULT_SIZE = STORAGE_BLOCK_SIZE;
+  static const size_t DEFAULT_SIZE = STORAGE_BLOCK_SIZE;
 
   size_t count; //Actual number of elements in the vector
   size_t max_size; //Allocated memory for elements. Will be STORAGE_BLOCK_SIZE*2^n for some n
   std::unique_ptr<storage_type[]> data; //A pointer to the vector data (Note: 8*sizeof(unsigned int) elements per index)
 
-  void increase_memory(int num_elements, bool copy = true); //Increases memory to fit at least num_elements number of elements
+  void increase_memory(size_t num_elements, bool copy = true); //Increases memory to fit at least num_elements number of elements
   size_t storage_size() const; // How many storage blocks are allocated
   const size_t initial_size(const size_t& minimumSize) const; // Return a suitable max_size >= minimumSize
 };
@@ -241,13 +241,13 @@ Vector<bool>::Vector(const std::initializer_list<bool>& list) : count(list.size(
 Vector<bool>::Vector(Vector<bool>&& other) {
 }
 
-Vector<bool>::Vector(const size_t size) : count(size), max_size(initial_size(count)), data(new storage_type[storage_size()]) {
+Vector<bool>::Vector(size_t size) : count(size), max_size(initial_size(count)), data(new storage_type[storage_size()]) {
   for(size_t i = 0; i < storage_size(); ++i) {
     data[i] = 0;
   }
 }
 
-Vector<bool>::Vector(const size_t size, const bool element) : count(size), max_size(initial_size(count)), data(new storage_type[storage_size()]) {
+Vector<bool>::Vector(size_t size, bool element) : count(size), max_size(initial_size(count)), data(new storage_type[storage_size()]) {
   const storage_type value = element ? STORAGE_BLOCK_ALL_TRUE : 0;
   for(size_t i = 0; i < storage_size(); ++i) {
     data[i] = value;
@@ -431,7 +431,7 @@ size_t Vector<bool>::weight3() const {
   return result;
 }
 
-void Vector<bool>::increase_memory(int num_elements, bool copy) { //Increases memory to fit at least num_elements number of elements
+void Vector<bool>::increase_memory(size_t num_elements, bool copy) { //Increases memory to fit at least num_elements number of elements
   size_t previous_storage_size = storage_size();
 
   size_t new_max_size = initial_size(num_elements);
