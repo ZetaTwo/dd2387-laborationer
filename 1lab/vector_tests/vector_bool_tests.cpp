@@ -49,8 +49,41 @@ TEST(VectorBool, ConstructorCopy) {
   EXPECT_EQ(true, vector2[3]);
 }
 
+TEST(VectorBool, ConstructorCopyAssignment) {
+  Vec vector1({false, true, false, false});
+  Vec vector2 = vector1;
+
+  EXPECT_EQ(vector1.size(), vector2.size());
+  for(size_t i = 0; i < vector1.size(); ++i) {
+    EXPECT_EQ(vector1[i], vector2[i]);
+  }
+
+  vector1[0] = true;
+
+  vector2[1] = false;
+  vector2[3] = true;
+
+  EXPECT_EQ(true, vector1[0]);
+  EXPECT_EQ(true, vector1[1]);
+  EXPECT_EQ(false, vector1[3]);
+
+  EXPECT_EQ(false, vector2[0]);
+  EXPECT_EQ(false, vector2[1]);
+  EXPECT_EQ(true, vector2[3]);
+}
+
 TEST(VectorBool, ConstructorInitlist) {
   Vec vector({ true, false, true, false });
+
+  EXPECT_EQ(true, vector[0]);
+  EXPECT_EQ(false, vector[1]);
+  EXPECT_EQ(true, vector[2]);
+  EXPECT_EQ(false, vector[3]);
+  EXPECT_EQ(4, vector.size());
+}
+
+TEST(VectorBool, ConstructorInitlistAssignment) {
+  Vec vector = { true, false, true, false };
 
   EXPECT_EQ(true, vector[0]);
   EXPECT_EQ(false, vector[1]);
@@ -180,29 +213,6 @@ TEST(VectorBool, OperatorBracketConstAlternatingFalseFirst) {
   }
 }
 
-TEST(VectorBool, AssignmentCopyConstructor) {
-  Vec vector1({false, true, false, false});
-  Vec vector2 = vector1;
-
-  EXPECT_EQ(vector1.size(), vector2.size());
-  for(size_t i = 0; i < vector1.size(); ++i) {
-    EXPECT_EQ(vector1[i], vector2[i]);
-  }
-
-  vector1[0] = true;
-
-  vector2[1] = false;
-  vector2[3] = true;
-
-  EXPECT_EQ(true, vector1[0]);
-  EXPECT_EQ(true, vector1[1]);
-  EXPECT_EQ(false, vector1[3]);
-
-  EXPECT_EQ(false, vector2[0]);
-  EXPECT_EQ(false, vector2[1]);
-  EXPECT_EQ(true, vector2[3]);
-}
-
 TEST(VectorBool, OperatorAssignment) {
   Vec vector1({false, true, false, false});
   Vec vector2({false});
@@ -243,16 +253,6 @@ TEST(VectorBool, OperatorAssignmentSelf) {
   EXPECT_EQ(false, vector[1]);
   EXPECT_EQ(true, vector[2]);
   EXPECT_EQ(false, vector[3]);
-}
-
-TEST(VectorBool, AssignmentListConstructor) {
-  Vec vector = { true, false, true, false };
-
-  EXPECT_EQ(true, vector[0]);
-  EXPECT_EQ(false, vector[1]);
-  EXPECT_EQ(true, vector[2]);
-  EXPECT_EQ(false, vector[3]);
-  EXPECT_EQ(4, vector.size());
 }
 
 TEST(VectorBool, OperatorAssignmentList) {
