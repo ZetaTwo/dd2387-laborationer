@@ -370,17 +370,25 @@ TEST(VectorBool, InsertRange) {
   }, std::out_of_range);
 }
 
-TEST(VectorBool, Erase) {
-  const size_t size = 4;
-  Vec vector(size);
+TEST_P(SizeSizeTest, EraseOneItem) {
+  const size_t size = std::get<0>(GetParam());
+  const size_t erase_index = std::get<1>(GetParam());
+  Vec vector(size, false);
 
-  vector[1] = false;
-  vector[2] = true;
+  if(erase_index >= size) {
+    EXPECT_THROW({
+      vector.erase(erase_index);
+    }, std::out_of_range);
+  } else {
+    vector[erase_index] = true;
 
-  vector.erase(1);
-  EXPECT_EQ(size - 1, vector.size());
-  EXPECT_EQ(true, vector[1]);
+    vector.erase(erase_index);
 
+    EXPECT_EQ(size - 1, vector.size());
+    if(erase_index < vector.size()) {
+      EXPECT_FALSE(vector[erase_index]);
+    }
+  }
 }
 
 TEST(VectorBool, EraseRange) {
