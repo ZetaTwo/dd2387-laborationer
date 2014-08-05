@@ -293,6 +293,35 @@ Vector<bool>& Vector<bool>::operator=(const Vector<bool>& other) {
 }
 
 Vector<bool>& Vector<bool>::operator=(const std::initializer_list<bool>& list) {
+  if(list.size() > max_size) {
+    increase_memory(list.size(), false);
+  }
+
+  count = list.size();
+
+  size_t listIndex;
+  std::initializer_list<bool>::iterator item;
+
+  size_t blockIndex = 0;
+  size_t blockSubindex = 0;
+  storage_type blockData = 0;
+
+  for(listIndex = 0, item = list.begin(); item != list.end(); ++item, ++listIndex, ++blockSubindex) {
+    if(*item) {
+      blockData += (1 << blockSubindex);
+    }
+
+    if(blockSubindex == STORAGE_BLOCK_SIZE) {
+      data[blockIndex++] = blockData;
+      blockData = 0;
+      blockSubindex = 0;
+    }
+  }
+
+  if(blockData != 0) {
+    data[blockIndex] = blockData;
+  }
+
   return *this;
 }
 
