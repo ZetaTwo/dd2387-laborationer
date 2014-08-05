@@ -94,13 +94,13 @@ public:
 
 private:
 
-  static const int DEFAULT_SIZE = 16;
+  static const size_t DEFAULT_SIZE = 16;
 
   size_t count; //Actual number of elements in the vector
   size_t max_size; //Allocated memory for elements. Will be 2^n for some n
   std::unique_ptr<T[]> data; //A pointer to the vector data
 
-  void increase_memory(int num_elements, bool copy = true); //Increases memory to fit at least num_elements number of elements
+  void increase_memory(size_t num_elements, bool copy = true); //Increases memory to fit at least num_elements number of elements
 };
 
 template<typename T>
@@ -279,7 +279,7 @@ size_t Vector<T>::size() const {
 }
 
 template<typename T>
-void Vector<T>::increase_memory(int num_elements, bool copy) {
+void Vector<T>::increase_memory(size_t num_elements, bool copy) {
   size_t new_max_size = (1 << static_cast<int>(ceil(log2(num_elements))));
   if(new_max_size < max_size) {
     throw std::invalid_argument("Vector already large enough");
