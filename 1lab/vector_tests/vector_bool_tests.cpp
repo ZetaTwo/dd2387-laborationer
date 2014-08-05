@@ -2,9 +2,10 @@
 #include "../vector/kth_cprog_vektor_bool.cpp"
 
 using ::testing::TestWithParam;
-using ::testing::Range;
 using ::testing::Bool;
 using ::testing::Combine;
+using ::testing::Range;
+using ::testing::Values;
 
 class SizeTest : public TestWithParam<size_t> {};
 INSTANTIATE_TEST_CASE_P(VectorBool, SizeTest, Range(static_cast<size_t>(0), static_cast<size_t>(3000)));
@@ -405,6 +406,26 @@ TEST_P(SizeSizeTest, EraseOneItem) {
       EXPECT_TRUE(vector[erase_index + 1]);
     }
   }
+}
+
+class EraseManyItemsTest : public TestWithParam<std::tuple<int, int, int> > {};
+INSTANTIATE_TEST_CASE_P(VectorBool, EraseManyItemsTest, Combine(Values(1000), Range(0, 900, 100), Range(0, 100, 10)));
+TEST_P(EraseManyItemsTest, EraseManyItems) {
+  const size_t size = std::get<0>(GetParam());
+  const size_t erase_index = std::get<1>(GetParam());
+  const size_t erase_amount = std::get<2>(GetParam());
+  Vec vector(size, false);
+
+  for(size_t i = erase_index; i < erase_index + erase_amount; ++i) {
+    vector[erase_index] = true;
+  }
+
+  for(size_t i = 0; i < erase_amount; ++i) {
+    vector.erase(erase_index);
+  }
+
+  EXPECT_EQ(size - erase_amount, vector.size());
+  EXPECT_FALSE(vector.exists(true));
 }
 
 TEST(VectorBool, EraseRange) {
