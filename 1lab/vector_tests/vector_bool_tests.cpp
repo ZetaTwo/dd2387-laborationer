@@ -317,17 +317,28 @@ TEST_P(SizeSizeTest, InsertOneItem) {
   }
 }
 
-TEST(VectorBool, InsertALotOfItems) {
-  const size_t size = 1;
-  const size_t final_size = 1024;
+TEST_P(SizeSizeTest, InsertManyItems) {
+  const size_t size = std::get<0>(GetParam());
+  const size_t insert_index = std::get<1>(GetParam());
+  const size_t insert_amount = 200;
   Vec vector(size);
 
-  for (size_t i = 0; i < final_size; i++)
-  {
-    vector.insert(vector.size(), true);
-  }
+  if(insert_index <= size) {
+    for(size_t i = 0; i < insert_amount; i++) {
+      vector.insert(insert_index, true);
+    }
 
-  EXPECT_EQ(final_size, vector.size());
+    EXPECT_EQ(size + insert_amount, vector.size());
+    for(size_t i = 0; i < insert_index; ++i) {
+      EXPECT_FALSE(vector[i]);
+    }
+    for(size_t i = insert_index; i < insert_index + insert_amount; ++i) {
+      EXPECT_TRUE(vector[i]);
+    }
+    for(size_t i = insert_index + insert_amount; i < vector.size(); ++i) {
+      EXPECT_FALSE(vector[i]);
+    }
+  }
 }
 
 TEST(VectorBool, InsertBeginning) {
