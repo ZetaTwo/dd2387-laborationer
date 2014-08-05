@@ -9,6 +9,9 @@ using ::testing::Combine;
 class SizeTest : public TestWithParam<size_t> {};
 INSTANTIATE_TEST_CASE_P(VectorBool, SizeTest, Range(static_cast<size_t>(0), static_cast<size_t>(3000)));
 
+class SizeSizeTest : public TestWithParam<std::tuple<size_t, size_t> > {};
+INSTANTIATE_TEST_CASE_P(VectorBool, SizeSizeTest, Combine(Range(static_cast<size_t>(0), static_cast<size_t>(100)), Range(static_cast<size_t>(0), static_cast<size_t>(100))));
+
 class SizeBoolTest : public TestWithParam<std::tuple<size_t, bool> > {};
 INSTANTIATE_TEST_CASE_P(VectorBool, SizeBoolTest, Combine(Range(static_cast<size_t>(0), static_cast<size_t>(3000)), Bool()));
 
@@ -290,14 +293,28 @@ TEST(VectorBool, PushBack) {
   }
 }
 
-TEST(VectorBool, Insert) {
-  const size_t size = 4;
-  Vec vector(size);
+TEST_P(SizeSizeTest, InsertOneItem) {
+  const size_t size = std::get<0>(GetParam());
+  const size_t insert_index = std::get<1>(GetParam());
+  Vec vector(size, false);
 
-  EXPECT_EQ(false, vector[1]);
-  vector.insert(1, true);
-  EXPECT_EQ(true, vector[1]);
-  EXPECT_EQ(size + 1, vector.size());
+  if(insert_index > size) {
+    EXPECT_THROW({
+      vector.insert(insert_index, true);
+    }, std::out_of_range);
+  } else {
+    vector.insert(insert_index, true);
+
+    EXPECT_EQ(size + 1, vector.size());
+
+    for(size_t i = 0; i < insert_index; ++i) {
+      EXPECT_FALSE(vector[i]);
+    }
+    EXPECT_TRUE(vector[insert_index]);
+    for(size_t i = insert_index+1; i < vector.size(); ++i) {
+      EXPECT_FALSE(vector[i]);
+    }
+  }
 }
 
 TEST(VectorBool, InsertALotOfItems) {
