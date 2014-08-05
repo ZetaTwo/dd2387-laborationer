@@ -403,7 +403,35 @@ Vector<bool>& Vector<bool>::push_back(const bool& element) {
   return *this;
 }
 
-Vector<bool>& Vector<bool>::insert(size_t index, const bool& element) {
+Vector<bool>& Vector<bool>::insert(const size_t index, const bool& element) {
+  if(index > count) {
+    std::stringstream msg;
+    msg << "Attempted to insert at index " << index << ", expected <= " << count;
+    throw std::out_of_range(msg.str());
+  }
+  if(max_size < count + 1) {
+    increase_memory(count + 1);
+  }
+
+  const size_t insert_storage_index = index / STORAGE_BLOCK_SIZE;
+  const size_t insert_subindex = index % STORAGE_BLOCK_SIZE;
+
+  size_t storage_index = storage_size() - 1;
+  if(count % STORAGE_BLOCK_SIZE == 0) {
+    data[storage_index] = 0;
+    ++storage_index;
+  }
+  for( ; storage_index > insert_storage_index; --storage_index) {
+    data[storage_index] = (data[storage_index] << 1) | (data[storage_index-1] >> MAX_SUBINDEX);
+  }
+
+  const storage_type lowerBits = insert_subindex == 0 ? 0 : data[storage_index] % (1 << insert_subindex);
+  const storage_type middleBit = (element ? (1 << insert_subindex) : 0);
+  const storage_type upperBits = insert_subindex == MAX_SUBINDEX ? 0 : (data[storage_index] >> insert_subindex) << (insert_subindex + 1);
+  data[storage_index] = lowerBits | middleBit | upperBits;
+
+  ++count;
+
   return *this;
 }
 
