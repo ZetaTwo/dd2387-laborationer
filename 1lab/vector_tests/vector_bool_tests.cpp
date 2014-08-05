@@ -180,7 +180,7 @@ TEST(VectorBool, OperatorBracketConstAlternatingFalseFirst) {
   }
 }
 
-TEST(VectorBool, OperatorAssignment) {
+TEST(VectorBool, AssignmentCopyConstructor) {
   Vec vector1({false, true, false, false});
   Vec vector2 = vector1;
 
@@ -203,7 +203,7 @@ TEST(VectorBool, OperatorAssignment) {
   EXPECT_EQ(true, vector2[3]);
 }
 
-TEST(VectorBool, OperatorAssignExisting) {
+TEST(VectorBool, OperatorAssignment) {
   Vec vector1({false, true, false, false});
   Vec vector2({false});
   vector2 = vector1;
@@ -245,7 +245,7 @@ TEST(VectorBool, OperatorAssignmentSelf) {
   EXPECT_EQ(false, vector[3]);
 }
 
-TEST(VectorBool, OperatorAssignmentList) {
+TEST(VectorBool, AssignmentListConstructor) {
   Vec vector = { true, false, true, false };
 
   EXPECT_EQ(true, vector[0]);
@@ -253,6 +253,17 @@ TEST(VectorBool, OperatorAssignmentList) {
   EXPECT_EQ(true, vector[2]);
   EXPECT_EQ(false, vector[3]);
   EXPECT_EQ(4, vector.size());
+}
+
+TEST(VectorBool, OperatorAssignmentList) {
+  Vec vector;
+  vector = { true, false, true, false };
+
+  EXPECT_EQ(4, vector.size());
+  EXPECT_EQ(true, vector[0]);
+  EXPECT_EQ(false, vector[1]);
+  EXPECT_EQ(true, vector[2]);
+  EXPECT_EQ(false, vector[3]);
 }
 
 TEST(VectorBool, OperatorAssignmentMove) {
