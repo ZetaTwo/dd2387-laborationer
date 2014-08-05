@@ -380,13 +380,29 @@ TEST_P(SizeSizeTest, EraseOneItem) {
       vector.erase(erase_index);
     }, std::out_of_range);
   } else {
+    if(erase_index > 1) {
+      vector[erase_index - 2] = true;
+    }
     vector[erase_index] = true;
+    if(size > 1 && erase_index < size - 2) {
+      vector[erase_index + 2] = true;
+    }
 
     vector.erase(erase_index);
 
     EXPECT_EQ(size - 1, vector.size());
-    if(erase_index < vector.size()) {
+
+    if(erase_index > 1) {
+      EXPECT_TRUE(vector[erase_index - 2]);
+    }
+    if(erase_index > 0) {
+      EXPECT_FALSE(vector[erase_index - 1]);
+    }
+    if(erase_index < size - 1) {
       EXPECT_FALSE(vector[erase_index]);
+    }
+    if(size > 1 && erase_index < size - 2) {
+      EXPECT_TRUE(vector[erase_index + 1]);
     }
   }
 }
