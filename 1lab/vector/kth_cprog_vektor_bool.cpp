@@ -223,7 +223,7 @@ Vector<bool>::Vector(const std::initializer_list<bool>& list) : count(list.size(
 
   for(listIndex = 0, item = list.begin(); item != list.end(); ++item, ++listIndex, ++blockSubindex) {
     if(*item) {
-      blockData += (1 << blockSubindex);
+      blockData |= (1 << blockSubindex);
     }
 
     if(blockSubindex == STORAGE_BLOCK_SIZE) {
@@ -308,7 +308,7 @@ Vector<bool>& Vector<bool>::operator=(const std::initializer_list<bool>& list) {
 
   for(listIndex = 0, item = list.begin(); item != list.end(); ++item, ++listIndex, ++blockSubindex) {
     if(*item) {
-      blockData += (1 << blockSubindex);
+      blockData |= (1 << blockSubindex);
     }
 
     if(blockSubindex == STORAGE_BLOCK_SIZE) {
