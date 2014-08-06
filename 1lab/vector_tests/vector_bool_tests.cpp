@@ -282,18 +282,23 @@ TEST(VectorBool, OperatorAssignmentMove) {
   EXPECT_EQ(true, (*vector2)[0]);
 }
 
-TEST(VectorBool, PushBack) {
-  Vec vector;
+TEST_P(SizeSizeTest, PushBack) {
+  const size_t size = std::get<0>(GetParam());
+  const size_t append_amount = std::get<1>(GetParam());
+  Vec vector(size, false);
 
-  for (size_t i = 0; i < 32; i++) {
-    EXPECT_EQ(i, vector.size());
+  for(size_t i = 0; i < append_amount; ++i) {
+    EXPECT_EQ(size + i, vector.size());
     vector.push_back(true);
-    EXPECT_EQ(true, vector[i]);
-    EXPECT_EQ(i + 1, vector.size());
   }
 
-  for (size_t i = 0; i < 32; i++) {
-    EXPECT_EQ(true, vector[i]);
+  EXPECT_EQ(size + append_amount, vector.size());
+
+  for(size_t i = 0; i < size; ++i) {
+    EXPECT_FALSE(vector[i]);
+  }
+  for(size_t i = size; i < size + append_amount; ++i) {
+    EXPECT_TRUE(vector[i]);
   }
 }
 
