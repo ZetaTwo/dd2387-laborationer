@@ -470,7 +470,24 @@ Vector<bool>& Vector<bool>::clear() {
   return *this;
 }
 
-Vector<bool>& Vector<bool>::sort(bool ascending) {
+Vector<bool>& Vector<bool>::sort(const bool ascending) {
+  const storage_type front_block = ascending ? 0 : STORAGE_BLOCK_ALL_TRUE;
+  const storage_type rear_block = ascending ? STORAGE_BLOCK_ALL_TRUE : 0;
+  const size_t num_front = ascending ? count - weight() : weight();
+  const size_t flip_block_index = num_front / STORAGE_BLOCK_SIZE;
+
+  for(size_t i = 0; i < flip_block_index; ++i) {
+    data[i] = front_block;
+  }
+  for(size_t i = flip_block_index; i < count / STORAGE_BLOCK_SIZE + (count % STORAGE_BLOCK_SIZE == 0 ? 0 : 1); ++i) {
+    data[i] = rear_block;
+  }
+
+  data[flip_block_index] <<= num_front % STORAGE_BLOCK_SIZE;
+  if(!ascending) {
+    data[flip_block_index] |= STORAGE_BLOCK_ALL_TRUE % (1 << (num_front % STORAGE_BLOCK_SIZE));
+  }
+
   return *this;
 }
 
