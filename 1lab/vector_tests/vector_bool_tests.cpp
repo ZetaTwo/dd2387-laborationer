@@ -453,38 +453,32 @@ TEST_P(SizeTest, Clear) {
   EXPECT_EQ(0, vector.size());
 }
 
-TEST(VectorBool, SortAscending) {
-  const size_t size = 4;
-  Vec vector(size);
+TEST_P(SizeSizeBoolTest, Sort) {
+  const size_t size = std::get<0>(GetParam());
+  const size_t weight = std::get<1>(GetParam());
+  const bool ascending = std::get<2>(GetParam());
 
-  vector[0] = true;
-  vector[1] = false;
-  vector[2] = true;
-  vector[3] = false;
+  if(weight <= size) {
+    Vec vector(size, false);
 
-  vector.sort();
+    if(size > 0) {
+      const size_t start_index = ascending ? 0 : size - weight;
+      for(size_t i = start_index; i < start_index + weight; ++i) {
+        vector[i] = 1;
+      }
+    }
+    ASSERT_EQ(weight, vector.weight()) << "Test setup failed.";
 
-  EXPECT_EQ(false, vector[0]);
-  EXPECT_EQ(false, vector[1]);
-  EXPECT_EQ(true, vector[2]);
-  EXPECT_EQ(true, vector[3]);
-}
+    vector.sort(ascending);
 
-TEST(VectorBool, SortDescending) {
-  const size_t size = 4;
-  Vec vector(size);
-
-  vector[0] = true;
-  vector[1] = false;
-  vector[2] = true;
-  vector[3] = false;
-
-  vector.sort(false);
-
-  EXPECT_EQ(true, vector[0]);
-  EXPECT_EQ(true, vector[1]);
-  EXPECT_EQ(false, vector[2]);
-  EXPECT_EQ(false, vector[3]);
+    const size_t flip_index = ascending ? size - weight : weight;
+    for(size_t i = 0; i < flip_index; ++i) {
+      EXPECT_EQ(!ascending, vector[i]);
+    }
+    for(size_t i = flip_index; i < size; ++i) {
+      EXPECT_EQ(ascending, vector[i]);
+    }
+  }
 }
 
 TEST(VectorBool, SortUniqueAscending) {
