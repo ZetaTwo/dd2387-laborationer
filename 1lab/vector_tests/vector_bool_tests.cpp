@@ -709,6 +709,23 @@ TEST(VectorBool, Weight1) {
   EXPECT_EQ(20, vector1.weight1());
 }
 
+TEST(VectorBool, Weight1DoesNotModifyVector) {
+  const Vec vector1({
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+  });
+  const Vec before(vector1);
+  vector1.weight1();
+
+  EXPECT_EQ(before.size(), vector1.size());
+  for(size_t i = 0; i < vector1.size(); ++i) {
+    EXPECT_EQ(before[i], vector1[i]);
+  }
+}
+
 TEST(VectorBool, Weight2) {
   const Vec vector1({
     true, false, true, false, true, false, true, false,
@@ -721,6 +738,22 @@ TEST(VectorBool, Weight2) {
   EXPECT_EQ(20, vector1.weight2());
 }
 
+TEST(VectorBool, Weight2DoesNotModifyVector) {
+  const Vec vector1({
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+  });
+  const Vec before(vector1);
+  vector1.weight2();
+
+  EXPECT_EQ(before.size(), vector1.size());
+  for(size_t i = 0; i < vector1.size(); ++i) {
+    EXPECT_EQ(before[i], vector1[i]);
+  }
+}
 TEST(VectorBool, Weight3) {
   const Vec vector1({
     true, false, true, false, true, false, true, false,
@@ -731,6 +764,23 @@ TEST(VectorBool, Weight3) {
   });
 
   EXPECT_EQ(20, vector1.weight3());
+}
+
+TEST(VectorBool, Weight3DoesNotModifyVector) {
+  const Vec vector1({
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+  });
+  const Vec before(vector1);
+  vector1.weight3();
+
+  EXPECT_EQ(before.size(), vector1.size());
+  for(size_t i = 0; i < vector1.size(); ++i) {
+    EXPECT_EQ(before[i], vector1[i]);
+  }
 }
 
 TEST(VectorBool, StreamInput) {
