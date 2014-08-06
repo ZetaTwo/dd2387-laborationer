@@ -474,7 +474,12 @@ Vector<bool>& Vector<bool>::sort(bool ascending) {
   return *this;
 }
 
-Vector<bool>& Vector<bool>::unique_sort(bool ascending) {
+Vector<bool>& Vector<bool>::unique_sort(const bool ascending) {
+  const size_t w = weight();
+  const bool hasFalse = w < count;
+  const bool hasTrue = w > 0;
+  count = hasFalse + hasTrue;
+  data[0] = ((hasFalse << !ascending) | (hasTrue << ascending)) & (1 << ascending);
   return *this;
 }
 
