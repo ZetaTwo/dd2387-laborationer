@@ -400,7 +400,7 @@ bool Vector<bool>::operator!=(const Vector<bool>& other) const {
 }
 
 Vector<bool>& Vector<bool>::push_back(const bool& element) {
-  return *this;
+  return insert(count, element);
 }
 
 Vector<bool>& Vector<bool>::insert(const size_t index, const bool& element) {
