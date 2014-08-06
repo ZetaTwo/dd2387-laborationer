@@ -46,6 +46,7 @@ public:
   bool exists(const bool& element) const;
   size_t size() const;
 
+  size_t weight() const;
   size_t weight1() const;
   size_t weight2() const;
   size_t weight3() const;
@@ -492,6 +493,10 @@ bool Vector<bool>::exists(const bool& element) const {
 
 size_t Vector<bool>::size() const {
   return count;
+}
+
+size_t Vector<bool>::weight() const {
+  return weight1();
 }
 
 size_t Vector<bool>::weight1() const {
