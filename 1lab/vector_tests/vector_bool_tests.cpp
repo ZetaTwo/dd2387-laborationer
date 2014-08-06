@@ -668,10 +668,22 @@ TEST(VectorBool, OperatorEqualFalseSize) {
 }
 
 TEST(VectorBool, OperatorEqualFalseValue) {
-  const Vec vector1({ true, false, true, true });
-  const Vec vector2({ false, true, false, true });
-
-  EXPECT_NE(vector1, vector2);
+  EXPECT_NE(
+    Vec({ true, true, true, true }),
+    Vec({ false, true, true, true })
+  );
+  EXPECT_NE(
+    Vec({ true, true, true, true }),
+    Vec({ true, false, true, true })
+  );
+  EXPECT_NE(
+    Vec({ true, true, true, true }),
+    Vec({ true, true, false, true })
+  );
+  EXPECT_NE(
+    Vec({ true, true, true, true }),
+    Vec({ true, true, true, false })
+  );
 }
 
 TEST(VectorBool, OperatorEqualTrue) {
