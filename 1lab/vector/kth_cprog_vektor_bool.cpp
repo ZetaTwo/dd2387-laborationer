@@ -507,6 +507,7 @@ size_t Vector<bool>::weight() const {
 size_t Vector<bool>::weight1() const {
   size_t result = 0;
 
+  data[size() / STORAGE_BLOCK_SIZE] %= 1 << (size() % STORAGE_BLOCK_SIZE);
   for(size_t i = 0; i <= size() / STORAGE_BLOCK_SIZE; i++) {
     size_t count = data[i] - ((data[i] >> 1) & 033333333333) - ((data[i] >> 2) & 011111111111);
     result += ((count + (count >> 3)) & 030707070707) % 63;
