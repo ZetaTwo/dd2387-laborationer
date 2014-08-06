@@ -7,17 +7,17 @@ using ::testing::Combine;
 using ::testing::Range;
 using ::testing::Values;
 
-class SizeTest : public TestWithParam<size_t> {};
-INSTANTIATE_TEST_CASE_P(VectorBool, SizeTest, Range(static_cast<size_t>(0), static_cast<size_t>(3000)));
+class SizeTest : public TestWithParam<int> {};
+INSTANTIATE_TEST_CASE_P(VectorBool, SizeTest, Range(0, 3000));
 
-class SizeSizeTest : public TestWithParam<std::tuple<size_t, size_t> > {};
-INSTANTIATE_TEST_CASE_P(VectorBool, SizeSizeTest, Combine(Range(static_cast<size_t>(0), static_cast<size_t>(100)), Range(static_cast<size_t>(0), static_cast<size_t>(100))));
+class SizeSizeTest : public TestWithParam<std::tuple<int, int> > {};
+INSTANTIATE_TEST_CASE_P(VectorBool, SizeSizeTest, Combine(Range(0, 100), Range(0, 100)));
 
-class SizeBoolTest : public TestWithParam<std::tuple<size_t, bool> > {};
-INSTANTIATE_TEST_CASE_P(VectorBool, SizeBoolTest, Combine(Range(static_cast<size_t>(0), static_cast<size_t>(3000)), Bool()));
+class SizeBoolTest : public TestWithParam<std::tuple<int, bool> > {};
+INSTANTIATE_TEST_CASE_P(VectorBool, SizeBoolTest, Combine(Range(0, 3000), Bool()));
 
-class SizeSizeBoolTest : public TestWithParam<std::tuple<size_t, size_t, bool> > {};
-INSTANTIATE_TEST_CASE_P(VectorBool, SizeSizeBoolTest, Combine(Range(static_cast<size_t>(0), static_cast<size_t>(100)), Range(static_cast<size_t>(0), static_cast<size_t>(100)), Bool()));
+class SizeSizeBoolTest : public TestWithParam<std::tuple<int, int, bool> > {};
+INSTANTIATE_TEST_CASE_P(VectorBool, SizeSizeBoolTest, Combine(Range(0, 100), Range(0, 100), Bool()));
 
 typedef Vector<bool> Vec;
 
