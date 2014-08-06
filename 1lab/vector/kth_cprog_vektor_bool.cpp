@@ -478,6 +478,25 @@ Vector<bool>& Vector<bool>::unique_sort(bool ascending) {
 }
 
 bool Vector<bool>::exists(const bool& element) const {
+  if(element) {
+    for(size_t i = 0; i < count / STORAGE_BLOCK_SIZE; ++i) {
+      if(data[i] != 0) {
+        return true;
+      }
+    }
+    if(data[count / STORAGE_BLOCK_SIZE] % (1 << count % STORAGE_BLOCK_SIZE) != 0) {
+      return true;
+    }
+  } else {
+    for(size_t i = 0; i < count / STORAGE_BLOCK_SIZE; ++i) {
+      if(~data[i] != 0) {
+        return true;
+      }
+    }
+    if(~data[count / STORAGE_BLOCK_SIZE] % (1 << count % STORAGE_BLOCK_SIZE) != 0) {
+      return true;
+    }
+  }
   return false;
 }
 
