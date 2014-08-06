@@ -697,89 +697,51 @@ TEST(VectorBool, OperatorEqualEdgeCase) {
   EXPECT_EQ(vector1, vector2);
 }
 
-TEST(VectorBool, Weight1) {
-  const Vec vector1({
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-  });
+TEST_P(SizeTest, Weight1) {
+  const size_t size = GetParam();
+  Vec vector(size);
+  for(size_t i = 0; i < size; ++i) {
+    vector[i] = i % 2;
+  }
+  const Vec before(vector);
 
-  EXPECT_EQ(20, vector1.weight1());
-}
+  EXPECT_EQ(size / 2, vector.weight1());
 
-TEST(VectorBool, Weight1DoesNotModifyVector) {
-  const Vec vector1({
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-  });
-  const Vec before(vector1);
-  vector1.weight1();
-
-  EXPECT_EQ(before.size(), vector1.size());
-  for(size_t i = 0; i < vector1.size(); ++i) {
-    EXPECT_EQ(before[i], vector1[i]);
+  EXPECT_EQ(before.size(), vector.size());
+  for(size_t i = 0; i < vector.size(); ++i) {
+    EXPECT_EQ(before[i], vector[i]) << "Vector has changed.";
   }
 }
 
-TEST(VectorBool, Weight2) {
-  const Vec vector1({
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-  });
+TEST_P(SizeTest, Weight2) {
+  const size_t size = GetParam();
+  Vec vector(size);
+  for(size_t i = 0; i < size; ++i) {
+    vector[i] = i % 2;
+  }
+  const Vec before(vector);
 
-  EXPECT_EQ(20, vector1.weight2());
-}
+  EXPECT_EQ(size / 2, vector.weight2());
 
-TEST(VectorBool, Weight2DoesNotModifyVector) {
-  const Vec vector1({
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-  });
-  const Vec before(vector1);
-  vector1.weight2();
-
-  EXPECT_EQ(before.size(), vector1.size());
-  for(size_t i = 0; i < vector1.size(); ++i) {
-    EXPECT_EQ(before[i], vector1[i]);
+  EXPECT_EQ(before.size(), vector.size());
+  for(size_t i = 0; i < vector.size(); ++i) {
+    EXPECT_EQ(before[i], vector[i]) << "Vector has changed.";
   }
 }
-TEST(VectorBool, Weight3) {
-  const Vec vector1({
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-  });
 
-  EXPECT_EQ(20, vector1.weight3());
-}
+TEST_P(SizeTest, Weight3) {
+  const size_t size = GetParam();
+  Vec vector(size);
+  for(size_t i = 0; i < size; ++i) {
+    vector[i] = i % 2;
+  }
+  const Vec before(vector);
 
-TEST(VectorBool, Weight3DoesNotModifyVector) {
-  const Vec vector1({
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-  });
-  const Vec before(vector1);
-  vector1.weight3();
+  EXPECT_EQ(size / 2, vector.weight3());
 
-  EXPECT_EQ(before.size(), vector1.size());
-  for(size_t i = 0; i < vector1.size(); ++i) {
-    EXPECT_EQ(before[i], vector1[i]);
+  EXPECT_EQ(before.size(), vector.size());
+  for(size_t i = 0; i < vector.size(); ++i) {
+    EXPECT_EQ(before[i], vector[i]) << "Vector has changed.";
   }
 }
 
