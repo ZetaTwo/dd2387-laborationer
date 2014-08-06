@@ -693,7 +693,7 @@ TEST(VectorBool, OperatorEqualTrue) {
   EXPECT_EQ(vector1, vector2);
 }
 
-TEST(VectorBool, OperatorEqualEdgeCase) {
+TEST(VectorBool, OperatorEqualComparesTheRightBits) {
   Vec vector1({ true, false, true, true, false });
   Vec vector2({ true, false, true, true, true });
 
