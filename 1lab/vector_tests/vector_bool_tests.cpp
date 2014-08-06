@@ -8,13 +8,13 @@ using ::testing::Range;
 using ::testing::Values;
 
 class SizeTest : public TestWithParam<int> {};
-INSTANTIATE_TEST_CASE_P(VectorBool, SizeTest, Range(0, 3000));
+INSTANTIATE_TEST_CASE_P(VectorBool, SizeTest, Range(0, 200));
 
 class SizeSizeTest : public TestWithParam<std::tuple<int, int> > {};
 INSTANTIATE_TEST_CASE_P(VectorBool, SizeSizeTest, Combine(Range(0, 100), Range(0, 100)));
 
 class SizeBoolTest : public TestWithParam<std::tuple<int, bool> > {};
-INSTANTIATE_TEST_CASE_P(VectorBool, SizeBoolTest, Combine(Range(0, 3000), Bool()));
+INSTANTIATE_TEST_CASE_P(VectorBool, SizeBoolTest, Combine(Range(0, 200), Bool()));
 
 class SizeSizeBoolTest : public TestWithParam<std::tuple<int, int, bool> > {};
 INSTANTIATE_TEST_CASE_P(VectorBool, SizeSizeBoolTest, Combine(Range(0, 100), Range(0, 100), Bool()));
