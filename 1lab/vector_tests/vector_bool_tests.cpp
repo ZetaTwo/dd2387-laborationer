@@ -8,16 +8,16 @@ using ::testing::Range;
 using ::testing::Values;
 
 class SizeTest : public TestWithParam<int> {};
-INSTANTIATE_TEST_CASE_P(VectorBool, SizeTest, Range(0, 200));
+INSTANTIATE_TEST_CASE_P(VectorBool, SizeTest, Range(0, 70));
 
 class SizeSizeTest : public TestWithParam<std::tuple<int, int> > {};
-INSTANTIATE_TEST_CASE_P(VectorBool, SizeSizeTest, Combine(Range(0, 100), Range(0, 100)));
+INSTANTIATE_TEST_CASE_P(VectorBool, SizeSizeTest, Combine(Range(0, 70), Range(0, 70)));
 
 class SizeBoolTest : public TestWithParam<std::tuple<int, bool> > {};
-INSTANTIATE_TEST_CASE_P(VectorBool, SizeBoolTest, Combine(Range(0, 200), Bool()));
+INSTANTIATE_TEST_CASE_P(VectorBool, SizeBoolTest, Combine(Range(0, 70), Bool()));
 
 class SizeSizeBoolTest : public TestWithParam<std::tuple<int, int, bool> > {};
-INSTANTIATE_TEST_CASE_P(VectorBool, SizeSizeBoolTest, Combine(Range(0, 100), Range(0, 100), Bool()));
+INSTANTIATE_TEST_CASE_P(VectorBool, SizeSizeBoolTest, Combine(Range(0, 70), Range(0, 70), Bool()));
 
 typedef Vector<bool> Vec;
 
@@ -329,7 +329,7 @@ TEST_P(SizeSizeTest, InsertOneItem) {
 TEST_P(SizeSizeTest, InsertManyItems) {
   const size_t size = std::get<0>(GetParam());
   const size_t insert_index = std::get<1>(GetParam());
-  const size_t insert_amount = 200;
+  const size_t insert_amount = 70;
   Vec vector(size);
 
   if(insert_index <= size) {
@@ -417,7 +417,7 @@ TEST_P(SizeSizeTest, EraseOneItem) {
 }
 
 class EraseManyItemsTest : public TestWithParam<std::tuple<int, int, int> > {};
-INSTANTIATE_TEST_CASE_P(VectorBool, EraseManyItemsTest, Combine(Values(1000), Range(0, 900, 100), Range(0, 100, 10)));
+INSTANTIATE_TEST_CASE_P(VectorBool, EraseManyItemsTest, Combine(Range(70, 100), Range(0, 70), Range(1, 71)));
 TEST_P(EraseManyItemsTest, EraseManyItems) {
   const size_t size = std::get<0>(GetParam());
   const size_t erase_index = std::get<1>(GetParam());
