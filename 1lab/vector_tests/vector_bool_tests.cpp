@@ -667,23 +667,19 @@ TEST(VectorBool, OperatorEqualFalseSize) {
   EXPECT_NE(vector1, vector2);
 }
 
-TEST(VectorBool, OperatorEqualFalseValue) {
-  EXPECT_NE(
-    Vec({ true, true, true, true }),
-    Vec({ false, true, true, true })
-  );
-  EXPECT_NE(
-    Vec({ true, true, true, true }),
-    Vec({ true, false, true, true })
-  );
-  EXPECT_NE(
-    Vec({ true, true, true, true }),
-    Vec({ true, true, false, true })
-  );
-  EXPECT_NE(
-    Vec({ true, true, true, true }),
-    Vec({ true, true, true, false })
-  );
+TEST_P(SizeSizeBoolTest, OperatorEqualFalseValue) {
+  const size_t size = std::get<0>(GetParam());
+  const size_t differing_index = std::get<1>(GetParam());
+  const bool initial_value = std::get<2>(GetParam());
+
+  if(differing_index < size) {
+    const Vec vector1(size, initial_value);
+    Vec vector2(size, initial_value);
+
+    vector2[differing_index] = !initial_value;
+
+    EXPECT_NE(vector1, vector2);
+  }
 }
 
 TEST_P(SizeBoolTest, OperatorEqualTrue) {
