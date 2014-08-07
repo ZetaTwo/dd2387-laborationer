@@ -686,9 +686,11 @@ TEST(VectorBool, OperatorEqualFalseValue) {
   );
 }
 
-TEST(VectorBool, OperatorEqualTrue) {
-  const Vec vector1({ true, false, true, true });
-  const Vec vector2({ true, false, true, true });
+TEST_P(SizeBoolTest, OperatorEqualTrue) {
+  const size_t size = std::get<0>(GetParam());
+  const bool value = std::get<1>(GetParam());
+  const Vec vector1(size, value);
+  const Vec vector2(size, value);
 
   EXPECT_EQ(vector1, vector2);
 }
