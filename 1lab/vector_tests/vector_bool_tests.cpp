@@ -7,17 +7,19 @@ using ::testing::Combine;
 using ::testing::Range;
 using ::testing::Values;
 
+#define SIZES Range(0, 70)
+
 class SizeTest : public TestWithParam<int> {};
-INSTANTIATE_TEST_CASE_P(VectorBool, SizeTest, Range(0, 70));
+INSTANTIATE_TEST_CASE_P(VectorBool, SizeTest, SIZES);
 
 class SizeSizeTest : public TestWithParam<std::tuple<int, int> > {};
-INSTANTIATE_TEST_CASE_P(VectorBool, SizeSizeTest, Combine(Range(0, 70), Range(0, 70)));
+INSTANTIATE_TEST_CASE_P(VectorBool, SizeSizeTest, Combine(SIZES, SIZES));
 
 class SizeBoolTest : public TestWithParam<std::tuple<int, bool> > {};
-INSTANTIATE_TEST_CASE_P(VectorBool, SizeBoolTest, Combine(Range(0, 70), Bool()));
+INSTANTIATE_TEST_CASE_P(VectorBool, SizeBoolTest, Combine(SIZES, Bool()));
 
 class SizeSizeBoolTest : public TestWithParam<std::tuple<int, int, bool> > {};
-INSTANTIATE_TEST_CASE_P(VectorBool, SizeSizeBoolTest, Combine(Range(0, 70), Range(0, 70), Bool()));
+INSTANTIATE_TEST_CASE_P(VectorBool, SizeSizeBoolTest, Combine(SIZES, SIZES, Bool()));
 
 typedef Vector<bool> Vec;
 
