@@ -379,40 +379,36 @@ TEST(VectorBool, InsertRange) {
   }, std::out_of_range);
 }
 
-TEST_P(SizeSizeTest, EraseOneItem) {
+class EraseOneItemTest : public TestWithParam<std::tuple<int, int> > {};
+INSTANTIATE_TEST_CASE_P(VectorBool, EraseOneItemTest, Combine(Values(70), Values(0, 1, 16, 31, 32, 33, 48, 63, 64, 65)));
+TEST_P(EraseOneItemTest, EraseOneItem) {
   const size_t size = std::get<0>(GetParam());
   const size_t erase_index = std::get<1>(GetParam());
   Vec vector(size, false);
 
-  if(erase_index >= size) {
-    EXPECT_THROW({
-      vector.erase(erase_index);
-    }, std::out_of_range);
-  } else {
-    if(erase_index > 1) {
-      vector[erase_index - 2] = true;
-    }
-    vector[erase_index] = true;
-    if(size > 1 && erase_index < size - 2) {
-      vector[erase_index + 2] = true;
-    }
+  if(erase_index > 1) {
+    vector[erase_index - 2] = true;
+  }
+  vector[erase_index] = true;
+  if(size > 1 && erase_index < size - 2) {
+    vector[erase_index + 2] = true;
+  }
 
-    vector.erase(erase_index);
+  vector.erase(erase_index);
 
-    EXPECT_EQ(size - 1, vector.size());
+  EXPECT_EQ(size - 1, vector.size());
 
-    if(erase_index > 1) {
-      EXPECT_TRUE(vector[erase_index - 2]);
-    }
-    if(erase_index > 0) {
-      EXPECT_FALSE(vector[erase_index - 1]);
-    }
-    if(erase_index < size - 1) {
-      EXPECT_FALSE(vector[erase_index]);
-    }
-    if(size > 1 && erase_index < size - 2) {
-      EXPECT_TRUE(vector[erase_index + 1]);
-    }
+  if(erase_index > 1) {
+    EXPECT_TRUE(vector[erase_index - 2]);
+  }
+  if(erase_index > 0) {
+    EXPECT_FALSE(vector[erase_index - 1]);
+  }
+  if(erase_index < size - 1) {
+    EXPECT_FALSE(vector[erase_index]);
+  }
+  if(erase_index < size - 2) {
+    EXPECT_TRUE(vector[erase_index + 1]);
   }
 }
 
