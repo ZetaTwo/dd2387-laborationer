@@ -434,11 +434,15 @@ TEST_P(EraseManyItemsTest, EraseManyItems) {
 
 TEST(VectorBool, EraseRange) {
   const size_t size = 4;
-  Vec vector(size);
+  Vec vector1(size);
+  Vec vector2(size+1);
 
   EXPECT_THROW({
-    vector.erase(size);
+    vector1.erase(size);
   }, std::out_of_range);
+  EXPECT_NO_THROW({
+    vector2.erase(size);
+  });
 }
 
 TEST_P(SizeTest, Clear) {
