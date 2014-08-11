@@ -417,7 +417,7 @@ TEST_P(SizeSizeTest, EraseOneItem) {
 }
 
 class EraseManyItemsTest : public TestWithParam<std::tuple<int, int, int> > {};
-INSTANTIATE_TEST_CASE_P(VectorBool, EraseManyItemsTest, Combine(Range(70, 100), Range(0, 70), Range(1, 71)));
+INSTANTIATE_TEST_CASE_P(VectorBool, EraseManyItemsTest, Combine(Values(66), Values(0, 1, 16, 31, 32, 33), Values(16, 31, 32, 33)));
 TEST_P(EraseManyItemsTest, EraseManyItems) {
   const size_t size = std::get<0>(GetParam());
   const size_t erase_index = std::get<1>(GetParam());
