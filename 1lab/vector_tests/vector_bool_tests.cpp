@@ -7,7 +7,7 @@ using ::testing::Combine;
 using ::testing::Range;
 using ::testing::Values;
 
-#define SIZES Range(0, 70)
+#define SIZES Values(0, 1, 16, 31, 32, 33, 48, 63, 64, 65, 1000)
 
 class SizeTest : public TestWithParam<int> {};
 INSTANTIATE_TEST_CASE_P(VectorBool, SizeTest, SIZES);
