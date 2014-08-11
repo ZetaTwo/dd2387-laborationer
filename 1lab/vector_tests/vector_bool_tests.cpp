@@ -328,12 +328,10 @@ TEST_P(SizeSizeTest, InsertOneItem) {
   }
 }
 
-class InsertManyItemsTest : public TestWithParam<std::tuple<int, int, int> > {};
-INSTANTIATE_TEST_CASE_P(VectorBool, InsertManyItemsTest, Combine(Range(30, 70), Range(0, 30), Range(1, 71)));
-TEST_P(InsertManyItemsTest, InsertManyItems) {
-  const size_t size = std::get<0>(GetParam());
-  const size_t insert_index = std::get<1>(GetParam());
-  const size_t insert_amount = std::get<2>(GetParam());
+TEST(VectorBool, InsertManyItems) {
+  const size_t size = 2;
+  const size_t insert_index = 1;
+  const size_t insert_amount = 64;
   Vec vector(size);
 
   for(size_t i = 0; i < insert_amount; i++) {
