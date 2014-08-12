@@ -90,13 +90,19 @@ TEST(VectorBool, ConstructorCopyAssignment) {
 }
 
 TEST(VectorBool, ConstructorInitlist) {
-  Vec vector({ true, false, true, false });
+  const Vec vector({
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+  });
 
-  EXPECT_EQ(true, vector[0]);
-  EXPECT_EQ(false, vector[1]);
-  EXPECT_EQ(true, vector[2]);
-  EXPECT_EQ(false, vector[3]);
-  EXPECT_EQ(4, vector.size());
+  EXPECT_EQ(40, vector.size());
+  for(size_t i = 0; i < vector.size(); i += 2) {
+    EXPECT_TRUE(vector[i]);
+    EXPECT_FALSE(vector[i+1]);
+  }
 }
 
 TEST(VectorBool, ConstructorInitlistAssignment) {
