@@ -116,13 +116,29 @@ TEST(VectorBool, ConstructorInitlist) {
 }
 
 TEST(VectorBool, ConstructorInitlistAssignment) {
-  Vec vector = { true, false, true, false };
+  const Vec vector1 = {
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+  };
+  const Vec vector2 = {
+    false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true,
+  };
 
-  EXPECT_EQ(true, vector[0]);
-  EXPECT_EQ(false, vector[1]);
-  EXPECT_EQ(true, vector[2]);
-  EXPECT_EQ(false, vector[3]);
-  EXPECT_EQ(4, vector.size());
+  EXPECT_EQ(40, vector1.size());
+  EXPECT_EQ(40, vector2.size());
+  for(size_t i = 0; i < 40; i += 2) {
+    EXPECT_TRUE(vector1[i]);
+    EXPECT_FALSE(vector1[i+1]);
+    EXPECT_FALSE(vector2[i]);
+    EXPECT_TRUE(vector2[i+1]);
+  }
 }
 
 TEST(VectorBool, ConstructorMove) {
