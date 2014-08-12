@@ -30,11 +30,11 @@ TEST(VectorBool, ConstructorDefault) {
 }
 
 TEST(VectorBool, ConstructorCopy) {
-  const size_t size = 4;
-  Vec vector1(size);
+  const size_t size = 65;
+  Vec vector1(size, false);
 
-  vector1[1] = false;
-  vector1[2] = true;
+  vector1[31] = true;
+  vector1[64] = true;
 
   Vec vector2(vector1);
 
@@ -43,19 +43,20 @@ TEST(VectorBool, ConstructorCopy) {
     EXPECT_EQ(vector1[i], vector2[i]);
   }
 
-  vector1[1] = true;
+  vector1[32] = true;
 
-  vector2[3] = true;
+  vector2[31] = false;
+  vector2[63] = true;
 
-  EXPECT_EQ(false, vector1[0]);
-  EXPECT_EQ(true, vector1[1]);
-  EXPECT_EQ(true, vector1[2]);
-  EXPECT_EQ(false, vector1[3]);
+  EXPECT_EQ(true, vector1[31]);
+  EXPECT_EQ(true, vector1[32]);
+  EXPECT_EQ(false, vector1[63]);
+  EXPECT_EQ(true, vector1[64]);
 
-  EXPECT_EQ(false, vector2[0]);
-  EXPECT_EQ(false, vector2[1]);
-  EXPECT_EQ(true, vector2[2]);
-  EXPECT_EQ(true, vector2[3]);
+  EXPECT_EQ(false, vector2[31]);
+  EXPECT_EQ(false, vector2[32]);
+  EXPECT_EQ(true, vector2[63]);
+  EXPECT_EQ(true, vector2[64]);
 }
 
 TEST(VectorBool, ConstructorCopyAssignment) {
