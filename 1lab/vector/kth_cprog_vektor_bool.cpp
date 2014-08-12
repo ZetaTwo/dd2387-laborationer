@@ -222,15 +222,14 @@ Vector<bool>::Vector(const std::initializer_list<bool>& list) : count(list.size(
   size_t blockSubindex = 0;
   storage_type blockData = 0;
 
-  for(listIndex = 0, item = list.begin(); item != list.end(); ++item, ++listIndex, ++blockSubindex) {
+  for(listIndex = 0, item = list.begin(); item != list.end(); ++item, ++listIndex, blockSubindex = (blockSubindex + 1) % STORAGE_BLOCK_SIZE) {
     if(*item) {
       blockData |= (1 << blockSubindex);
     }
 
-    if(blockSubindex == STORAGE_BLOCK_SIZE) {
+    if(blockSubindex == MAX_SUBINDEX) {
       data[blockIndex++] = blockData;
       blockData = 0;
-      blockSubindex = 0;
     }
   }
 
