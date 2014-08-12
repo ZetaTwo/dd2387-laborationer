@@ -90,18 +90,28 @@ TEST(VectorBool, ConstructorCopyAssignment) {
 }
 
 TEST(VectorBool, ConstructorInitlist) {
-  const Vec vector({
+  const Vec vector1({
     true, false, true, false, true, false, true, false,
     true, false, true, false, true, false, true, false,
     true, false, true, false, true, false, true, false,
     true, false, true, false, true, false, true, false,
     true, false, true, false, true, false, true, false,
   });
+  const Vec vector2({
+    false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true,
+  });
 
-  EXPECT_EQ(40, vector.size());
-  for(size_t i = 0; i < vector.size(); i += 2) {
-    EXPECT_TRUE(vector[i]);
-    EXPECT_FALSE(vector[i+1]);
+  EXPECT_EQ(40, vector1.size());
+  EXPECT_EQ(40, vector2.size());
+  for(size_t i = 0; i < 40; i += 2) {
+    EXPECT_TRUE(vector1[i]);
+    EXPECT_FALSE(vector1[i+1]);
+    EXPECT_FALSE(vector2[i]);
+    EXPECT_TRUE(vector2[i+1]);
   }
 }
 
