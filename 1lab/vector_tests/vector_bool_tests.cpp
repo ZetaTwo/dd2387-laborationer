@@ -39,7 +39,7 @@ TEST(VectorBool, ConstructorCopy) {
   Vec vector2(vector1);
 
   EXPECT_EQ(vector1.size(), vector2.size());
-  for (size_t i = 0; i < vector1.size(); ++i) {
+  for(size_t i = 0; i < vector1.size(); ++i) {
     EXPECT_EQ(vector1[i], vector2[i]);
   }
 
@@ -132,7 +132,7 @@ TEST_P(SizeBoolTest, ConstructorRepeat) {
   const bool value = std::get<1>(GetParam());
   Vec vector(size, value);
   EXPECT_EQ(size, vector.size());
-  for (size_t i = 0; i < size; i++) {
+  for(size_t i = 0; i < size; i++) {
     EXPECT_EQ(value, vector[i]);
   }
 }
@@ -548,8 +548,7 @@ TEST(VectorBool, ItrBeginEnd) {
   Vec vector1({ true, false, true, false });
   Vec vector2;
 
-  for (Vec::iterator itr = vector1.begin(); itr != vector1.end(); ++itr)
-  {
+  for(Vec::iterator itr = vector1.begin(); itr != vector1.end(); ++itr) {
     vector2.push_back(*itr);
   }
 
@@ -564,8 +563,7 @@ TEST(VectorBool, ItrCBeginEnd) {
   const Vec vector1({ true, false, true, false });
   Vec vector2;
 
-  for (Vec::const_iterator itr = vector1.begin(); itr != vector1.end(); ++itr)
-  {
+  for(Vec::const_iterator itr = vector1.begin(); itr != vector1.end(); ++itr) {
     vector2.push_back(*itr);
   }
 
@@ -581,8 +579,7 @@ TEST(VectorBool, ItrRBeginEnd) {
   Vec vector2({ false, true, false, true });
   Vec vector3;
 
-  for (Vec::reverse_iterator itr = vector1.rbegin(); itr != vector1.rend(); ++itr)
-  {
+  for(Vec::reverse_iterator itr = vector1.rbegin(); itr != vector1.rend(); ++itr) {
     vector3.push_back(*itr);
   }
 
@@ -598,8 +595,7 @@ TEST(VectorBool, ItrRCBeginEnd) {
   Vec vector2({ false, true, false, true });
   Vec vector3;
 
-  for (Vec::const_reverse_iterator itr = vector1.rbegin(); itr != vector1.rend(); ++itr)
-  {
+  for(Vec::const_reverse_iterator itr = vector1.rbegin(); itr != vector1.rend(); ++itr) {
     vector3.push_back(*itr);
   }
 
