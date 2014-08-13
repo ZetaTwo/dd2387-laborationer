@@ -216,7 +216,7 @@ TEST_P(SizeTest, OperatorBracketWriteRange) {
 
 TEST_P(SizeTest, OperatorBracketConstRange) {
   const size_t size = GetParam();
-  Vec vector(size);
+  const Vec vector(size);
 
   if(size > 0) {
     EXPECT_NO_THROW({
