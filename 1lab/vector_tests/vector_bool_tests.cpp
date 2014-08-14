@@ -278,7 +278,13 @@ TEST(VectorBool, OperatorBracketConstAlternatingFalseFirst) {
 }
 
 TEST(VectorBool, OperatorAssignment) {
-  Vec vector1({false, true, false, false});
+  Vec vector1({
+    false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true,
+  });
   Vec vector2({false});
   vector2 = vector1;
 
@@ -288,17 +294,20 @@ TEST(VectorBool, OperatorAssignment) {
   }
 
   vector1[0] = true;
+  vector1[31] = false;
 
   vector2[1] = false;
-  vector2[3] = true;
+  vector2[32] = true;
 
   EXPECT_EQ(true, vector1[0]);
   EXPECT_EQ(true, vector1[1]);
-  EXPECT_EQ(false, vector1[3]);
+  EXPECT_EQ(false, vector1[31]);
+  EXPECT_EQ(false, vector1[32]);
 
   EXPECT_EQ(false, vector2[0]);
   EXPECT_EQ(false, vector2[1]);
-  EXPECT_EQ(true, vector2[3]);
+  EXPECT_EQ(true, vector2[31]);
+  EXPECT_EQ(true, vector2[32]);
 }
 
 TEST(VectorBool, OperatorAssignmentSelf) {
