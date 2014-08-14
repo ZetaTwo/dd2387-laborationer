@@ -170,20 +170,23 @@ TEST_P(SizeBoolTest, ConstructorRepeat) {
 }
 
 TEST(VectorBool, OperatorBracketWrite) {
-  const size_t size = 4;
+  const size_t size = 70;
 
-  Vec vector(size);
-  EXPECT_EQ(false, vector[0]);
+  Vec vector(size, false);
 
-  vector[0] = false;
-  vector[1] = true;
-  vector[2] = false;
-  vector[3] = true;
+  for(size_t i = 0; i < size; ++i) {
+    vector[i] = i % 2 == 0;
+  }
+  for(size_t i = 0; i < size; ++i) {
+    EXPECT_EQ(i % 2 == 0, vector[i]);
+  }
 
-  EXPECT_EQ(false, vector[0]);
-  EXPECT_EQ(true, vector[1]);
-  EXPECT_EQ(false, vector[2]);
-  EXPECT_EQ(true, vector[3]);
+  for(size_t i = 0; i < size; ++i) {
+    vector[i] = i % 2 != 0;
+  }
+  for(size_t i = 0; i < size; ++i) {
+    EXPECT_EQ(i % 2 != 0, vector[i]);
+  }
 }
 
 TEST_P(SizeTest, OperatorBracketWriteRange) {
