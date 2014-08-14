@@ -248,7 +248,13 @@ TEST_P(SizeBoolTest, OperatorBracketConstAllEqual) {
 }
 
 TEST(VectorBool, OperatorBracketConstAlternatingTrueFirst) {
-  std::initializer_list<bool> list = {true, false, true, false, true, false};
+  std::initializer_list<bool> list = {
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+  };
   const Vec vector(list);
   for(size_t i = 0; i < list.size(); ) {
     EXPECT_TRUE(vector[i++]);
@@ -257,7 +263,13 @@ TEST(VectorBool, OperatorBracketConstAlternatingTrueFirst) {
 }
 
 TEST(VectorBool, OperatorBracketConstAlternatingFalseFirst) {
-  std::initializer_list<bool> list = {false, true, false, true, false, true};
+  std::initializer_list<bool> list = {
+    false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true,
+  };
   const Vec vector(list);
   for(size_t i = 0; i < list.size(); ) {
     EXPECT_FALSE(vector[i++]);
