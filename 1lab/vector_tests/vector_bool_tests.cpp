@@ -403,26 +403,6 @@ TEST(VectorBool, InsertManyItems) {
   }
 }
 
-TEST(VectorBool, InsertBeginning) {
-  const size_t size = 4;
-  Vec vector(size);
-
-  EXPECT_EQ(false, vector[1]);
-  vector.insert(0, true);
-  EXPECT_EQ(true, vector[0]);
-  EXPECT_EQ(size + 1, vector.size());
-}
-
-TEST(VectorBool, InsertEnd) {
-  const size_t size = 4;
-  Vec vector(size);
-
-  EXPECT_EQ(false, vector[1]);
-  vector.insert(vector.size(), true);
-  EXPECT_EQ(true, vector[size]);
-  EXPECT_EQ(size + 1, vector.size());
-}
-
 TEST(VectorBool, InsertRange) {
   const size_t size = 4;
   Vec vector(size);
