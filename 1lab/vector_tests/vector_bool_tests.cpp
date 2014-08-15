@@ -403,12 +403,19 @@ TEST(VectorBool, InsertManyItems) {
   }
 }
 
-TEST(VectorBool, InsertRange) {
-  const size_t size = 4;
-  Vec vector(size);
+TEST_P(SizeTest, InsertRange) {
+  const size_t size = GetParam();
+
+  EXPECT_NO_THROW({
+    Vec vector(size);
+    vector.insert(size, true);
+    vector.insert(0, true);
+  });
 
   EXPECT_THROW({
-    vector.insert(size + 2, true);
+    Vec vector(size);
+    vector.insert(size + 1, true);
+    vector.insert(-1, true);
   }, std::out_of_range);
 }
 
