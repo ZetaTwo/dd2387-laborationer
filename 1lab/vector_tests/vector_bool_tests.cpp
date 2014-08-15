@@ -461,7 +461,7 @@ TEST_P(EraseManyItemsTest, EraseManyItems) {
   Vec vector(size, false);
 
   for(size_t i = erase_index; i < erase_index + erase_amount; ++i) {
-    vector[erase_index] = true;
+    vector[i] = true;
   }
 
   for(size_t i = 0; i < erase_amount; ++i) {
