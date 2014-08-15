@@ -337,9 +337,9 @@ TEST(VectorBool, OperatorAssignmentMove) {
   EXPECT_EQ(true, (*vector2)[0]);
 }
 
-TEST_P(SizeSizeTest, PushBack) {
-  const size_t size = std::get<0>(GetParam());
-  const size_t append_amount = std::get<1>(GetParam());
+TEST_P(SizeTest, PushBack) {
+  const size_t size = GetParam();
+  const size_t append_amount = 10;
   Vec vector(size, false);
 
   for(size_t i = 0; i < append_amount; ++i) {
