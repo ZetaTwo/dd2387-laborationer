@@ -328,17 +328,6 @@ TEST(VectorBool, OperatorAssignmentSelf) {
   EXPECT_EQ(false, vector[3]);
 }
 
-TEST(VectorBool, OperatorAssignmentList) {
-  Vec vector;
-  vector = { true, false, true, false };
-
-  EXPECT_EQ(4, vector.size());
-  EXPECT_EQ(true, vector[0]);
-  EXPECT_EQ(false, vector[1]);
-  EXPECT_EQ(true, vector[2]);
-  EXPECT_EQ(false, vector[3]);
-}
-
 TEST(VectorBool, OperatorAssignmentMove) {
   std::unique_ptr<Vec> vector1(new Vec({ true, false, true, false }));
 
