@@ -472,8 +472,8 @@ TEST_P(EraseManyItemsTest, EraseManyItems) {
   EXPECT_FALSE(vector.exists(true));
 }
 
-TEST(VectorBool, EraseRange) {
-  const size_t size = 4;
+TEST_P(SizeTest, EraseRange) {
+  const size_t size = GetParam();
   Vec vector1(size);
   Vec vector2(size+1);
 
