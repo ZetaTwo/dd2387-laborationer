@@ -521,8 +521,11 @@ TEST_P(SizeSizeBoolTest, Sort) {
   }
 }
 
-TEST(VectorBool, SortUniqueAscending) {
+class BoolTest : public TestWithParam<bool> {};
+INSTANTIATE_TEST_CASE_P(VectorBool, BoolTest, Bool());
+TEST_P(BoolTest, SortUnique) {
   const size_t size = 4;
+  const bool ascending = GetParam();
   Vec vector(size);
 
   vector[0] = true;
@@ -530,29 +533,17 @@ TEST(VectorBool, SortUniqueAscending) {
   vector[2] = true;
   vector[3] = false;
 
-  vector.unique_sort();
+  vector.unique_sort(ascending);
 
   EXPECT_EQ(2, vector.size());
 
-  EXPECT_EQ(false, vector[0]);
-  EXPECT_EQ(true, vector[1]);
-}
-
-TEST(VectorBool, SortUniqueDescending) {
-  const size_t size = 4;
-  Vec vector(size);
-
-  vector[0] = true;
-  vector[1] = false;
-  vector[2] = true;
-  vector[3] = false;
-
-  vector.unique_sort(false);
-
-  EXPECT_EQ(2, vector.size());
-
-  EXPECT_EQ(true, vector[0]);
-  EXPECT_EQ(false, vector[1]);
+  if(ascending) {
+    EXPECT_EQ(false, vector[0]);
+    EXPECT_EQ(true, vector[1]);
+  } else {
+    EXPECT_EQ(true, vector[0]);
+    EXPECT_EQ(false, vector[1]);
+  }
 }
 
 TEST_P(SizeSizeBoolTest, Exists) {
