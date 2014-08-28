@@ -379,17 +379,10 @@ bool Vector<bool>::operator==(const Vector<bool>& other) const {
     return false;
   }
 
-  //Check all except last element
-  for(size_t i = 0; i < count / STORAGE_BLOCK_SIZE; i++) {
+  for(size_t i = 0; i < storage_size(); i++) {
     if(data[i] != other.data[i]) {
       return false;
     }
-  }
-
-  //Check last element
-  if(((data[count / STORAGE_BLOCK_SIZE]) & (1 << count % MAX_SUBINDEX)) !=
-    ((other.data[count / STORAGE_BLOCK_SIZE]) & (1 << count % MAX_SUBINDEX))) {
-    return false;
   }
 
   return true;
