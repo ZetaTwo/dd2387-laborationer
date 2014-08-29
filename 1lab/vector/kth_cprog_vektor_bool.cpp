@@ -331,7 +331,7 @@ Vector<bool>& Vector<bool>::operator=(Vector<bool>&& other) {
 
 Vector<bool> Vector<bool>::operator~() const {
   Vector<bool> result(count);
-  for(size_t i = 0; i <= size() / STORAGE_BLOCK_SIZE; i++) {
+  for(size_t i = 0; i < storage_size(); i++) {
     result.data[i] = ~data[i];
   }
 
