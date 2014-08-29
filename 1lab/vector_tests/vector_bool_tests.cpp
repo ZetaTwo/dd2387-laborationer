@@ -728,8 +728,8 @@ TEST(VectorBool, OperatorEqualComparesTheRightBits) {
   Vec vector1({ true, false, true, true, false });
   Vec vector2({ true, false, true, true, true });
 
-  vector1.erase(vector1.size());
-  vector2.erase(vector2.size());
+  vector1.erase(vector1.size() - 1);
+  vector2.erase(vector2.size() - 1);
 
   EXPECT_EQ(vector1, vector2);
 }
