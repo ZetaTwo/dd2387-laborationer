@@ -92,7 +92,11 @@ Answer:
 :::: Why does not `powerof` return the expected value (16), when invoked with 2 and 4?
 --------------------------------------------------------------------------------
 
-Answer: ...
+Answer:
+
+The for statement is immediately followed by a semicolon (;) and not a code
+block, which means the following row is not in the loop body and is therefore
+executed exactly once.
 
 --------------------------------------------------------------------------------
 :::: Why does not `y` compare equal to 3.1415?
