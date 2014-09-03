@@ -630,10 +630,10 @@ TEST(VectorBool, ItrRCBeginEnd) {
 }
 
 TEST(VectorBool, OperatorNot) {
-  const Vec vector1({ true, false, true, false });
-  const Vec vector2({ false, true, false, true });
-
-  EXPECT_EQ(vector1, ~vector2);
+  EXPECT_EQ(Vec({ true }), ~Vec({ false }));
+  EXPECT_EQ(Vec({ true, false }), ~Vec({ false, true }));
+  EXPECT_EQ(Vec({ true, false, true }), ~Vec({ false, true, false }));
+  EXPECT_EQ(Vec({ true, false, true, false }), ~Vec({ false, true, false, true }));
 }
 
 TEST(VectorBool, OperatorAnd) {
