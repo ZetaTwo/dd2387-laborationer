@@ -24,7 +24,12 @@ Answer:
 :::: What is the difference between an object file, and an executable?
 --------------------------------------------------------------------------------
 
-Answer: ...
+Answer:
+
+An object file is a precompiled "library" that you can link to when compiling
+other things. An executable is an entry point for processes. While an executable
+is a series of instructions to execute in a process, an object file is more like
+a toolbox containing functions and other definitions for use by executables.
 
 --------------------------------------------------------------------------------
 
