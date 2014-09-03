@@ -102,7 +102,12 @@ executed exactly once.
 :::: Why does not `y` compare equal to 3.1415?
 --------------------------------------------------------------------------------
 
-Answer: ...
+Answer:
+
+Because floating-point numbers are not meant to be compared for exact equality.
+It might in fact not be possible to save the exact value of a given literal as a
+float (or double), and so an approximation is used instead. Of course, comparing
+approximate values for equality is rather futile.
 
 --------------------------------------------------------------------------------
 :::: Is there any difference in behavior if we compare `y` to 3.1415f, if so: why?
