@@ -123,7 +123,12 @@ the latter case the two expressions (y and 3.1415f) evaluate to equal values.
 :::: two floating-point values are equal, and why?
 --------------------------------------------------------------------------------
 
-Answer: ...
+Answer:
+
+Check if the difference between them is smaller than some small value; Because
+it is extremely unlikely that two values will be the same even if algebra says
+they should be (because only a finite subset of the rational numbers can be
+represented exactly).
 
 --------------------------------------------------------------------------------
 
