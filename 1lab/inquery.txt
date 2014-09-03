@@ -15,7 +15,10 @@ $ mkdir bar && touch bar/test_foobar.cpp && make test_foobar_run # 'bar/foobar' 
 :::: What is the purpose of `-Wall` and -g, when passed as arguments to g++?
 --------------------------------------------------------------------------------
 
-Answer: ...
+Answer:
+
+- Wall: Enable (almost) all warnings
+- g: Include debug information in output program (mainly for GDB)
 
 --------------------------------------------------------------------------------
 :::: What is the difference between an object file, and an executable?
