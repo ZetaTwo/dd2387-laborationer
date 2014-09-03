@@ -3,7 +3,13 @@
 :::: What does `$*` mean inside a makefile?
 --------------------------------------------------------------------------------
 
-Answer: ...
+Answer: The stem that matches an implicit pattern. Example:
+
+test_%_run: test_%.cpp
+    echo $*
+
+$ touch test_foo.cpp && make test_foo_run # 'foo' printed
+$ mkdir bar && touch bar/test_foobar.cpp && make test_foobar_run # 'bar/foobar' printed
 
 --------------------------------------------------------------------------------
 :::: What is the purpose of `-Wall` and -g, when passed as arguments to g++?
