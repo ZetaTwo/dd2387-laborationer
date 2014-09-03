@@ -151,7 +151,15 @@ int count_if_followed_by (char const * p, int len, char a, char b) {
      especially in the case of `count_if_followed_by`?
 --------------------------------------------------------------------------------
 
-Answer: ...
+Answer:
+
+- Errors often happen at the boundaries if you're careless
+- Sometimes errors are more easily exposed at the boundaries even when they
+  affect program flow elsewhere as well (and so, testing boundary conditions can
+  help expose problems that may not be apparent otherwise).
+- Especially in the case of count_if_followed_by because it does pointer
+  arithmetic, which doesn't necessarily cause compile-time errors nor runtime
+  crashes.
 
 --------------------------------------------------------------------------------
 
