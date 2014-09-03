@@ -43,7 +43,19 @@ a toolbox containing functions and other definitions for use by executables.
      respectively?
 -------------------------------------------------------------------------------
 
-Answer: ...
+Answer:
+
+- cout is a stream that prints output to standard output (typically the terminal
+  the program is invoked from). It is meant for the main output from a program.
+  For instance, a program that copies files might print progress information to
+  cout.
+- cerr is a stream that prints to standard error (also typically the terminal
+  the program is invoked from). It is meant for error output, for instance a
+  program that copies files might print warnings and error information such as
+  permission issues to cerr.
+- clog is meant for log output, and is by default connected to standard error.
+  For instance, a program might print fine-grained debugging information to
+  clog.
 
 -------------------------------------------------------------------------------
 
