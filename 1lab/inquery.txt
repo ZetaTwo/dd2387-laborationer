@@ -113,7 +113,10 @@ approximate values for equality is rather futile.
 :::: Is there any difference in behavior if we compare `y` to 3.1415f, if so: why?
 --------------------------------------------------------------------------------
 
-Answer: ...
+Answer:
+
+Yes; because the 3.1415 is a double literal while 3.1415f is a float literal. In
+the latter case the two expressions (y and 3.1415f) evaluate to equal values.
 
 --------------------------------------------------------------------------------
 :::: What is the recommended method to use when trying to determine if
