@@ -5,7 +5,7 @@
 
 int main(int argc, char** argv) {
   std::string helloee = "world";
-  size_t times = 1;
+  int times = 1;
 
   if(argc > 3) {
     std::cerr << "error: Too many arguments!" << std::endl;
