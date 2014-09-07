@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include<string>
 
-std::string hello(std::string helloee, size_t times);
+void hello(std::ostream& out, const std::string& helloee, const size_t times);

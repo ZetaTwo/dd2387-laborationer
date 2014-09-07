@@ -28,5 +28,6 @@ int main(int argc, char** argv) {
     }
   }
 
-  std::cout << hello(helloee, times) << std::endl;
+  hello(std::cout, helloee, times);
+  std::cout << std::endl;
 }
