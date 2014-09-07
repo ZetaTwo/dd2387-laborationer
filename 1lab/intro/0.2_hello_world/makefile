@@ -9,4 +9,4 @@ main.exe: main.cpp hello.o
 	g++ $(CPPFLAGS) -o $@ $^
 
 clean:
-	rm -f *.o
+	rm -f *.o *.exe
