@@ -217,7 +217,11 @@ int main()
 :::: why?
 --------------------------------------------------------------------------------
 
-Answer: ...
+Answer:
+
+Memory leaks - memory allocated on the heap is not freed. This is because the
+delete operator is used to free the variable aa instead of the delete[]
+operator.
 
 --------------------------------------------------------------------------------
 
