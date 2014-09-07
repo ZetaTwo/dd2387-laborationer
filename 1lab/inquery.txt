@@ -231,7 +231,10 @@ operator.
 :::: through `delete p` instead of `delete [] p`?
 --------------------------------------------------------------------------------
 
-Answer: ...
+Answer:
+
+Undefined behaviour. In particular, it's almost certain that not all memory
+allocated for the array will be freed.
 
 --------------------------------------------------------------------------------
 
