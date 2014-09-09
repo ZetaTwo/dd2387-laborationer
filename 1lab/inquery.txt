@@ -216,11 +216,7 @@ int main()
 :::: What different constructors are invoked, and when?
 --------------------------------------------------------------------------------
 
-Answer:
-
-Memory leaks - memory allocated on the heap is not freed. This is because the
-delete operator is used to free the variable aa instead of the delete[]
-operator.
+Answer: ...
 
 --------------------------------------------------------------------------------
 :::: Will there be any temporaries created, if so; when?
@@ -232,16 +228,16 @@ Answer: ...
 :::: When are the objects destructed, an why?
 --------------------------------------------------------------------------------
 
-Answer:
-
-Undefined behaviour. In particular, it's almost certain that not all memory
-allocated for the array will be freed.
+Answer: ...
 
 --------------------------------------------------------------------------------
 :::: What will happen if we try to free the dynamically allocated
 :::: memory through `delete p`, instead of `delete [] p`?
 
-Answer: ...
+Answer:
+
+Undefined behaviour. In particular, it's almost certain that not all memory
+allocated for the array will be freed.
 
 --------------------------------------------------------------------------------
 
