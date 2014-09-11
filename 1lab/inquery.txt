@@ -167,50 +167,50 @@ Answer:
 
 0.5 WILL IT FLOAT (birth.cpp)
 
-class A {
-public:
-   A () {
-     std::cout << "default-constructor" << std::endl;
-   }
-
-   A (A const& src) {
-     std::cout << "copy-constructor" << std::endl;
-   }
-
-  ~A () {
-    std::cout << "destructor" << std::endl;
-  }
-
-   A(char const* s) {
-      std::cout << "some other constructor" << std::endl;
-   }
-
-   A& operator= (A const& src) {
-     std::cout << "the assignment operator" << std::endl;
-     return *this;
-   }
-};
-
-void no_ref(A a) {}
-void with_ref(const A & a) {}
-
-int main()
-{
-    A a("my name is a");
-
-    A b = a;          // what is the difference
-    A c(a);           // between these three
-    A d;              // forms of initialization?
-
-    d = a;
-
-      no_ref (a);     // will this copy the value of `a`?
-    with_ref (a);     // will this copy the value of `a`?
-
-    A *aa = new A[5];
-    delete aa;        // what will happen?
-    return 0;
-}
+001 class A {
+002 public:
+003   A () {
+004     std::cout << "default-constructor" << std::endl;
+005   }
+006
+007   A (A const& src) {
+008     std::cout << "copy-constructor" << std::endl;
+009   }
+010
+011   ~A () {
+012     std::cout << "destructor" << std::endl;
+013   }
+014
+015   A(char const* s) {
+016     std::cout << "some other constructor" << std::endl;
+017   }
+018
+019   A& operator= (A const& src) {
+020     std::cout << "the assignment operator" << std::endl;
+021     return *this;
+022   }
+023 };
+024
+025 void no_ref(A a) {}
+026 void with_ref(const A & a) {}
+027
+028 int main()
+029 {
+030     A a("my name is a");
+031
+032     A b = a;          // what is the difference
+033     A c(a);           // between these three
+034     A d;              // forms of initialization?
+035
+036     d = a;
+037
+038       no_ref (a);     // will this copy the value of `a`?
+039     with_ref (a);     // will this copy the value of `a`?
+040
+041     A *aa = new A[5];
+042     delete aa;        // what will happen?
+043     return 0;
+044 }
 
 --------------------------------------------------------------------------------
 :::: What different constructors are invoked, and when?
