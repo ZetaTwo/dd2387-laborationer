@@ -216,13 +216,31 @@ Answer:
 :::: What different constructors are invoked, and when?
 --------------------------------------------------------------------------------
 
-Answer: ...
+Answer:
+
+- 030 invokes 015 (string constructor)
+- 032 invokes 007 (copy constructor)
+- 033 invokes 007 (copy constructor)
+- 034 invokes 003 (default constructor)
+- 036 invokes 019 (assignment operator)
+- 038 invokes 007 (copy constructor) and 011 (destructor)
+- 039 invokes no constructor
+- 041 invokes 003 (default constructor) five times
 
 --------------------------------------------------------------------------------
 :::: Will there be any temporaries created, if so; when?
 --------------------------------------------------------------------------------
 
-Answer: ...
+Answer:
+
+- The 5 literal at 041
+- The 0 literal at 043
+- The string literals in the constructors etc.
+- The string literal at 030
+- The return value at 021 (assuming the program continues after 042)
+
+No temporaries of A will be created - all instances are always bound to some
+name or another.
 
 --------------------------------------------------------------------------------
 :::: When are the objects destructed, an why?
