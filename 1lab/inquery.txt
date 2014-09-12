@@ -255,7 +255,7 @@ Answer: ...
 Answer:
 
 Undefined behaviour. In particular, it's almost certain that not all memory
-allocated for the array will be freed.
+allocated for the array will be freed. Segmentation fault is likely.
 
 --------------------------------------------------------------------------------
 
