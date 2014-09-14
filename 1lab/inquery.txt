@@ -272,22 +272,22 @@ allocated for the array will be freed. Segmentation fault is likely.
 
 0.5 WILL IT FLOAT (bad_plumming.cpp)
 
-struct Data {
-    int x, y, z;
-};
-
-Data ** foo(Data ** v, int x) {
-    for (int i = 0; i < x; i++)
-        if (v[i] != 0)
-            v[i] = new Data;
-    return v;
-}
-
-int main () {
-    const int size = 5;
-    Data ** v = new Data * [size];
-    foo(v, size);
-}
+001 struct Data {
+002     int x, y, z;
+003 };
+004
+005 Data ** foo(Data ** v, int x) {
+006     for (int i = 0; i < x; i++)
+007         if (v[i] != 0)
+008             v[i] = new Data;
+009     return v;
+010 }
+011
+012 int main () {
+013     const int size = 5;
+014     Data ** v = new Data * [size];
+015     foo(v, size);
+016 }
 
 --------------------------------------------------------------------------------
 :::: valgrind indicates that the program suffers from a few problems, which and
