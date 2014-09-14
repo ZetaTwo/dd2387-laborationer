@@ -246,7 +246,17 @@ name or another.
 :::: When are the objects destructed, an why?
 --------------------------------------------------------------------------------
 
-Answer: ...
+Answer:
+
+- At the end of the no_ref call, because a new A instance is created when the
+  function begins. This instance is not dynamically allocated, so it is
+  automatically destructed when the function exits and the instance no longer
+  exists.
+- In the delete call (assuming the right delete operator is used) 5 times,
+  because that's what the delete operator does (it calls the destructor on the
+  value(s) pointed to by the pointer).
+- At the end of the main call, because the 'a', 'b', 'c' and 'd' variables are
+  not dynamically allocated.
 
 --------------------------------------------------------------------------------
 :::: What will happen if we try to free the dynamically allocated
