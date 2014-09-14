@@ -294,7 +294,13 @@ allocated for the array will be freed. Segmentation fault is likely.
 :::: why?
 --------------------------------------------------------------------------------
 
-Answer: ...
+Answer:
+
+- The conditional at 008 depends on uninitialized values, which is because the
+  'v' array in the main function is never initialized (an array of
+  pointers/arrays is created, but the subpointers/arrays are never set to point
+  to anything).
+- Memory leaks, because the 'v' array is never destroyed with a delete[] call.
 
 --------------------------------------------------------------------------------
 :::: If you comment out the entire if-block in foo, is there any difference in
