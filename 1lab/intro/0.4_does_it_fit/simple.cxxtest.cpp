@@ -17,4 +17,22 @@ class MyTestSuite : public CxxTest::TestSuite {
 
       TS_ASSERT_EQUALS(result, 1);
     }
+
+    void test_that_it_does_not_look_outside_the_specified_range() {
+      char const data[6] = {'G','G','X','G','X','G'};
+      int  const result = count_if_followed_by (data, 4, 'G', 'X');
+      TS_ASSERT_EQUALS(result, 1);
+    }
+
+    void test_that_it_does_not_crash_when_prefix_is_at_the_end() {
+      char const data[6] = {'G','G','X','G','X','G'};
+      int  const result = count_if_followed_by (data, 6, 'G', 'X');
+      TS_ASSERT_EQUALS(result, 2);
+    }
+
+    void test_that_it_does_not_count_suffix_when_not_preceded_by_prefix() {
+      char const data[6] = {'G','A','X','G','X','G'};
+      int  const result = count_if_followed_by (data, 6, 'G', 'X');
+      TS_ASSERT_EQUALS(result, 1);
+    }
 };
