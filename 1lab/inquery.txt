@@ -337,7 +337,20 @@ dereference each value in the 'v' array and delete[] those subpointers as well.
 :::: and why?
 --------------------------------------------------------------------------------
 
-Answer: ...
+Answer:
+
+- A const variant is needed in order for it to be possible to read elements of a
+  const instance or use operator[] in a const method of the class:
+
+      const Vector copy(original);
+      cout << copy[0] << endl; // Not possible if operator[] is not const
+
+- A non-const variant is needed in order for it to be possible for a writable
+  operator[] to call non-const methods of the class:
+
+      Vector v;
+      v[0] = 7; // operator[] needs to be non-const if this needs to call other
+                   non-const methods of the class
 
 --------------------------------------------------------------------------------
 :::: The semantics of copying a UIntVector might not be trivial; why must we
