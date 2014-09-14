@@ -307,7 +307,9 @@ Answer:
 :::: how much memory that is leaked?
 --------------------------------------------------------------------------------
 
-Answer: ...
+Answer:
+
+No, because there is still no delete[] call.
 
 --------------------------------------------------------------------------------
 :::: Revert bad_plumming.cpp to its original state, and comment out
@@ -320,7 +322,10 @@ Answer: ...
 :::: delete [] p;
 --------------------------------------------------------------------------------
 
-Answer: ...
+Answer:
+
+The top-level pointer is deallocated, but the subpointers are not. You need to
+dereference each value in the 'v' array and delete[] those subpointers as well.
 
 --------------------------------------------------------------------------------
 
