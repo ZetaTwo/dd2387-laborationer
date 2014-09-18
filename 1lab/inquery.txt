@@ -1,0 +1,382 @@
+0.1  MAKE IT HAPPEN
+--------------------------------------------------------------------------------
+:::: What does `$*` mean inside a makefile?
+--------------------------------------------------------------------------------
+
+Answer: The stem that matches an implicit pattern. Example:
+
+test_%_run: test_%.cpp
+    echo $*
+
+$ touch test_foo.cpp && make test_foo_run # 'foo' printed
+$ mkdir bar && touch bar/test_foobar.cpp && make test_foobar_run # 'bar/foobar' printed
+
+--------------------------------------------------------------------------------
+:::: What is the purpose of `-Wall` and -g, when passed as arguments to g++?
+--------------------------------------------------------------------------------
+
+Answer:
+
+- Wall: Enable (almost) all warnings
+- g: Include debug information in output program (mainly for GDB)
+
+--------------------------------------------------------------------------------
+:::: What is the difference between an object file, and an executable?
+--------------------------------------------------------------------------------
+
+Answer:
+
+An object file is a precompiled "library" that you can link to when compiling
+other things. An executable is an entry point for processes. While an executable
+is a series of instructions to execute in a process, an object file is more like
+a toolbox containing functions and other definitions for use by executables.
+
+--------------------------------------------------------------------------------
+
+
+
+
+
+0.2  HELLO WORLD
+-------------------------------------------------------------------------------
+:::: What is the purpose of `std::cout`, `std::cerr`, and `std::clog`,
+     respectively?
+-------------------------------------------------------------------------------
+
+Answer:
+
+- cout is a stream that prints output to standard output (typically the terminal
+  the program is invoked from). It is meant for the main output from a program.
+  For instance, a program that copies files might print progress information to
+  cout.
+- cerr is a stream that prints to standard error (also typically the terminal
+  the program is invoked from). It is meant for error output, for instance a
+  program that copies files might print warnings and error information such as
+  permission issues to cerr.
+- clog is meant for log output, and is by default connected to standard error.
+  For instance, a program might print fine-grained debugging information to
+  clog.
+
+-------------------------------------------------------------------------------
+
+
+
+
+0.3  TRAIN SPOTTING
+
+    int powerof (int x, int y) {
+      int res = 1;
+
+      for (int i = 0; i < y; ++i);
+        res *= x;
+
+      return res;
+    }
+
+    int main () {
+      int const a = 2;
+      int const b = 4;
+
+      int   x = powerof(a, b);
+      float y = 3.1415;
+
+      std::cout << a << "^" << b << " = " << x << ";\n";
+
+      if (y == 3.1415)
+        std::cout << y << " is equal to 3.1415!\n";
+      else
+        std::cout << y << " is not equal to 3.1415!\n";
+    }
+
+--------------------------------------------------------------------------------
+:::: Why does not `powerof` return the expected value (16), when invoked with 2 and 4?
+--------------------------------------------------------------------------------
+
+Answer:
+
+The for statement is immediately followed by a semicolon (;) and not a code
+block, which means the following row is not in the loop body and is therefore
+executed exactly once.
+
+--------------------------------------------------------------------------------
+:::: Why does not `y` compare equal to 3.1415?
+--------------------------------------------------------------------------------
+
+Answer:
+
+Because floating-point numbers are not meant to be compared for exact equality.
+It might in fact not be possible to save the exact value of a given literal as a
+float (or double), and so an approximation is used instead. Of course, comparing
+approximate values for equality is rather futile.
+
+--------------------------------------------------------------------------------
+:::: Is there any difference in behavior if we compare `y` to 3.1415f, if so: why?
+--------------------------------------------------------------------------------
+
+Answer:
+
+Yes; because the 3.1415 is a double literal while 3.1415f is a float literal. In
+the latter case the two expressions (y and 3.1415f) evaluate to equal values.
+
+--------------------------------------------------------------------------------
+:::: What is the recommended method to use when trying to determine if
+:::: two floating-point values are equal, and why?
+--------------------------------------------------------------------------------
+
+Answer:
+
+Check if the difference between them is smaller than some small value; Because
+it is extremely unlikely that two values will be the same even if algebra says
+they should be (because only a finite subset of the rational numbers can be
+represented exactly).
+
+--------------------------------------------------------------------------------
+
+
+0.4 DOES IT FIT
+
+int count_if_followed_by (char const * p, int len, char a, char b) {
+  int        count = 0;
+  char const * end = p + len;
+
+  while (p != end) {
+    if (*p == a && *(p+1) == b)
+      count += 1;
+
+    ++p;
+  }
+
+--------------------------------------------------------------------------------
+:::: Why is it important to test the boundary conditions of an implementation,
+     especially in the case of `count_if_followed_by`?
+--------------------------------------------------------------------------------
+
+Answer:
+
+- Errors often happen at the boundaries if you're careless
+- Sometimes errors are more easily exposed at the boundaries even when they
+  affect program flow elsewhere as well (and so, testing boundary conditions can
+  help expose problems that may not be apparent otherwise).
+- Especially in the case of count_if_followed_by because it does pointer
+  arithmetic, which doesn't necessarily cause compile-time errors nor runtime
+  crashes.
+
+--------------------------------------------------------------------------------
+
+
+
+0.5 WILL IT FLOAT (birth.cpp)
+
+001 class A {
+002 public:
+003   A () {
+004     std::cout << "default-constructor" << std::endl;
+005   }
+006
+007   A (A const& src) {
+008     std::cout << "copy-constructor" << std::endl;
+009   }
+010
+011   ~A () {
+012     std::cout << "destructor" << std::endl;
+013   }
+014
+015   A(char const* s) {
+016     std::cout << "some other constructor" << std::endl;
+017   }
+018
+019   A& operator= (A const& src) {
+020     std::cout << "the assignment operator" << std::endl;
+021     return *this;
+022   }
+023 };
+024
+025 void no_ref(A a) {}
+026 void with_ref(const A & a) {}
+027
+028 int main()
+029 {
+030     A a("my name is a");
+031
+032     A b = a;          // what is the difference
+033     A c(a);           // between these three
+034     A d;              // forms of initialization?
+035
+036     d = a;
+037
+038       no_ref (a);     // will this copy the value of `a`?
+039     with_ref (a);     // will this copy the value of `a`?
+040
+041     A *aa = new A[5];
+042     delete aa;        // what will happen?
+043     return 0;
+044 }
+
+--------------------------------------------------------------------------------
+:::: What different constructors are invoked, and when?
+--------------------------------------------------------------------------------
+
+Answer:
+
+- 030 invokes 015 (string constructor)
+- 032 invokes 007 (copy constructor)
+- 033 invokes 007 (copy constructor)
+- 034 invokes 003 (default constructor)
+- 036 invokes 019 (assignment operator)
+- 038 invokes 007 (copy constructor) and 011 (destructor)
+- 039 invokes no constructor
+- 041 invokes 003 (default constructor) five times
+
+--------------------------------------------------------------------------------
+:::: Will there be any temporaries created, if so; when?
+--------------------------------------------------------------------------------
+
+Answer:
+
+- The 5 literal at 041
+- The 0 literal at 043
+- The string literals in the constructors etc.
+- The string literal at 030
+- The return value at 021 (assuming the program continues after 042)
+
+No temporaries of A will be created - all instances are always bound to some
+name or another.
+
+--------------------------------------------------------------------------------
+:::: When are the objects destructed, an why?
+--------------------------------------------------------------------------------
+
+Answer:
+
+- At the end of the no_ref call, because a new A instance is created when the
+  function begins. This instance is not dynamically allocated, so it is
+  automatically destructed when the function exits and the instance no longer
+  exists.
+- In the delete call (assuming the right delete operator is used) 5 times,
+  because that's what the delete operator does (it calls the destructor on the
+  value(s) pointed to by the pointer).
+- At the end of the main call, because the 'a', 'b', 'c' and 'd' variables are
+  not dynamically allocated.
+
+--------------------------------------------------------------------------------
+:::: What will happen if we try to free the dynamically allocated
+:::: memory through `delete p`, instead of `delete [] p`?
+
+Answer:
+
+Undefined behaviour. In particular, it's almost certain that not all memory
+allocated for the array will be freed. Segmentation fault is likely.
+
+--------------------------------------------------------------------------------
+
+
+0.5 WILL IT FLOAT (bad_plumming.cpp)
+
+001 struct Data {
+002     int x, y, z;
+003 };
+004
+005 Data ** foo(Data ** v, int x) {
+006     for (int i = 0; i < x; i++)
+007         if (v[i] != 0)
+008             v[i] = new Data;
+009     return v;
+010 }
+011
+012 int main () {
+013     const int size = 5;
+014     Data ** v = new Data * [size];
+015     foo(v, size);
+016 }
+
+--------------------------------------------------------------------------------
+:::: valgrind indicates that the program suffers from a few problems, which and
+:::: why?
+--------------------------------------------------------------------------------
+
+Answer:
+
+- The conditional at 008 depends on uninitialized values, which is because the
+  'v' array in the main function is never initialized (an array of
+  pointers/arrays is created, but the subpointers/arrays are never set to point
+  to anything).
+- Memory leaks, because the 'v' array is never destroyed with a delete[] call.
+
+--------------------------------------------------------------------------------
+:::: If you comment out the entire if-block in foo, is there any difference in
+:::: how much memory that is leaked?
+--------------------------------------------------------------------------------
+
+Answer:
+
+No, because there is still no delete[] call.
+
+--------------------------------------------------------------------------------
+:::: Revert bad_plumming.cpp to its original state, and comment out
+:::: only the line that contains the if-condition.
+::::
+:::: If you now change the last line of `main` to the following; why is it
+:::: that valgrind still issue diagnostics related to memory management?
+::::
+:::: Data ** p = foo (v, size);
+:::: delete [] p;
+--------------------------------------------------------------------------------
+
+Answer:
+
+The top-level pointer is deallocated, but the subpointers are not. You need to
+dereference each value in the 'v' array and delete[] those subpointers as well.
+
+--------------------------------------------------------------------------------
+
+
+
+0.6  THE SIMPLE CONTAINER
+--------------------------------------------------------------------------------
+:::: `operator[]` must in some cases be marked as `const`, but not always; when,
+:::: and why?
+--------------------------------------------------------------------------------
+
+Answer:
+
+- A const variant is needed in order for it to be possible to read elements of a
+  const instance or use operator[] in a const method of the class:
+
+      const Vector copy(original);
+      cout << copy[0] << endl; // Not possible if operator[] is not const
+
+- A non-const variant is needed in order for it to be possible for a writable
+  operator[] to call non-const methods of the class:
+
+      Vector v;
+      v[0] = 7; // operator[] needs to be non-const if this needs to call other
+                   non-const methods of the class
+
+--------------------------------------------------------------------------------
+:::: The semantics of copying a UIntVector might not be trivial; why must we
+:::: manually implement the relevant code, instead of having the compiler generate
+:::: it for us?
+--------------------------------------------------------------------------------
+
+Answer: ...
+
+--------------------------------------------------------------------------------
+
+
+
+0.7  THE TEMPLATE VECTOR
+--------------------------------------------------------------------------------
+:::: Iterating over a range of elements can be done with a range-based for-loop,
+:::: but the type of `source` must meet certain requirements; what are they?
+--------------------------------------------------------------------------------
+
+Answer: ...
+
+--------------------------------------------------------------------------------
+:::: The C++ Standard sometimes state that a type in the Standard Library is
+:::: "unspecified"; why do you think that is?
+--------------------------------------------------------------------------------
+
+Answer: ...
+
+--------------------------------------------------------------------------------
