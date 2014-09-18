@@ -1,7 +1,0 @@
-Varför blir värdet på variabeln w inte det man tror?
-- z får ett värde som är strax under 0.29 (händer även med double), och
-  konversionen till (int) trunkerar bort decimalerna så värdet på w blir 28.
-
-Hur många varv körs for-loopen i funktionen powerof?
-- Bara ett, eftersom for-satsen följs av ett semikolon (så {}-blocket betyder
-  ingenting speciellt och körs bara en gång)
