@@ -1,38 +1,38 @@
-#include "vector.h"             // inkludera din headerfil här
+#include "vector.h"             // inkludera din headerfil hÃ¤r
 #include <assert.h>             // assert(b) ger felmeddelande om b falsk
 
 
 int main()
 {
     Vector<double> v;           // ok: defaultkonstruktor ger vektor med flyttal
-    Vector<char> *a = new Vector<char>[3];  // dynamiskt allokerade ser ut så här
+    Vector<char> *a = new Vector<char>[3];  // dynamiskt allokerade ser ut sÃ¥ hÃ¤r
     delete [] a;
 
-    assert(v.size() == 0);      // tom från början
-    v.push_back(3.14);          // lägg till ett element sist
+    assert(v.size() == 0);      // tom frÃ¥n bÃ¶rjan
+    v.push_back(3.14);          // lÃ¤gg till ett element sist
     assert(v.size() == 1);      // nu ligger ett element i vektorn
-    v.insert(0, 2.10);          // lägg till före element 0, dvs först
-    assert(v[0] == 2.10 &&      // hamnade de rätt?
+    v.insert(0, 2.10);          // lÃ¤gg till fÃ¶re element 0, dvs fÃ¶rst
+    assert(v[0] == 2.10 &&      // hamnade de rÃ¤tt?
 	   v[1] == 3.14);
-    assert(v.size() == 2);      // nu ligger två element i vektorn
+    assert(v.size() == 2);      // nu ligger tvÃ¥ element i vektorn
     v.sort(false);              // sortera i fallande ordning
-    assert(v[0] == 3.14 &&      // hamnade de rätt?
+    assert(v[0] == 3.14 &&      // hamnade de rÃ¤tt?
 	   v[1] == 2.10);
-    assert(v.size() == 2);      // ingenting ändrat?
+    assert(v.size() == 2);      // ingenting Ã¤ndrat?
     v[1] = 2.11;                // tilldelning av enstaka element;
 
     const Vector<double> &vc = v;  // skapa konstant referens
-    assert(vc.size() == 2);     // ok: ändrar ej vektorn som är konstant
-    assert(vc[0] == 3.14 &&     // ok: ändrar ej vektorn som är konstant
+    assert(vc.size() == 2);     // ok: Ã¤ndrar ej vektorn som Ã¤r konstant
+    assert(vc[0] == 3.14 &&     // ok: Ã¤ndrar ej vektorn som Ã¤r konstant
 	   vc[1] == 2.11);
 
-    v.erase(0);                 // ta bort första elementet
-    assert(v.size() == 1);      // rätt antal elelment
-    v.clear();                  // töm hela vektorn
-    assert(v.size() == 0);      // tom när alla element är borttagna
+    v.erase(0);                 // ta bort fÃ¶rsta elementet
+    assert(v.size() == 1);      // rÃ¤tt antal elelment
+    v.clear();                  // tÃ¶m hela vektorn
+    assert(v.size() == 0);      // tom nÃ¤r alla element Ã¤r borttagna
 
 
-    // kontrollera att följande rader inte går att kompilera
+    // kontrollera att fÃ¶ljande rader inte gÃ¥r att kompilera
     vc[0] = 3.1415;             // fel: tilldelning av konstant objekt
     Vector<char> c = v;         // fel: tilldelning av olika typer
 
