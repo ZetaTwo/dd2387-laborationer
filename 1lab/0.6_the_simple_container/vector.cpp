@@ -1,7 +1,7 @@
 #include <stdexcept>
 #include <cmath>
 #include <algorithm> //sort
-#include "Vector_int.h"
+#include "vector.h"
 
 typedef unsigned int T;
 
