@@ -1,4 +1,4 @@
-#include "vector.h"             // inkludera din headerfil här
+#include "kth_cprog_vektor.cpp" // inkludera din headerfil här
 #include <assert.h>             // assert(b) ger felmeddelande om b falsk
 
 
