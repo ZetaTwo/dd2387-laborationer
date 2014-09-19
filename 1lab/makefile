@@ -1,4 +1,4 @@
-CPPFLAGS=-std=c++11 -Wall -g
+CPPFLAGS=-std=c++11 -Wall -g -lgtest
 
 COURSEDIR=../kurskatalog
 
@@ -68,8 +68,8 @@ build/$(EX06DIR)/test_vec.exe: $(EX06DIR)/test_vec.cpp build/$(EX06DIR)/vector.o
 
 build/$(EX07DIR)/vector_tests.o: $(EX07DIR)/vector_tests.cpp $(EX07DIR)/kth_cprog_vektor.cpp
 	mkdir -p $(@D)
-	g++ $(CPPFLAGS) -lgtest -c -o $@ $<
+	g++ $(CPPFLAGS) -c -o $@ $<
 
 build/$(EX07DIR)/vector_tests.exe: ../test_runner.cpp build/$(EX07DIR)/vector_tests.o
 	mkdir -p $(@D)
-	g++ $(CPPFLAGS) -lgtest -o $@ $^
+	g++ $(CPPFLAGS) -o $@ $^
