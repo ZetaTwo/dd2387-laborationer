@@ -2,10 +2,11 @@ CPPFLAGS=-std=c++11 -Wall -g
 
 COURSEDIR=../kurskatalog
 
+EX01DIR=0.1_make_it_happen
 EX02DIR=0.2_hello_world
 EX03DIR=0.3_trainspotting
 
-lab1: ex02 ex03
+lab1: ex01 ex02 ex03
 
 build/%.o: %.cpp %.h
 	mkdir -p $(@D)
@@ -17,6 +18,8 @@ build/%.exe: %.cpp
 
 run/%: build/%.exe
 	./$^
+
+ex01: run/$(EX01DIR)/hello_world
 
 ex02: build/$(EX02DIR)/hello.exe
 	./$<
