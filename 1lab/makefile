@@ -10,7 +10,9 @@ EX05DIR=0.5_will_it_float
 EX06DIR=0.6_the_simple_container
 EX07DIR=0.7_the_template_vector
 
-lab1: ex01 ex02 ex03 ex04 ex05 ex06 ex07
+EX14DIR=1.4_the_hypercube
+
+lab1: ex01 ex02 ex03 ex04 ex05 ex06 ex07 ex14
 
 build/%.o: %.cpp %.h
 	mkdir -p $(@D)
@@ -50,6 +52,8 @@ ex07: ex07_given_tests ex07_tests
 ex07_given_tests: valgrind/$(EX07DIR)/test_template_vec
 ex07_tests: run/$(EX07DIR)/vector_tests
 
+ex14: run/$(EX14DIR)/hypercube_tests
+
 build/$(EX02DIR)/hello.exe: $(EX02DIR)/main.cpp build/$(EX02DIR)/hello.o
 	mkdir -p $(@D)
 	g++ $(CPPFLAGS) -o $@ $^
@@ -73,3 +77,11 @@ build/$(EX07DIR)/vector_tests.o: $(EX07DIR)/vector_tests.cpp $(EX07DIR)/kth_cpro
 build/$(EX07DIR)/vector_tests.exe: ../test_runner.cpp build/$(EX07DIR)/vector_tests.o
 	mkdir -p $(@D)
 	g++ $(CPPFLAGS) -o $@ $^
+
+build/$(EX14DIR)/hypercube_tests.o: $(EX14DIR)/hypercube_tests.cpp $(EX14DIR)/hypercube.hpp $(EX07DIR)/kth_cprog_vektor.cpp
+	mkdir -p $(@D)
+	g++ ${CPPFLAGS} -I $(EX07DIR) -c -o $@ $<
+
+build/$(EX14DIR)/hypercube_tests.exe: ../test_runner.cpp build/$(EX14DIR)/hypercube_tests.o
+	mkdir -p $(@D)
+	g++ ${CPPFLAGS} -o $@ $^
