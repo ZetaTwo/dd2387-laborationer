@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "../vector/kth_cprog_vektor.cpp"
+#include "kth_cprog_vektor.cpp"
 
 TEST(Vector, ConstructorDefault) {
   EXPECT_NO_THROW({
