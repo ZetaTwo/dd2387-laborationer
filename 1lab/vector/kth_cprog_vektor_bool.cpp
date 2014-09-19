@@ -379,8 +379,16 @@ bool Vector<bool>::operator==(const Vector<bool>& other) const {
     return false;
   }
 
-  for(size_t i = 0; i < storage_size(); i++) {
+  for(size_t i = 0; i < storage_size()-1; i++) {
     if(data[i] != other.data[i]) {
+      return false;
+    }
+  }
+
+  const size_t last_data_index = storage_size() - 1;
+  if(last_data_index >= 0) {
+    const size_t cell_size_mask = 1 << (size() % STORAGE_BLOCK_SIZE);
+    if(data[last_data_index] % cell_size_mask != other.data[last_data_index] % cell_size_mask) {
       return false;
     }
   }
