@@ -8,8 +8,9 @@ EX03DIR=0.3_trainspotting
 EX04DIR=0.4_does_it_fit
 EX05DIR=0.5_will_it_float
 EX06DIR=0.6_the_simple_container
+EX07DIR=0.7_the_template_vector
 
-lab1: ex01 ex02 ex03 ex04 ex05 ex06
+lab1: ex01 ex02 ex03 ex04 ex05 ex06 ex07
 
 build/%.o: %.cpp %.h
 	mkdir -p $(@D)
@@ -60,3 +61,5 @@ build/$(EX04DIR)/simple_testrunner.cpp: $(EX04DIR)/simple.cxxtest.cpp
 build/$(EX06DIR)/test_vec.exe: $(EX06DIR)/test_vec.cpp build/$(EX06DIR)/vector.o
 	mkdir -p $(@D)
 	g++ $(CPPFLAGS) -o $@ $^
+
+ex07: valgrind/$(EX07DIR)/test_template_vec
