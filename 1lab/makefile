@@ -46,6 +46,10 @@ ex05: valgrind/$(EX05DIR)/birth valgrind/$(EX05DIR)/bad_plumming
 ex06: build/$(EX06DIR)/test_vec.exe
 	valgrind ./$<
 
+ex07: ex07_given_tests ex07_tests
+ex07_given_tests: valgrind/$(EX07DIR)/test_template_vec
+ex07_tests: run/$(EX07DIR)/vector_tests
+
 build/$(EX02DIR)/hello.exe: $(EX02DIR)/main.cpp build/$(EX02DIR)/hello.o
 	mkdir -p $(@D)
 	g++ $(CPPFLAGS) -o $@ $^
@@ -62,4 +66,10 @@ build/$(EX06DIR)/test_vec.exe: $(EX06DIR)/test_vec.cpp build/$(EX06DIR)/vector.o
 	mkdir -p $(@D)
 	g++ $(CPPFLAGS) -o $@ $^
 
-ex07: valgrind/$(EX07DIR)/test_template_vec
+build/$(EX07DIR)/vector_tests.o: $(EX07DIR)/vector_tests.cpp $(EX07DIR)/kth_cprog_vektor.cpp
+	mkdir -p $(@D)
+	g++ $(CPPFLAGS) -lgtest -c -o $@ $<
+
+build/$(EX07DIR)/vector_tests.exe: ../test_runner.cpp build/$(EX07DIR)/vector_tests.o
+	mkdir -p $(@D)
+	g++ $(CPPFLAGS) -lgtest -o $@ $^
