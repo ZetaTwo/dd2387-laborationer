@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "../vector/hypercube.hpp"
+#include "hypercube.hpp"
 
 typedef uint8_t byte;
 
