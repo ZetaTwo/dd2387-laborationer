@@ -6,8 +6,9 @@ EX01DIR=0.1_make_it_happen
 EX02DIR=0.2_hello_world
 EX03DIR=0.3_trainspotting
 EX04DIR=0.4_does_it_fit
+EX05DIR=0.5_will_it_float
 
-lab1: ex01 ex02 ex03 ex04
+lab1: ex01 ex02 ex03 ex04 ex05
 
 build/%.o: %.cpp %.h
 	mkdir -p $(@D)
@@ -19,6 +20,9 @@ build/%.exe: %.cpp
 
 run/%: build/%.exe
 	./$^
+
+valgrind/%: build/%.exe
+	valgrind ./$^
 
 ex01: run/$(EX01DIR)/hello_world
 
@@ -34,6 +38,8 @@ ex02: build/$(EX02DIR)/hello.exe
 ex03: run/$(EX03DIR)/float run/$(EX03DIR)/weird
 
 ex04: run/$(EX04DIR)/simple_testrunner
+
+ex05: valgrind/$(EX05DIR)/birth valgrind/$(EX05DIR)/bad_plumming
 
 build/$(EX02DIR)/hello.exe: $(EX02DIR)/main.cpp build/$(EX02DIR)/hello.o
 	mkdir -p $(@D)
