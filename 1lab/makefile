@@ -7,8 +7,9 @@ EX02DIR=0.2_hello_world
 EX03DIR=0.3_trainspotting
 EX04DIR=0.4_does_it_fit
 EX05DIR=0.5_will_it_float
+EX06DIR=0.6_the_simple_container
 
-lab1: ex01 ex02 ex03 ex04 ex05
+lab1: ex01 ex02 ex03 ex04 ex05 ex06
 
 build/%.o: %.cpp %.h
 	mkdir -p $(@D)
@@ -41,6 +42,9 @@ ex04: run/$(EX04DIR)/simple_testrunner
 
 ex05: valgrind/$(EX05DIR)/birth valgrind/$(EX05DIR)/bad_plumming
 
+ex06: build/$(EX06DIR)/test_vec.exe
+	valgrind ./$<
+
 build/$(EX02DIR)/hello.exe: $(EX02DIR)/main.cpp build/$(EX02DIR)/hello.o
 	mkdir -p $(@D)
 	g++ $(CPPFLAGS) -o $@ $^
@@ -52,3 +56,7 @@ build/$(EX04DIR)/simple_testrunner.exe: build/$(EX04DIR)/simple_testrunner.cpp $
 build/$(EX04DIR)/simple_testrunner.cpp: $(EX04DIR)/simple.cxxtest.cpp
 	mkdir -p $(@D)
 	python2 $(COURSEDIR)/cxxtest/cxxtestgen.py --error-printer -o $@ $<
+
+build/$(EX06DIR)/test_vec.exe: $(EX06DIR)/test_vec.cpp build/$(EX06DIR)/vector.o
+	mkdir -p $(@D)
+	g++ $(CPPFLAGS) -o $@ $^
