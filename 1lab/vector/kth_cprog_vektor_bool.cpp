@@ -387,8 +387,21 @@ bool Vector<bool>::operator==(const Vector<bool>& other) const {
 
   const size_t last_data_index = storage_size() - 1;
   if(last_data_index >= 0) {
-    const size_t cell_size_mask = 1 << (size() % STORAGE_BLOCK_SIZE);
-    if(data[last_data_index] % cell_size_mask != other.data[last_data_index] % cell_size_mask) {
+    const size_t cell_max_subindex = size() % STORAGE_BLOCK_SIZE;
+
+    storage_type last_block;
+    storage_type other_last_block;
+
+    if(cell_max_subindex == 0) {
+      last_block = data[last_data_index];
+      other_last_block = other.data[last_data_index];
+    } else {
+      const size_t cell_size_mask = 1 << cell_max_subindex;
+      last_block = data[last_data_index] % cell_size_mask;
+      other_last_block = other.data[last_data_index] % cell_size_mask;
+    }
+
+    if(last_block != other_last_block) {
       return false;
     }
   }
