@@ -102,14 +102,32 @@ TEST(VectorBool, ConstructorInitlist) {
     false, true, false, true, false, true, false, true,
     false, true, false, true, false, true, false,
   });
+  const Vec vector3_31 = {
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true,
+  };
+  const Vec vector4_31 = {
+    false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false,
+  };
 
   EXPECT_EQ(31, vector1_31.size());
   EXPECT_EQ(31, vector2_31.size());
+  EXPECT_EQ(31, vector3_31.size());
+  EXPECT_EQ(31, vector4_31.size());
   for(size_t i = 0; i < 30; i += 2) {
     EXPECT_TRUE(vector1_31[i]);
     EXPECT_FALSE(vector1_31[i+1]);
     EXPECT_FALSE(vector2_31[i]);
     EXPECT_TRUE(vector2_31[i+1]);
+    EXPECT_TRUE(vector3_31[i]);
+    EXPECT_FALSE(vector3_31[i+1]);
+    EXPECT_FALSE(vector4_31[i]);
+    EXPECT_TRUE(vector4_31[i+1]);
   }
 
   const Vec vector1_32({
@@ -124,14 +142,32 @@ TEST(VectorBool, ConstructorInitlist) {
     false, true, false, true, false, true, false, true,
     false, true, false, true, false, true, false, true,
   });
+  const Vec vector3_32 = {
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+  };
+  const Vec vector4_32 = {
+    false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true,
+  };
 
   EXPECT_EQ(32, vector1_32.size());
   EXPECT_EQ(32, vector2_32.size());
+  EXPECT_EQ(32, vector3_32.size());
+  EXPECT_EQ(32, vector4_32.size());
   for(size_t i = 0; i < 31; i += 2) {
     EXPECT_TRUE(vector1_32[i]);
     EXPECT_FALSE(vector1_32[i+1]);
     EXPECT_FALSE(vector2_32[i]);
     EXPECT_TRUE(vector2_32[i+1]);
+    EXPECT_TRUE(vector3_32[i]);
+    EXPECT_FALSE(vector3_32[i+1]);
+    EXPECT_FALSE(vector4_32[i]);
+    EXPECT_TRUE(vector4_32[i+1]);
   }
 
   const Vec vector1_33({
@@ -146,14 +182,32 @@ TEST(VectorBool, ConstructorInitlist) {
     false, true, false, true, false, true, false, true,
     false, true, false, true, false, true, false, true, false
   });
+  const Vec vector3_33 = {
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false, true
+  };
+  const Vec vector4_33 = {
+    false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true, false
+  };
 
   EXPECT_EQ(33, vector1_33.size());
   EXPECT_EQ(33, vector2_33.size());
+  EXPECT_EQ(33, vector3_33.size());
+  EXPECT_EQ(33, vector4_33.size());
   for(size_t i = 0; i < 32; i += 2) {
     EXPECT_TRUE(vector1_33[i]);
     EXPECT_FALSE(vector1_33[i+1]);
     EXPECT_FALSE(vector2_33[i]);
     EXPECT_TRUE(vector2_33[i+1]);
+    EXPECT_TRUE(vector3_33[i]);
+    EXPECT_FALSE(vector3_33[i+1]);
+    EXPECT_FALSE(vector4_33[i]);
+    EXPECT_TRUE(vector4_33[i+1]);
   }
 
   const Vec vector1_63({
@@ -176,14 +230,40 @@ TEST(VectorBool, ConstructorInitlist) {
     false, true, false, true, false, true, false, true,
     false, true, false, true, false, true, false,
   });
+  const Vec vector3_63 = {
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true,
+  };
+  const Vec vector4_63 = {
+    false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false,
+  };
 
   EXPECT_EQ(63, vector1_63.size());
   EXPECT_EQ(63, vector2_63.size());
+  EXPECT_EQ(63, vector3_63.size());
+  EXPECT_EQ(63, vector4_63.size());
   for(size_t i = 0; i < 62; i += 2) {
     EXPECT_TRUE(vector1_63[i]);
     EXPECT_FALSE(vector1_63[i+1]);
     EXPECT_FALSE(vector2_63[i]);
     EXPECT_TRUE(vector2_63[i+1]);
+    EXPECT_TRUE(vector3_63[i]);
+    EXPECT_FALSE(vector3_63[i+1]);
+    EXPECT_FALSE(vector4_63[i]);
+    EXPECT_TRUE(vector4_63[i+1]);
   }
 
   const Vec vector1_64({
@@ -206,14 +286,40 @@ TEST(VectorBool, ConstructorInitlist) {
     false, true, false, true, false, true, false, true,
     false, true, false, true, false, true, false, true,
   });
+  const Vec vector3_64 = {
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+  };
+  const Vec vector4_64 = {
+    false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true,
+  };
 
   EXPECT_EQ(64, vector1_64.size());
   EXPECT_EQ(64, vector2_64.size());
+  EXPECT_EQ(64, vector3_64.size());
+  EXPECT_EQ(64, vector4_64.size());
   for(size_t i = 0; i < 63; i += 2) {
     EXPECT_TRUE(vector1_64[i]);
     EXPECT_FALSE(vector1_64[i+1]);
     EXPECT_FALSE(vector2_64[i]);
     EXPECT_TRUE(vector2_64[i+1]);
+    EXPECT_TRUE(vector3_64[i]);
+    EXPECT_FALSE(vector3_64[i+1]);
+    EXPECT_FALSE(vector4_64[i]);
+    EXPECT_TRUE(vector4_64[i+1]);
   }
 
   const Vec vector1_65({
@@ -236,40 +342,40 @@ TEST(VectorBool, ConstructorInitlist) {
     false, true, false, true, false, true, false, true,
     false, true, false, true, false, true, false, true, false
   });
+  const Vec vector3_65 = {
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false, true
+  };
+  const Vec vector4_65 = {
+    false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true, false
+  };
 
   EXPECT_EQ(65, vector1_65.size());
   EXPECT_EQ(65, vector2_65.size());
+  EXPECT_EQ(65, vector3_65.size());
+  EXPECT_EQ(65, vector4_65.size());
   for(size_t i = 0; i < 64; i += 2) {
     EXPECT_TRUE(vector1_65[i]);
     EXPECT_FALSE(vector1_65[i+1]);
     EXPECT_FALSE(vector2_65[i]);
     EXPECT_TRUE(vector2_65[i+1]);
-  }
-}
-
-TEST(VectorBool, ConstructorInitlistAssignment) {
-  const Vec vector1 = {
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-  };
-  const Vec vector2 = {
-    false, true, false, true, false, true, false, true,
-    false, true, false, true, false, true, false, true,
-    false, true, false, true, false, true, false, true,
-    false, true, false, true, false, true, false, true,
-    false, true, false, true, false, true, false, true,
-  };
-
-  EXPECT_EQ(40, vector1.size());
-  EXPECT_EQ(40, vector2.size());
-  for(size_t i = 0; i < 40; i += 2) {
-    EXPECT_TRUE(vector1[i]);
-    EXPECT_FALSE(vector1[i+1]);
-    EXPECT_FALSE(vector2[i]);
-    EXPECT_TRUE(vector2[i+1]);
+    EXPECT_TRUE(vector3_65[i]);
+    EXPECT_FALSE(vector3_65[i+1]);
+    EXPECT_FALSE(vector4_65[i]);
+    EXPECT_TRUE(vector4_65[i+1]);
   }
 }
 
