@@ -1053,13 +1053,22 @@ TEST_P(SizeSizeBoolTest, OperatorEqualFalseValue) {
   }
 }
 
-TEST_P(SizeBoolTest, OperatorEqualTrue) {
+TEST_P(SizeSizeBoolTest, OperatorEqualTrue) {
   const size_t size = std::get<0>(GetParam());
-  const bool value = std::get<1>(GetParam());
-  const Vec vector1(size, value);
-  const Vec vector2(size, value);
+  const size_t different_index = std::get<1>(GetParam());
+  const bool value = std::get<2>(GetParam());
+
+  Vec vector1(size, value);
+  Vec vector2(size, value);
 
   EXPECT_EQ(vector1, vector2);
+
+  if(different_index < size) {
+    vector1[different_index] = !value;
+    vector2[different_index] = !value;
+
+    EXPECT_EQ(vector1, vector2);
+  }
 }
 
 TEST(VectorBool, OperatorEqualComparesTheRightBits) {
