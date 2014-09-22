@@ -379,31 +379,34 @@ bool Vector<bool>::operator==(const Vector<bool>& other) const {
     return false;
   }
 
-  for(size_t i = 0; i < storage_size()-1; i++) {
+  if(size() == 0 || storage_size() == 0) {
+    return true;
+  }
+
+  const size_t last_logical_block_index = (size()-1) / STORAGE_BLOCK_SIZE;
+
+  for(size_t i = 0; i < last_logical_block_index; i++) {
     if(data[i] != other.data[i]) {
       return false;
     }
   }
 
-  const size_t last_data_index = storage_size() - 1;
-  if(last_data_index >= 0) {
-    const size_t cell_max_subindex = size() % STORAGE_BLOCK_SIZE;
+  const size_t block_logical_end = size() % STORAGE_BLOCK_SIZE;
 
-    storage_type last_block;
-    storage_type other_last_block;
+  storage_type last_block;
+  storage_type other_last_block;
 
-    if(cell_max_subindex == 0) {
-      last_block = data[last_data_index];
-      other_last_block = other.data[last_data_index];
-    } else {
-      const size_t cell_size_mask = 1 << cell_max_subindex;
-      last_block = data[last_data_index] % cell_size_mask;
-      other_last_block = other.data[last_data_index] % cell_size_mask;
-    }
+  if(block_logical_end == 0) {
+    last_block = data[last_logical_block_index];
+    other_last_block = other.data[last_logical_block_index];
+  } else {
+    const size_t block_size_mask = 1 << block_logical_end;
+    last_block = data[last_logical_block_index] % block_size_mask;
+    other_last_block = other.data[last_logical_block_index] % block_size_mask;
+  }
 
-    if(last_block != other_last_block) {
-      return false;
-    }
+  if(last_block != other_last_block) {
+    return false;
   }
 
   return true;
