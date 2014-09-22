@@ -2,7 +2,7 @@
 #define MATRIX_TEST_H_INCLUDED
 
 #include "Matrix.h"
-#include "/info/cprog09/cxxtest/cxxtest/TestSuite.h"
+#include "cxxtest/TestSuite.h"
 #include <fstream>
 #include <sstream>
 
