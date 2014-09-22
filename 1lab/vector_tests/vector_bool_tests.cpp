@@ -26,6 +26,45 @@ INSTANTIATE_TEST_CASE_P(VectorBool, SizeSizeBoolTest, Combine(SIZES, SIZES, Bool
 
 typedef Vector<bool> Vec;
 
+class AlternatingVectorsTest : public TestWithParam<Vec> {};
+INSTANTIATE_TEST_CASE_P(VectorBool, AlternatingVectorsTest, Values(
+  Vec(0)
+  ,Vec({ true })
+  ,Vec({ true, false })
+  ,Vec({ true, false, true })
+  ,Vec({ true, false, true, false })
+  ,Vec({ // 31
+    true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false, true, false, true, false, true, false, true
+  })
+  ,Vec({ // 32
+    true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false
+  })
+  ,Vec({ // 33
+    true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true
+  })
+  ,Vec({ // 63
+    true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false, true, false, true, false, true, false, true
+  })
+  ,Vec({ // 64
+    true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false
+  })
+  ,Vec({ // 65
+    true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true
+  })
+));
+
 TEST(VectorBool, ConstructorDefault) {
   EXPECT_NO_THROW({
     Vec vector;
@@ -870,72 +909,15 @@ TEST(VectorBool, ItrRCBeginEnd) {
   EXPECT_EQ(vector2[3], vector3[3]);
 }
 
-TEST(VectorBool, OperatorNot) {
+TEST_P(AlternatingVectorsTest, OperatorNot) {
+  const Vec& vector = GetParam();
+  const Vec neg_vector = ~vector;
 
-  Vec vectors[10];
+  ASSERT_EQ(vector.size(), neg_vector.size());
 
-  vectors[0] = Vec({ true });
-  vectors[1] = Vec({ true, false });
-  vectors[2] = Vec({ true, false, true });
-  vectors[3] = Vec({ true, false, true, false });
-
-  vectors[4] = Vec({
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true,
-  });
-  vectors[5] = Vec({
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-  });
-  vectors[6] = Vec({
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false, true,
-  });
-
-  vectors[7] = Vec({
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true,
-  });
-  vectors[8] = Vec({
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-  });
-  vectors[9] = Vec({
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false,
-    true, false, true, false, true, false, true, false, true,
-  });
-
-  for(const Vec vector : vectors) {
-    const Vec neg_vector = ~vector;
-    ASSERT_EQ(vector.size(), neg_vector.size());
-    for(size_t i = 0; i < vector.size(); ++i) {
-      EXPECT_EQ(vector[i], i%2 == 0);
-      EXPECT_EQ(neg_vector[i], i%2 != 0);
-    }
+  for(size_t i = 0; i < vector.size(); ++i) {
+    EXPECT_EQ(vector[i], i%2 == 0);
+    EXPECT_EQ(neg_vector[i], i%2 != 0);
   }
 }
 
