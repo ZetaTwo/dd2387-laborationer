@@ -1126,6 +1126,32 @@ TEST_P(SizeTest, Weight3) {
   }
 }
 
+TEST_P(AlternatingVectorsTest, ConvertToUnsignedInteger) {
+  const Vec vector = GetParam();
+  if(vector.size() > sizeof(unsigned int) * CHAR_BIT) {
+    EXPECT_THROW({
+      static_cast<unsigned int>(GetParam());
+    }, std::runtime_error);
+  } else {
+    const unsigned int vec_i = GetParam();
+
+    for(size_t i = 0; i < vector.size() && i < sizeof(unsigned int)*CHAR_BIT; ++i) {
+      EXPECT_EQ(vector[i], (vec_i & (1<<i)) != 0);
+    }
+    if(vector.size() < sizeof(unsigned int) * CHAR_BIT) {
+      EXPECT_EQ(vec_i >> vector.size(), 0);
+    }
+  }
+}
+
+TEST(VectorBool, ConvertToUnsignedInteger) {
+  EXPECT_EQ(0, static_cast<unsigned int>(Vec(0)));
+  EXPECT_EQ(0b1001, static_cast<unsigned int>(Vec({true, false, false, true})));
+  EXPECT_EQ(0b0110, static_cast<unsigned int>(Vec({false, true, true, false})));
+  EXPECT_EQ(0b0011, static_cast<unsigned int>(Vec({true, true, false, false})));
+  EXPECT_EQ(0b1100, static_cast<unsigned int>(Vec({false, false, true, true})));
+}
+
 TEST(VectorBool, StreamInput) {
   std::cout << Vec({true, false, true, false, false, true, true, false}) << std::endl;
 }
