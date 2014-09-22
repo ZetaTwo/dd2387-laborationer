@@ -18,6 +18,9 @@ INSTANTIATE_TEST_CASE_P(VectorBool, SizeSizeTest, Combine(SIZES, SIZES));
 class SizeBoolTest : public TestWithParam<std::tuple<int, bool> > {};
 INSTANTIATE_TEST_CASE_P(VectorBool, SizeBoolTest, Combine(SIZES, Bool()));
 
+class SizeBoolBoolTest : public TestWithParam<std::tuple<int, bool, bool> > {};
+INSTANTIATE_TEST_CASE_P(VectorBool, SizeBoolBoolTest, Combine(SIZES, Bool(), Bool()));
+
 class SizeSizeBoolTest : public TestWithParam<std::tuple<int, int, bool> > {};
 INSTANTIATE_TEST_CASE_P(VectorBool, SizeSizeBoolTest, Combine(SIZES, SIZES, Bool()));
 
@@ -1071,9 +1074,16 @@ TEST_P(SizeSizeBoolTest, OperatorEqualTrue) {
   }
 }
 
-TEST(VectorBool, OperatorEqualComparesTheRightBits) {
-  Vec vector1({ true, false, true, true, false });
-  Vec vector2({ true, false, true, true, true });
+TEST_P(SizeBoolBoolTest, OperatorEqualComparesTheRightBits) {
+  const size_t size = std::get<0>(GetParam());
+  const bool base_value = std::get<1>(GetParam());
+  const bool differing_value = std::get<2>(GetParam());
+
+  Vec vector1(size, base_value);
+  Vec vector2(size, base_value);
+
+  vector1.push_back(differing_value);
+  vector2.push_back(!differing_value);
 
   vector1.erase(vector1.size() - 1);
   vector2.erase(vector2.size() - 1);
