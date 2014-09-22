@@ -871,110 +871,72 @@ TEST(VectorBool, ItrRCBeginEnd) {
 }
 
 TEST(VectorBool, OperatorNot) {
-  EXPECT_EQ(Vec({ true }), ~Vec({ false }));
-  EXPECT_EQ(Vec({ true, false }), ~Vec({ false, true }));
-  EXPECT_EQ(Vec({ true, false, true }), ~Vec({ false, true, false }));
-  EXPECT_EQ(Vec({ true, false, true, false }), ~Vec({ false, true, false, true }));
 
-  // Edge cases near 32
-  EXPECT_EQ(Vec({
-      true, false, true, false, true, false, true, false,
-      true, false, true, false, true, false, true, false,
-      true, false, true, false, true, false, true, false,
-      true, false, true, false, true, false, true
-    }), ~Vec({
-      false, true, false, true, false, true, false, true,
-      false, true, false, true, false, true, false, true,
-      false, true, false, true, false, true, false, true,
-      false, true, false, true, false, true, false
-    })
-  );
-  EXPECT_EQ(Vec({
-      true, false, true, false, true, false, true, false,
-      true, false, true, false, true, false, true, false,
-      true, false, true, false, true, false, true, false,
-      true, false, true, false, true, false, true, false
-    }), ~Vec({
-      false, true, false, true, false, true, false, true,
-      false, true, false, true, false, true, false, true,
-      false, true, false, true, false, true, false, true,
-      false, true, false, true, false, true, false, true,
-    })
-  );
-  EXPECT_EQ(Vec({
-      true, false, true, false, true, false, true, false,
-      true, false, true, false, true, false, true, false,
-      true, false, true, false, true, false, true, false,
-      true, false, true, false, true, false, true, false, true
-    }), ~Vec({
-      false, true, false, true, false, true, false, true,
-      false, true, false, true, false, true, false, true,
-      false, true, false, true, false, true, false, true,
-      false, true, false, true, false, true, false, true, false
-    })
-  );
+  Vec vectors[10];
 
-  // Edge cases near 64
-  EXPECT_EQ(Vec({
-      true, false, true, false, true, false, true, false,
-      true, false, true, false, true, false, true, false,
-      true, false, true, false, true, false, true, false,
-      true, false, true, false, true, false, true, false,
-      true, false, true, false, true, false, true, false,
-      true, false, true, false, true, false, true, false,
-      true, false, true, false, true, false, true, false,
-      true, false, true, false, true, false, true,
-    }), ~Vec({
-      false, true, false, true, false, true, false, true,
-      false, true, false, true, false, true, false, true,
-      false, true, false, true, false, true, false, true,
-      false, true, false, true, false, true, false, true,
-      false, true, false, true, false, true, false, true,
-      false, true, false, true, false, true, false, true,
-      false, true, false, true, false, true, false, true,
-      false, true, false, true, false, true, false
-    })
-  );
-  EXPECT_EQ(Vec({
-      true, false, true, false, true, false, true, false,
-      true, false, true, false, true, false, true, false,
-      true, false, true, false, true, false, true, false,
-      true, false, true, false, true, false, true, false,
-      true, false, true, false, true, false, true, false,
-      true, false, true, false, true, false, true, false,
-      true, false, true, false, true, false, true, false,
-      true, false, true, false, true, false, true, false
-    }), ~Vec({
-      false, true, false, true, false, true, false, true,
-      false, true, false, true, false, true, false, true,
-      false, true, false, true, false, true, false, true,
-      false, true, false, true, false, true, false, true,
-      false, true, false, true, false, true, false, true,
-      false, true, false, true, false, true, false, true,
-      false, true, false, true, false, true, false, true,
-      false, true, false, true, false, true, false, true,
-    })
-  );
-  EXPECT_EQ(Vec({
-      true, false, true, false, true, false, true, false,
-      true, false, true, false, true, false, true, false,
-      true, false, true, false, true, false, true, false,
-      true, false, true, false, true, false, true, false,
-      true, false, true, false, true, false, true, false,
-      true, false, true, false, true, false, true, false,
-      true, false, true, false, true, false, true, false,
-      true, false, true, false, true, false, true, false, true
-    }), ~Vec({
-      false, true, false, true, false, true, false, true,
-      false, true, false, true, false, true, false, true,
-      false, true, false, true, false, true, false, true,
-      false, true, false, true, false, true, false, true,
-      false, true, false, true, false, true, false, true,
-      false, true, false, true, false, true, false, true,
-      false, true, false, true, false, true, false, true,
-      false, true, false, true, false, true, false, true, false
-    })
-  );
+  vectors[0] = Vec({ true });
+  vectors[1] = Vec({ true, false });
+  vectors[2] = Vec({ true, false, true });
+  vectors[3] = Vec({ true, false, true, false });
+
+  vectors[4] = Vec({
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true,
+  });
+  vectors[5] = Vec({
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+  });
+  vectors[6] = Vec({
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false, true,
+  });
+
+  vectors[7] = Vec({
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true,
+  });
+  vectors[8] = Vec({
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+  });
+  vectors[9] = Vec({
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false, true,
+  });
+
+  for(const Vec vector : vectors) {
+    const Vec neg_vector = ~vector;
+    ASSERT_EQ(vector.size(), neg_vector.size());
+    for(size_t i = 0; i < vector.size(); ++i) {
+      EXPECT_EQ(vector[i], i%2 == 0);
+      EXPECT_EQ(neg_vector[i], i%2 != 0);
+    }
+  }
 }
 
 TEST(VectorBool, OperatorAnd) {
