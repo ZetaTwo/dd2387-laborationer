@@ -1035,6 +1035,16 @@ TEST_P(SizeBoolBoolTest, OperatorEqualComparesTheRightBits) {
   EXPECT_EQ(vector1, vector2);
 }
 
+TEST_P(AlternatingVectorsTest, OperatorEqualWithAlternatingVectors) {
+  const Vec& vector = GetParam();
+  const Vec copy(vector);
+  EXPECT_EQ(vector, copy);
+
+  const Vec neg = ~vector;
+  const Vec neg_copy(neg);
+  EXPECT_EQ(neg, neg_copy);
+}
+
 TEST_P(SizeTest, Weight1) {
   const size_t size = GetParam();
   Vec vector(size);
