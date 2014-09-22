@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include <sstream>
-#include "../matrix/Matrix.h"
+#include "Matrix.h"
 
 TEST(Matrix, ConstructorDefault) {
   EXPECT_NO_THROW({

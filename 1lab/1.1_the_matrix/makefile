@@ -22,10 +22,13 @@ clean:
 		*.o \
 		compiler_test_failure
 
-test_matrix.o: test_matrix.cpp
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c -o $@ $^
+Matrix.o: Matrix.cpp Matrix.h
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -I ../0.7_the_template_vector -c -o $@ $<
 
-test: test_runner.cpp test_matrix.o Matrix.o
+matrix_tests.o: matrix_tests.cpp Matrix.o
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -I ../0.7_the_template_vector -c -o $@ $<
+
+test: ../../test_runner.cpp matrix_tests.o Matrix.o
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $@ $^
 
 testcode.cpp: $(testcode)

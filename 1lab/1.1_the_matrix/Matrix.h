@@ -4,7 +4,7 @@
 #include <stdexcept>
 #include <sstream>
 #include <vector>
-#include "../vector/kth_cprog_vektor.cpp"
+#include "kth_cprog_vektor.cpp"
 
 class Matrix
 {
