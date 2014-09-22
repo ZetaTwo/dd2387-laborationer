@@ -30,20 +30,36 @@ class AlternatingVectorsTest : public TestWithParam<Vec> {};
 INSTANTIATE_TEST_CASE_P(VectorBool, AlternatingVectorsTest, Values(
   Vec(0)
   ,Vec({ true })
+  ,Vec({ false })
   ,Vec({ true, false })
+  ,Vec({ false, true })
   ,Vec({ true, false, true })
+  ,Vec({ false, true, false })
   ,Vec({ true, false, true, false })
+  ,Vec({ false, true, false, true })
   ,Vec({ // 31
     true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false,
     true, false, true, false, true, false, true, false, true, false, true, false, true, false, true
+  })
+  ,Vec({ // 31
+    false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true, false, true, false, true, false, true, false
   })
   ,Vec({ // 32
     true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false,
     true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false
   })
+  ,Vec({ // 32
+    false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true
+  })
   ,Vec({ // 33
     true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false,
     true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true
+  })
+  ,Vec({ // 33
+    false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false
   })
   ,Vec({ // 63
     true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false,
@@ -51,17 +67,35 @@ INSTANTIATE_TEST_CASE_P(VectorBool, AlternatingVectorsTest, Values(
     true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false,
     true, false, true, false, true, false, true, false, true, false, true, false, true, false, true
   })
+  ,Vec({ // 63
+    false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true, false, true, false, true, false, true, false
+  })
   ,Vec({ // 64
     true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false,
     true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false,
     true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false,
     true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false
   })
+  ,Vec({ // 64
+    false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true
+  })
   ,Vec({ // 65
     true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false,
     true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false,
     true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false,
     true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true
+  })
+  ,Vec({ // 65
+    false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true,
+    false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false
   })
 ));
 
@@ -916,8 +950,7 @@ TEST_P(AlternatingVectorsTest, OperatorNot) {
   ASSERT_EQ(vector.size(), neg_vector.size());
 
   for(size_t i = 0; i < vector.size(); ++i) {
-    EXPECT_EQ(vector[i], i%2 == 0);
-    EXPECT_EQ(neg_vector[i], i%2 != 0);
+    EXPECT_EQ(vector[i], !neg_vector[i]);
   }
 }
 
