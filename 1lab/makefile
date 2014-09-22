@@ -1,6 +1,7 @@
 CPPFLAGS=-std=c++11 -Wall -g -lgtest
 
 COURSEDIR=../kurskatalog
+CXXTEST_DIR=$(COURSEDIR)/cxxtest
 
 EX01DIR=0.1_make_it_happen
 EX02DIR=0.2_hello_world
@@ -64,11 +65,11 @@ build/$(EX02DIR)/hello.exe: $(EX02DIR)/main.cpp build/$(EX02DIR)/hello.o
 
 build/$(EX04DIR)/simple_testrunner.exe: build/$(EX04DIR)/simple_testrunner.cpp $(EX04DIR)/count_if_followed_by.o
 	mkdir -p $(@D)
-	g++ -o $@ -I $(COURSEDIR)/cxxtest/ -I . $^
+	g++ -o $@ -I $(CXXTEST_DIR)/ -I . $^
 
 build/$(EX04DIR)/simple_testrunner.cpp: $(EX04DIR)/simple.cxxtest.cpp
 	mkdir -p $(@D)
-	python2 $(COURSEDIR)/cxxtest/cxxtestgen.py --error-printer -o $@ $<
+	python2 $(CXXTEST_DIR)/cxxtestgen.py --error-printer -o $@ $<
 
 build/$(EX06DIR)/test_vec.exe: $(EX06DIR)/test_vec.cpp build/$(EX06DIR)/vector.o
 	mkdir -p $(@D)
