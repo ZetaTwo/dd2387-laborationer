@@ -11,11 +11,12 @@ EX05DIR=0.5_will_it_float
 EX06DIR=0.6_the_simple_container
 EX07DIR=0.7_the_template_vector
 
+EX11DIR=1.1_the_matrix
 EX14DIR=1.4_the_hypercube
 EX15DIR=1.5_space_is_not_infinite
 EX16DIR=1.6_walking_across_the_universe
 
-lab1: ex01 ex02 ex03 ex04 ex05 ex06 ex07 ex14 ex15 ex16
+lab1: ex01 ex02 ex03 ex04 ex05 ex06 ex07 ex11 ex14 ex15 ex16
 
 build/%.o: %.cpp %.h
 	mkdir -p $(@D)
@@ -55,6 +56,7 @@ ex07: ex07_given_tests ex07_tests
 ex07_given_tests: valgrind/$(EX07DIR)/test_template_vec
 ex07_tests: run/$(EX07DIR)/vector_tests
 
+ex11: run/$(EX11DIR)/matrix_tests ex11_compiler_tests run/$(EX11DIR)/example_test
 ex14: run/$(EX14DIR)/hypercube_tests
 ex15: run/$(EX15DIR)/vector_bool_tests
 ex16: run/$(EX16DIR)/vector_iterator_tests
@@ -82,6 +84,31 @@ build/$(EX07DIR)/vector_tests.o: $(EX07DIR)/vector_tests.cpp $(EX07DIR)/kth_cpro
 build/$(EX07DIR)/vector_tests.exe: ../test_runner.cpp build/$(EX07DIR)/vector_tests.o
 	mkdir -p $(@D)
 	g++ $(CPPFLAGS) -o $@ $^
+
+ex11_compiler_tests: $(patsubst $(EX11DIR)/compiler_tests/%.cpp,ex11_compiler_test_%,$(wildcard $(EX11DIR)/compiler_tests/*.cpp))
+ex11_compiler_test_%: $(EX11DIR)/compiler_tests/%.cpp build/$(EX11DIR)/Matrix.o
+	mkdir -p $(@D)
+	! g++ $(CPPFLAGS) -I $(EX11DIR) -I $(EX07DIR) $^ -o /dev/null &>/dev/null
+
+build/$(EX11DIR)/Matrix.o: $(EX11DIR)/Matrix.cpp $(EX11DIR)/Matrix.h
+	mkdir -p $(@D)
+	g++ $(CPPFLAGS) -I $(EX07DIR) -c -o $@ $<
+
+build/$(EX11DIR)/matrix_tests.o: $(EX11DIR)/matrix_tests.cpp build/$(EX11DIR)/Matrix.o
+	mkdir -p $(@D)
+	g++ $(CPPFLAGS) -I $(EX07DIR) -c -o $@ $<
+
+build/$(EX11DIR)/matrix_tests.exe: ../test_runner.cpp build/$(EX11DIR)/matrix_tests.o build/$(EX11DIR)/Matrix.o
+	mkdir -p $(@D)
+	g++ $(CPPFLAGS) -o $@ $^
+
+build/$(EX11DIR)/example_test.cpp: $(EX11DIR)/example_test.h
+	mkdir -p $(@D)
+	python2 $(CXXTEST_DIR)/cxxtestgen.py --error-printer -o $@ $<
+
+build/$(EX11DIR)/example_test.exe: build/$(EX11DIR)/example_test.cpp build/$(EX11DIR)/Matrix.o
+	mkdir -p $(@D)
+	g++ $(CPPFLAGS) -I $(CXXTEST_DIR) -I $(EX07DIR) -I . -o $@ $^
 
 build/$(EX14DIR)/hypercube_tests.o: $(EX14DIR)/hypercube_tests.cpp $(EX14DIR)/hypercube.hpp $(EX07DIR)/kth_cprog_vektor.cpp
 	mkdir -p $(@D)
