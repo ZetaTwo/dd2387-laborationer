@@ -24,3 +24,6 @@
 .vimrc
 !/.vimrc
 1lab/matrix_given_tests/runtest*
+
+# Kurskatalog
+!/kurskatalog/**/*
