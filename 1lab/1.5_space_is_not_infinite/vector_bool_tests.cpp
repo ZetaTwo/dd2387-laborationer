@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "../vector/kth_cprog_vektor_bool.cpp"
+#include "kth_cprog_vektor_bool.cpp"
 
 using ::testing::TestWithParam;
 using ::testing::Bool;
