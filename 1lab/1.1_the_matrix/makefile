@@ -1,5 +1,5 @@
 # Change these
-cxxtestpath = ../../cxxtest/
+cxxtestpath = ../../kurskatalog/cxxtest/
 testcode    = example_test.h
 
 CXX=g++
@@ -35,4 +35,4 @@ testcode.cpp: $(testcode)
 	python2 $(cxxtestpath)cxxtestgen.py --error-printer -o testcode.cpp $(testcode)
 
 given_test: testcode.cpp Matrix.o
-	g++ -I $(cxxtestpath) -o $@ $^
+	g++ $(CPPFLAGS) -I $(cxxtestpath) -I ../0.7_the_template_vector -o $@ $^
