@@ -433,3 +433,7 @@ TEST(Vector, ItrRCBeginEnd) {
   EXPECT_EQ(vector2[2], vector3[2]);
   EXPECT_EQ(vector2[3], vector3[3]);
 }
+
+TEST(Vector, StreamInput) {
+  std::cout << Vector<int>({0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597}) << std::endl;
+}
