@@ -243,7 +243,7 @@ Vector<bool>::Vector(const std::initializer_list<bool>& list) : count(list.size(
   }
 }
 
-Vector<bool>::Vector(Vector<bool>&& other) {
+Vector<bool>::Vector(Vector<bool>&& other) : count(other.count), max_size(other.max_size), data(std::move(other.data)) {
 }
 
 Vector<bool>::Vector(size_t size) : count(size), max_size(initial_size(count)), data(new storage_type[storage_size()]) {
@@ -348,7 +348,8 @@ Vector<bool> Vector<bool>::operator&(const Vector<bool>& other) const {
   }
 
   Vector<bool> result(count);
-  for(size_t i = 0; i <= count / STORAGE_BLOCK_SIZE; i++) {
+
+  for (size_t i = 0; i < storage_size(); i++) {
     result.data[i] = data[i] & other.data[i];
   }
 
@@ -360,7 +361,8 @@ Vector<bool> Vector<bool>::operator|(const Vector<bool>& other) const {
   }
 
   Vector<bool> result(count);
-  for(size_t i = 0; i <= count / STORAGE_BLOCK_SIZE; i++) {
+
+  for (size_t i = 0; i < storage_size(); i++) {
     result.data[i] = data[i] | other.data[i];
   }
 
@@ -372,7 +374,8 @@ Vector<bool> Vector<bool>::operator^(const Vector<bool>& other) const {
   }
 
   Vector<bool> result(count);
-  for(size_t i = 0; i <= count / STORAGE_BLOCK_SIZE; i++) {
+
+  for (size_t i = 0; i < storage_size(); i++) {
     result.data[i] = data[i] ^ other.data[i];
   }
 
@@ -517,7 +520,7 @@ Vector<bool>& Vector<bool>::unique_sort(const bool ascending) {
   const bool hasFalse = w < count;
   const bool hasTrue = w > 0;
   count = hasFalse + hasTrue;
-  data[0] = ((hasFalse << !ascending) | (hasTrue << ascending)) & (1 << ascending);
+  data[0] = ((hasFalse << static_cast<unsigned>(!ascending)) | (hasTrue << static_cast<unsigned>(ascending))) & (1 << static_cast<unsigned>(ascending));
   return *this;
 }
 
