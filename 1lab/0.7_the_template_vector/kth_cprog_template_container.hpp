@@ -163,7 +163,7 @@ Vector<T>::~Vector() {
 
 template<typename T>
 T& Vector<T>::operator[](size_t index) {
-  if(index < 0 || index >= count) {
+  if(index >= count) {
     throw std::out_of_range("Index out of range");
   }
   return data[index];
@@ -171,7 +171,7 @@ T& Vector<T>::operator[](size_t index) {
 
 template<typename T>
 const T Vector<T>::operator[](size_t index) const {
-  if(index < 0 || index >= count) {
+  if(index >= count) {
     throw std::out_of_range("Index out of range");
   }
 
