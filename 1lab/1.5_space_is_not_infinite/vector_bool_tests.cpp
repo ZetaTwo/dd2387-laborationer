@@ -7,7 +7,9 @@ using ::testing::Combine;
 using ::testing::Range;
 using ::testing::Values;
 
-#define SIZES Values(0, 1, 16, 31, 32, 33, 48, 63, 64, 65, 100, 1000)
+#define BLOCK_SIZE = sizeof(unsigned int) * CHAR_BIT;
+
+#define SIZES Values(0, 1, BLOCK_SIZE-1, BLOCK_SIZE, BLOCK_SIZE+1, 100)
 
 class SizeTest : public TestWithParam<int> {};
 INSTANTIATE_TEST_CASE_P(VectorBool, SizeTest, SIZES);
