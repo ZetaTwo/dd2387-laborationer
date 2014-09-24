@@ -31,6 +31,7 @@ public:
   Vector<T>& insert(size_t index, const T& element);
   Vector<T>& erase(size_t index);
   Vector<T>& clear();
+  Vector<T>& reset();
   Vector<T>& sort(bool ascending = true);
   Vector<T>& unique_sort(bool ascending = true);
 
@@ -128,6 +129,10 @@ Vector<T>::Vector(const std::initializer_list<T>& list) : count(list.size()), ma
 }
 
 template<typename T>
+Vector<T>::Vector(Vector<T>&& other) : data(std::move(other.data)), count(other.count) {
+}
+
+template<typename T>
 Vector<T>::Vector(size_t size) : count(size), max_size(1 << static_cast<int>(ceil(log2(count)))), data(new T[max_size]) {
   for(size_t i = 0; i < count; ++i) {
     data[i] = T();
@@ -179,6 +184,12 @@ Vector<T>& Vector<T>::operator=(const Vector<T>& other) {
   }
 
   return *this;
+}
+
+template<typename T>
+Vector<T>& Vector<T>::operator=(Vector<T>&& other) {
+  data = std::move(other.data);
+  count = other.count;
 }
 
 template<typename T>
@@ -240,6 +251,15 @@ Vector<T>& Vector<T>::erase(size_t index) {
 template<typename T>
 Vector<T>& Vector<T>::clear() {
   count = 0;
+  return *this;
+}
+
+template<typename T>
+Vector<T>& Vector<T>::reset() {
+  for (size_t i = 0; i < count; i++) {
+    data[i] = T{};
+  }
+
   return *this;
 }
 
