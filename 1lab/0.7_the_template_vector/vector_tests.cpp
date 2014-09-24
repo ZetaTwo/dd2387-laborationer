@@ -217,9 +217,11 @@ TEST(Vector, InsertBeginning) {
   Vector<int> int_vector(size);
 
   EXPECT_EQ(0, int_vector[1]);
+  int_vector.insert(0, 14);
   int_vector.insert(0, 13);
   EXPECT_EQ(13, int_vector[0]);
-  EXPECT_EQ(size + 1, int_vector.size());
+  EXPECT_EQ(14, int_vector[1]);
+  EXPECT_EQ(size + 2, int_vector.size());
 }
 
 TEST(Vector, InsertEnd) {
