@@ -38,6 +38,7 @@ public:
   //Lookup in vector
   bool exists(const T& element) const;
   size_t size() const;
+  size_t capacity() const;
 
   //Iterators
   class const_iterator : public std::iterator<std::random_access_iterator_tag, const T>
@@ -55,6 +56,8 @@ public:
     size_t operator-(const const_iterator& other) const { return p - other.p; }
     bool operator==(const const_iterator& rhs) const { return p == rhs.p; }
     bool operator!=(const const_iterator& rhs) const { return p != rhs.p; }
+    bool operator>(const const_iterator& rhs) const { return p > rhs.p; }
+    bool operator<(const const_iterator& rhs) const { return p < rhs.p; }
     T& operator[](size_t index) { return *(p + index); }
     T& operator*() { return *p; }
     T const * operator->() const { return p; }
@@ -75,6 +78,8 @@ public:
     size_t operator-(const iterator &other) const { return p - other.p; }
     bool operator==(const iterator& rhs) const { return p == rhs.p; }
     bool operator!=(const iterator& rhs) const { return p != rhs.p; }
+    bool operator>(const iterator& rhs) const { return p > rhs.p; }
+    bool operator<(const iterator& rhs) const { return p < rhs.p; }
     T& operator[](size_t index) { return *(p + index); }
     T& operator*() { return *p; }
     T* operator->() const { return p; }
@@ -85,8 +90,10 @@ public:
 
   iterator begin();
   iterator end();
+  iterator find(T value);
   const_iterator begin() const;
   const_iterator end() const;
+  const_iterator find(T value) const;
 
   reverse_iterator rbegin();
   reverse_iterator rend();
@@ -129,7 +136,7 @@ Vector<T>::Vector(const std::initializer_list<T>& list) : count(list.size()), ma
 }
 
 template<typename T>
-Vector<T>::Vector(Vector<T>&& other) : data(std::move(other.data)), count(other.count) {
+Vector<T>::Vector(Vector<T>&& other) : data(std::move(other.data)), count(other.count), max_size(other.max_size) {
 }
 
 template<typename T>
@@ -190,6 +197,7 @@ template<typename T>
 Vector<T>& Vector<T>::operator=(Vector<T>&& other) {
   data = std::move(other.data);
   count = other.count;
+  max_size = other.max_size;
 }
 
 template<typename T>
@@ -299,6 +307,11 @@ size_t Vector<T>::size() const {
 }
 
 template<typename T>
+size_t Vector<T>::capacity() const {
+  return max_size;
+}
+
+template<typename T>
 void Vector<T>::increase_memory(size_t num_elements, bool copy) {
   size_t new_max_size = (1 << static_cast<int>(ceil(log2(num_elements))));
   if(new_max_size < max_size) {
@@ -328,6 +341,18 @@ typename Vector<T>::iterator Vector<T>::end() {
 }
 
 template<typename T>
+typename Vector<T>::iterator Vector<T>::find(T value) {
+  Vector<T>::iterator el = begin();
+  for (; el != end(); el++) {
+    if (*el == value) {
+      return el;
+    }
+  }
+
+  return el;
+}
+
+template<typename T>
 typename Vector<T>::reverse_iterator Vector<T>::rbegin() {
   return reverse_iterator(&data[count]);
 }
@@ -345,6 +370,18 @@ typename Vector<T>::const_iterator Vector<T>::begin() const {
 template<typename T>
 typename Vector<T>::const_iterator Vector<T>::end() const {
   return const_iterator(&data[count]);
+}
+
+template<typename T>
+typename Vector<T>::const_iterator Vector<T>::find(T value) const {
+  Vector<T>::const_iterator el = begin();
+  for (; el != end(); el++) {
+    if (*el == value) {
+      return el;
+    }
+  }
+
+  return el;
 }
 
 template<typename T>

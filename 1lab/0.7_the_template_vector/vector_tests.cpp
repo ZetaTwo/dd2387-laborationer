@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "kth_cprog_vektor.hpp"
+#include "kth_cprog_template_container.hpp"
 
 TEST(Vector, ConstructorDefault) {
   EXPECT_NO_THROW({
@@ -47,11 +47,11 @@ TEST(Vector, ConstructorInitlist) {
 }
 
 TEST(Vector, ConstructorMove) {
-  std::unique_ptr<Vector<int> > int_vector1(new Vector<int> ({ 13, 14, 15, 16 }));
+  Vector<int> int_vector1({ 13, 14, 15, 16 });
 
-  EXPECT_EQ(13, (*int_vector1)[0]);
-  std::unique_ptr<Vector<int> > int_vector2(std::move(int_vector1));
-  EXPECT_EQ(13, (*int_vector2)[0]);
+  EXPECT_EQ(13, int_vector1[0]);
+  Vector<int> int_vector2(std::move(int_vector1));
+  EXPECT_EQ(13, int_vector2[0]);
 }
 
 TEST(Vector, ConstructorSize) {
@@ -370,6 +370,15 @@ TEST(Vector, Size) {
   EXPECT_EQ(size, int_vector.size());
 }
 
+TEST(Vector, Capacity) {
+  const size_t size = 16;
+  Vector<int> int_vector(size);
+
+  EXPECT_EQ(16, int_vector.capacity());
+  int_vector.push_back(1);
+  EXPECT_EQ(32, int_vector.capacity());
+}
+
 TEST(Vector, ItrBeginEnd) {
   Vector<int> vector1({ 1, 2, 3, 4 });
   Vector<int> vector2;
@@ -385,6 +394,24 @@ TEST(Vector, ItrBeginEnd) {
   EXPECT_EQ(vector1[2], vector2[2]);
   EXPECT_EQ(vector1[3], vector2[3]);
 }
+
+TEST(Vector, ItFind) {
+  Vector<int> vector1({ 1, 2, 3, 4 });
+  
+  Vector<int>::iterator itr = vector1.find(3);
+  EXPECT_EQ(3, *itr);
+  EXPECT_GT(itr, vector1.begin());
+  EXPECT_LT(itr, vector1.end());
+
+  itr = vector1.find(5);
+  EXPECT_EQ(vector1.end(), itr);
+
+  itr = vector1.find(1);
+  EXPECT_EQ(1, *itr);
+  EXPECT_EQ(itr, vector1.begin());
+  EXPECT_LT(itr, vector1.end());
+}
+
 
 TEST(Vector, ItrCBeginEnd) {
   const Vector<int> vector1({ 1, 2, 3, 4 });

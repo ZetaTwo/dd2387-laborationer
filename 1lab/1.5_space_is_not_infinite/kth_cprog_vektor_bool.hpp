@@ -1,4 +1,4 @@
-#include "kth_cprog_vektor.hpp"
+#include "kth_cprog_template_container.hpp"
 #include <climits> // CHAR_BIT
 
 template <>
@@ -61,10 +61,12 @@ public:
 
   iterator begin();
   iterator end();
+  iterator find(bool value);
   const_iterator begin() const;
   const_iterator end() const;
+  const_iterator find(bool value) const;
 
-  reverse_iterator rbegin();
+  reverse_iterator rbegin() ;
   reverse_iterator rend();
   const_reverse_iterator rbegin() const;
   const_reverse_iterator rend() const;
@@ -616,12 +618,34 @@ Vector<bool>::iterator Vector<bool>::end() {
   return iterator(&data[count / STORAGE_BLOCK_SIZE], count % MAX_SUBINDEX);
 }
 
+Vector<bool>::iterator Vector<bool>::find(bool value) {
+  Vector<bool>::iterator el = begin();
+  for (; el != end(); el++) {
+    if (*el == value) {
+      return el;
+    }
+  }
+
+  return el;
+}
+
 Vector<bool>::const_iterator Vector<bool>::begin() const {
   return const_iterator(&data[0], 0);
 }
 
 Vector<bool>::const_iterator Vector<bool>::end() const {
   return const_iterator(&data[count / STORAGE_BLOCK_SIZE], count % MAX_SUBINDEX);
+}
+
+Vector<bool>::const_iterator Vector<bool>::find(bool value) const {
+  Vector<bool>::const_iterator el = begin();
+  for (; el != end(); el++) {
+    if (*el == value) {
+      return el;
+    }
+  }
+
+  return el;
 }
 
 Vector<bool>::reverse_iterator Vector<bool>::rbegin() {

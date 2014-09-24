@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\0.7_the_template_vector\kth_cprog_vektor.hpp" />
+    <ClInclude Include="..\..\0.7_the_template_vector\kth_cprog_template_container.hpp" />
     <ClInclude Include="..\..\1.5_space_is_not_infinite\kth_cprog_vektor_bool.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
