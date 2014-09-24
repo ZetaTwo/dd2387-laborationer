@@ -7,6 +7,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VectorTests", "VectorTests\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimpleVectorTests", "SimpleVectorTests\SimpleVectorTests.vcxproj", "{9D98F329-19F0-416A-93F5-43376B9C874F}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Vector", "Vector\Vector.vcxproj", "{8935F8AE-17CB-412F-824C-E64F8E5AB08D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimpleVectorTemplateTests", "SimpleVectorTemplateTests\SimpleVectorTemplateTests.vcxproj", "{BF78F0A9-A1FD-4DFC-80AB-56711C46E816}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -21,6 +25,14 @@ Global
 		{9D98F329-19F0-416A-93F5-43376B9C874F}.Debug|Win32.Build.0 = Debug|Win32
 		{9D98F329-19F0-416A-93F5-43376B9C874F}.Release|Win32.ActiveCfg = Release|Win32
 		{9D98F329-19F0-416A-93F5-43376B9C874F}.Release|Win32.Build.0 = Release|Win32
+		{8935F8AE-17CB-412F-824C-E64F8E5AB08D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{8935F8AE-17CB-412F-824C-E64F8E5AB08D}.Debug|Win32.Build.0 = Debug|Win32
+		{8935F8AE-17CB-412F-824C-E64F8E5AB08D}.Release|Win32.ActiveCfg = Release|Win32
+		{8935F8AE-17CB-412F-824C-E64F8E5AB08D}.Release|Win32.Build.0 = Release|Win32
+		{BF78F0A9-A1FD-4DFC-80AB-56711C46E816}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BF78F0A9-A1FD-4DFC-80AB-56711C46E816}.Debug|Win32.Build.0 = Debug|Win32
+		{BF78F0A9-A1FD-4DFC-80AB-56711C46E816}.Release|Win32.ActiveCfg = Release|Win32
+		{BF78F0A9-A1FD-4DFC-80AB-56711C46E816}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
