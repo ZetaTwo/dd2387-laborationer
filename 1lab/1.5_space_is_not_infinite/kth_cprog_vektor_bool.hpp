@@ -71,6 +71,9 @@ public:
   const_reverse_iterator rbegin() const;
   const_reverse_iterator rend() const;
 
+  // Type conversions
+  operator unsigned int() const;
+
 private:
 
   static const size_t DEFAULT_SIZE = STORAGE_BLOCK_SIZE;
@@ -664,3 +667,21 @@ Vector<bool>::const_reverse_iterator Vector<bool>::rend() const {
   return const_reverse_iterator(const_iterator(&data[0], 0));
 }
 
+Vector<bool>::operator unsigned int() const {
+  const size_t UNSIGNED_INT_SIZE = sizeof(unsigned int) * CHAR_BIT;
+  if(size() > UNSIGNED_INT_SIZE) {
+    std::stringstream ss;
+    ss << "Vector is too big for type unsigned int: size " << size() << ", max is " << UNSIGNED_INT_SIZE << ".";
+    throw std::runtime_error(ss.str());
+  }
+
+  unsigned int result = 0;
+
+  for(size_t i = 0; i < size() && i < UNSIGNED_INT_SIZE; ++i) {
+    if((*this)[i]) {
+      result |= 1 << i;
+    }
+  }
+
+  return result;
+}

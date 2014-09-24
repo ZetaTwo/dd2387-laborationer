@@ -7,8 +7,8 @@ using ::testing::Combine;
 using ::testing::Range;
 using ::testing::Values;
 
-const int BLOCK_SIZE = 8 * sizeof(unsigned int);
-#define SIZES Values(0, 1, BLOCK_SIZE - 1, BLOCK_SIZE, BLOCK_SIZE + 1, 100)
+#define BLOCK_SIZE = sizeof(unsigned int) * CHAR_BIT;
+#define SIZES Values(0, 1, BLOCK_SIZE-1, BLOCK_SIZE, BLOCK_SIZE+1, 100)
 
 class SizeTest : public TestWithParam<int> {};
 //INSTANTIATE_TEST_CASE_P(VectorBool, SizeTest, SIZES);
@@ -1125,6 +1125,32 @@ TEST_P(SizeTest, Weight3) {
   for(size_t i = 0; i < vector.size(); ++i) {
     EXPECT_EQ(before[i], vector[i]) << "Vector has changed.";
   }
+}
+
+TEST_P(AlternatingVectorsTest, ConvertToUnsignedInteger) {
+  const Vec vector = GetParam();
+  if(vector.size() > sizeof(unsigned int) * CHAR_BIT) {
+    EXPECT_THROW({
+      static_cast<unsigned int>(GetParam());
+    }, std::runtime_error);
+  } else {
+    const unsigned int vec_i = GetParam();
+
+    for(size_t i = 0; i < vector.size() && i < sizeof(unsigned int)*CHAR_BIT; ++i) {
+      EXPECT_EQ(vector[i], (vec_i & (1<<i)) != 0);
+    }
+    if(vector.size() < sizeof(unsigned int) * CHAR_BIT) {
+      EXPECT_EQ(vec_i >> vector.size(), 0);
+    }
+  }
+}
+
+TEST(VectorBool, ConvertToUnsignedInteger) {
+  EXPECT_EQ(0, static_cast<unsigned int>(Vec(0)));
+  EXPECT_EQ(0b1001, static_cast<unsigned int>(Vec({true, false, false, true})));
+  EXPECT_EQ(0b0110, static_cast<unsigned int>(Vec({false, true, true, false})));
+  EXPECT_EQ(0b0011, static_cast<unsigned int>(Vec({true, true, false, false})));
+  EXPECT_EQ(0b1100, static_cast<unsigned int>(Vec({false, false, true, true})));
 }
 
 TEST(VectorBool, StreamInput) {
