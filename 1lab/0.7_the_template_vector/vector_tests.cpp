@@ -54,6 +54,34 @@ TEST(Vector, ConstructorMove) {
   EXPECT_EQ(13, int_vector2[0]);
 }
 
+TEST(Vector, ConstructorMoveReuse) {
+  Vector<int> int_vector1({ 13, 14, 15, 16 });
+  Vector<int> int_vector2(std::move(int_vector1));
+
+  EXPECT_THROW({
+    int_vector1[3];
+  }, std::out_of_range);
+
+  EXPECT_THROW({
+    int_vector1[3] = 14;
+  }, std::out_of_range);
+
+  int_vector1.push_back(1);
+  EXPECT_EQ(1, int_vector1[0]);
+  EXPECT_EQ(1, int_vector1.size());
+}
+
+TEST(Vector, ConstructorSelfMove) {
+  Vector<int> int_vector1({ 13, 14, 15, 16 });
+  int_vector1 = std::move(int_vector1);
+
+  EXPECT_EQ(13, int_vector1[0]);
+  EXPECT_EQ(14, int_vector1[1]);
+  EXPECT_EQ(15, int_vector1[2]);
+  EXPECT_EQ(16, int_vector1[3]);
+  EXPECT_EQ(4, int_vector1.size());
+}
+
 TEST(Vector, ConstructorSize) {
   const size_t size = 32;
 
@@ -465,4 +493,33 @@ TEST(Vector, ItrRCBeginEnd) {
 
 TEST(Vector, StreamInput) {
   std::cout << Vector<int>({0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597}) << std::endl;
+}
+
+
+TEST(Vector, EvilInt3) {
+  Vector<int> A(1024, 5);
+  Vector<int> B(1024, 6);
+  Vector<int> X;
+
+  X = std::move(B);
+  B = std::move(A);
+  A = std::move(X);
+
+  X.reset();
+
+  EXPECT_EQ(A.end(), A.find(5));
+  EXPECT_EQ(A.begin(), A.find(6));
+
+  EXPECT_EQ(B.end(), B.find(6));
+  EXPECT_EQ(B.begin(), B.find(5));
+
+  EXPECT_EQ(0, X.size());
+
+  B = B;
+  EXPECT_EQ(1024, B.size());
+  EXPECT_EQ(5, B[1024 - 1]);
+
+  A = std::move(A);
+  EXPECT_EQ(1024, A.size());
+  EXPECT_EQ(6, A[1024 - 1]);
 }

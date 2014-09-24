@@ -244,6 +244,8 @@ Vector<bool>::Vector(const std::initializer_list<bool>& list) : count(list.size(
 }
 
 Vector<bool>::Vector(Vector<bool>&& other) : count(other.count), max_size(other.max_size), data(std::move(other.data)) {
+  other.count = 0;
+  other.max_size = 0;
 }
 
 Vector<bool>::Vector(size_t size) : count(size), max_size(initial_size(count)), data(new storage_type[storage_size()]) {
@@ -331,6 +333,16 @@ Vector<bool>& Vector<bool>::operator=(const std::initializer_list<bool>& list) {
 }
 
 Vector<bool>& Vector<bool>::operator=(Vector<bool>&& other) {
+  if (this != &other) {
+    count = other.count;
+    max_size = other.max_size;
+    data = std::move(other.data);
+
+    //Reset movee
+    other.count = 0;
+    other.max_size = 0;
+  }
+
   return *this;
 }
 

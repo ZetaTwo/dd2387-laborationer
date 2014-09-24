@@ -137,6 +137,8 @@ Vector<T>::Vector(const std::initializer_list<T>& list) : count(list.size()), ma
 
 template<typename T>
 Vector<T>::Vector(Vector<T>&& other) : data(std::move(other.data)), count(other.count), max_size(other.max_size) {
+  other.count = 0;
+  other.max_size = 0;
 }
 
 template<typename T>
@@ -155,6 +157,8 @@ Vector<T>::Vector(size_t size, T element) : count(size), max_size(1 << static_ca
 
 template<typename T>
 Vector<T>::~Vector() {
+  count = 0;
+  max_size = 0;
 }
 
 template<typename T>
@@ -195,9 +199,17 @@ Vector<T>& Vector<T>::operator=(const Vector<T>& other) {
 
 template<typename T>
 Vector<T>& Vector<T>::operator=(Vector<T>&& other) {
-  data = std::move(other.data);
-  count = other.count;
-  max_size = other.max_size;
+  if (this != &other) {
+    data = std::move(other.data);
+    count = other.count;
+    max_size = other.max_size;
+
+    //Reset movee
+    other.count = 0;
+    other.max_size = 0;
+  }
+
+  return *this;
 }
 
 template<typename T>
