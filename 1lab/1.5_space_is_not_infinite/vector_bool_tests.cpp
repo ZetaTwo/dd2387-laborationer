@@ -1006,14 +1006,13 @@ TEST(VectorBool, OperatorXorSize) {
   }, std::invalid_argument);
 }
 
-TEST_P(SizeSizeBoolTest, OperatorEqualFalseSize) {
+TEST_P(SizeSizeTest, OperatorEqualFalseSize) {
   const size_t size1 = std::get<0>(GetParam());
   const size_t size2 = std::get<1>(GetParam());
-  const bool value = std::get<2>(GetParam());
 
   if(size1 != size2) {
-    const Vec vector1(size1, value);
-    const Vec vector2(size2, value);
+    const Vec vector1(size1);
+    const Vec vector2(size2);
 
     EXPECT_NE(vector1, vector2);
   }
