@@ -213,8 +213,8 @@ Vector<T>& Vector<T>::insert(size_t index, const T& element) {
     increase_memory(count + 1);
   }
 
-  for(size_t i = count; i > index; ) {
-    data[i] = data[--i];
+  for(size_t i = count; i > index; i--) {
+    data[i] = data[i-1];
   }
 
   data[index] = element;
