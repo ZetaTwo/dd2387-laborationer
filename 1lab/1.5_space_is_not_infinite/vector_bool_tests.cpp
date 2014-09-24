@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "kth_cprog_vektor_bool.cpp"
+#include "kth_cprog_vektor_bool.hpp"
 
 using ::testing::TestWithParam;
 using ::testing::Bool;
@@ -7,27 +7,28 @@ using ::testing::Combine;
 using ::testing::Range;
 using ::testing::Values;
 
-#define SIZES Values(0, 1, 16, 31, 32, 33, 48, 63, 64, 65, 100, 1000)
+const int BLOCK_SIZE = 8 * sizeof(unsigned int);
+#define SIZES Values(0, 1, BLOCK_SIZE - 1, BLOCK_SIZE, BLOCK_SIZE + 1, 100)
 
 class SizeTest : public TestWithParam<int> {};
-INSTANTIATE_TEST_CASE_P(VectorBool, SizeTest, SIZES);
+//INSTANTIATE_TEST_CASE_P(VectorBool, SizeTest, SIZES);
 
 class SizeSizeTest : public TestWithParam<std::tuple<int, int> > {};
-INSTANTIATE_TEST_CASE_P(VectorBool, SizeSizeTest, Combine(SIZES, SIZES));
+//INSTANTIATE_TEST_CASE_P(VectorBool, SizeSizeTest, Combine(SIZES, SIZES));
 
 class SizeBoolTest : public TestWithParam<std::tuple<int, bool> > {};
-INSTANTIATE_TEST_CASE_P(VectorBool, SizeBoolTest, Combine(SIZES, Bool()));
+//INSTANTIATE_TEST_CASE_P(VectorBool, SizeBoolTest, Combine(SIZES, Bool()));
 
 class SizeBoolBoolTest : public TestWithParam<std::tuple<int, bool, bool> > {};
-INSTANTIATE_TEST_CASE_P(VectorBool, SizeBoolBoolTest, Combine(SIZES, Bool(), Bool()));
+//INSTANTIATE_TEST_CASE_P(VectorBool, SizeBoolBoolTest, Combine(SIZES, Bool(), Bool()));
 
 class SizeSizeBoolTest : public TestWithParam<std::tuple<int, int, bool> > {};
-INSTANTIATE_TEST_CASE_P(VectorBool, SizeSizeBoolTest, Combine(SIZES, SIZES, Bool()));
+//INSTANTIATE_TEST_CASE_P(VectorBool, SizeSizeBoolTest, Combine(SIZES, SIZES, Bool()));
 
 typedef Vector<bool> Vec;
 
 class AlternatingVectorsTest : public TestWithParam<Vec> {};
-INSTANTIATE_TEST_CASE_P(VectorBool, AlternatingVectorsTest, Values(
+/*INSTANTIATE_TEST_CASE_P(VectorBool, AlternatingVectorsTest, Values(
   Vec(0)
   ,Vec({ true })
   ,Vec({ false })
@@ -97,7 +98,7 @@ INSTANTIATE_TEST_CASE_P(VectorBool, AlternatingVectorsTest, Values(
     false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true,
     false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false
   })
-));
+));*/
 
 TEST(VectorBool, ConstructorDefault) {
   EXPECT_NO_THROW({
@@ -734,7 +735,7 @@ TEST_P(SizeTest, InsertRange) {
 }
 
 class EraseOneItemTest : public TestWithParam<std::tuple<int, int> > {};
-INSTANTIATE_TEST_CASE_P(VectorBool, EraseOneItemTest, Combine(Values(70), Values(0, 1, 16, 31, 32, 33, 48, 63, 64, 65)));
+//INSTANTIATE_TEST_CASE_P(VectorBool, EraseOneItemTest, Combine(Values(70), Values(0, 1, BLOCK_SIZE-1, BLOCK_SIZE, BLOCK_SIZE+1)));
 TEST_P(EraseOneItemTest, EraseOneItem) {
   const size_t size = std::get<0>(GetParam());
   const size_t erase_index = std::get<1>(GetParam());
@@ -767,7 +768,7 @@ TEST_P(EraseOneItemTest, EraseOneItem) {
 }
 
 class EraseManyItemsTest : public TestWithParam<std::tuple<int, int, int> > {};
-INSTANTIATE_TEST_CASE_P(VectorBool, EraseManyItemsTest, Combine(Values(66), Values(0, 1, 16, 31, 32, 33), Values(16, 31, 32, 33)));
+//INSTANTIATE_TEST_CASE_P(VectorBool, EraseManyItemsTest, Combine(Values(66), Values(0, 1, 0, 1, BLOCK_SIZE - 1, BLOCK_SIZE, BLOCK_SIZE + 1), Values(0, 1, BLOCK_SIZE - 1, BLOCK_SIZE, BLOCK_SIZE + 1)));
 TEST_P(EraseManyItemsTest, EraseManyItems) {
   const size_t size = std::get<0>(GetParam());
   const size_t erase_index = std::get<1>(GetParam());
@@ -836,7 +837,7 @@ TEST_P(SizeSizeBoolTest, Sort) {
 }
 
 class BoolTest : public TestWithParam<bool> {};
-INSTANTIATE_TEST_CASE_P(VectorBool, BoolTest, Bool());
+//INSTANTIATE_TEST_CASE_P(VectorBool, BoolTest, Bool());
 TEST_P(BoolTest, SortUnique) {
   const size_t size = 4;
   const bool ascending = GetParam();

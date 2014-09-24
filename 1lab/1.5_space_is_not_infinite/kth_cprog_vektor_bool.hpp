@@ -1,4 +1,4 @@
-#include "kth_cprog_vektor.cpp"
+#include "kth_cprog_vektor.hpp"
 #include <climits> // CHAR_BIT
 
 template <>
