@@ -73,11 +73,11 @@ build/$(EX04DIR)/simple_testrunner.cpp: $(EX04DIR)/simple.cxxtest.cpp
 	mkdir -p $(@D)
 	python2 $(CXXTEST_DIR)/cxxtestgen.py --error-printer -o $@ $<
 
-build/$(EX06DIR)/test_vec.exe: $(EX06DIR)/test_vec.cpp build/$(EX06DIR)/vector.o
+build/$(EX06DIR)/test_vec.exe: $(EX06DIR)/test_vec.cpp $(EX06DIR)/kth_cprog_simple_container.hpp
 	mkdir -p $(@D)
-	g++ $(CPPFLAGS) -o $@ $^
+	g++ $(CPPFLAGS) -I $(EX07DIR) -o $@ $^
 
-build/$(EX07DIR)/vector_tests.o: $(EX07DIR)/vector_tests.cpp $(EX07DIR)/kth_cprog_vektor.cpp
+build/$(EX07DIR)/vector_tests.o: $(EX07DIR)/vector_tests.cpp $(EX07DIR)/kth_cprog_template_container.hpp
 	mkdir -p $(@D)
 	g++ $(CPPFLAGS) -c -o $@ $<
 
@@ -110,7 +110,7 @@ build/$(EX11DIR)/example_test.exe: build/$(EX11DIR)/example_test.cpp build/$(EX1
 	mkdir -p $(@D)
 	g++ $(CPPFLAGS) -I $(CXXTEST_DIR) -I $(EX07DIR) -I . -o $@ $^
 
-build/$(EX14DIR)/hypercube_tests.o: $(EX14DIR)/hypercube_tests.cpp $(EX14DIR)/hypercube.hpp $(EX07DIR)/kth_cprog_vektor.cpp
+build/$(EX14DIR)/hypercube_tests.o: $(EX14DIR)/hypercube_tests.cpp $(EX14DIR)/hypercube.hpp $(EX07DIR)/kth_cprog_template_container.hpp
 	mkdir -p $(@D)
 	g++ ${CPPFLAGS} -I $(EX07DIR) -c -o $@ $<
 
@@ -118,7 +118,7 @@ build/$(EX14DIR)/hypercube_tests.exe: ../test_runner.cpp build/$(EX14DIR)/hyperc
 	mkdir -p $(@D)
 	g++ ${CPPFLAGS} -o $@ $^
 
-build/$(EX15DIR)/vector_bool_tests.o: $(EX15DIR)/vector_bool_tests.cpp $(EX15DIR)/kth_cprog_vektor_bool.cpp $(EX07DIR)/kth_cprog_vektor.cpp
+build/$(EX15DIR)/vector_bool_tests.o: $(EX15DIR)/vector_bool_tests.cpp $(EX15DIR)/kth_cprog_vektor_bool.hpp $(EX07DIR)/kth_cprog_template_container.hpp
 	mkdir -p $(@D)
 	g++ $(CPPFLAGS) -I $(EX07DIR) -c -o $@ $<
 
@@ -126,7 +126,7 @@ build/$(EX15DIR)/vector_bool_tests.exe: ../test_runner.cpp build/$(EX15DIR)/vect
 	mkdir -p $(@D)
 	g++ $(CPPFLAGS) -o $@ $^
 
-build/$(EX16DIR)/vector_iterator_tests.o: $(EX16DIR)/vector_iterator_tests.cpp $(EX07DIR)/kth_cprog_vektor.cpp
+build/$(EX16DIR)/vector_iterator_tests.o: $(EX16DIR)/vector_iterator_tests.cpp $(EX07DIR)/kth_cprog_template_container.hpp
 	mkdir -p $(@D)
 	g++ ${CPPFLAGS} -I $(EX07DIR) -c -o $@ $<
 
