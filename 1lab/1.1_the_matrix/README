@@ -3,7 +3,7 @@ Read and edit makefile. Asign 'testcode' to your tests
 in Makefile:
     testcode    = example_test.h
 
-Generate your cxxtest with
+Generate your cxxtest with 
 
  make testcode.cpp
 
@@ -24,7 +24,7 @@ with (gcc --version)
 
  gcc (Ubuntu/Linaro 4.6.3-1ubuntu5) 4.6.3
 
-reached via
+reached via 
 
  ssh u-shell.csc.kth.se
 
@@ -33,3 +33,4 @@ result is 64-bit (file Matrix02.o)
  Matrix02.o: ELF 64-bit LSB relocatable, x86-64, version 1 (SYSV), not stripped
 
 for 32-bit files look in 32bit subdir
+

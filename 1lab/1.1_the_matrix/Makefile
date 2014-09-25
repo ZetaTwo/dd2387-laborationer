@@ -11,3 +11,4 @@ runtest0%: testcode.cpp
 clean:
 	touch runtest01 testcode.cpp
 	rm runtest0* testcode.cpp
+

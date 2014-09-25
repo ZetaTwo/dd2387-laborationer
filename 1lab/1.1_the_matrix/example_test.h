@@ -2,7 +2,7 @@
 #define MATRIX_TEST_H_INCLUDED
 
 #include "Matrix.h"
-#include "cxxtest/TestSuite.h"
+#include "/info/cprog09/cxxtest/cxxtest/TestSuite.h"
 #include <fstream>
 #include <sstream>
 
@@ -18,7 +18,7 @@ class MatrixTestSuite : public CxxTest::TestSuite
 
     void init_matrix( Matrix& m, const char* file )
     {
-        std::stringstream stream( file );
+        std::stringstream stream( file );   
         stream >> m;
     }
 
@@ -42,3 +42,4 @@ public:
 };
 
 #endif
+
