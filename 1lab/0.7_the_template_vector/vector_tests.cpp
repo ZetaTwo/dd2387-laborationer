@@ -495,6 +495,14 @@ TEST(Vector, StreamInput) {
   std::cout << Vector<int>({0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597}) << std::endl;
 }
 
+TEST(Vector, Basic1) {
+  Vector<int> A(1024, 5);
+  Vector<int> B(1024, 6);
+
+  A = std::move(A);
+  B = B;
+  EXPECT_EQ(6, B[512]);
+}
 
 TEST(Vector, EvilInt3) {
   Vector<int> A(1024, 5);
