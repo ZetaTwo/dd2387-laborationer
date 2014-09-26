@@ -57,7 +57,7 @@ ex07_tests: run/$(EX07DIR)/vector_tests
 
 ex11: run/$(EX11DIR)/matrix_tests ex11_compiler_tests run/$(EX11DIR)/example_test
 ex13: run/$(EX13DIR)/hypercube_tests
-ex14: run/$(EX14DIR)/vector_bool_tests run/$(EX14DIR)/vector_iterator_tests
+ex14: run/$(EX14DIR)/vector_bool_tests
 
 build/$(EX02DIR)/hello.exe: $(EX02DIR)/main.cpp build/$(EX02DIR)/hello.o
 	mkdir -p $(@D)
@@ -78,15 +78,11 @@ build/$(EX06DIR)/test_vec.exe: $(EX06DIR)/test_vec.cpp $(EX06DIR)/kth_cprog_simp
 	mkdir -p $(@D)
 	g++ $(CPPFLAGS) -I $(EX06DIR) -I $(EX07DIR) -o $@ $^
 
-build/$(EX07DIR)/vector_tests.o: $(EX07DIR)/vector_tests.cpp $(EX07DIR)/kth_cprog_template_container.hpp
+build/$(EX07DIR)/%_tests.o: $(EX07DIR)/%_tests.cpp $(EX07DIR)/kth_cprog_template_container.hpp
 	mkdir -p $(@D)
 	g++ $(CPPFLAGS) -c -o $@ $<
 
-build/$(EX07DIR)/vector_iterator_tests.o: $(EX07DIR)/vector_iterator_tests.cpp $(EX07DIR)/kth_cprog_template_container.hpp
-	mkdir -p $(@D)
-	g++ $(CPPFLAGS) -c -o $@ $<
-
-build/$(EX07DIR)/vector_tests.exe: ../test_runner.cpp build/$(EX07DIR)/vector_tests.o build/$(EX07DIR)/vector_iterator_tests.o
+build/$(EX07DIR)/vector_tests.exe: ../test_runner.cpp $(foreach test,vector iterator vector_iterator,build/$(EX07DIR)/$(test)_tests.o)
 	mkdir -p $(@D)
 	g++ $(CPPFLAGS) -o $@ $^
 
@@ -128,13 +124,5 @@ build/$(EX14DIR)/vector_bool_tests.o: $(EX14DIR)/vector_bool_tests.cpp $(EX14DIR
 	g++ $(CPPFLAGS) -I $(EX07DIR) -c -o $@ $<
 
 build/$(EX14DIR)/vector_bool_tests.exe: ../test_runner.cpp build/$(EX14DIR)/vector_bool_tests.o
-	mkdir -p $(@D)
-	g++ $(CPPFLAGS) -o $@ $^
-
-build/$(EX14DIR)/vector_iterator_tests.o: $(EX14DIR)/vector_iterator_tests.cpp $(EX07DIR)/kth_cprog_template_container.hpp
-	mkdir -p $(@D)
-	g++ ${CPPFLAGS} -I $(EX07DIR) -c -o $@ $<
-
-build/$(EX14DIR)/vector_iterator_tests.exe: ../test_runner.cpp build/$(EX14DIR)/vector_iterator_tests.o
 	mkdir -p $(@D)
 	g++ $(CPPFLAGS) -o $@ $^
