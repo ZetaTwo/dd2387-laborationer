@@ -87,7 +87,7 @@ build/$(EX06DIR)/test_vec.exe: $(EX06DIR)/test_vec.cpp $(EX06DIR)/kth_cprog_simp
 build/$(EX07DIR)/%_tests.o: $(EX07DIR)/%_tests.cpp $(TEMPLATE_VECTOR_HEADER)
 	$(MAKE_OBJECT)
 
-build/$(EX07DIR)/vector_tests.exe: ../test_runner.cpp $(foreach test,vector iterator,build/$(EX07DIR)/$(test)_tests.o)
+build/$(EX07DIR)/vector_tests.exe: ../test_runner.cpp $(patsubst %.cpp,build/%.o,$(wildcard $(EX07DIR)/*_tests.cpp))
 	$(MAKE_EXECUTABLE)
 
 ex11_compiler_tests: $(patsubst $(EX11DIR)/compiler_tests/%.cpp,ex11_compiler_test_%,$(wildcard $(EX11DIR)/compiler_tests/*.cpp))
@@ -119,5 +119,5 @@ build/$(EX13DIR)/hypercube_tests.exe: ../test_runner.cpp build/$(EX13DIR)/hyperc
 build/$(EX14DIR)/vector_%_tests.o: $(EX14DIR)/vector_%_tests.cpp $(EX14DIR)/kth_cprog_vektor_bool.hpp $(TEMPLATE_VECTOR_HEADER)
 	$(MAKE_OBJECT)
 
-build/$(EX14DIR)/vector_bool_tests.exe: ../test_runner.cpp $(foreach testName,bool,build/$(EX14DIR)/vector_$(testName)_tests.o)
+build/$(EX14DIR)/vector_bool_tests.exe: ../test_runner.cpp $(patsubst %.cpp,build/%.o,$(wildcard $(EX14DIR)/*_tests.cpp))
 	$(MAKE_EXECUTABLE)
