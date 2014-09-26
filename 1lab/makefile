@@ -19,7 +19,7 @@ lab1: ex01 ex02 ex03 ex04 ex05 ex06 ex07 ex11 ex13 ex14
 
 build/%.o: %.cpp %.h
 	mkdir -p $(@D)
-	g++ $(CPPFLAGS) -c -o $@ $<
+	g++ $(CPPFLAGS) -I $(EX06DIR) -I $(EX07DIR) -I $(EX11DIR) -c -o $@ $<
 
 build/%.exe: %.cpp
 	mkdir -p $(@D)
@@ -90,10 +90,6 @@ ex11_compiler_tests: $(patsubst $(EX11DIR)/compiler_tests/%.cpp,ex11_compiler_te
 ex11_compiler_test_%: $(EX11DIR)/compiler_tests/%.cpp build/$(EX11DIR)/Matrix.o
 	mkdir -p $(@D)
 	! g++ $(CPPFLAGS) -I $(EX11DIR) -I $(EX07DIR) $^ -o /dev/null &>/dev/null
-
-build/$(EX11DIR)/Matrix.o: $(EX11DIR)/Matrix.cpp $(EX11DIR)/Matrix.h
-	mkdir -p $(@D)
-	g++ $(CPPFLAGS) -I $(EX07DIR) -c -o $@ $<
 
 build/$(EX11DIR)/matrix_tests.o: $(EX11DIR)/matrix_tests.cpp build/$(EX11DIR)/Matrix.o
 	mkdir -p $(@D)
