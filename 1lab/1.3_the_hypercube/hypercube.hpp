@@ -1,4 +1,4 @@
-#include "kth_cprog_vektor.cpp"
+#include "kth_cprog_template_container.hpp"
 
 template<class T, size_t n>
 class Hypercube : public Vector<Hypercube<T, n-1> > {
