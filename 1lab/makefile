@@ -71,6 +71,9 @@ build/$(EX04DIR)/simple_testrunner.cpp: $(EX04DIR)/simple.cxxtest.cpp
 	mkdir -p $(@D)
 	python2 $(CXXTEST_DIR)/cxxtestgen.py --error-printer -o $@ $<
 
+run/$(EX04DIR)/simple_testrunner: build/$(EX04DIR)/simple_testrunner.exe
+	-./$^
+
 build/$(EX06DIR)/test_vec.exe: $(EX06DIR)/test_vec.cpp $(EX06DIR)/kth_cprog_simple_container.hpp
 	mkdir -p $(@D)
 	g++ $(CPPFLAGS) -I $(EX06DIR) -I $(EX07DIR) -o $@ $^
