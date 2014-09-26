@@ -12,11 +12,10 @@ EX06DIR=0.6_the_simple_container
 EX07DIR=0.7_the_template_vector
 
 EX11DIR=1.1_the_matrix
-EX14DIR=1.4_the_hypercube
-EX15DIR=1.5_space_is_not_infinite
-EX16DIR=1.6_walking_across_the_universe
+EX13DIR=1.3_the_hypercube
+EX14DIR=1.4_space_is_not_infinite
 
-lab1: ex01 ex02 ex03 ex04 ex05 ex06 ex07 ex11 ex14 ex15 ex16
+lab1: ex01 ex02 ex03 ex04 ex05 ex06 ex07 ex11 ex13 ex14
 
 build/%.o: %.cpp %.h
 	mkdir -p $(@D)
@@ -57,9 +56,8 @@ ex07_given_tests: valgrind/$(EX07DIR)/test_template_vec
 ex07_tests: run/$(EX07DIR)/vector_tests
 
 ex11: run/$(EX11DIR)/matrix_tests ex11_compiler_tests run/$(EX11DIR)/example_test
-ex14: run/$(EX14DIR)/hypercube_tests
-ex15: run/$(EX15DIR)/vector_bool_tests
-ex16: run/$(EX16DIR)/vector_iterator_tests
+ex13: run/$(EX13DIR)/hypercube_tests
+ex14: run/$(EX14DIR)/vector_bool_tests run/$(EX14DIR)/vector_iterator_tests
 
 build/$(EX02DIR)/hello.exe: $(EX02DIR)/main.cpp build/$(EX02DIR)/hello.o
 	mkdir -p $(@D)
@@ -110,26 +108,26 @@ build/$(EX11DIR)/example_test.exe: build/$(EX11DIR)/example_test.cpp build/$(EX1
 	mkdir -p $(@D)
 	g++ $(CPPFLAGS) -I $(CXXTEST_DIR) -I $(EX07DIR) -I . -o $@ $^
 
-build/$(EX14DIR)/hypercube_tests.o: $(EX14DIR)/hypercube_tests.cpp $(EX14DIR)/hypercube.hpp $(EX07DIR)/kth_cprog_template_container.hpp
+build/$(EX13DIR)/hypercube_tests.o: $(EX13DIR)/hypercube_tests.cpp $(EX13DIR)/hypercube.hpp $(EX07DIR)/kth_cprog_template_container.hpp
 	mkdir -p $(@D)
 	g++ ${CPPFLAGS} -I $(EX07DIR) -c -o $@ $<
 
-build/$(EX14DIR)/hypercube_tests.exe: ../test_runner.cpp build/$(EX14DIR)/hypercube_tests.o
+build/$(EX13DIR)/hypercube_tests.exe: ../test_runner.cpp build/$(EX13DIR)/hypercube_tests.o
 	mkdir -p $(@D)
 	g++ ${CPPFLAGS} -o $@ $^
 
-build/$(EX15DIR)/vector_bool_tests.o: $(EX15DIR)/vector_bool_tests.cpp $(EX15DIR)/kth_cprog_vektor_bool.hpp $(EX07DIR)/kth_cprog_template_container.hpp
+build/$(EX14DIR)/vector_bool_tests.o: $(EX14DIR)/vector_bool_tests.cpp $(EX14DIR)/kth_cprog_vektor_bool.hpp $(EX07DIR)/kth_cprog_template_container.hpp
 	mkdir -p $(@D)
 	g++ $(CPPFLAGS) -I $(EX07DIR) -c -o $@ $<
 
-build/$(EX15DIR)/vector_bool_tests.exe: ../test_runner.cpp build/$(EX15DIR)/vector_bool_tests.o
+build/$(EX14DIR)/vector_bool_tests.exe: ../test_runner.cpp build/$(EX14DIR)/vector_bool_tests.o
 	mkdir -p $(@D)
 	g++ $(CPPFLAGS) -o $@ $^
 
-build/$(EX16DIR)/vector_iterator_tests.o: $(EX16DIR)/vector_iterator_tests.cpp $(EX07DIR)/kth_cprog_template_container.hpp
+build/$(EX14DIR)/vector_iterator_tests.o: $(EX14DIR)/vector_iterator_tests.cpp $(EX07DIR)/kth_cprog_template_container.hpp
 	mkdir -p $(@D)
 	g++ ${CPPFLAGS} -I $(EX07DIR) -c -o $@ $<
 
-build/$(EX16DIR)/vector_iterator_tests.exe: ../test_runner.cpp build/$(EX16DIR)/vector_iterator_tests.o
+build/$(EX14DIR)/vector_iterator_tests.exe: ../test_runner.cpp build/$(EX14DIR)/vector_iterator_tests.o
 	mkdir -p $(@D)
 	g++ $(CPPFLAGS) -o $@ $^
