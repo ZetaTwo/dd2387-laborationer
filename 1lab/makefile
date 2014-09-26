@@ -75,7 +75,7 @@ build/$(EX04DIR)/simple_testrunner.cpp: $(EX04DIR)/simple.cxxtest.cpp
 
 build/$(EX06DIR)/test_vec.exe: $(EX06DIR)/test_vec.cpp $(EX06DIR)/kth_cprog_simple_container.hpp
 	mkdir -p $(@D)
-	g++ $(CPPFLAGS) -I $(EX07DIR) -o $@ $^
+	g++ $(CPPFLAGS) -I $(EX06DIR) -I $(EX07DIR) -o $@ $^
 
 build/$(EX07DIR)/vector_tests.o: $(EX07DIR)/vector_tests.cpp $(EX07DIR)/kth_cprog_template_container.hpp
 	mkdir -p $(@D)
