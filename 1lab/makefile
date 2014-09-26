@@ -79,7 +79,11 @@ build/$(EX07DIR)/vector_tests.o: $(EX07DIR)/vector_tests.cpp $(EX07DIR)/kth_cpro
 	mkdir -p $(@D)
 	g++ $(CPPFLAGS) -c -o $@ $<
 
-build/$(EX07DIR)/vector_tests.exe: ../test_runner.cpp build/$(EX07DIR)/vector_tests.o
+build/$(EX07DIR)/vector_iterator_tests.o: $(EX07DIR)/vector_iterator_tests.cpp $(EX07DIR)/kth_cprog_template_container.hpp
+	mkdir -p $(@D)
+	g++ $(CPPFLAGS) -c -o $@ $<
+
+build/$(EX07DIR)/vector_tests.exe: ../test_runner.cpp build/$(EX07DIR)/vector_tests.o build/$(EX07DIR)/vector_iterator_tests.o
 	mkdir -p $(@D)
 	g++ $(CPPFLAGS) -o $@ $^
 
