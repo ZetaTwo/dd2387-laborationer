@@ -17,6 +17,9 @@ EX14DIR=1.4_space_is_not_infinite
 
 lab1: ex01 ex02 ex03 ex04 ex05 ex06 ex07 ex11 ex13 ex14
 
+clean:
+	rm -rf build
+
 build/%.o: %.cpp %.h
 	mkdir -p $(@D)
 	g++ $(CPPFLAGS) -I $(EX06DIR) -I $(EX07DIR) -I $(EX11DIR) -c -o $@ $<
