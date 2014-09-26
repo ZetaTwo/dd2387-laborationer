@@ -1,5 +1,3 @@
-CPPFLAGS=-std=c++11 -Wall -g -lgtest
-
 COURSEDIR=../kurskatalog
 CXXTEST_DIR=$(COURSEDIR)/cxxtest
 
@@ -15,18 +13,24 @@ EX11DIR=1.1_the_matrix
 EX13DIR=1.3_the_hypercube
 EX14DIR=1.4_space_is_not_infinite
 
+CPPFLAGS=-std=c++11 -Wall -g -lgtest
+INCLUDE_PREREQUISITE_HEADER_DIRECTORIES=$(foreach file,$(filter %.h %.hpp,$^),-I $(dir $(file)))
+COMPILE=mkdir -p $(dir $@); g++ $(CPPFLAGS) $(INCLUDE_PREREQUISITE_HEADER_DIRECTORIES) -o $@ $< $(filter %.o,$^)
+
+MAKE_OBJECT=$(COMPILE) -c
+MAKE_EXECUTABLE=$(COMPILE)
+MAKE_CXXTEST_CODE=mkdir -p $(@D); python2 $(CXXTEST_DIR)/cxxtestgen.py --error-printer -o $@ $<
+
 lab1: ex01 ex02 ex03 ex04 ex05 ex06 ex07 ex11 ex13 ex14
 
 clean:
 	rm -rf build
 
 build/%.o: %.cpp %.h
-	mkdir -p $(@D)
-	g++ $(CPPFLAGS) -I $(EX06DIR) -I $(EX07DIR) -I $(EX11DIR) -c -o $@ $<
+	$(MAKE_OBJECT)
 
 build/%.exe: %.cpp
-	mkdir -p $(@D)
-	g++ $(CPPFLAGS) -o $@ $<
+	$(MAKE_EXECUTABLE)
 
 run/%: build/%.exe
 	./$^
@@ -63,65 +67,54 @@ ex13: run/$(EX13DIR)/hypercube_tests
 ex14: run/$(EX14DIR)/vector_bool_tests
 
 build/$(EX02DIR)/hello.exe: $(EX02DIR)/main.cpp build/$(EX02DIR)/hello.o
-	mkdir -p $(@D)
-	g++ $(CPPFLAGS) -o $@ $^
-
-build/$(EX04DIR)/simple_testrunner.exe: build/$(EX04DIR)/simple_testrunner.cpp $(EX04DIR)/count_if_followed_by.o
-	mkdir -p $(@D)
-	g++ -o $@ -I $(CXXTEST_DIR)/ -I . $^
+	$(MAKE_EXECUTABLE)
 
 build/$(EX04DIR)/simple_testrunner.cpp: $(EX04DIR)/simple.cxxtest.cpp
-	mkdir -p $(@D)
-	python2 $(CXXTEST_DIR)/cxxtestgen.py --error-printer -o $@ $<
+	$(MAKE_CXXTEST_CODE)
+
+build/$(EX04DIR)/simple_testrunner.exe: build/$(EX04DIR)/simple_testrunner.cpp $(EX04DIR)/count_if_followed_by.o
+	$(MAKE_EXECUTABLE) -I $(CXXTEST_DIR) -I .
 
 run/$(EX04DIR)/simple_testrunner: build/$(EX04DIR)/simple_testrunner.exe
 	-./$^
 
-build/$(EX06DIR)/test_vec.exe: $(EX06DIR)/test_vec.cpp $(EX06DIR)/kth_cprog_simple_container.hpp
-	mkdir -p $(@D)
-	g++ $(CPPFLAGS) -I $(EX06DIR) -I $(EX07DIR) -o $@ $^
+build/$(EX06DIR)/test_vec.exe: $(EX06DIR)/test_vec.cpp $(EX06DIR)/kth_cprog_simple_container.hpp $(EX07DIR)/kth_cprog_template_container.hpp
+	$(MAKE_EXECUTABLE)
 
 build/$(EX07DIR)/%_tests.o: $(EX07DIR)/%_tests.cpp $(EX07DIR)/kth_cprog_template_container.hpp
-	mkdir -p $(@D)
-	g++ $(CPPFLAGS) -c -o $@ $<
+	$(MAKE_OBJECT)
 
-build/$(EX07DIR)/vector_tests.exe: ../test_runner.cpp $(foreach test,vector iterator vector_iterator,build/$(EX07DIR)/$(test)_tests.o)
-	mkdir -p $(@D)
-	g++ $(CPPFLAGS) -o $@ $^
+build/$(EX07DIR)/vector_tests.exe: ../test_runner.cpp $(foreach test,vector iterator,build/$(EX07DIR)/$(test)_tests.o)
+	$(MAKE_EXECUTABLE)
 
 ex11_compiler_tests: $(patsubst $(EX11DIR)/compiler_tests/%.cpp,ex11_compiler_test_%,$(wildcard $(EX11DIR)/compiler_tests/*.cpp))
 ex11_compiler_test_%: $(EX11DIR)/compiler_tests/%.cpp build/$(EX11DIR)/Matrix.o
 	mkdir -p $(@D)
 	! g++ $(CPPFLAGS) -I $(EX11DIR) -I $(EX07DIR) $^ -o /dev/null &>/dev/null
 
-build/$(EX11DIR)/matrix_tests.o: $(EX11DIR)/matrix_tests.cpp build/$(EX11DIR)/Matrix.o
-	mkdir -p $(@D)
-	g++ $(CPPFLAGS) -I $(EX07DIR) -c -o $@ $<
+build/$(EX11DIR)/Matrix.o: $(EX11DIR)/Matrix.cpp $(EX11DIR)/Matrix.h $(EX07DIR)/kth_cprog_template_container.hpp
+	$(MAKE_OBJECT)
+
+build/$(EX11DIR)/matrix_tests.o: $(EX11DIR)/matrix_tests.cpp build/$(EX11DIR)/Matrix.o $(EX07DIR)/kth_cprog_template_container.hpp
+	$(MAKE_OBJECT)
 
 build/$(EX11DIR)/matrix_tests.exe: ../test_runner.cpp build/$(EX11DIR)/matrix_tests.o build/$(EX11DIR)/Matrix.o
-	mkdir -p $(@D)
-	g++ $(CPPFLAGS) -o $@ $^
+	$(MAKE_EXECUTABLE)
 
 build/$(EX11DIR)/example_test.cpp: $(EX11DIR)/example_test.h
-	mkdir -p $(@D)
-	python2 $(CXXTEST_DIR)/cxxtestgen.py --error-printer -o $@ $<
+	$(MAKE_CXXTEST_CODE)
 
-build/$(EX11DIR)/example_test.exe: build/$(EX11DIR)/example_test.cpp build/$(EX11DIR)/Matrix.o
-	mkdir -p $(@D)
-	g++ $(CPPFLAGS) -I $(CXXTEST_DIR) -I $(EX07DIR) -I . -o $@ $^
+build/$(EX11DIR)/example_test.exe: build/$(EX11DIR)/example_test.cpp build/$(EX11DIR)/Matrix.o $(EX07DIR)/kth_cprog_template_container.hpp
+	$(MAKE_EXECUTABLE) -I $(CXXTEST_DIR) -I .
 
 build/$(EX13DIR)/hypercube_tests.o: $(EX13DIR)/hypercube_tests.cpp $(EX13DIR)/hypercube.hpp $(EX07DIR)/kth_cprog_template_container.hpp
-	mkdir -p $(@D)
-	g++ ${CPPFLAGS} -I $(EX07DIR) -c -o $@ $<
+	$(MAKE_OBJECT)
 
 build/$(EX13DIR)/hypercube_tests.exe: ../test_runner.cpp build/$(EX13DIR)/hypercube_tests.o
-	mkdir -p $(@D)
-	g++ ${CPPFLAGS} -o $@ $^
+	$(MAKE_EXECUTABLE)
 
-build/$(EX14DIR)/vector_bool_tests.o: $(EX14DIR)/vector_bool_tests.cpp $(EX14DIR)/kth_cprog_vektor_bool.hpp $(EX07DIR)/kth_cprog_template_container.hpp
-	mkdir -p $(@D)
-	g++ $(CPPFLAGS) -I $(EX07DIR) -c -o $@ $<
+build/$(EX14DIR)/vector_%_tests.o: $(EX14DIR)/vector_%_tests.cpp $(EX14DIR)/kth_cprog_vektor_bool.hpp $(EX07DIR)/kth_cprog_template_container.hpp
+	$(MAKE_OBJECT)
 
-build/$(EX14DIR)/vector_bool_tests.exe: ../test_runner.cpp build/$(EX14DIR)/vector_bool_tests.o
-	mkdir -p $(@D)
-	g++ $(CPPFLAGS) -o $@ $^
+build/$(EX14DIR)/vector_bool_tests.exe: ../test_runner.cpp $(foreach testName,bool,build/$(EX14DIR)/vector_$(testName)_tests.o)
+	$(MAKE_EXECUTABLE)
