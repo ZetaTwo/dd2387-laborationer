@@ -1094,38 +1094,6 @@ TEST_P(SizeTest, Weight1) {
   }
 }
 
-TEST_P(SizeTest, Weight2) {
-  const size_t size = GetParam();
-  Vec vector(size);
-  for(size_t i = 0; i < size; ++i) {
-    vector[i] = i % 2;
-  }
-  const Vec before(vector);
-
-  EXPECT_EQ(size / 2, vector.weight2());
-
-  EXPECT_EQ(before.size(), vector.size());
-  for(size_t i = 0; i < vector.size(); ++i) {
-    EXPECT_EQ(before[i], vector[i]) << "Vector has changed.";
-  }
-}
-
-TEST_P(SizeTest, Weight3) {
-  const size_t size = GetParam();
-  Vec vector(size);
-  for(size_t i = 0; i < size; ++i) {
-    vector[i] = i % 2;
-  }
-  const Vec before(vector);
-
-  EXPECT_EQ(size / 2, vector.weight3());
-
-  EXPECT_EQ(before.size(), vector.size());
-  for(size_t i = 0; i < vector.size(); ++i) {
-    EXPECT_EQ(before[i], vector[i]) << "Vector has changed.";
-  }
-}
-
 TEST_P(AlternatingVectorsTest, ConvertToUnsignedInteger) {
   const Vec vector = GetParam();
   if(vector.size() > sizeof(unsigned int) * CHAR_BIT) {

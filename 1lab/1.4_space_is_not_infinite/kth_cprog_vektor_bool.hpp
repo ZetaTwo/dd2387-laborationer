@@ -48,8 +48,6 @@ public:
 
   size_t weight() const;
   size_t weight1() const;
-  size_t weight2() const;
-  size_t weight3() const;
 
   //Iterators
 public:
@@ -564,36 +562,6 @@ size_t Vector<bool>::weight1() const {
   for(size_t i = 0; i <= size() / STORAGE_BLOCK_SIZE; i++) {
     size_t count = data[i] - ((data[i] >> 1) & 033333333333) - ((data[i] >> 2) & 011111111111);
     result += ((count + (count >> 3)) & 030707070707) % 63;
-  }
-
-  return result;
-}
-
-size_t Vector<bool>::weight2() const {
-  size_t result = 0;
-
-  for(size_t i = 0; i <= size() / STORAGE_BLOCK_SIZE; i++) {
-    while(data[i] > 0) {         // until all bits are zero
-      if((data[i] & 1) == 1) {   // check lower bit
-        result++;
-      }
-      data[i] >>= 1;              // shift bits, removing lower bit
-    }
-  }
-
-  return result;
-}
-
-size_t Vector<bool>::weight3() const {
-  size_t result = 0;
-
-  for(size_t i = 0; i <= size() / STORAGE_BLOCK_SIZE; i++) {
-    while(data[i] > 0) {         // until all bits are zero
-      if((data[i] & (1 << (sizeof(storage_type)-1))) == (1 << (sizeof(storage_type)-1))) {   // check upper bit
-        result++;
-      }
-      data[i] <<= 1;              // shift bits, removing upper bit
-    }
   }
 
   return result;
