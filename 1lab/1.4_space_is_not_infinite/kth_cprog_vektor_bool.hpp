@@ -451,6 +451,7 @@ Vector<bool>& Vector<bool>::insert(const size_t index, const bool& element) {
   const size_t insert_storage_index = index / STORAGE_BLOCK_SIZE;
   const size_t insert_subindex = index % STORAGE_BLOCK_SIZE;
 
+  //TODO: <TrasigKod>
   size_t storage_index = storage_size() - 1;
   if(count % STORAGE_BLOCK_SIZE == 0) {
     data[storage_index] = 0;
@@ -464,6 +465,7 @@ Vector<bool>& Vector<bool>::insert(const size_t index, const bool& element) {
   const storage_type middleBit = (element ? (1 << insert_subindex) : 0);
   const storage_type upperBits = insert_subindex == MAX_SUBINDEX ? 0 : (data[storage_index] >> insert_subindex) << (insert_subindex + 1);
   data[storage_index] = lowerBits | middleBit | upperBits;
+  //TODO: </TrasigKod>
 
   ++count;
 
