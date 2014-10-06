@@ -81,8 +81,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\0.7_the_template_vector\vector_iterator_tests.cpp" />
     <ClCompile Include="..\..\0.7_the_template_vector\vector_tests.cpp" />
-    <ClCompile Include="..\..\1.5_space_is_not_infinite\vector_bool_tests.cpp" />
+    <ClCompile Include="..\..\1.4_space_is_not_infinite\vector_bool_tests.cpp" />
     <ClCompile Include="..\..\test_runner.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
