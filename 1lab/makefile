@@ -13,9 +13,10 @@ EX11DIR=1.1_the_matrix
 EX13DIR=1.3_the_hypercube
 EX14DIR=1.4_space_is_not_infinite
 
+CXX=g++
 CPPFLAGS=-std=c++11 -Wall -g -lgtest
 INCLUDE_PREREQUISITE_HEADER_DIRECTORIES=$(foreach file,$(filter %.h %.hpp,$^),-I $(dir $(file)))
-COMPILE=mkdir -p $(dir $@); g++ $(CPPFLAGS) $(INCLUDE_PREREQUISITE_HEADER_DIRECTORIES) -o $@ $< $(filter %.o,$^)
+COMPILE=mkdir -p $(dir $@); $(CXX) $(CPPFLAGS) $(INCLUDE_PREREQUISITE_HEADER_DIRECTORIES) -o $@ $< $(filter %.o,$^)
 
 MAKE_OBJECT=$(COMPILE) -c
 MAKE_EXECUTABLE=$(COMPILE)
