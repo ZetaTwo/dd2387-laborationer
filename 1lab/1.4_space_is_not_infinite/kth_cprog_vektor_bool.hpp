@@ -43,7 +43,7 @@ public:
   Vector<bool>& unique_sort(bool ascending = true);
 
   //Lookup in vector
-  bool exists(const bool& element) const;
+  bool exists(bool element) const;
   size_t size() const;
 
   size_t weight() const;
@@ -92,7 +92,7 @@ private:
   subindex_type index;
 public:
   bool_proxy(storage_type* element, subindex_type index) : element(element), index(index) {}
-  bool_proxy& operator=(const bool& value) {
+  bool_proxy& operator=(const bool value) {
     if(value) {
       *element |= 1 << index;
     } else {
@@ -535,7 +535,7 @@ Vector<bool>& Vector<bool>::unique_sort(const bool ascending) {
   return *this;
 }
 
-bool Vector<bool>::exists(const bool& element) const {
+bool Vector<bool>::exists(const bool element) const {
   for(size_t i = 0; i < count / STORAGE_BLOCK_SIZE; ++i) {
     if((element ? data[i] : ~data[i]) != 0) {
       return true;
