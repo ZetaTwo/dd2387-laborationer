@@ -455,7 +455,6 @@ Vector<bool>& Vector<bool>::insert(const size_t index, const bool& element) {
   size_t storage_index = storage_size() - 1;
   if(count % STORAGE_BLOCK_SIZE == 0) {
     data[storage_index] = 0;
-    ++storage_index;
   }
   for( ; storage_index > insert_storage_index; --storage_index) {
     data[storage_index] = (data[storage_index] << 1) | (data[storage_index-1] >> MAX_SUBINDEX);
@@ -560,8 +559,11 @@ size_t Vector<bool>::weight() const {
 size_t Vector<bool>::weight1() const {
   size_t result = 0;
 
-  data[size() / STORAGE_BLOCK_SIZE] %= 1 << (size() % STORAGE_BLOCK_SIZE);
-  for(size_t i = 0; i <= size() / STORAGE_BLOCK_SIZE; i++) {
+  if (size() % STORAGE_BLOCK_SIZE != 0) {
+    data[size() / STORAGE_BLOCK_SIZE] %= 1 << (size() % STORAGE_BLOCK_SIZE);
+  }
+  const size_t max_index = (size() / STORAGE_BLOCK_SIZE) - ((size() > 0 && size() % STORAGE_BLOCK_SIZE == 0) ? 1 : 0);
+  for (size_t i = 0; i <= max_index; i++) {
     size_t count = data[i] - ((data[i] >> 1) & 033333333333) - ((data[i] >> 2) & 011111111111);
     result += ((count + (count >> 3)) & 030707070707) % 63;
   }
@@ -637,11 +639,17 @@ Vector<bool>::const_iterator Vector<bool>::find(bool value) const {
 }
 
 Vector<bool>::reverse_iterator Vector<bool>::rbegin() {
-  return reverse_iterator(iterator(&data[count / STORAGE_BLOCK_SIZE], count % MAX_SUBINDEX));
+  if (count == 0) {
+    return rend();
+  }
+
+  return reverse_iterator(end());
+  //return reverse_iterator(iterator(&data[count / STORAGE_BLOCK_SIZE], (count - 1) % MAX_SUBINDEX));
 }
 
 Vector<bool>::reverse_iterator Vector<bool>::rend() {
-  return reverse_iterator(iterator(&data[0], 0));
+  return reverse_iterator(begin());
+  //return reverse_iterator(iterator(&data[0] - 1, STORAGE_BLOCK_SIZE-1));
 }
 
 Vector<bool>::const_reverse_iterator Vector<bool>::rbegin() const {

@@ -913,19 +913,27 @@ TEST(VectorBool, ItrCBeginEnd) {
 }
 
 TEST(VectorBool, ItrRBeginEnd) {
-  Vec vector1({ true, false, true, false });
-  Vec vector2({ false, true, false, true });
+  Vec vector1({ true, false, true, false, true, true, false, false });
+  Vec vector2({ false, false, true, true, false, true, false, true });
   Vec vector3;
 
   for(Vec::reverse_iterator itr = vector1.rbegin(); itr != vector1.rend(); ++itr) {
+    std::cout << *itr << ", ";
     vector3.push_back(*itr);
   }
+    std::cout << std::endl;
+
+  std::cout << vector3 << std::endl;
 
   EXPECT_EQ(vector2.size(), vector3.size());
   EXPECT_EQ(vector2[0], vector3[0]);
   EXPECT_EQ(vector2[1], vector3[1]);
   EXPECT_EQ(vector2[2], vector3[2]);
   EXPECT_EQ(vector2[3], vector3[3]);
+  EXPECT_EQ(vector2[4], vector3[4]);
+  EXPECT_EQ(vector2[5], vector3[5]);
+  EXPECT_EQ(vector2[6], vector3[6]);
+  EXPECT_EQ(vector2[7], vector3[7]);
 }
 
 TEST(VectorBool, ItrRCBeginEnd) {
