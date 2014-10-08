@@ -35,8 +35,8 @@ public:
   bool operator!=(const Vector<bool>& other) const;
 
   //Modify vector
-  Vector<bool>& push_back(const bool& element);
-  Vector<bool>& insert(size_t index, const bool& element);
+  Vector<bool>& push_back(bool element);
+  Vector<bool>& insert(size_t index, bool element);
   Vector<bool>& erase(size_t index);
   Vector<bool>& clear();
   Vector<bool>& sort(bool ascending = true);
@@ -434,11 +434,11 @@ bool Vector<bool>::operator!=(const Vector<bool>& other) const {
   return !(*this == other);
 }
 
-Vector<bool>& Vector<bool>::push_back(const bool& element) {
+Vector<bool>& Vector<bool>::push_back(bool element) {
   return insert(count, element);
 }
 
-Vector<bool>& Vector<bool>::insert(const size_t index, const bool& element) {
+Vector<bool>& Vector<bool>::insert(const size_t index, bool element) {
   if(index > count) {
     std::stringstream msg;
     msg << "Attempted to insert at index " << index << ", expected <= " << count;
