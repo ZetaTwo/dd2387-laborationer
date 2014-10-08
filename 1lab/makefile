@@ -81,7 +81,7 @@ build/$(EX04DIR)/simple_testrunner.exe: build/$(EX04DIR)/simple_testrunner.cpp $
 run/$(EX04DIR)/simple_testrunner: build/$(EX04DIR)/simple_testrunner.exe
 	-./$^
 
-build/$(EX06DIR)/test_vec.exe: $(EX06DIR)/test_vec.cpp $(EX06DIR)/kth_cprog_simple_container.hpp $(TEMPLATE_VECTOR_HEADER)
+build/$(EX06DIR)/test_vec.exe: $(EX06DIR)/test_vec.cpp $(EX06DIR)/kth_cprog_simple_container.hpp
 	$(MAKE_EXECUTABLE)
 
 build/$(EX07DIR)/%_tests.o: $(EX07DIR)/%_tests.cpp $(TEMPLATE_VECTOR_HEADER)
