@@ -411,7 +411,7 @@ std::ostream& operator<<(std::ostream& os, const Vector<T>& vector) {
   os << "[";
   if(vector.size() > 0) {
     os << vector[0];
-    for(auto item = ++vector.begin(); item != vector.end(); ++item) {
+    for(typename Vector<T>::const_iterator item = ++vector.begin(); item != vector.end(); ++item) {
       os << ", " << *item;
     }
   }
