@@ -381,6 +381,18 @@ found via argument-dependent lookup.
 :::: "unspecified"; why do you think that is?
 --------------------------------------------------------------------------------
 
-Answer: ...
+Answer:
+
+The type is irrelevant to the specification, or dependent on other things such
+as type parameters. For instance, the return type of std::bind is unspecified
+but has a member type `result_type` that expresses the return type of the
+wrapped function.
+
+Types in C++ don't work like, say, Java types. C++ programs don't always need to
+know the type of something, only that they for example provide a set of
+functions. A library function in Java might expect an argument that implements
+the Iterable interface, while in C++ the function might only need to require
+that `begin()` and `end()` methods exist - independently of what classes are
+extended etc.
 
 --------------------------------------------------------------------------------
