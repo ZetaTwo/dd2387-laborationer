@@ -358,7 +358,12 @@ Answer:
 :::: it for us?
 --------------------------------------------------------------------------------
 
-Answer: ...
+Answer:
+
+It might not always be possible to infer semantics from member types. For
+example, some classes may want to make deep copies and some might want shallow
+copies. Some might want a combination, which could also depend on the state of
+the object.
 
 --------------------------------------------------------------------------------
 
