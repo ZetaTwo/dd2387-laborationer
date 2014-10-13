@@ -370,7 +370,11 @@ Answer: ...
 :::: but the type of `source` must meet certain requirements; what are they?
 --------------------------------------------------------------------------------
 
-Answer: ...
+Answer:
+
+It must be an array or an instance of a class with `begin()` and `end()`
+methods; otherwise there must exist `begin(source)` and `end(source)` functions
+found via argument-dependent lookup.
 
 --------------------------------------------------------------------------------
 :::: The C++ Standard sometimes state that a type in the Standard Library is
