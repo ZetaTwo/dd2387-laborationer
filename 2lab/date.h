@@ -21,6 +21,9 @@ public:
   virtual Date& operator--()    = 0;
   virtual Date& operator+=(int) = 0;
   virtual Date& operator-=(int) = 0;
+
+  virtual Date& add_year (int years  = 1) = 0;
+  virtual Date& add_month(int months = 1) = 0;
 };
 
 }
