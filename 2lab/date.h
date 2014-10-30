@@ -9,6 +9,12 @@ protected:
   int mjd_offset;
 public:
 
+  Date();
+  explicit Date(int mjd_offset);
+  Date(const Date& original);
+
+  virtual Date& operator=(const Date& other);
+
   virtual int year()            const = 0;
   virtual int month()           const = 0;
   virtual int day()             const = 0;
