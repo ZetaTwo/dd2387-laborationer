@@ -9,7 +9,7 @@ protected:
 
 public:
   MjdOffsetDate();
-  explicit MjdOffsetDate(int mjd_offset);
+  MjdOffsetDate(int mjd_offset);
   MjdOffsetDate(const Date& original);
 
   virtual MjdOffsetDate& operator=(const Date& other);
