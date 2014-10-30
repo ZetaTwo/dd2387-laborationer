@@ -17,6 +17,8 @@ public:
   virtual std::string week_day_name() const = 0;
   virtual std::string month_name()    const = 0;
 
+  virtual int mod_julian_day() const = 0;
+
   int  operator- (const Date& other) const;
   bool operator==(const Date& other) const;
   bool operator!=(const Date& other) const;
