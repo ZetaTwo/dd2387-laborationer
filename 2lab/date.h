@@ -5,6 +5,8 @@
 namespace lab2 {
 
 class Date {
+protected:
+  int mjd_offset;
 public:
 
   virtual int year()            const = 0;
@@ -18,7 +20,7 @@ public:
   virtual std::string week_day_name() const = 0;
   virtual std::string month_name()    const = 0;
 
-  virtual int mod_julian_day() const = 0;
+  int mod_julian_day() const;
 
   int  operator- (const Date& other) const;
   bool operator==(const Date& other) const;
@@ -28,10 +30,10 @@ public:
   bool operator> (const Date& other) const;
   bool operator>=(const Date& other) const;
 
-  virtual Date& operator++()    = 0;
-  virtual Date& operator--()    = 0;
-  virtual Date& operator+=(int) = 0;
-  virtual Date& operator-=(int) = 0;
+  virtual Date& operator++();
+  virtual Date& operator--();
+  virtual Date& operator+=(int);
+  virtual Date& operator-=(int);
 
   virtual Date& add_year (int years  = 1) = 0;
   virtual Date& add_month(int months = 1) = 0;
