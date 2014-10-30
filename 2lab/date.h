@@ -16,6 +16,11 @@ public:
 
   virtual std::string week_day_name() const = 0;
   virtual std::string month_name()    const = 0;
+
+  virtual Date& operator++()    = 0;
+  virtual Date& operator--()    = 0;
+  virtual Date& operator+=(int) = 0;
+  virtual Date& operator-=(int) = 0;
 };
 
 }
