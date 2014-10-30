@@ -1,5 +1,6 @@
 #pragma once
 #include<string>
+#include<iostream>
 
 namespace lab2 {
 
@@ -35,5 +36,7 @@ public:
   virtual Date& add_year (int years  = 1) = 0;
   virtual Date& add_month(int months = 1) = 0;
 };
+
+std::ostream& operator<<(std::ostream&, const Date&);
 
 }
