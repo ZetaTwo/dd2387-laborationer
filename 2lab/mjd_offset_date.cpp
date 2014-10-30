@@ -16,10 +16,6 @@ MjdOffsetDate& MjdOffsetDate::operator=(const Date& other) {
   return *this;
 }
 
-int MjdOffsetDate::mod_julian_day() const {
-  return mjd_offset;
-}
-
 MjdOffsetDate& MjdOffsetDate::operator++() {
   ++mjd_offset;
   return *this;

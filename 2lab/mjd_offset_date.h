@@ -14,7 +14,7 @@ public:
 
   virtual MjdOffsetDate& operator=(const Date& other);
 
-  virtual int mod_julian_day() const;
+  virtual inline int mod_julian_day() const { return mjd_offset; }
 
   virtual MjdOffsetDate& operator++();
   virtual MjdOffsetDate& operator--();
