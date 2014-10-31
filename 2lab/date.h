@@ -21,13 +21,15 @@ namespace lab2 {
 
     virtual int mod_julian_day() const = 0;
 
-    int  operator- (const Date& other) const;
-    bool operator==(const Date& other) const;
-    bool operator!=(const Date& other) const;
-    bool operator< (const Date& other) const;
-    bool operator<=(const Date& other) const;
-    bool operator> (const Date& other) const;
-    bool operator>=(const Date& other) const;
+    inline int  operator- (const Date& other) const {
+      return mod_julian_day() - other.mod_julian_day();
+    };
+    inline bool operator==(const Date& other) const { return (*this - other) == 0; }
+    inline bool operator!=(const Date& other) const { return (*this - other) != 0; }
+    inline bool operator< (const Date& other) const { return (*this - other) <  0; }
+    inline bool operator<=(const Date& other) const { return (*this - other) <= 0; }
+    inline bool operator> (const Date& other) const { return (*this - other) >  0; }
+    inline bool operator>=(const Date& other) const { return (*this - other) >= 0; }
 
     virtual Date& operator++() = 0;
     virtual Date& operator--() = 0;
