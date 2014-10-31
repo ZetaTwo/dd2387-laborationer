@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include <sstream>
 #include "date.h"
 
 using lab2::Date;
@@ -368,4 +369,13 @@ TEST(Date, OperatorGreaterThanOrEqualIsReflexive) {
   const DateStub& dsr = ds;
   EXPECT_TRUE(ds >= ds);
   EXPECT_TRUE(ds >= dsr);
+}
+
+
+TEST(Date, OperatorOutputUsesIso8601DateFormat) {
+  std::stringstream os;
+  const DateStub ds(0);
+  os << ds;
+
+  EXPECT_EQ("0001-02-03", os.str());
 }
