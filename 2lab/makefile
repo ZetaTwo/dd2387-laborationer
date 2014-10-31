@@ -1,5 +1,5 @@
 CXX=clang++
-CPPFLAGS=-std=c++11 -Wall -g
+CPPFLAGS=-std=c++11 -Wall -Wextra -g
 
 INCLUDE_PREREQUISITE_HEADER_DIRECTORIES=$(foreach file,$(filter %.h %.hpp,$^),-I $(dir $(file)))
 
