@@ -11,8 +11,8 @@ namespace lab2 {
     WesternDate();
     ~WesternDate();
 
-    virtual int days_per_week() const inline override { return 7; }
-    virtual int months_per_year() const inline override { return 12; }
+    virtual inline int days_per_week() const override { return 7; }
+    virtual inline int months_per_year() const override { return 12; }
 
   protected:
     static const std::vector<std::string> day_names;
