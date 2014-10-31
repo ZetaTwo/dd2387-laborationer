@@ -6,8 +6,7 @@
 #include "mjd_offset_date.h"
 
 namespace lab2 {
-  class WesternDate : public MjdOffsetDate
-  {
+  class WesternDate : public MjdOffsetDate {
   public:
     WesternDate();
     ~WesternDate();
