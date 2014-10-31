@@ -34,3 +34,8 @@ public:
   virtual Date& add_year (int) override { return *this; }
   virtual Date& add_month(int) override { return *this; }
 };
+
+TEST(MjdOffsetDate, DefaultConstructorSetsModJulianDayToZero) {
+  const MjdodStub ds = MjdodStub();
+  EXPECT_EQ(0, ds.mod_julian_day());
+}
