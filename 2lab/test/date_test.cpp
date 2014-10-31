@@ -155,3 +155,53 @@ TEST(Date, OperatorNotEqualsIsFalseForSelf) {
   EXPECT_FALSE(ds != ds);
   EXPECT_FALSE(ds != dsr);
 }
+
+TEST(Date, OperatorLessThanReturnsFalseForEqualDates) {
+  const DateStub dsa(0);
+  const DateStub dsb(0);
+  const DateStub& dsar = dsa;
+  const DateStub& dsbr = dsb;
+
+  EXPECT_FALSE(dsa  < dsb);
+  EXPECT_FALSE(dsa  < dsbr);
+  EXPECT_FALSE(dsar < dsb);
+  EXPECT_FALSE(dsar < dsbr);
+}
+
+TEST(Date, OperatorLessThanReturnsTrueIfLess) {
+  const DateStub dsa(0);
+  const DateStub dsb(1);
+  const DateStub& dsar = dsa;
+  const DateStub& dsbr = dsb;
+
+  EXPECT_TRUE(dsa  < dsb);
+  EXPECT_TRUE(dsa  < dsbr);
+  EXPECT_TRUE(dsar < dsb);
+  EXPECT_TRUE(dsar < dsbr);
+}
+
+TEST(Date, OperatorLessThanReturnsFalseIfGreater) {
+  const DateStub dsa(1);
+  const DateStub dsb(0);
+  const DateStub& dsar = dsa;
+  const DateStub& dsbr = dsb;
+
+  EXPECT_FALSE(dsa  < dsb);
+  EXPECT_FALSE(dsa  < dsbr);
+  EXPECT_FALSE(dsar < dsb);
+  EXPECT_FALSE(dsar < dsbr);
+}
+
+TEST(Date, OperatorLessThanIsAntiSymmetric) {
+  const DateStub dsa(0);
+  const DateStub dsb(1);
+
+  EXPECT_EQ(dsa < dsb, !(dsb < dsa));
+}
+
+TEST(Date, OperatorLessThanIsFalseForSelf) {
+  const DateStub ds(0);
+  const DateStub& dsr = ds;
+  EXPECT_FALSE(ds < ds);
+  EXPECT_FALSE(ds < dsr);
+}
