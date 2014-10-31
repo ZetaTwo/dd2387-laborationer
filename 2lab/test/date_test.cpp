@@ -104,7 +104,7 @@ TEST(Date, OperatorEqualsIsSymmetricWhenFalse) {
   EXPECT_EQ(dsa == dsb, dsb == dsa);
 }
 
-TEST(Date, OperatorEqualsIsTrueForSelf) {
+TEST(Date, OperatorEqualsIsReflexive) {
   const DateStub ds(0);
   const DateStub& dsr = ds;
   EXPECT_TRUE(ds == ds);
@@ -149,7 +149,7 @@ TEST(Date, OperatorNotEqualsIsSymmetricWhenTrue) {
   EXPECT_EQ(dsa != dsb, dsb != dsa);
 }
 
-TEST(Date, OperatorNotEqualsIsFalseForSelf) {
+TEST(Date, OperatorNotEqualsIsAntireflexive) {
   const DateStub ds(0);
   const DateStub& dsr = ds;
   EXPECT_FALSE(ds != ds);
@@ -199,7 +199,7 @@ TEST(Date, OperatorLessThanIsAntiSymmetric) {
   EXPECT_EQ(dsa < dsb, !(dsb < dsa));
 }
 
-TEST(Date, OperatorLessThanIsFalseForSelf) {
+TEST(Date, OperatorLessThanIsAntireflexive) {
   const DateStub ds(0);
   const DateStub& dsr = ds;
   EXPECT_FALSE(ds < ds);
@@ -256,7 +256,7 @@ TEST(Date, OperatorLessThanOrEqualIsSymmetricForEqualDates) {
   EXPECT_EQ(dsa <= dsb, dsb <= dsa);
 }
 
-TEST(Date, OperatorLessThanOrEqualIsTrueForSelf) {
+TEST(Date, OperatorLessThanOrEqualIsReflexive) {
   const DateStub ds(0);
   const DateStub& dsr = ds;
   EXPECT_TRUE(ds <= ds);
@@ -306,7 +306,7 @@ TEST(Date, OperatorGreaterThanIsAntiSymmetric) {
   EXPECT_EQ(dsa > dsb, !(dsb > dsa));
 }
 
-TEST(Date, OperatorGreaterThanIsFalseForSelf) {
+TEST(Date, OperatorGreaterThanIsAntireflexive) {
   const DateStub ds(0);
   const DateStub& dsr = ds;
   EXPECT_FALSE(ds > ds);
@@ -363,7 +363,7 @@ TEST(Date, OperatorGreaterThanOrEqualIsSymmetricForEqualDates) {
   EXPECT_EQ(dsa >= dsb, dsb >= dsa);
 }
 
-TEST(Date, OperatorGreaterThanOrEqualIsTrueForSelf) {
+TEST(Date, OperatorGreaterThanOrEqualIsReflexive) {
   const DateStub ds(0);
   const DateStub& dsr = ds;
   EXPECT_TRUE(ds >= ds);
