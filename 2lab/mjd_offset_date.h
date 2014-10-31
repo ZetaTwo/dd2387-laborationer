@@ -12,14 +12,14 @@ public:
   MjdOffsetDate(int mjd_offset);
   MjdOffsetDate(const Date& original);
 
-  virtual MjdOffsetDate& operator=(const Date& other);
+  virtual MjdOffsetDate& operator=(const Date& other) override;
 
-  virtual inline int mod_julian_day() const { return mjd_offset; }
+  virtual inline int mod_julian_day() const override { return mjd_offset; }
 
-  virtual MjdOffsetDate& operator++();
-  virtual MjdOffsetDate& operator--();
-  virtual MjdOffsetDate& operator+=(int);
-  virtual MjdOffsetDate& operator-=(int);
+  virtual MjdOffsetDate& operator++() override;
+  virtual MjdOffsetDate& operator--() override;
+  virtual MjdOffsetDate& operator+=(int) override;
+  virtual MjdOffsetDate& operator-=(int) override;
 };
 
 }
