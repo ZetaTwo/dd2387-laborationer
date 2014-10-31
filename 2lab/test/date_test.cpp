@@ -65,3 +65,48 @@ TEST(Date, OperatorMinusReturnsZeroForSelf) {
   EXPECT_EQ(0, ds - dsr);
   EXPECT_EQ(0, dsr - dsr);
 }
+
+TEST(Date, OperatorEqualsReturnsTrueForEqualDates) {
+  const DateStub dsa(0);
+  const DateStub dsb(0);
+  const DateStub& dsar = dsa;
+  const DateStub& dsbr = dsb;
+
+  EXPECT_TRUE(dsa  == dsb);
+  EXPECT_TRUE(dsa  == dsbr);
+  EXPECT_TRUE(dsar == dsb);
+  EXPECT_TRUE(dsar == dsbr);
+}
+
+TEST(Date, OperatorEqualsReturnsFalseForUnequalDates) {
+  const DateStub dsa(0);
+  const DateStub dsb(1);
+  const DateStub& dsar = dsa;
+  const DateStub& dsbr = dsb;
+
+  EXPECT_FALSE(dsa  == dsb);
+  EXPECT_FALSE(dsa  == dsbr);
+  EXPECT_FALSE(dsar == dsb);
+  EXPECT_FALSE(dsar == dsbr);
+}
+
+TEST(Date, OperatorEqualsIsSymmetricWhenTrue) {
+  const DateStub dsa(0);
+  const DateStub dsb(1);
+
+  EXPECT_EQ(dsa == dsb, dsb == dsa);
+}
+
+TEST(Date, OperatorEqualsIsSymmetricWhenFalse) {
+  const DateStub dsa(0);
+  const DateStub dsb(0);
+
+  EXPECT_EQ(dsa == dsb, dsb == dsa);
+}
+
+TEST(Date, OperatorEqualsIsTrueForSelf) {
+  const DateStub ds(0);
+  const DateStub& dsr = ds;
+  EXPECT_TRUE(ds == ds);
+  EXPECT_TRUE(ds == dsr);
+}
