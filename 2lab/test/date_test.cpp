@@ -28,7 +28,7 @@ public:
   //  std::ostream& operator<<(std::ostream&, const Date&);
 
   // Dummy implementations for virtual methods
-  virtual DateStub& operator=(const Date& other) override { return *this; }
+  virtual DateStub& operator=(const Date&) override { return *this; }
   virtual int week_day()        const override { return 0; }
   virtual int days_per_week()   const override { return 0; }
   virtual int days_this_month() const override { return 0; }
@@ -37,10 +37,10 @@ public:
   virtual std::string month_name()    const override { return ""; }
   virtual Date& operator++() override { return *this; }
   virtual Date& operator--() override { return *this; }
-  virtual Date& operator+=(int days) override { return *this; }
-  virtual Date& operator-=(int days) override { return *this; }
-  virtual Date& add_year (int years  = 1) override { return *this; }
-  virtual Date& add_month(int months = 1) override { return *this; }
+  virtual Date& operator+=(int) override { return *this; }
+  virtual Date& operator-=(int) override { return *this; }
+  virtual Date& add_year (int) override { return *this; }
+  virtual Date& add_month(int) override { return *this; }
 };
 
 
