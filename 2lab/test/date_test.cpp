@@ -312,3 +312,60 @@ TEST(Date, OperatorGreaterThanIsFalseForSelf) {
   EXPECT_FALSE(ds > ds);
   EXPECT_FALSE(ds > dsr);
 }
+
+TEST(Date, OperatorGreaterThanOrEqualReturnsTrueForEqualDates) {
+  const DateStub dsa(0);
+  const DateStub dsb(0);
+  const DateStub& dsar = dsa;
+  const DateStub& dsbr = dsb;
+
+  EXPECT_TRUE(dsa  >= dsb);
+  EXPECT_TRUE(dsa  >= dsbr);
+  EXPECT_TRUE(dsar >= dsb);
+  EXPECT_TRUE(dsar >= dsbr);
+}
+
+TEST(Date, OperatorGreaterThanOrEqualReturnsTrueIfGreater) {
+  const DateStub dsa(1);
+  const DateStub dsb(0);
+  const DateStub& dsar = dsa;
+  const DateStub& dsbr = dsb;
+
+  EXPECT_TRUE(dsa  >= dsb);
+  EXPECT_TRUE(dsa  >= dsbr);
+  EXPECT_TRUE(dsar >= dsb);
+  EXPECT_TRUE(dsar >= dsbr);
+}
+
+TEST(Date, OperatorGreaterThanOrEqualReturnsFalseIfLess) {
+  const DateStub dsa(0);
+  const DateStub dsb(1);
+  const DateStub& dsar = dsa;
+  const DateStub& dsbr = dsb;
+
+  EXPECT_FALSE(dsa  >= dsb);
+  EXPECT_FALSE(dsa  >= dsbr);
+  EXPECT_FALSE(dsar >= dsb);
+  EXPECT_FALSE(dsar >= dsbr);
+}
+
+TEST(Date, OperatorGreaterThanOrEqualIsAntiSymmetricForUnequalDates) {
+  const DateStub dsa(0);
+  const DateStub dsb(1);
+
+  EXPECT_EQ(dsa >= dsb, !(dsb >= dsa));
+}
+
+TEST(Date, OperatorGreaterThanOrEqualIsSymmetricForEqualDates) {
+  const DateStub dsa(0);
+  const DateStub dsb(0);
+
+  EXPECT_EQ(dsa >= dsb, dsb >= dsa);
+}
+
+TEST(Date, OperatorGreaterThanOrEqualIsTrueForSelf) {
+  const DateStub ds(0);
+  const DateStub& dsr = ds;
+  EXPECT_TRUE(ds >= ds);
+  EXPECT_TRUE(ds >= dsr);
+}
