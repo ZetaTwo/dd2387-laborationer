@@ -41,3 +41,27 @@ public:
   virtual Date& add_year (int years  = 1) override { return *this; }
   virtual Date& add_month(int months = 1) override { return *this; }
 };
+
+
+TEST(Date, OperatorMinusReturnsTheRightValue) {
+  const DateStub ds0(0);
+  const DateStub ds1(1);
+
+  EXPECT_EQ(1, ds1 - ds0);
+}
+
+TEST(Date, OperatorMinusIsAntisymmetric) {
+  const DateStub ds0(0);
+  const DateStub ds1(1);
+
+  EXPECT_EQ(ds1 - ds0, -(ds0 - ds1));
+}
+
+TEST(Date, OperatorMinusReturnsZeroForSelf) {
+  const DateStub ds(0);
+  const DateStub& dsr = ds;
+
+  EXPECT_EQ(0, ds - ds);
+  EXPECT_EQ(0, ds - dsr);
+  EXPECT_EQ(0, dsr - dsr);
+}
