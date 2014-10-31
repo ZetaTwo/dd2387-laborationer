@@ -1,4 +1,4 @@
-#include "westerndate.h"
+#include "western_date.h"
 
 namespace lab2 {
   const std::vector<std::string> WesternDate::day_names = {
