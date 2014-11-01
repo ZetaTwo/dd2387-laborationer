@@ -44,3 +44,15 @@ TEST(MjdOffsetDate, IntConstructorSetsModJulianDayToArgument) {
   const MjdodStub ds(1);
   EXPECT_EQ(1, ds.mod_julian_day());
 }
+
+TEST(MjdOffsetDate, CopyConstructorMakesResultEqualToArgument) {
+  const MjdodStub dsa(1);
+  const MjdodStub dsb(dsa);
+  EXPECT_EQ(dsa, dsb);
+}
+
+TEST(MjdOffsetDate, CopyConstructorDoesNotModifyMjdOfArgument) {
+  const MjdodStub dsa(1);
+  const MjdodStub dsb(dsa);
+  EXPECT_EQ(1, dsa.mod_julian_day());
+}
