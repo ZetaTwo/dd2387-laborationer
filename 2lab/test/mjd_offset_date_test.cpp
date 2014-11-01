@@ -39,3 +39,8 @@ TEST(MjdOffsetDate, DefaultConstructorSetsModJulianDayToZero) {
   const MjdodStub ds = MjdodStub();
   EXPECT_EQ(0, ds.mod_julian_day());
 }
+
+TEST(MjdOffsetDate, IntConstructorSetsModJulianDayToArgument) {
+  const MjdodStub ds(1);
+  EXPECT_EQ(1, ds.mod_julian_day());
+}
