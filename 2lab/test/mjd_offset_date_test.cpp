@@ -133,3 +133,20 @@ TEST(MjdOffsetDate, OperatorDecrementPrefixReturnsSelfAfterModification) {
 
   EXPECT_EQ(-1, (--dr).mod_julian_day());
 }
+
+TEST(MjdOffsetDate, OperatorIncreaseAssignmentIncreasesModJulianDayByArgument) {
+  MjdodStub ds(0);
+  Date& dr = ds;
+
+  dr += 5;
+
+  EXPECT_EQ(5, dr.mod_julian_day());
+  EXPECT_EQ(5, ds.mod_julian_day());
+}
+
+TEST(MjdOffsetDate, OperatorIncreaseAssignmentReturnsSelfAfterModification) {
+  MjdodStub ds(0);
+  Date& dr = ds;
+
+  EXPECT_EQ(5, (dr += 5).mod_julian_day());
+}
