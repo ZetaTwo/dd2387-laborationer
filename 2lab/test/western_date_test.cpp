@@ -32,3 +32,11 @@ TEST(WesternDate, DaysPerWeekIsSeven) {
   EXPECT_EQ(7, ds.days_per_week());
   EXPECT_EQ(7, dr.days_per_week());
 }
+
+TEST(WesternDate, MonthsPerYearIsTwelve) {
+  const WesternDateStub ds = WesternDateStub();
+  const Date& dr = ds;
+
+  EXPECT_EQ(12, ds.months_per_year());
+  EXPECT_EQ(12, dr.months_per_year());
+}
