@@ -116,3 +116,20 @@ TEST(MjdOffsetDate, OperatorIncrementPrefixReturnsSelfAfterModification) {
 
   EXPECT_EQ(1, (++dr).mod_julian_day());
 }
+
+TEST(MjdOffsetDate, OperatorDecrementPrefixDecrementsModJulianDayByOne) {
+  MjdodStub ds(0);
+  Date& dr = ds;
+
+  --dr;
+
+  EXPECT_EQ(-1, dr.mod_julian_day());
+  EXPECT_EQ(-1, ds.mod_julian_day());
+}
+
+TEST(MjdOffsetDate, OperatorDecrementPrefixReturnsSelfAfterModification) {
+  MjdodStub ds(0);
+  Date& dr = ds;
+
+  EXPECT_EQ(-1, (--dr).mod_julian_day());
+}
