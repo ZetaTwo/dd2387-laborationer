@@ -56,3 +56,39 @@ TEST(MjdOffsetDate, CopyConstructorDoesNotModifyMjdOfArgument) {
   const MjdodStub dsb(dsa);
   EXPECT_EQ(1, dsa.mod_julian_day());
 }
+
+TEST(MjdOffsetDate, AssignmentOperatorMakesLhsEqualToRhs) {
+  const MjdodStub dsa(1);
+  MjdodStub dsb(0);
+  MjdodStub& dsbr = dsb;
+
+  ASSERT_NE(dsa, dsb);
+
+  dsbr = dsa;
+
+  EXPECT_EQ(dsa, dsb);
+}
+
+TEST(MjdOffsetDate, AssignmentOperatorDoesNotModifyMjdOfRhs) {
+  const MjdodStub dsa(1);
+  MjdodStub dsb(0);
+
+  ASSERT_NE(dsa, dsb);
+
+  dsb = dsa;
+
+  EXPECT_EQ(1, dsa.mod_julian_day());
+}
+
+TEST(MjdOffsetDate, AssignmentOperatorIsBoundDynamically) {
+  const MjdodStub dsa(1);
+  MjdodStub dsb(0);
+  Date& dbr = dsb;
+
+  ASSERT_NE(dbr, dsa);
+
+  dbr = dsa;
+
+  EXPECT_EQ(1, dbr.mod_julian_day());
+  EXPECT_EQ(1, dsb.mod_julian_day());
+}
