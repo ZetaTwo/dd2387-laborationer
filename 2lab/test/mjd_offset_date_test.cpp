@@ -92,3 +92,10 @@ TEST(MjdOffsetDate, AssignmentOperatorIsBoundDynamically) {
   EXPECT_EQ(1, dbr.mod_julian_day());
   EXPECT_EQ(1, dsb.mod_julian_day());
 }
+
+TEST(MjdOffsetDate, ModJulianDayIsBoundDynamically) {
+  const MjdodStub ds(1);
+  const Date& dr = ds;
+
+  EXPECT_EQ(1, dr.mod_julian_day());
+}
