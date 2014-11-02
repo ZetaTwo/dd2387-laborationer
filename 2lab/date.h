@@ -6,7 +6,7 @@ namespace lab2 {
 
   class Date {
   public:
-    virtual Date& operator=(const Date& other) = 0;
+    virtual inline Date& operator=(const Date&) { return *this; };
 
     virtual int year()            const = 0;
     virtual int month()           const = 0;
