@@ -25,5 +25,5 @@ build/mjd_offset_date.o: mjd_offset_date.cpp mjd_offset_date.h date.h
 build/test/%_test.o: test/%_test.cpp %.h
 	$(MAKE_OBJECT)
 
-build/run_test: test_runner.cpp $(patsubst %.cpp,build/%.o,$(wildcard test/*_test.cpp)) build/date.o build/mjd_offset_date.o
+build/run_test: test_runner.cpp $(patsubst %.cpp,build/%.o,$(wildcard test/*_test.cpp)) $(patsubst %.cpp,build/%.o,$(wildcard *date.cpp))
 	$(MAKE_EXECUTABLE) -lgtest
