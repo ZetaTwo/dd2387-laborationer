@@ -24,3 +24,11 @@ public:
   virtual Date& add_year (int) override { return *this; }
   virtual Date& add_month(int) override { return *this; }
 };
+
+TEST(WesternDate, DaysPerWeekIsSeven) {
+  const WesternDateStub ds = WesternDateStub();
+  const Date& dr = ds;
+
+  EXPECT_EQ(7, ds.days_per_week());
+  EXPECT_EQ(7, dr.days_per_week());
+}
