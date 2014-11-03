@@ -45,3 +45,17 @@ using lab2::GregorianDate;
 TEST_P(GregorianLeapYearTest, IsLeapYearIsCorrect) {
   EXPECT_EQ(std::get<1>(GetParam()), GregorianDate::is_leap_year(std::get<0>(GetParam())));
 }
+
+TEST_P(EpochSecondsToGregorianDateTest, DefaultConstructorSetsResultToToday) {
+  const int current_epoch_seconds = std::get<0>(GetParam());
+  const int expected_year = std::get<1>(GetParam());
+  const int expected_month = std::get<2>(GetParam());
+  const int expected_day = std::get<3>(GetParam());
+
+  set_k_time(current_epoch_seconds);
+  const GregorianDate d;
+
+  EXPECT_EQ(expected_year, d.year());
+  EXPECT_EQ(expected_month, d.month());
+  EXPECT_EQ(expected_day, d.day());
+}
