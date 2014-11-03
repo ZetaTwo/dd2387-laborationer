@@ -14,7 +14,7 @@ clean:
 	rm -r build
 
 test: build/run_test
-	$<
+	$< $(GTEST_FLAGS)
 
 build/%.o: %.cpp %.h
 	$(MAKE_OBJECT)
