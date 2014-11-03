@@ -25,5 +25,8 @@ build/mjd_offset_date.o: mjd_offset_date.cpp mjd_offset_date.h date.h
 build/test/%_test.o: test/%_test.cpp %.h
 	$(MAKE_OBJECT)
 
-build/run_test: test_runner.cpp $(patsubst %.cpp,build/%.o,$(wildcard test/*_test.cpp)) $(patsubst %.cpp,build/%.o,$(wildcard *date.cpp))
+build/test/gregorian_date_test.o: test/gregorian_date_test.cpp gregorian_date.h kurskatalog/kattistime.h
+	$(MAKE_OBJECT)
+
+build/run_test: test_runner.cpp $(patsubst %.cpp,build/%.o,$(wildcard test/*_test.cpp)) $(patsubst %.cpp,build/%.o,$(wildcard *date.cpp)) build/kurskatalog/kattistime.o
 	$(MAKE_EXECUTABLE) -lgtest

@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include "kattistime.h"
 #include "gregorian_date.h"
 
 using ::testing::TestWithParam;
@@ -17,6 +18,25 @@ INSTANTIATE_TEST_CASE_P(GregorianDate, GregorianLeapYearTest, Values(
   std::tuple<int, bool>{2100, false},
   std::tuple<int, bool>{2558, false},
   std::tuple<int, bool>{2560, true}
+));
+
+class EpochSecondsToGregorianDateTest : public TestWithParam<std::tuple<int, int, int, int>> {};
+INSTANTIATE_TEST_CASE_P(GregorianDate, EpochSecondsToGregorianDateTest, Values(
+  std::tuple<int, int, int, int>{3506716800, 1858, 11, 17},
+  std::tuple<int, int, int, int>{-1, 1969, 12, 31},
+  std::tuple<int, int, int, int>{0, 1970, 1, 1},
+  std::tuple<int, int, int, int>{1, 1970, 1, 1},
+  std::tuple<int, int, int, int>{60*60*24, 1970, 1, 2},
+  std::tuple<int, int, int, int>{1414976494, 2014, 11, 3}
+));
+
+class GregorianYmdTest : public TestWithParam<std::tuple<int, int, int>> {};
+INSTANTIATE_TEST_CASE_P(GregorianDate, GregorianYmdTest, Values(
+  std::tuple<int, int, int>{1970, 1, 1},
+  std::tuple<int, int, int>{1970, 1, 2},
+  std::tuple<int, int, int>{1858, 11, 16},
+  std::tuple<int, int, int>{1858, 11, 17},
+  std::tuple<int, int, int>{2014, 11, 3}
 ));
 
 using lab2::Date;
