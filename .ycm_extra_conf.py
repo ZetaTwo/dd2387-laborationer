@@ -79,6 +79,8 @@ flags = [
 '1lab/1.1_the_matrix',
 '-I',
 '2lab',
+'-I',
+'2lab/kurskatalog',
 '-isystem',
 './tests/gmock/gtest',
 '-isystem',
