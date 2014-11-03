@@ -1,6 +1,21 @@
 #include <gtest/gtest.h>
 #include "western_date.h"
 
+using ::testing::TestWithParam;
+using ::testing::Values;
+
+class DayNamesTest : public TestWithParam<std::tuple<int, std::string>> {};
+
+INSTANTIATE_TEST_CASE_P(WesternDate, DayNamesTest, Values(
+  std::tuple<int, std::string>{0, "monday"},
+  std::tuple<int, std::string>{1, "tuesday"},
+  std::tuple<int, std::string>{2, "wednesday"},
+  std::tuple<int, std::string>{3, "thursday"},
+  std::tuple<int, std::string>{4, "friday"},
+  std::tuple<int, std::string>{5, "saturday"},
+  std::tuple<int, std::string>{6, "sunday"}
+));
+
 using lab2::Date;
 using lab2::WesternDate;
 
@@ -8,6 +23,10 @@ class WesternDateStub : public WesternDate {
 public:
   // Methods required for tests
   using WesternDate::WesternDate; // Inherit constructors
+
+  // Provide outside access to protected static variables
+  inline std::string get_week_day_name(const int index) const { return day_names[index]; }
+  inline std::string get_month_name(const int index)    const { return month_names[index]; }
 
   // Methods under test:
   //  virtual inline int days_per_week() const override { return 7; }
@@ -39,4 +58,12 @@ TEST(WesternDate, MonthsPerYearIsTwelve) {
 
   EXPECT_EQ(12, ds.months_per_year());
   EXPECT_EQ(12, dr.months_per_year());
+}
+
+TEST_P(DayNamesTest, DayNamesCorrespondToTheRightIndices) {
+  const int day_index = std::get<0>(GetParam());
+  const std::string day_name = std::get<1>(GetParam());
+
+  const WesternDateStub ds = WesternDateStub();
+  EXPECT_EQ(day_name, ds.get_week_day_name(day_index));
 }
