@@ -59,3 +59,15 @@ TEST_P(EpochSecondsToGregorianDateTest, DefaultConstructorSetsResultToToday) {
   EXPECT_EQ(expected_month, d.month());
   EXPECT_EQ(expected_day, d.day());
 }
+
+TEST_P(GregorianYmdTest, YmdConstructorSetsResultToArgument) {
+  const int year = std::get<0>(GetParam());
+  const int month = std::get<1>(GetParam());
+  const int day = std::get<2>(GetParam());
+
+  const GregorianDate d(year, month, day);
+
+  EXPECT_EQ(year, d.year());
+  EXPECT_EQ(month, d.month());
+  EXPECT_EQ(day, d.day());
+}
