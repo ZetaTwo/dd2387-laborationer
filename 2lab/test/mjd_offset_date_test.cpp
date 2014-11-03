@@ -8,7 +8,9 @@ using lab2::MjdOffsetDate;
 class MjdodStub : public MjdOffsetDate {
 public:
   // Methods required for tests
-  using MjdOffsetDate::MjdOffsetDate; // Inherit constructors
+  MjdodStub() {}
+  MjdodStub(int offset) : MjdOffsetDate(offset) {}
+  MjdodStub(const MjdodStub &other) : MjdOffsetDate(other) {}
 
   // Methods under test:
   //  MjdOffsetDate();
