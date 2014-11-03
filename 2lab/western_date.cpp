@@ -19,7 +19,7 @@ namespace lab2 {
     "june",
     "july",
     "august",
-    "spetember",
+    "september",
     "october",
     "november",
     "december",
