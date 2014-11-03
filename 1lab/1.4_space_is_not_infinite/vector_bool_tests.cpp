@@ -864,7 +864,7 @@ TEST_P(BoolTest, SortUnique) {
 TEST_P(SizeSizeBoolTest, Exists) {
   const size_t size = std::get<0>(GetParam());
   const size_t needle_index = std::get<1>(GetParam());
-  const size_t needle_value = std::get<2>(GetParam());
+  const bool needle_value = std::get<2>(GetParam());
 
   if(needle_index < size) {
     Vec vector(size, !needle_value);
@@ -918,12 +918,8 @@ TEST(VectorBool, ItrRBeginEnd) {
   Vec vector3;
 
   for(Vec::reverse_iterator itr = vector1.rbegin(); itr != vector1.rend(); ++itr) {
-    std::cout << *itr << ", ";
     vector3.push_back(*itr);
   }
-    std::cout << std::endl;
-
-  std::cout << vector3 << std::endl;
 
   EXPECT_EQ(vector2.size(), vector3.size());
   EXPECT_EQ(vector2[0], vector3[0]);
@@ -1090,7 +1086,7 @@ TEST_P(SizeTest, Weight1) {
   const size_t size = GetParam();
   Vec vector(size);
   for(size_t i = 0; i < size; ++i) {
-    vector[i] = i % 2;
+    vector[i] = (i % 2) == 1;
   }
   const Vec before(vector);
 
