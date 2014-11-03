@@ -41,8 +41,8 @@ public:
   using WesternDate::WesternDate; // Inherit constructors
 
   // Provide outside access to protected static variables
-  inline std::string get_week_day_name(const int index) const { return day_names[index]; }
-  inline std::string get_month_name(const int index)    const { return month_names[index]; }
+  static inline std::string get_week_day_name(const int index) { return day_names[index]; }
+  static inline std::string get_month_name(const int index)    { return month_names[index]; }
 
   // Methods under test:
   //  virtual inline int days_per_week() const override { return 7; }
@@ -80,14 +80,12 @@ TEST_P(DayNamesTest, DayNamesCorrespondToTheRightIndices) {
   const int day_index = std::get<0>(GetParam());
   const std::string day_name = std::get<1>(GetParam());
 
-  const WesternDateStub ds = WesternDateStub();
-  EXPECT_EQ(day_name, ds.get_week_day_name(day_index));
+  EXPECT_EQ(day_name, WesternDateStub::get_week_day_name(day_index));
 }
 
 TEST_P(MonthNamesTest, MonthNamesCorrespondToTheRightIndices) {
   const int month_index = std::get<0>(GetParam());
   const std::string month_name = std::get<1>(GetParam());
 
-  const WesternDateStub ds = WesternDateStub();
-  EXPECT_EQ(month_name, ds.get_month_name(month_index));
+  EXPECT_EQ(month_name, WesternDateStub::get_month_name(month_index));
 }
