@@ -5,6 +5,7 @@ using ::testing::TestWithParam;
 using ::testing::Values;
 
 class DayNamesTest : public TestWithParam<std::tuple<int, std::string>> {};
+class MonthNamesTest : public TestWithParam<std::tuple<int, std::string>> {};
 
 INSTANTIATE_TEST_CASE_P(WesternDate, DayNamesTest, Values(
   std::tuple<int, std::string>{0, "monday"},
@@ -14,6 +15,21 @@ INSTANTIATE_TEST_CASE_P(WesternDate, DayNamesTest, Values(
   std::tuple<int, std::string>{4, "friday"},
   std::tuple<int, std::string>{5, "saturday"},
   std::tuple<int, std::string>{6, "sunday"}
+));
+
+INSTANTIATE_TEST_CASE_P(WesternDate, MonthNamesTest, Values(
+  std::tuple<int, std::string>{0, "january"},
+  std::tuple<int, std::string>{1, "february"},
+  std::tuple<int, std::string>{2, "march"},
+  std::tuple<int, std::string>{3, "april"},
+  std::tuple<int, std::string>{4, "may"},
+  std::tuple<int, std::string>{5, "june"},
+  std::tuple<int, std::string>{6, "july"},
+  std::tuple<int, std::string>{7, "august"},
+  std::tuple<int, std::string>{8, "september"},
+  std::tuple<int, std::string>{9, "october"},
+  std::tuple<int, std::string>{10, "november"},
+  std::tuple<int, std::string>{11, "december"}
 ));
 
 using lab2::Date;
@@ -66,4 +82,12 @@ TEST_P(DayNamesTest, DayNamesCorrespondToTheRightIndices) {
 
   const WesternDateStub ds = WesternDateStub();
   EXPECT_EQ(day_name, ds.get_week_day_name(day_index));
+}
+
+TEST_P(MonthNamesTest, MonthNamesCorrespondToTheRightIndices) {
+  const int month_index = std::get<0>(GetParam());
+  const std::string month_name = std::get<1>(GetParam());
+
+  const WesternDateStub ds = WesternDateStub();
+  EXPECT_EQ(month_name, ds.get_month_name(month_index));
 }
