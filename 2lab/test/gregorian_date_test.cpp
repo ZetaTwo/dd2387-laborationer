@@ -174,3 +174,35 @@ TEST_P(ValidGregorianDateTest, YmdConstructorSetsResultToArgument) {
   EXPECT_EQ(month, d.month());
   EXPECT_EQ(day, d.day());
 }
+
+TEST_P(ValidGregorianDateTest, CopyConstructorMakesResultEqualToArgument) {
+  const int year = std::get<0>(GetParam());
+  const int month = std::get<1>(GetParam());
+  const int day = std::get<2>(GetParam());
+
+  const GregorianDate gda{year, month, day};
+  const Date& da = gda;
+  const GregorianDate gdb{da};
+
+  EXPECT_EQ(da, gdb);
+  EXPECT_EQ(0, da - gdb);
+}
+
+TEST_P(ValidGregorianDateTest, CopyConstructorDoesNotModifyOriginal) {
+  const int year = std::get<0>(GetParam());
+  const int month = std::get<1>(GetParam());
+  const int day = std::get<2>(GetParam());
+
+  const GregorianDate gda{year, month, day};
+  const Date& da = gda;
+
+  ASSERT_EQ(year, da.year());
+  ASSERT_EQ(month, da.month());
+  ASSERT_EQ(day, da.day());
+
+  const GregorianDate gdb{da};
+
+  EXPECT_EQ(year, da.year());
+  EXPECT_EQ(month, da.month());
+  EXPECT_EQ(day, da.day());
+}
