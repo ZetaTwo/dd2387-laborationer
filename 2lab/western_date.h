@@ -13,12 +13,6 @@ namespace lab2 {
     virtual inline int days_per_week() const override { return 7; }
     virtual inline int months_per_year() const override { return 12; }
 
-  protected:
-    static const std::vector<std::string> day_names;
-    static const std::vector<std::string> month_names;
-    static const std::vector<int> month_lengths;
-
-    virtual bool is_leap_year()   const = 0;
     virtual int year()            const override;
     virtual int month()           const override;
     virtual int day()             const override;
@@ -28,6 +22,12 @@ namespace lab2 {
       return  month_lengths[m - 1] + ((m == 2) ? 1 : 0);
     }
     
+  protected:
+    static const std::vector<std::string> day_names;
+    static const std::vector<std::string> month_names;
+    static const std::vector<int> month_lengths;
+
+    virtual bool is_leap_year()   const = 0;
     struct DateDecomposition {
       int year;
       int day;
