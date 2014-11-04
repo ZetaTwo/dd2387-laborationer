@@ -22,7 +22,10 @@ INSTANTIATE_TEST_CASE_P(GregorianDate, GregorianLeapYearTest, Values(
 
 class EpochSecondsToGregorianDateTest : public TestWithParam<std::tuple<long long, int, int, int>> {};
 INSTANTIATE_TEST_CASE_P(GregorianDate, EpochSecondsToGregorianDateTest, Values(
-  std::tuple<long long, int, int, int>{-3506716801LL, 1858, 11, 16},
+  std::tuple<long long, int, int, int>{-62167219200LL, 0, 1, 1},
+  std::tuple<long long, int, int, int>{-62167132801LL, 0, 1, 1},
+  std::tuple<long long, int, int, int>{-62167132800LL, 0, 1, 2},
+  std::tuple<long long, int, int, int>{-3506716800LL, 1858, 11, 16},
   std::tuple<long long, int, int, int>{-3506716800LL, 1858, 11, 17},
   std::tuple<long long, int, int, int>{-3506716799LL, 1858, 11, 17},
   std::tuple<long long, int, int, int>{-1, 1969, 12, 31},
