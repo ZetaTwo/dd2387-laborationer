@@ -5,6 +5,6 @@ using namespace std;
 
 namespace lab2 {
   std::ostream& operator<<(std::ostream& os, const Date& d) {
-    return os << setw(4) << setfill('0') << d.year() << "-" << setw(2) << d.month() << "-" << d.day();
+    return os << setw(4) << setfill('0') << d.year() << "-" << setw(2) << d.month() << "-" << setw(2) << d.day();
   }
 }
