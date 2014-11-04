@@ -103,15 +103,6 @@ INSTANTIATE_TEST_CASE_P(GregorianDate, InvalidGregorianDateTest, Values(
   std::tuple<int, int, int>{2014, 12, 32}
 ));
 
-class GregorianYmdTest : public TestWithParam<std::tuple<int, int, int>> {};
-INSTANTIATE_TEST_CASE_P(GregorianDate, GregorianYmdTest, Values(
-  std::tuple<int, int, int>{1970, 1, 1},
-  std::tuple<int, int, int>{1970, 1, 2},
-  std::tuple<int, int, int>{1858, 11, 16},
-  std::tuple<int, int, int>{1858, 11, 17},
-  std::tuple<int, int, int>{2014, 11, 3}
-));
-
 using lab2::Date;
 using lab2::GregorianDate;
 
@@ -153,7 +144,7 @@ TEST_P(InvalidGregorianDateTest, YmdConstructorFailsForInvalidDates) {
   }, std::out_of_range);
 }
 
-TEST_P(GregorianYmdTest, YmdConstructorSetsResultToArgument) {
+TEST_P(ValidGregorianDateTest, YmdConstructorSetsResultToArgument) {
   const int year = std::get<0>(GetParam());
   const int month = std::get<1>(GetParam());
   const int day = std::get<2>(GetParam());
