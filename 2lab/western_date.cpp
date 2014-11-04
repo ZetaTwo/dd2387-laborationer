@@ -30,16 +30,29 @@ namespace lab2 {
     const DateDecomposition d = getDecomposition();
     return d.year;
   }
+
   int WesternDate::month() const {
     const DateDecomposition d = getDecomposition();
-    //TODO: month
-    return 0;
+    int day = d.day;
+    int month = 0;
+    while(day >= month_lengths[month]) {
+      day -= month_lengths[month];
+      ++month;
+    }
+    return month+1;
   }
+
   int WesternDate::day() const {
     const DateDecomposition d = getDecomposition();
-    //TODO: day
-    return 0;
+    int day = d.day;
+    int month = 0;
+    while(day >= month_lengths[month]) {
+      day -= month_lengths[month];
+      ++month;
+    }
+    return day+1;
   }
+
   int WesternDate::week_day() const {
     const DateDecomposition d = getDecomposition();
     //TODO: week day
