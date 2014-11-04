@@ -1,4 +1,6 @@
 #include <cmath>
+#include <stdexcept>
+#include <sstream>
 #include "kattistime.h"
 #include "gregorian_date.h"
 
@@ -14,6 +16,12 @@ namespace lab2 {
   }
 
   GregorianDate::GregorianDate(const int year, const int month, const int day) {
+    if(!is_valid_date(year, month, day)) {
+      std::stringstream ss;
+      ss << "Invalid Gregorian date: " << year << "-" << month << "-" << day;
+      throw std::out_of_range(ss.str());
+    }
+
     // Source: https://en.wikipedia.org/wiki/Julian_day#Converting_Julian_or_Gregorian_calendar_date_to_Julian_Day_Number
     const int a = std::floor((14 - month) / 12);
     const int y = year + 4800 - a;
