@@ -10,8 +10,8 @@ namespace lab2 {
 
   public:
     // Date API methods
-    GregorianDate() {}
-    GregorianDate(int year, int month, int day) {}
+    GregorianDate();
+    GregorianDate(int year, int month, int day);
 
     virtual Date& add_year (int years  = 1) override { return *this; }
     virtual Date& add_month(int months = 1) override { return *this; }
