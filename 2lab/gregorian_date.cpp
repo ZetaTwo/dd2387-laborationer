@@ -27,7 +27,7 @@ namespace lab2 {
     const int m = month + 12 * a - 3;
 
     mjd_offset = day
-      + ((153 * m) / 5)
+      + ((153 * m + 2) / 5)
       + 365L * y + (y / 4)
       - (y / 100)
       + (y / 400)
