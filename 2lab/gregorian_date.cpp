@@ -1,3 +1,4 @@
+#include <cmath>
 #include <stdexcept>
 #include <sstream>
 #include "kattistime.h"
@@ -63,6 +64,27 @@ namespace lab2 {
     const int db1 = dp1 % D1;
 
     return DateDecomposition{400 * c400 + 100 * (cp100 + cb100) + 4 * (cp4 + cb4) + cp1 + cb1, db1};
+  }
+
+  GregorianDate& GregorianDate::add_month(int months) {
+    for(int i = 0; i < months; ++i) {
+      add_one_month();
+    }
+    return *this;
+  }
+
+  GregorianDate& GregorianDate::add_one_month() {
+    const int month_after = std::max((month() + 1) % (months_per_year() + 1), 1);
+    const int year_after = year() + (month_after == 1 ? 1 : 0);
+    const int current_day = day();
+
+    if(is_valid_date(year_after, month_after, current_day)) {
+      *this = GregorianDate(year_after, month_after, current_day);
+    } else {
+      *this += 30;
+    }
+
+    return *this;
   }
 
 }

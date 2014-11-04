@@ -9,6 +9,8 @@ namespace lab2 {
     virtual DateDecomposition getDecomposition() const override;
     virtual inline bool is_leap_year() const override { return is_leap_year(year()); };
 
+    GregorianDate& add_one_month();
+
   public:
     // Date API methods
     GregorianDate();
@@ -16,7 +18,7 @@ namespace lab2 {
     GregorianDate(const Date& original);
 
     virtual Date& add_year (int years  = 1) override { return *this; }
-    virtual Date& add_month(int months = 1) override { return *this; }
+    virtual GregorianDate& add_month(int months = 1) override;
 
     // Utility functions
     static inline bool is_leap_year(int year) { return year % 400 == 0 || (year % 4 == 0 && year % 100 != 0); }
