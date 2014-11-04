@@ -13,6 +13,7 @@ namespace lab2 {
     // Date API methods
     GregorianDate();
     GregorianDate(int year, int month, int day);
+    GregorianDate(const Date& original);
 
     virtual Date& add_year (int years  = 1) override { return *this; }
     virtual Date& add_month(int months = 1) override { return *this; }

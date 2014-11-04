@@ -34,6 +34,8 @@ namespace lab2 {
       - 32045L - 2400001LL;
   }
 
+  GregorianDate::GregorianDate(const Date& original) : WesternDate(original.mod_julian_day()) {}
+
   GregorianDate::DateDecomposition GregorianDate::getDecomposition() const {
     const int D400 = 365 * 400 + 100 - 3;
     const int D100 = 365 * 100 +  25 - 1;
