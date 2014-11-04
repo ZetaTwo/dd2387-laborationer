@@ -21,7 +21,10 @@ namespace lab2 {
       const int m = month();
       return  month_lengths[m - 1] + ((m == 2) ? 1 : 0);
     }
-    
+
+    virtual inline std::string week_day_name() const override { return day_names[week_day() - 1]; }
+    virtual inline std::string month_name()    const override { return month_names[month() - 1]; }
+
   protected:
     static const std::vector<std::string> day_names;
     static const std::vector<std::string> month_names;
