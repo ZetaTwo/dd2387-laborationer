@@ -16,6 +16,23 @@ namespace lab2 {
   protected:
     static const std::vector<std::string> day_names;
     static const std::vector<std::string> month_names;
+    static const std::vector<int> month_lengths;
+
+    virtual bool is_leap_year()   const = 0;
+    virtual int year()            const override;
+    virtual int month()           const override;
+    virtual int day()             const override;
+    virtual int week_day()        const override;
+    virtual inline int days_this_month() const override {
+      const int m = month();
+      return  month_lengths[m - 1] + ((m == 2) ? 1 : 0);
+    }
+    
+    struct DateDecomposition {
+      int year;
+      int day;
+    };
+    virtual DateDecomposition getDecomposition() const = 0;
   };
 }
 
