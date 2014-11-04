@@ -22,6 +22,9 @@ build/%.o: %.cpp %.h
 build/mjd_offset_date.o: mjd_offset_date.cpp mjd_offset_date.h date.h
 	$(MAKE_OBJECT)
 
+build/gregorian_date.o: gregorian_date.cpp gregorian_date.h western_date.h mjd_offset_date.h date.h kurskatalog/kattistime.h
+	$(MAKE_OBJECT)
+
 build/test/%_test.o: test/%_test.cpp %.h
 	$(MAKE_OBJECT)
 
