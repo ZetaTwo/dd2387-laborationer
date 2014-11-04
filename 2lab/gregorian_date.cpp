@@ -7,6 +7,7 @@ namespace lab2 {
   GregorianDate::GregorianDate() : WesternDate(std::floor(static_cast<double>(k_time(nullptr)) / (60*60*24)) + UTC_EPOCH_MJD_OFFSET) {}
 
   GregorianDate::GregorianDate(const int year, const int month, const int day) {
+    // Source: https://en.wikipedia.org/wiki/Julian_day#Converting_Julian_or_Gregorian_calendar_date_to_Julian_Day_Number
     const int a = std::floor((14 - month) / 12);
     const int y = year + 4800 - a;
     const int m = month + 12 * a - 3;
