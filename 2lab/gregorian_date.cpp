@@ -4,7 +4,14 @@
 
 namespace lab2 {
 
-  GregorianDate::GregorianDate() : WesternDate(k_time(nullptr) / (60*60*24) + UTC_EPOCH_MJD_OFFSET) {}
+  GregorianDate::GregorianDate() {
+    const time_t now = k_time(nullptr);
+    mjd_offset = now / (60*60*24) + UTC_EPOCH_MJD_OFFSET;
+
+    if(now % (60*60*24) < 0) {
+      --mjd_offset;
+    }
+  }
 
   GregorianDate::GregorianDate(const int year, const int month, const int day) {
     // Source: https://en.wikipedia.org/wiki/Julian_day#Converting_Julian_or_Gregorian_calendar_date_to_Julian_Day_Number
