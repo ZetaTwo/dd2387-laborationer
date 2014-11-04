@@ -19,5 +19,8 @@ namespace lab2 {
 
     // Utility functions
     static inline bool is_leap_year(int year) { return year % 400 == 0 || (year % 4 == 0 && year % 100 != 0); }
+    static inline bool is_valid_date(int year, int month, int day) {
+      return month <= 12 && month >= 1 && day >= 1 && day <= (month_lengths[month-1] + (month == 2 && is_leap_year(year) ? 1 : 0));
+    }
   };
 }
