@@ -180,6 +180,23 @@ INSTANTIATE_TEST_CASE_P(GregorianDate, GregorianDateAddMonthTest, Values(
   std::tuple<int, int, int, int, int, int, int>{ 2014, 12, 31, 13, 2016,  2,  2 }
 ));
 
+class GregorianDateAddNegativeMonthTest : public TestWithParam<std::tuple<int, int, int, int, int, int, int>> {};
+INSTANTIATE_TEST_CASE_P(GregorianDate, GregorianDateAddNegativeMonthTest, Values(
+  //                                                 y0, m0, d0, N,   y1, m1, d1
+  std::tuple<int, int, int, int, int, int, int>{ 2014, 12, 31,  -1, 2014, 12,  1 },
+  std::tuple<int, int, int, int, int, int, int>{ 2014, 11, 30,  -2, 2014,  9, 30 },
+  std::tuple<int, int, int, int, int, int, int>{ 2014, 10, 31,  -3, 2014,  8, 1  },
+  std::tuple<int, int, int, int, int, int, int>{ 2014,  9, 30,  -4, 2014,  5, 30 },
+  std::tuple<int, int, int, int, int, int, int>{ 2014,  8, 31,  -5, 2014,  4,  1 },
+  std::tuple<int, int, int, int, int, int, int>{ 2014,  7, 31,  -6, 2014,  2,  1 },
+  std::tuple<int, int, int, int, int, int, int>{ 2014,  6, 30,  -7, 2013, 11, 28 },
+  std::tuple<int, int, int, int, int, int, int>{ 2014,  5, 31,  -8, 2013, 10,  1 },
+  std::tuple<int, int, int, int, int, int, int>{ 2014,  4, 30,  -9, 2013,  7, 28 },
+  std::tuple<int, int, int, int, int, int, int>{ 2014,  3, 31, -10, 2013,  6,  1 },
+  std::tuple<int, int, int, int, int, int, int>{ 2014,  2, 28, -11, 2013,  3, 28 },
+  std::tuple<int, int, int, int, int, int, int>{ 2014,  1, 31, -12, 2013,  2,  1 }
+));
+
 using lab2::Date;
 using lab2::GregorianDate;
 
@@ -334,6 +351,39 @@ TEST_P(GregorianDateAddMonthTest, AddMonthAddsOneMonthIfPossibleOtherwiseAdds30D
   gda.add_month(num_months);
   for(int i = 0; i < num_months; ++i) {
       gdb.add_month();
+  }
+
+  EXPECT_EQ(year_after, gda.year());
+  EXPECT_EQ(month_after, gda.month());
+  EXPECT_EQ(day_after, gda.day());
+
+  EXPECT_EQ(year_after, gdb.year());
+  EXPECT_EQ(month_after, gdb.month());
+  EXPECT_EQ(day_after, gdb.day());
+}
+
+TEST_P(GregorianDateAddNegativeMonthTest, AddNegativeMonthsSubtractsOneMonthIfPossibleOtherwiseSubtracts30Days) {
+  const int year_before = std::get<0>(GetParam());
+  const int month_before = std::get<1>(GetParam());
+  const int day_before = std::get<2>(GetParam());
+
+  const int num_months = std::get<3>(GetParam());
+
+  const int year_after = std::get<4>(GetParam());
+  const int month_after = std::get<5>(GetParam());
+  const int day_after = std::get<6>(GetParam());
+
+  GregorianDate gda{year_before, month_before, day_before};
+  GregorianDate gdb{year_before, month_before, day_before};
+
+  ASSERT_EQ(year_before, gda.year());
+  ASSERT_EQ(month_before, gda.month());
+  ASSERT_EQ(day_before, gda.day());
+  ASSERT_EQ(gda, gdb);
+
+  gda.add_month(num_months);
+  for(int i = 0; i > num_months; --i) {
+      gdb.add_month(-1);
   }
 
   EXPECT_EQ(year_after, gda.year());
