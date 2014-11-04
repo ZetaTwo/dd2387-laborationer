@@ -34,6 +34,27 @@ INSTANTIATE_TEST_CASE_P(GregorianDate, EpochSecondsToGregorianDateTest, Values(
   std::tuple<long long, int, int, int>{0, 1970, 1, 1},
   std::tuple<long long, int, int, int>{1, 1970, 1, 1},
   std::tuple<long long, int, int, int>{60*60*24, 1970, 1, 2},
+
+  std::tuple<long long, int, int, int>{-2203977600LL, 1900, 2, 28},
+  std::tuple<long long, int, int, int>{-2203891201LL, 1900, 2, 28},
+  std::tuple<long long, int, int, int>{-2203891200LL, 1900, 3, 1},
+
+  std::tuple<long long, int, int, int>{951696000LL, 2000, 2, 28},
+  std::tuple<long long, int, int, int>{951782399LL, 2000, 2, 28},
+  std::tuple<long long, int, int, int>{951782400LL, 2000, 2, 29},
+  std::tuple<long long, int, int, int>{951868799LL, 2000, 2, 29},
+  std::tuple<long long, int, int, int>{951868800LL, 2000, 3, 1},
+
+  std::tuple<long long, int, int, int>{1330387200LL, 2012, 2, 28},
+  std::tuple<long long, int, int, int>{1330473599LL, 2012, 2, 28},
+  std::tuple<long long, int, int, int>{1330473600LL, 2012, 2, 29},
+  std::tuple<long long, int, int, int>{1330559999LL, 2012, 2, 29},
+  std::tuple<long long, int, int, int>{1330560000LL, 2012, 3, 1},
+
+  std::tuple<long long, int, int, int>{1393545600LL, 2014, 2, 28},
+  std::tuple<long long, int, int, int>{1393631999LL, 2014, 2, 28},
+  std::tuple<long long, int, int, int>{1393632000LL, 2014, 3, 1},
+
   std::tuple<long long, int, int, int>{1414976494LL, 2014, 11, 3},
   std::tuple<long long, int, int, int>{1415059199LL, 2014, 11, 3},
   std::tuple<long long, int, int, int>{1415059200LL, 2014, 11, 4},
