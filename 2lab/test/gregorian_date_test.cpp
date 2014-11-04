@@ -206,3 +206,50 @@ TEST_P(ValidGregorianDateTest, CopyConstructorDoesNotModifyOriginal) {
   EXPECT_EQ(month, da.month());
   EXPECT_EQ(day, da.day());
 }
+
+TEST_P(ValidGregorianDateTest, OperatorAssignmentSetsSelfEqualToArgument) {
+  const int year = std::get<0>(GetParam());
+  const int month = std::get<1>(GetParam());
+  const int day = std::get<2>(GetParam());
+
+  const GregorianDate gda{year, month, day};
+  const Date& da = gda;
+
+  GregorianDate gdb{};
+  Date& db = gdb;
+
+  db = da;
+
+  EXPECT_EQ(year, db.year());
+  EXPECT_EQ(month, db.month());
+  EXPECT_EQ(day, db.day());
+
+  EXPECT_EQ(year, gdb.year());
+  EXPECT_EQ(month, gdb.month());
+  EXPECT_EQ(day, gdb.day());
+
+  EXPECT_EQ(0, db - da);
+  EXPECT_EQ(0, gdb - da);
+}
+
+TEST_P(ValidGregorianDateTest, OperatorAssignmentDoesNotModifyOriginal) {
+  const int year = std::get<0>(GetParam());
+  const int month = std::get<1>(GetParam());
+  const int day = std::get<2>(GetParam());
+
+  const GregorianDate gda{year, month, day};
+  const Date& da = gda;
+
+  ASSERT_EQ(year, da.year());
+  ASSERT_EQ(month, da.month());
+  ASSERT_EQ(day, da.day());
+
+  GregorianDate gdb{};
+  Date& db = gdb;
+
+  db = da;
+
+  EXPECT_EQ(year, da.year());
+  EXPECT_EQ(month, da.month());
+  EXPECT_EQ(day, da.day());
+}
