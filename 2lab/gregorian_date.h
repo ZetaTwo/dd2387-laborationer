@@ -10,6 +10,7 @@ namespace lab2 {
     virtual inline bool is_leap_year() const override { return is_leap_year(year()); };
 
     GregorianDate& add_one_month();
+    GregorianDate& subtract_one_month();
 
   public:
     // Date API methods

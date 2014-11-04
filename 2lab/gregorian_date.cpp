@@ -67,8 +67,14 @@ namespace lab2 {
   }
 
   GregorianDate& GregorianDate::add_month(int months) {
-    for(int i = 0; i < months; ++i) {
-      add_one_month();
+    if(months > 0) {
+      for(int i = 0; i < months; ++i) {
+        add_one_month();
+      }
+    } else if(months < 0) {
+      for(int i = 0; i > months; --i) {
+        subtract_one_month();
+      }
     }
     return *this;
   }
@@ -82,6 +88,21 @@ namespace lab2 {
       *this = GregorianDate(year_after, month_after, current_day);
     } else {
       *this += 30;
+    }
+
+    return *this;
+  }
+
+  GregorianDate& GregorianDate::subtract_one_month() {
+    const int current_month = month();
+    const int month_after = current_month == 1 ? months_per_year() : current_month - 1;
+    const int year_after = year() - (month_after == 12 ? 1 : 0);
+    const int current_day = day();
+
+    if(is_valid_date(year_after, month_after, current_day)) {
+      *this = GregorianDate(year_after, month_after, current_day);
+    } else {
+      *this -= 30;
     }
 
     return *this;
