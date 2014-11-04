@@ -35,6 +35,48 @@ INSTANTIATE_TEST_CASE_P(GregorianDate, EpochSecondsToGregorianDateTest, Values(
   std::tuple<long long, int, int, int>{1415059201LL, 2014, 11, 4}
 ));
 
+class ValidGregorianDateTest : public TestWithParam<std::tuple<int, int, int>> {};
+INSTANTIATE_TEST_CASE_P(GregorianDate, ValidGregorianDateTest, Values(
+  std::tuple<int, int, int>{0, 1, 1},
+  std::tuple<int, int, int>{1858, 11, 30},
+  std::tuple<int, int, int>{1969, 12, 31},
+  std::tuple<int, int, int>{1970, 1, 1},
+  std::tuple<int, int, int>{1970, 1, 2},
+  std::tuple<int, int, int>{2012, 2, 28},
+  std::tuple<int, int, int>{2014, 11, 3},
+  std::tuple<int, int, int>{2014, 11, 4},
+  std::tuple<int, int, int>{2014, 1, 31},
+  std::tuple<int, int, int>{2014, 2, 28},
+  std::tuple<int, int, int>{2014, 3, 31},
+  std::tuple<int, int, int>{2014, 4, 30},
+  std::tuple<int, int, int>{2014, 5, 31},
+  std::tuple<int, int, int>{2014, 6, 30},
+  std::tuple<int, int, int>{2014, 7, 31},
+  std::tuple<int, int, int>{2014, 8, 31},
+  std::tuple<int, int, int>{2014, 9, 30},
+  std::tuple<int, int, int>{2014, 10, 31},
+  std::tuple<int, int, int>{2014, 11, 30},
+  std::tuple<int, int, int>{2014, 12, 31}
+));
+
+class InvalidGregorianDateTest : public TestWithParam<std::tuple<int, int, int>> {};
+INSTANTIATE_TEST_CASE_P(GregorianDate, InvalidGregorianDateTest, Values(
+  std::tuple<int, int, int>{0, 0, 0},
+  std::tuple<int, int, int>{1858, 11, 31},
+  std::tuple<int, int, int>{2014, 1, 32},
+  std::tuple<int, int, int>{2014, 2, 29},
+  std::tuple<int, int, int>{2014, 3, 32},
+  std::tuple<int, int, int>{2014, 4, 31},
+  std::tuple<int, int, int>{2014, 5, 32},
+  std::tuple<int, int, int>{2014, 6, 31},
+  std::tuple<int, int, int>{2014, 7, 32},
+  std::tuple<int, int, int>{2014, 8, 32},
+  std::tuple<int, int, int>{2014, 9, 31},
+  std::tuple<int, int, int>{2014, 10, 32},
+  std::tuple<int, int, int>{2014, 11, 31},
+  std::tuple<int, int, int>{2014, 12, 32}
+));
+
 class GregorianYmdTest : public TestWithParam<std::tuple<int, int, int>> {};
 INSTANTIATE_TEST_CASE_P(GregorianDate, GregorianYmdTest, Values(
   std::tuple<int, int, int>{1970, 1, 1},
@@ -63,6 +105,26 @@ TEST_P(EpochSecondsToGregorianDateTest, DefaultConstructorSetsResultToToday) {
   EXPECT_EQ(expected_year, d.year());
   EXPECT_EQ(expected_month, d.month());
   EXPECT_EQ(expected_day, d.day());
+}
+
+TEST_P(ValidGregorianDateTest, YmdConstructorFailsForInvalidDates) {
+  const int year = std::get<0>(GetParam());
+  const int month = std::get<1>(GetParam());
+  const int day = std::get<2>(GetParam());
+
+  EXPECT_NO_THROW({
+    GregorianDate d(year, month, day);
+  });
+}
+
+TEST_P(InvalidGregorianDateTest, YmdConstructorFailsForInvalidDates) {
+  const int year = std::get<0>(GetParam());
+  const int month = std::get<1>(GetParam());
+  const int day = std::get<2>(GetParam());
+
+  EXPECT_THROW({
+    GregorianDate d(year, month, day);
+  }, std::out_of_range);
 }
 
 TEST_P(GregorianYmdTest, YmdConstructorSetsResultToArgument) {
