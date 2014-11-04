@@ -35,22 +35,22 @@ namespace lab2 {
     const DateDecomposition d = getDecomposition();
     int day = d.day;
     int month = 0;
-    while(day >= month_lengths[month]) {
-      day -= month_lengths[month];
+    while(day >= month_lengths[month] + (month == 1 && is_leap_year() ? 1 : 0)) {
+      day -= month_lengths[month] + (month == 1 && is_leap_year() ? 1 : 0);
       ++month;
     }
-    return month+1;
+    return month + 1;
   }
 
   int WesternDate::day() const {
     const DateDecomposition d = getDecomposition();
     int day = d.day;
     int month = 0;
-    while(day >= month_lengths[month]) {
-      day -= month_lengths[month];
+    while(day >= month_lengths[month] + (month == 1 && is_leap_year() ? 1 : 0)) {
+      day -= month_lengths[month] + (month == 1 && is_leap_year() ? 1 : 0);
       ++month;
     }
-    return day+1;
+    return day + 1;
   }
 
   int WesternDate::week_day() const {
