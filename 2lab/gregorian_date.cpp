@@ -1,4 +1,3 @@
-#include <cmath>
 #include <stdexcept>
 #include <sstream>
 #include "kattistime.h"
@@ -23,7 +22,7 @@ namespace lab2 {
     }
 
     // Source: https://en.wikipedia.org/wiki/Julian_day#Converting_Julian_or_Gregorian_calendar_date_to_Julian_Day_Number
-    const int a = std::floor((14 - month) / 12);
+    const int a = (14 - month) / 12;
     const int y = year + 4800 - a;
     const int m = month + 12 * a - 3;
 
