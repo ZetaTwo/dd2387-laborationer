@@ -108,4 +108,16 @@ namespace lab2 {
     return *this;
   }
 
+  GregorianDate& GregorianDate::add_year(int years) {
+    const int year_after = year() + years;
+
+    if(is_valid_date(year_after, month(), day())) {
+      *this = GregorianDate(year_after, month(), day());
+    } else {
+      *this = GregorianDate(year_after, month(), month_lengths[1]);
+    }
+
+    return *this;
+  }
+
 }
