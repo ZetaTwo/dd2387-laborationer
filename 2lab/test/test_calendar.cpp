@@ -1,6 +1,7 @@
 #include <iostream>
 #include "calendar.h"
 #include "gregorian.h"
+#include "kattistime.h"
 
 using std::cout;
 using std::endl;
@@ -9,6 +10,8 @@ using lab2::Calendar;
 using lab2::Gregorian;
 
 int main() {
+  set_k_time(0);
+
   std::cout << "----------------------------------------" << std::endl;
   Calendar<Gregorian> cal;
   cal.set_date(2000, 12, 2);
