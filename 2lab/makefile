@@ -8,6 +8,13 @@ COMPILE=mkdir -p $(dir $@); $(CXX) $(CPPFLAGS) $(INCLUDE_PREREQUISITE_HEADER_DIR
 MAKE_OBJECT=$(COMPILE) -c
 MAKE_EXECUTABLE=$(COMPILE)
 
+DATE_FILENAMES=date mjd_offset_date western_date gregorian_date
+DATE_HEADERS=$(foreach name,$(DATE_FILENAMES),$(name).h)
+DATE_OBJECTS=$(foreach name,$(DATE_FILENAMES),build/$(name).o)
+KATTISTIME=kurskatalog/kattistime.h
+
+TEST_OBJECTS=$(patsubst %.cpp,build/%.o,$(wildcard test/*_test.cpp))
+
 default: test
 
 clean:
@@ -19,17 +26,17 @@ test: build/run_test
 build/%.o: %.cpp %.h
 	$(MAKE_OBJECT)
 
-build/mjd_offset_date.o: mjd_offset_date.cpp mjd_offset_date.h date.h
+build/mjd_offset_date.o: mjd_offset_date.cpp $(DATE_HEADERS)
 	$(MAKE_OBJECT)
 
-build/gregorian_date.o: gregorian_date.cpp gregorian_date.h western_date.h mjd_offset_date.h date.h kurskatalog/kattistime.h
+build/gregorian_date.o: gregorian_date.cpp $(DATE_HEADERS) $(KATTISTIME)
 	$(MAKE_OBJECT)
 
-build/test/%_test.o: test/%_test.cpp %.h
+build/test/%_test.o: test/%_test.cpp $(DATE_HEADERS)
 	$(MAKE_OBJECT)
 
-build/test/gregorian_date_test.o: test/gregorian_date_test.cpp gregorian_date.h kurskatalog/kattistime.h
+build/test/gregorian_date_test.o: test/gregorian_date_test.cpp $(DATE_HEADERS) $(KATTISTIME)
 	$(MAKE_OBJECT)
 
-build/run_test: test_runner.cpp $(patsubst %.cpp,build/%.o,$(wildcard test/*_test.cpp)) $(patsubst %.cpp,build/%.o,$(wildcard *date.cpp)) build/kurskatalog/kattistime.o
+build/run_test: test_runner.cpp $(TEST_OBJECTS) $(DATE_OBJECTS) build/kurskatalog/kattistime.o
 	$(MAKE_EXECUTABLE) -lgtest
