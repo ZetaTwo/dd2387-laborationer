@@ -44,6 +44,8 @@ namespace lab2 {
       return month <= 12 && month >= 1 && day >= 1 && day <= (month_lengths[month-1] + (month == 2 && is_leap_year(year) ? 1 : 0));
     }
 
+    int utc_seconds_to_mjd_offset(time_t utc_seconds) const;
+
     virtual bool is_leap_year(int year) const = 0;
     virtual int ymd_to_mjd_offset(int year, int month, int day) const = 0;
     virtual int utc_epoch_mjd_offset() const = 0;

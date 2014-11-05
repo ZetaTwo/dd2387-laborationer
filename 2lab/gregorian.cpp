@@ -6,14 +6,7 @@
 
 namespace lab2 {
 
-  GregorianDate::GregorianDate() {
-    const time_t now = k_time(nullptr);
-    mjd_offset = now / (60*60*24) + utc_epoch_mjd_offset();
-
-    if(now % (60*60*24) < 0) {
-      --mjd_offset;
-    }
-  }
+  GregorianDate::GregorianDate() : WesternDate(utc_seconds_to_mjd_offset(k_time(nullptr))) {}
 
   GregorianDate::GregorianDate(const int year, const int month, const int day) : WesternDate(ymd_to_mjd_offset(year, month, day)) {}
 

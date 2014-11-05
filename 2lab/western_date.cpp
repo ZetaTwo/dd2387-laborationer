@@ -26,6 +26,16 @@ namespace lab2 {
   };
   const std::vector<int> WesternDate::month_lengths = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
+  int WesternDate::utc_seconds_to_mjd_offset(const time_t utc_seconds) const {
+    int result = utc_seconds / (60*60*24) + utc_epoch_mjd_offset();
+
+    if(utc_seconds % (60*60*24) < 0) {
+      --result;
+    }
+
+    return result;
+  }
+
   int WesternDate::year() const {
     const DateDecomposition d = getDecomposition();
     return d.year;
