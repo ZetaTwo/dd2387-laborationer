@@ -149,7 +149,22 @@ INSTANTIATE_TEST_CASE_P(GregorianDate, GregorianDateAddMonthTest, Values(
   std::tuple<int, int, int, int, int, int, int>{ 2014,  9, 30, 1, 2014, 10, 30 },
   std::tuple<int, int, int, int, int, int, int>{ 2014, 10, 31, 1, 2014, 11, 30 },
   std::tuple<int, int, int, int, int, int, int>{ 2014, 11, 30, 1, 2014, 12, 30 },
-  std::tuple<int, int, int, int, int, int, int>{ 2014, 12, 31, 1, 2015,  1, 31 },
+  std::tuple<int, int, int, int, int, int, int>{ 2014, 12, 31, 1, 2015,  1, 31 }
+));
+
+INSTANTIATE_TEST_CASE_P(GregorianDateAddMultipleMonths, GregorianDateAddMonthTest, Values(
+  std::tuple<int, int, int, int, int, int, int>{ 1900,  1, 31,  2, 1900,  4,  2 },
+  std::tuple<int, int, int, int, int, int, int>{ 1900,  2, 28,  3, 1900,  5, 28 },
+  std::tuple<int, int, int, int, int, int, int>{ 1900,  3, 31,  4, 1900,  7, 30 },
+  std::tuple<int, int, int, int, int, int, int>{ 1900,  4, 30,  5, 1900,  9, 30 },
+  std::tuple<int, int, int, int, int, int, int>{ 1900,  5, 31,  6, 1900, 11, 30 },
+  std::tuple<int, int, int, int, int, int, int>{ 1900,  6, 30,  7, 1901,  1, 30 },
+  std::tuple<int, int, int, int, int, int, int>{ 1900,  7, 31,  8, 1901,  4,  1 },
+  std::tuple<int, int, int, int, int, int, int>{ 1900,  8, 31,  9, 1901,  6,  1 },
+  std::tuple<int, int, int, int, int, int, int>{ 1900,  9, 30, 10, 1901,  8,  1 },
+  std::tuple<int, int, int, int, int, int, int>{ 1900, 10, 31, 11, 1901, 10,  1 },
+  std::tuple<int, int, int, int, int, int, int>{ 1900, 11, 30, 12, 1901, 12,  1 },
+  std::tuple<int, int, int, int, int, int, int>{ 1900, 12, 31, 13, 1902,  2,  2 },
 
   std::tuple<int, int, int, int, int, int, int>{ 2014,  1, 31,  2, 2014,  4,  2 },
   std::tuple<int, int, int, int, int, int, int>{ 2014,  2, 28,  3, 2014,  5, 28 },
