@@ -48,10 +48,11 @@ INSTANTIATE_TEST_CASE_P(GregorianDate, EpochSecondsToGregorianDateTest, Values(
   std::tuple<long long, int, int, int>{   1415059201LL, 2014, 11,  4 }
 ));
 
-class ValidGregorianDateTest : public TestWithParam<std::tuple<int, int, int>> {};
-INSTANTIATE_TEST_CASE_P(GregorianDate, ValidGregorianDateTest, Values(
+class ValidJulianDateTest : public TestWithParam<std::tuple<int, int, int>> {};
+INSTANTIATE_TEST_CASE_P(JulianDate, ValidJulianDateTest, Values(
   std::tuple<int, int, int>{    0,  1,  1 },
   std::tuple<int, int, int>{ 1858, 11, 30 },
+  std::tuple<int, int, int>{ 1900,  2, 29 },
   std::tuple<int, int, int>{ 1904,  2, 29 },
   std::tuple<int, int, int>{ 2004,  2, 29 },
   std::tuple<int, int, int>{ 1969, 12, 31 },
@@ -88,11 +89,10 @@ INSTANTIATE_TEST_CASE_P(GregorianDate, ValidGregorianDateTest, Values(
   std::tuple<int, int, int>{ 2014, 12, 31 }
 ));
 
-class InvalidGregorianDateTest : public TestWithParam<std::tuple<int, int, int>> {};
-INSTANTIATE_TEST_CASE_P(GregorianDate, InvalidGregorianDateTest, Values(
+class InvalidJulianDateTest : public TestWithParam<std::tuple<int, int, int>> {};
+INSTANTIATE_TEST_CASE_P(JulianDate, InvalidJulianDateTest, Values(
   std::tuple<int, int, int>{    0,  0,  0 },
   std::tuple<int, int, int>{ 1858, 11, 31 },
-  std::tuple<int, int, int>{ 1900,  2, 29 },
   std::tuple<int, int, int>{ 2014,  1, 32 },
   std::tuple<int, int, int>{ 2014,  2, 29 },
   std::tuple<int, int, int>{ 2014,  3, 32 },
