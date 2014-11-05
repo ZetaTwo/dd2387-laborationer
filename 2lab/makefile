@@ -23,6 +23,9 @@ clean:
 test: build/run_test
 	$< $(GTEST_FLAGS)
 
+autotest:
+	while inotifywait -qqr -e close_write --exclude build/ . ; do make && echo "OK" || echo "FAILURE"; done
+
 given_test: build/test/datetest
 	$<
 
