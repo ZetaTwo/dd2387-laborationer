@@ -16,6 +16,11 @@ namespace lab2 {
     return *this;
   }
 
+  MjdOffsetDate& MjdOffsetDate::set(const int mjd_offset) {
+    (*this).mjd_offset = mjd_offset;
+    return *this;
+  }
+
   MjdOffsetDate& MjdOffsetDate::operator++() {
     ++mjd_offset;
     return *this;

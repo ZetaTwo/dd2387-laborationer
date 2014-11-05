@@ -7,6 +7,8 @@ namespace lab2 {
   protected:
     int mjd_offset;
 
+    virtual MjdOffsetDate& set(int mjd_offset);
+
   public:
     MjdOffsetDate();
     MjdOffsetDate(int mjd_offset);
