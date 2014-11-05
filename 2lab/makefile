@@ -15,14 +15,14 @@ KATTISTIME=kurskatalog/kattistime.h
 
 TEST_OBJECTS=$(patsubst %.cpp,build/%.o,$(wildcard test/*_test.cpp))
 
-default: test given_test
+default: run_test run_given_test
 
 valgrind: valgrind_test valgrind_given_test
 
 clean:
 	rm -r build
 
-test: build/run_test
+run_test: build/run_test
 	$< $(GTEST_FLAGS)
 
 valgrind_test: build/run_test
@@ -31,7 +31,7 @@ valgrind_test: build/run_test
 autotest:
 	while inotifywait -qqr -e close_write --exclude build/ . ; do make && echo "OK" || echo "FAILURE"; done
 
-given_test: build/test/datetest
+run_given_test: build/test/datetest
 	$<
 
 valgrind_given_test: build/test/datetest
