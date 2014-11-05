@@ -16,7 +16,11 @@ namespace lab2 {
     virtual int year()            const override;
     virtual int month()           const override;
     virtual int day()             const override;
-    virtual int week_day()        const override;
+
+    virtual inline int week_day() const override {
+      return ((WEEKDAY_OF_MOD_JULIAN_DAY + mod_julian_day()) % days_per_week()) + 1;
+    }
+
     virtual inline int days_this_month() const override {
       const int m = month();
       return  month_lengths[m - 1] + ((m == 2) ? 1 : 0);
@@ -26,6 +30,8 @@ namespace lab2 {
     virtual inline std::string month_name()    const override { return month_names[month() - 1]; }
 
   protected:
+    static const int WEEKDAY_OF_MOD_JULIAN_DAY = 2; // monday = 0, sunday = 6
+
     static const std::vector<std::string> day_names;
     static const std::vector<std::string> month_names;
     static const std::vector<int> month_lengths;

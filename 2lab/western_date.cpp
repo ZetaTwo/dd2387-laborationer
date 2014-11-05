@@ -53,9 +53,4 @@ namespace lab2 {
     return day + 1;
   }
 
-  int WesternDate::week_day() const {
-    const DateDecomposition d = getDecomposition();
-    //TODO: week day
-    return 0;
-  };
 }
