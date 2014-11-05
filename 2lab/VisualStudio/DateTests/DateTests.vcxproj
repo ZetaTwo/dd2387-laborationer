@@ -40,7 +40,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>..\..;$(IncludePath)</IncludePath>
+    <IncludePath>..\..\kurskatalog;..\..;$(IncludePath)</IncludePath>
     <LibraryPath>..\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -73,6 +73,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\test\date_test.cpp" />
+    <ClCompile Include="..\..\test\gregorian_date_test.cpp" />
     <ClCompile Include="..\..\test\mjd_offset_date_test.cpp" />
     <ClCompile Include="..\..\test\western_date_test.cpp" />
     <ClCompile Include="..\..\test_runner.cpp" />
