@@ -5,47 +5,42 @@
 using ::testing::TestWithParam;
 using ::testing::Values;
 
-class EpochSecondsToGregorianDateTest : public TestWithParam<std::tuple<long long, int, int, int>> {};
-INSTANTIATE_TEST_CASE_P(GregorianDate, EpochSecondsToGregorianDateTest, Values(
-  std::tuple<long long, int, int, int>{ -62167219200LL,    0,  1,  1 },
-  std::tuple<long long, int, int, int>{ -62167132801LL,    0,  1,  1 },
-  std::tuple<long long, int, int, int>{ -62167132800LL,    0,  1,  2 },
-  std::tuple<long long, int, int, int>{ -62135596801LL,    1,  1,  1 },
-  std::tuple<long long, int, int, int>{ -62135596800LL,    1,  1,  1 },
+class EpochSecondsToJulianDateTest : public TestWithParam<std::tuple<long long, int, int, int>> {};
+INSTANTIATE_TEST_CASE_P(JulianDate, EpochSecondsToJulianDateTest, Values(
+  std::tuple<long long, int, int, int>{ -62167392000LL,    0,  1,  1 },
+  std::tuple<long long, int, int, int>{ -62167305601LL,    0,  1,  1 },
+  std::tuple<long long, int, int, int>{ -62167305600LL,    0,  1,  2 },
+  std::tuple<long long, int, int, int>{ -62135769601LL,    0, 12, 31 },
+  std::tuple<long long, int, int, int>{ -62135769600LL,    1,  1,  1 },
 
-  std::tuple<long long, int, int, int>{  -3506716801LL, 1858, 11, 16 },
-  std::tuple<long long, int, int, int>{  -3506716800LL, 1858, 11, 17 },
-  std::tuple<long long, int, int, int>{  -3506716799LL, 1858, 11, 17 },
+  std::tuple<long long, int, int, int>{  -3505680000LL, 1858, 11, 17 },
+  std::tuple<long long, int, int, int>{  -3505593601LL, 1858, 11, 17 },
+  std::tuple<long long, int, int, int>{  -3505593600LL, 1858, 11, 18 },
 
-  std::tuple<long long, int, int, int>{           -1LL, 1969, 12, 31 },
-  std::tuple<long long, int, int, int>{            0LL, 1970,  1,  1 },
-  std::tuple<long long, int, int, int>{            1LL, 1970,  1,  1 },
-  std::tuple<long long, int, int, int>{     60*60*24LL, 1970,  1,  2 },
+  std::tuple<long long, int, int, int>{      1123199LL, 1969, 12, 31 },
+  std::tuple<long long, int, int, int>{      1123200LL, 1970,  1,  1 },
+  std::tuple<long long, int, int, int>{      1123201LL, 1970,  1,  1 },
+  std::tuple<long long, int, int, int>{      1209599LL, 1970,  1,  1 },
+  std::tuple<long long, int, int, int>{      1209600LL, 1970,  1,  2 },
 
-  std::tuple<long long, int, int, int>{  -2203977600LL, 1900,  2, 28 },
-  std::tuple<long long, int, int, int>{  -2203891201LL, 1900,  2, 28 },
-  std::tuple<long long, int, int, int>{  -2203891200LL, 1900,  3,  1 },
+  std::tuple<long long, int, int, int>{  -2202940800LL, 1900,  2, 28 },
+  std::tuple<long long, int, int, int>{  -2202854401LL, 1900,  2, 28 },
+  std::tuple<long long, int, int, int>{  -2202854400LL, 1900,  2, 29 },
+  std::tuple<long long, int, int, int>{  -2202768001LL, 1900,  2, 29 },
+  std::tuple<long long, int, int, int>{  -2202768000LL, 1900,  3,  1 },
 
-  std::tuple<long long, int, int, int>{    951696000LL, 2000,  2, 28 },
-  std::tuple<long long, int, int, int>{    951782399LL, 2000,  2, 28 },
-  std::tuple<long long, int, int, int>{    951782400LL, 2000,  2, 29 },
-  std::tuple<long long, int, int, int>{    951868799LL, 2000,  2, 29 },
-  std::tuple<long long, int, int, int>{    951868800LL, 2000,  3,  1 },
+  std::tuple<long long, int, int, int>{    952819200LL, 2000,  2, 28 },
+  std::tuple<long long, int, int, int>{    952905599LL, 2000,  2, 28 },
+  std::tuple<long long, int, int, int>{    952905600LL, 2000,  2, 29 },
+  std::tuple<long long, int, int, int>{    952991999LL, 2000,  2, 29 },
+  std::tuple<long long, int, int, int>{    952992000LL, 2000,  3,  1 },
 
-  std::tuple<long long, int, int, int>{   1330387200LL, 2012,  2, 28 },
-  std::tuple<long long, int, int, int>{   1330473599LL, 2012,  2, 28 },
-  std::tuple<long long, int, int, int>{   1330473600LL, 2012,  2, 29 },
-  std::tuple<long long, int, int, int>{   1330559999LL, 2012,  2, 29 },
-  std::tuple<long long, int, int, int>{   1330560000LL, 2012,  3,  1 },
+  std::tuple<long long, int, int, int>{   1394668800LL, 2014,  2, 28 },
+  std::tuple<long long, int, int, int>{   1394755199LL, 2014,  2, 28 },
+  std::tuple<long long, int, int, int>{   1394755200LL, 2014,  3,  1 },
 
-  std::tuple<long long, int, int, int>{   1393545600LL, 2014,  2, 28 },
-  std::tuple<long long, int, int, int>{   1393631999LL, 2014,  2, 28 },
-  std::tuple<long long, int, int, int>{   1393632000LL, 2014,  3,  1 },
-
-  std::tuple<long long, int, int, int>{   1414976494LL, 2014, 11,  3 },
-  std::tuple<long long, int, int, int>{   1415059199LL, 2014, 11,  3 },
-  std::tuple<long long, int, int, int>{   1415059200LL, 2014, 11,  4 },
-  std::tuple<long long, int, int, int>{   1415059201LL, 2014, 11,  4 }
+  std::tuple<long long, int, int, int>{   1416096000LL, 2014, 11,  3 },
+  std::tuple<long long, int, int, int>{   1416182400LL, 2014, 11,  4 }
 ));
 
 class ValidJulianDateTest : public TestWithParam<std::tuple<int, int, int>> {};
