@@ -7,13 +7,12 @@ namespace lab2 {
     static const int GREGORIAN_DAY_ZERO_MJD_OFFSET = -678941; // MJD number of Gregorian 0000-01-01
 
     virtual DateDecomposition getDecomposition() const override;
-    virtual inline bool is_leap_year() const override { return is_leap_year(year()); };
 
     GregorianDate& add_one_month();
     GregorianDate& subtract_one_month();
 
     // Utility functions
-    inline bool is_leap_year(int year) const { return year % 400 == 0 || (year % 4 == 0 && year % 100 != 0); }
+    virtual inline bool is_leap_year(int year) const override { return year % 400 == 0 || (year % 4 == 0 && year % 100 != 0); }
     inline bool is_valid_date(int year, int month, int day) const {
       return month <= 12 && month >= 1 && day >= 1 && day <= (month_lengths[month-1] + (month == 2 && is_leap_year(year) ? 1 : 0));
 

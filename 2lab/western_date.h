@@ -36,7 +36,9 @@ namespace lab2 {
     static const std::vector<std::string> month_names;
     static const std::vector<int> month_lengths;
 
-    virtual bool is_leap_year()   const = 0;
+    inline bool is_leap_year() const { return is_leap_year(year()); }
+    virtual bool is_leap_year(int year) const = 0;
+
     struct DateDecomposition {
       int year;
       int day;

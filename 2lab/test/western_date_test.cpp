@@ -59,7 +59,7 @@ public:
   virtual Date& add_year (int) override { return *this; }
   virtual Date& add_month(int) override { return *this; }
 
-  virtual bool is_leap_year() const override { return false; }
+  virtual bool is_leap_year(int) const override { return false; }
   virtual DateDecomposition getDecomposition() const { return DateDecomposition{0, 0}; }
 };
 
