@@ -17,6 +17,8 @@ namespace lab2 {
 
   GregorianDate::GregorianDate(const int year, const int month, const int day) : WesternDate(ymd_to_mjd_offset(year, month, day)) {}
 
+  GregorianDate::GregorianDate(const Date& original) : WesternDate(original.mod_julian_day()) {}
+
   int GregorianDate::ymd_to_mjd_offset(const int year, const int month, const int day) const {
     if(!is_valid_date(year, month, day)) {
       std::stringstream ss;
@@ -36,8 +38,6 @@ namespace lab2 {
       + (y / 400)
       - 32045L - 2400001LL;
   }
-
-  GregorianDate::GregorianDate(const Date& original) : WesternDate(original.mod_julian_day()) {}
 
   GregorianDate::DateDecomposition GregorianDate::getDecomposition() const {
     const int D400 = 365 * 400 + 100 - 3;
