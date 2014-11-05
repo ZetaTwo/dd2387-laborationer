@@ -7,7 +7,9 @@ namespace lab2 {
     static const int GREGORIAN_DAY_ZERO_MJD_OFFSET = -678941; // MJD number of Gregorian 0000-01-01
 
     // Utility functions
-    virtual inline bool is_leap_year(int year) const override { return year % 400 == 0 || (year % 4 == 0 && year % 100 != 0); }
+    virtual inline bool is_leap_year(int year) const override {
+        return year % 400 == 0 || (year % 4 == 0 && year % 100 != 0);
+    }
     virtual int ymd_to_mjd_offset(int year, int month, int day) const override;
     virtual inline int utc_epoch_mjd_offset() const override { return UTC_EPOCH_MJD_OFFSET; }
     virtual DateDecomposition getDecomposition() const override;
