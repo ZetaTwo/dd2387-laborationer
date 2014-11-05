@@ -13,7 +13,7 @@ namespace lab2 {
 
     // Utility functions
     virtual inline bool is_leap_year(int year) const override { return year % 400 == 0 || (year % 4 == 0 && year % 100 != 0); }
-    int ymd_to_mjd_offset(int year, int month, int day) const;
+    virtual int ymd_to_mjd_offset(int year, int month, int day) const override;
 
   public:
     // Date API methods
