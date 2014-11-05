@@ -9,9 +9,9 @@
 #include <ctime>
 
 
-// Obs att testerna förutsätter att dina klasser returnerar
-// månader och dagar indexerade från ETT. Testerna är inte
-// fullständiga
+// Obs att testerna fÃ¶rutsÃ¤tter att dina klasser returnerar
+// mÃ¥nader och dagar indexerade frÃ¥n ETT. Testerna Ã¤r inte
+// fullstÃ¤ndiga
 
 
 int main()
@@ -19,7 +19,7 @@ int main()
     using namespace lab2;        // Exponera funktionalitet i namnrymden lab2
 
     ////////////////////////////////////////////////////////////
-    // Sätt tiden. OBS skicka inte nedanstående kod till kattis
+    // SÃ¤tt tiden. OBS skicka inte nedanstÃ¥ende kod till kattis
     time_t mytime;
     time(&mytime);
     set_k_time(mytime);
@@ -27,13 +27,13 @@ int main()
 
 
     Julian tj;                  // ok: defaultkonstruktor ger dagens datum
-    Gregorian gtoday;           // ok för gregorian också
-    std::cout << "Idag är det " << gtoday << std::endl;
+    Gregorian gtoday;           // ok fÃ¶r gregorian ocksÃ¥
+    std::cout << "Idag Ã¤r det " << gtoday << std::endl;
     assert(tj - gtoday == 0);
-    Gregorian tg(2006, 10, 31); // ok: sätt datum explicit
-                                // följande fungerar också:
+    Gregorian tg(2006, 10, 31); // ok: sÃ¤tt datum explicit
+                                // fÃ¶ljande fungerar ocksÃ¥:
                                 // Gregorian(2000, Gregorian::October, 31)
-    Date &j = tj;               // åtkomst av funktioner genom Dates interface
+    Date &j = tj;               // Ã¥tkomst av funktioner genom Dates interface
     Date &g = tg;
     Date &today = gtoday;
 
@@ -49,56 +49,56 @@ int main()
     time(&tp);
     struct tm *t = gmtime(&tp);
     int year  = t->tm_year + 1900;
-    int month = t->tm_mon + 1;      // månaderna och dagarna
-    int day   = t->tm_mday;         // indexerade från ETT
+    int month = t->tm_mon + 1;      // mÃ¥naderna och dagarna
+    int day   = t->tm_mday;         // indexerade frÃ¥n ETT
 
     std::cout << "Testing constructors..." << std::endl;
-    assert(today.year() == year &&          // rätt initierad
+    assert(today.year() == year &&          // rÃ¤tt initierad
            today.month() == month &&
            today.day() == day);
-    assert(g.year() == 2006 &&              // rätt initierad
+    assert(g.year() == 2006 &&              // rÃ¤tt initierad
            g.month() == 10 &&
            g.day() == 31);                  // obs! ettindexerade
 
     std::cout << "Testing access..." << std::endl;
-    assert(g.days_per_week() == 7);         // rätt antal dagar per vecka
-    assert(j.days_per_week() == 7);         // rätt antal dagar per vecka
-    assert(g.days_this_month() == 31);      // rätt antal dagar denna månad
-    assert(g.months_per_year() == 12);      // rätt antal månader per år
-    assert(j.months_per_year() == 12);      // rätt antal månader per år
-    assert(g.week_day() == 2); // rätt veckodag
+    assert(g.days_per_week() == 7);         // rÃ¤tt antal dagar per vecka
+    assert(j.days_per_week() == 7);         // rÃ¤tt antal dagar per vecka
+    assert(g.days_this_month() == 31);      // rÃ¤tt antal dagar denna mÃ¥nad
+    assert(g.months_per_year() == 12);      // rÃ¤tt antal mÃ¥nader per Ã¥r
+    assert(j.months_per_year() == 12);      // rÃ¤tt antal mÃ¥nader per Ã¥r
+    assert(g.week_day() == 2); // rÃ¤tt veckodag
 
     std::cout << "Testing manipulation..." << std::endl;
-    ++g;                                    // prefix ökning
-    assert(g.week_day() == 3); // rätt veckodag
+    ++g;                                    // prefix Ã¶kning
+    assert(g.week_day() == 3); // rÃ¤tt veckodag
     --g;                                    // prefix minskning
-    assert(g.week_day() == 2); // rätt veckodag
-    g += 2;                                 // lägg till två dagar
-    assert(g.week_day() == 4); // rätt veckodag
+    assert(g.week_day() == 2); // rÃ¤tt veckodag
+    g += 2;                                 // lÃ¤gg till tvÃ¥ dagar
+    assert(g.week_day() == 4); // rÃ¤tt veckodag
     g -= 3;                     // dra bort tre dagar
-    g.add_month();              // lägg till en månad
-    g.add_month(-1);            // dra bort en månad
-    g.add_year(10);             // lägg till tio år.
+    g.add_month();              // lÃ¤gg till en mÃ¥nad
+    g.add_month(-1);            // dra bort en mÃ¥nad
+    g.add_year(10);             // lÃ¤gg till tio Ã¥r.
 
     std::cout << "Testing miscellaneous functions..." << std::endl;
     Julian jj(tj);              // kopieringskonstruktor
     const Gregorian gg;
-    gg.year();                  // gg konstant, läsa går bra
+    gg.year();                  // gg konstant, lÃ¤sa gÃ¥r bra
     g = gg;                     // tilldelning
-    if(g == gg ||               // jämförelse
-       g != gg ||               // jämförelse
-       g < gg ||                // jämförelse
-       g >= gg)                 // jämförelse
+    if(g == gg ||               // jÃ¤mfÃ¶relse
+       g != gg ||               // jÃ¤mfÃ¶relse
+       g < gg ||                // jÃ¤mfÃ¶relse
+       g >= gg)                 // jÃ¤mfÃ¶relse
         {}
 
     std::cout << "Testing boundary violations";
     Gregorian temp(1900, 1, 1);
     Date &d = temp;
 
-    // loopa över dagar och kolla att inga gränser över/underskrids
+    // loopa Ã¶ver dagar och kolla att inga grÃ¤nser Ã¶ver/underskrids
     for(int i = 0; i < 100000; ++i, ++d)
         {
-            if(!(i % 5000))        // utskrift på framsteg
+            if(!(i % 5000))        // utskrift pÃ¥ framsteg
                 {
                     std::cout << ".";
                     flush(std::cout);
@@ -121,12 +121,12 @@ int main()
     std::cout << std::endl;
 
     std::cout << "Testing leap years..." << std::endl;
-    // testa om skottåren för sekelskiften fungerar som de ska
+    // testa om skottÃ¥ren fÃ¶r sekelskiften fungerar som de ska
     for(int y = 1958; y < 2500; y += 100)
         {
             Gregorian temp(y, 2, 28);
             Date &e = temp;
-            ++e;                                   // lägg till en dag
+            ++e;                                   // lÃ¤gg till en dag
             if((y % 400 == 0 && e.day() == 29) ||  // skottdag (obs! ETTindexerad)
                (y % 400 != 0 && e.day() == 1))     // ej skottdag
                 {}
@@ -142,11 +142,11 @@ int main()
 
     std::cout << std::endl << "All tests were successful." << std::endl;
 
-    // följande ska inte gå att kompilera
+    // fÃ¶ljande ska inte gÃ¥ att kompilera
 #if 0
-    gg.leap_year();             // fel: kan inte komma åt protected/private medlem
+    gg.leap_year();             // fel: kan inte komma Ã¥t protected/private medlem
     gg = g;                     // fel: kan inte tilldela konstant
-    ++gg;                       // fel: kan inte ändra på en konstant
+    ++gg;                       // fel: kan inte Ã¤ndra pÃ¥ en konstant
 #endif
 
     return 0;
