@@ -3,7 +3,7 @@
 namespace lab2 {
   class GregorianDate : public WesternDate {
   protected:
-    static const int UTC_EPOCH_MJD_OFFSET = 40587; // Offset of 1970-01-01 (MJD is 1858-11-17)
+    static const int UTC_EPOCH_MJD_OFFSET = 40587;            // MJD muber of Greg 1970-01-01 (MJD is Greg 1858-11-17)
     static const int GREGORIAN_DAY_ZERO_MJD_OFFSET = -678941; // MJD number of Gregorian 0000-01-01
 
     // Utility functions
