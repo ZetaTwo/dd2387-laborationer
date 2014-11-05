@@ -8,7 +8,7 @@ namespace lab2 {
 
   GregorianDate::GregorianDate() {
     const time_t now = k_time(nullptr);
-    mjd_offset = now / (60*60*24) + UTC_EPOCH_MJD_OFFSET;
+    mjd_offset = now / (60*60*24) + utc_epoch_mjd_offset();
 
     if(now % (60*60*24) < 0) {
       --mjd_offset;

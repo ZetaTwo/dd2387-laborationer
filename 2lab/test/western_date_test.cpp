@@ -59,6 +59,7 @@ public:
 
   virtual bool is_leap_year(int) const override { return false; }
   virtual int ymd_to_mjd_offset(int, int, int) const override { return 0; }
+  virtual int utc_epoch_mjd_offset() const override { return 0; }
   virtual DateDecomposition getDecomposition() const { return DateDecomposition{0, 0}; }
 };
 

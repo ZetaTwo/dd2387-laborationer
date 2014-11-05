@@ -46,6 +46,7 @@ namespace lab2 {
 
     virtual bool is_leap_year(int year) const = 0;
     virtual int ymd_to_mjd_offset(int year, int month, int day) const = 0;
+    virtual int utc_epoch_mjd_offset() const = 0;
 
     WesternDate& add_one_month();
     WesternDate& subtract_one_month();

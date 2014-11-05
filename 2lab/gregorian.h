@@ -9,6 +9,7 @@ namespace lab2 {
     // Utility functions
     virtual inline bool is_leap_year(int year) const override { return year % 400 == 0 || (year % 4 == 0 && year % 100 != 0); }
     virtual int ymd_to_mjd_offset(int year, int month, int day) const override;
+    virtual inline int utc_epoch_mjd_offset() const override { return UTC_EPOCH_MJD_OFFSET; }
     virtual DateDecomposition getDecomposition() const override;
 
   public:
