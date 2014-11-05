@@ -152,8 +152,8 @@ INSTANTIATE_TEST_CASE_P(JulianDate, JulianDateAddMonthTest, Values(
   std::tuple<int, int, int, int, int, int, int>{ 2014, 12, 31, 1, 2015,  1, 31 }
 ));
 
-INSTANTIATE_TEST_CASE_P(GregorianDateAddMultipleMonths, GregorianDateAddMonthTest, Values(
-  std::tuple<int, int, int, int, int, int, int>{ 1900,  1, 31,  2, 1900,  4,  2 },
+INSTANTIATE_TEST_CASE_P(JulianDateAddMultipleMonths, JulianDateAddMonthTest, Values(
+  std::tuple<int, int, int, int, int, int, int>{ 1900,  1, 31,  2, 1900,  4,  1 },
   std::tuple<int, int, int, int, int, int, int>{ 1900,  2, 28,  3, 1900,  5, 28 },
   std::tuple<int, int, int, int, int, int, int>{ 1900,  3, 31,  4, 1900,  7, 30 },
   std::tuple<int, int, int, int, int, int, int>{ 1900,  4, 30,  5, 1900,  9, 30 },
