@@ -8,6 +8,8 @@
 namespace lab2 {
   class WesternDate : public MjdOffsetDate {
   public:
+    static const int UTC_EPOCH_MJD_OFFSET = 40587; // MJD muber of Greg 1970-01-01 (MJD is Greg 1858-11-17)
+
     WesternDate() {};
     WesternDate(int mjd_offset) : MjdOffsetDate(mjd_offset) {};
     WesternDate(const Date& original) : MjdOffsetDate(original) {};
@@ -50,7 +52,6 @@ namespace lab2 {
 
     virtual bool is_leap_year(int year) const = 0;
     virtual int ymd_to_mjd_offset(int year, int month, int day) const = 0;
-    virtual int utc_epoch_mjd_offset() const = 0;
 
     WesternDate& add_one_month();
     WesternDate& subtract_one_month();
