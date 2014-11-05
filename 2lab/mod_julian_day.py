@@ -19,11 +19,13 @@ def mjd_jul(year, month, day) :
 
 USAGE = "Usage: mod_julian_day.py YEAR MONTH DAY"
 if __name__ == "__main__":
-    if(len(argv) > 3):
-        try:
-            print(mjd(int(argv[1]), int(argv[2]), int(argv[3])))
-        except Error:
+    if len(argv) > 1:
+        if len(argv) > 3:
+            try:
+                print(mjd(int(argv[1]), int(argv[2]), int(argv[3])))
+            except Error:
+                print(USAGE)
+                exit(1)
+        else:
             print(USAGE)
             exit(1)
-    else:
-        print(USAGE)
