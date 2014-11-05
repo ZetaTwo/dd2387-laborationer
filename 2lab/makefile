@@ -15,7 +15,7 @@ KATTISTIME=kurskatalog/kattistime.h
 
 TEST_OBJECTS=$(patsubst %.cpp,build/%.o,$(wildcard test/*_test.cpp))
 
-default: test
+default: test given_test
 
 clean:
 	rm -r build
@@ -23,8 +23,14 @@ clean:
 test: build/run_test
 	$< $(GTEST_FLAGS)
 
+given_test: build/test/datetest
+	$<
+
 build/%.o: %.cpp $(DATE_HEADERS) $(KATTISTIME)
 	$(MAKE_OBJECT)
 
 build/run_test: test_runner.cpp $(TEST_OBJECTS) $(DATE_OBJECTS) build/kurskatalog/kattistime.o
 	$(MAKE_EXECUTABLE) -lgtest
+
+build/test/datetest: test/datetest.cpp $(DATE_OBJECTS) build/kurskatalog/kattistime.o $(DATE_HEADERS) $(KATTISTIME)
+	$(MAKE_EXECUTABLE)
