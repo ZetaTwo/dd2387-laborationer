@@ -28,4 +28,6 @@ namespace lab2 {
     virtual GregorianDate& add_year (int years  = 1) override;
     virtual GregorianDate& add_month(int months = 1) override;
   };
+
+  typedef GregorianDate Gregorian;
 }
