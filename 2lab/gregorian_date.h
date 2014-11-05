@@ -12,6 +12,13 @@ namespace lab2 {
     GregorianDate& add_one_month();
     GregorianDate& subtract_one_month();
 
+    // Utility functions
+    static inline bool is_leap_year(int year) { return year % 400 == 0 || (year % 4 == 0 && year % 100 != 0); }
+    static inline bool is_valid_date(int year, int month, int day) {
+      return month <= 12 && month >= 1 && day >= 1 && day <= (month_lengths[month-1] + (month == 2 && is_leap_year(year) ? 1 : 0));
+
+    }
+
   public:
     // Date API methods
     GregorianDate();
@@ -20,11 +27,5 @@ namespace lab2 {
 
     virtual GregorianDate& add_year (int years  = 1) override;
     virtual GregorianDate& add_month(int months = 1) override;
-
-    // Utility functions
-    static inline bool is_leap_year(int year) { return year % 400 == 0 || (year % 4 == 0 && year % 100 != 0); }
-    static inline bool is_valid_date(int year, int month, int day) {
-      return month <= 12 && month >= 1 && day >= 1 && day <= (month_lengths[month-1] + (month == 2 && is_leap_year(year) ? 1 : 0));
-    }
   };
 }

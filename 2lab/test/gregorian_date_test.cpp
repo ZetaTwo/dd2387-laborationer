@@ -5,21 +5,6 @@
 using ::testing::TestWithParam;
 using ::testing::Values;
 
-class GregorianLeapYearTest : public TestWithParam<std::tuple<int, bool>> {};
-
-INSTANTIATE_TEST_CASE_P(GregorianDate, GregorianLeapYearTest, Values(
-  std::tuple<int, bool>{0, true},
-  std::tuple<int, bool>{100, false},
-  std::tuple<int, bool>{1900, false},
-  std::tuple<int, bool>{1904, true},
-  std::tuple<int, bool>{1996, true},
-  std::tuple<int, bool>{2000, true},
-  std::tuple<int, bool>{2004, true},
-  std::tuple<int, bool>{2100, false},
-  std::tuple<int, bool>{2558, false},
-  std::tuple<int, bool>{2560, true}
-));
-
 class EpochSecondsToGregorianDateTest : public TestWithParam<std::tuple<long long, int, int, int>> {};
 INSTANTIATE_TEST_CASE_P(GregorianDate, EpochSecondsToGregorianDateTest, Values(
   std::tuple<long long, int, int, int>{-62167219200LL, 0, 1, 1},
@@ -223,10 +208,6 @@ INSTANTIATE_TEST_CASE_P(GregorianDate, GregorianDateAddYearTest, Values(
 
 using lab2::Date;
 using lab2::GregorianDate;
-
-TEST_P(GregorianLeapYearTest, IsLeapYearIsCorrect) {
-  EXPECT_EQ(std::get<1>(GetParam()), GregorianDate::is_leap_year(std::get<0>(GetParam())));
-}
 
 TEST_P(EpochSecondsToGregorianDateTest, DefaultConstructorSetsResultToToday) {
   const long long current_epoch_seconds = std::get<0>(GetParam());
