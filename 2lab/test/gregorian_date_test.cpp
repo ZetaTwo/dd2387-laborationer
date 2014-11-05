@@ -197,6 +197,30 @@ INSTANTIATE_TEST_CASE_P(GregorianDate, GregorianDateAddNegativeMonthTest, Values
   std::tuple<int, int, int, int, int, int, int>{ 2014,  1, 31, -12, 2013,  2,  1 }
 ));
 
+class GregorianDateAddYearTest : public TestWithParam<std::tuple<int, int, int, int, int, int, int>> {};
+INSTANTIATE_TEST_CASE_P(GregorianDate, GregorianDateAddYearTest, Values(
+  //                                               y0, m0, d0,   N,   y1, m1, d1
+  std::tuple<int, int, int, int, int, int, int>{    0,  1,  1,   1,    1,  1,  1 },
+
+  std::tuple<int, int, int, int, int, int, int>{ 1858, 11, 30,   1, 1859, 11, 30 },
+  std::tuple<int, int, int, int, int, int, int>{ 1858, 12, 30,   1, 1859, 12, 30 },
+
+  std::tuple<int, int, int, int, int, int, int>{ 1970,  1, 28,   1, 1971,  1, 28 },
+  std::tuple<int, int, int, int, int, int, int>{ 1970,  1, 29,   1, 1971,  1, 29 },
+  std::tuple<int, int, int, int, int, int, int>{ 1970,  1, 30,   1, 1971,  1, 30 },
+  std::tuple<int, int, int, int, int, int, int>{ 1970,  1, 31,   1, 1971,  1, 31 },
+
+  std::tuple<int, int, int, int, int, int, int>{ 1971,  2, 28,   1, 1972,  2, 28 },
+  std::tuple<int, int, int, int, int, int, int>{ 1972,  2, 29,   1, 1973,  2, 28 },
+  std::tuple<int, int, int, int, int, int, int>{ 1972,  2, 29,   4, 1976,  2, 29 },
+  std::tuple<int, int, int, int, int, int, int>{ 1972,  2, 29,  28, 2000,  2, 29 },
+  std::tuple<int, int, int, int, int, int, int>{ 1972,  2, 29, 128, 2100,  2, 28 },
+  std::tuple<int, int, int, int, int, int, int>{ 1972,  2, 29, 428, 2400,  2, 29 },
+
+  std::tuple<int, int, int, int, int, int, int>{ 1972,  2, 29,  -1, 1971,  2, 28 },
+  std::tuple<int, int, int, int, int, int, int>{ 1973,  2, 28,  -1, 1972,  2, 28 }
+));
+
 using lab2::Date;
 using lab2::GregorianDate;
 
@@ -393,4 +417,28 @@ TEST_P(GregorianDateAddNegativeMonthTest, AddNegativeMonthsSubtractsOneMonthIfPo
   EXPECT_EQ(year_after, gdb.year());
   EXPECT_EQ(month_after, gdb.month());
   EXPECT_EQ(day_after, gdb.day());
+}
+
+TEST_P(GregorianDateAddYearTest, AddYearMovesToSameDayOnAnotherYearAndLeapDayGoesToLastFebruary) {
+  const int year_before = std::get<0>(GetParam());
+  const int month_before = std::get<1>(GetParam());
+  const int day_before = std::get<2>(GetParam());
+
+  const int num_years = std::get<3>(GetParam());
+
+  const int year_after = std::get<4>(GetParam());
+  const int month_after = std::get<5>(GetParam());
+  const int day_after = std::get<6>(GetParam());
+
+  GregorianDate gd{year_before, month_before, day_before};
+
+  ASSERT_EQ(year_before, gd.year());
+  ASSERT_EQ(month_before, gd.month());
+  ASSERT_EQ(day_before, gd.day());
+
+  gd.add_year(num_years);
+
+  EXPECT_EQ(year_after, gd.year());
+  EXPECT_EQ(month_after, gd.month());
+  EXPECT_EQ(day_after, gd.day());
 }
