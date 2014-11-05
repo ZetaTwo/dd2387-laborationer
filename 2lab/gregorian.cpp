@@ -87,7 +87,7 @@ namespace lab2 {
     const int current_day = day();
 
     if(is_valid_date(year_after, month_after, current_day)) {
-      *this = GregorianDate(year_after, month_after, current_day);
+      this->set(ymd_to_mjd_offset(year_after, month_after, current_day));
     } else {
       *this += 30;
     }
@@ -102,7 +102,7 @@ namespace lab2 {
     const int current_day = day();
 
     if(is_valid_date(year_after, month_after, current_day)) {
-      *this = GregorianDate(year_after, month_after, current_day);
+      this->set(ymd_to_mjd_offset(year_after, month_after, current_day));
     } else {
       *this -= 30;
     }
@@ -114,9 +114,9 @@ namespace lab2 {
     const int year_after = year() + years;
 
     if(is_valid_date(year_after, month(), day())) {
-      *this = GregorianDate(year_after, month(), day());
+      this->set(ymd_to_mjd_offset(year_after, month(), day()));
     } else {
-      *this = GregorianDate(year_after, month(), month_lengths[1]);
+      this->set(ymd_to_mjd_offset(year_after, month(), month_lengths[1]));
     }
 
     return *this;
