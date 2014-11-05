@@ -18,6 +18,7 @@ namespace lab2 {
     JulianDate();
     JulianDate(int year, int month, int day);
     JulianDate(const Date& original);
+    JulianDate(const Date* original);
   };
 
   typedef JulianDate Julian;
