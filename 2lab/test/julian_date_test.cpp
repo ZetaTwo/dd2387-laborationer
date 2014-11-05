@@ -10,6 +10,7 @@ INSTANTIATE_TEST_CASE_P(JulianDate, EpochSecondsToJulianDateTest, Values(
   std::tuple<long long, int, int, int>{ -62167392000LL,    0,  1,  1 },
   std::tuple<long long, int, int, int>{ -62167305601LL,    0,  1,  1 },
   std::tuple<long long, int, int, int>{ -62167305600LL,    0,  1,  2 },
+  std::tuple<long long, int, int, int>{ -62135856000LL,    0, 12, 31 },
   std::tuple<long long, int, int, int>{ -62135769601LL,    0, 12, 31 },
   std::tuple<long long, int, int, int>{ -62135769600LL,    1,  1,  1 },
 
