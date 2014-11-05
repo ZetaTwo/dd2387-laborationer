@@ -8,7 +8,7 @@ COMPILE=mkdir -p $(dir $@); $(CXX) $(CPPFLAGS) $(INCLUDE_PREREQUISITE_HEADER_DIR
 MAKE_OBJECT=$(COMPILE) -c
 MAKE_EXECUTABLE=$(COMPILE)
 
-DATE_FILENAMES=date mjd_offset_date western_date gregorian_date
+DATE_FILENAMES=date mjd_offset_date western_date gregorian
 DATE_HEADERS=$(foreach name,$(DATE_FILENAMES),$(name).h)
 DATE_OBJECTS=$(foreach name,$(DATE_FILENAMES),build/$(name).o)
 KATTISTIME=kurskatalog/kattistime.h

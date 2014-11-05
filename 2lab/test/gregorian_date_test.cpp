@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include "kattistime.h"
-#include "gregorian_date.h"
+#include "gregorian.h"
 
 using ::testing::TestWithParam;
 using ::testing::Values;

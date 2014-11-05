@@ -2,7 +2,7 @@
 #include <stdexcept>
 #include <sstream>
 #include "kattistime.h"
-#include "gregorian_date.h"
+#include "gregorian.h"
 
 namespace lab2 {
 
