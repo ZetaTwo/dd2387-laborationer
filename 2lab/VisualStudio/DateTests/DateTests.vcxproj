@@ -74,6 +74,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\test\date_test.cpp" />
     <ClCompile Include="..\..\test\gregorian_date_test.cpp" />
+    <ClCompile Include="..\..\test\julian_date_test.cpp" />
     <ClCompile Include="..\..\test\mjd_offset_date_test.cpp" />
     <ClCompile Include="..\..\test\western_date_test.cpp" />
     <ClCompile Include="..\..\test_runner.cpp" />
