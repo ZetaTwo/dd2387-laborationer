@@ -221,17 +221,17 @@ INSTANTIATE_TEST_CASE_P(JulianDate, JulianDateAddYearTest, Values(
   std::tuple<int, int, int, int, int, int, int>{ 1973,  2, 28,  -1, 1972,  2, 28 }
 ));
 
-class GregorianDateWeekdayTest : public TestWithParam<std::tuple<int, int, int, int>> {};
-INSTANTIATE_TEST_CASE_P(GregorianDate, GregorianDateWeekdayTest, Values(
-  std::tuple<int, int, int, int>{ 3, 1858, 11, 17 },
+class JulianDateWeekdayTest : public TestWithParam<std::tuple<int, int, int, int>> {};
+INSTANTIATE_TEST_CASE_P(JulianDate, JulianDateWeekdayTest, Values(
+  std::tuple<int, int, int, int>{ 1, 1858, 11, 17 },
 
-  std::tuple<int, int, int, int>{ 4, 1970,  1,  1 },
+  std::tuple<int, int, int, int>{ 3, 1970,  1,  1 },
 
-  std::tuple<int, int, int, int>{ 6, 2014, 11,  1 },
-  std::tuple<int, int, int, int>{ 7, 2014, 11,  2 },
-  std::tuple<int, int, int, int>{ 1, 2014, 11,  3 },
-  std::tuple<int, int, int, int>{ 2, 2014, 11,  4 },
-  std::tuple<int, int, int, int>{ 3, 2014, 11,  5 }
+  std::tuple<int, int, int, int>{ 5, 2014, 11,  1 },
+  std::tuple<int, int, int, int>{ 6, 2014, 11,  2 },
+  std::tuple<int, int, int, int>{ 7, 2014, 11,  3 },
+  std::tuple<int, int, int, int>{ 1, 2014, 11,  4 },
+  std::tuple<int, int, int, int>{ 2, 2014, 11,  5 }
 ));
 
 using lab2::Date;
