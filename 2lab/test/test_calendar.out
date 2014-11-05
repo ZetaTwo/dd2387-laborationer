@@ -1,0 +1,15 @@
+----------------------------------------
+2000-12-11 : Basketträning
+2000-12-20 : Min första cykel
+2000-12-24 : Julafton
+2000-12-24 : Kalle Anka hälsar god jul
+2001-01-01 : Nyårsfrukost
+----------------------------------------
+ cal.remove_event("Julafton", 24) tar inte
+ bort något eftersom aktuell månad är november
+----------------------------------------
+2000-12-01 : Första advent
+2000-12-11 : Basketträning
+2000-12-20 : Min första cykel
+2000-12-24 : Julafton
+2001-01-01 : Nyårsfrukost
