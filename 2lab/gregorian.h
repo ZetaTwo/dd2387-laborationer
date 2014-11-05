@@ -1,3 +1,4 @@
+#pragma once
 #include "western_date.h"
 
 namespace lab2 {
