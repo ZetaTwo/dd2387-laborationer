@@ -197,8 +197,8 @@ INSTANTIATE_TEST_CASE_P(JulianDate, JulianDateAddNegativeMonthTest, Values(
   std::tuple<int, int, int, int, int, int, int>{ 2014,  1, 31, -12, 2013,  2,  1 }
 ));
 
-class GregorianDateAddYearTest : public TestWithParam<std::tuple<int, int, int, int, int, int, int>> {};
-INSTANTIATE_TEST_CASE_P(GregorianDate, GregorianDateAddYearTest, Values(
+class JulianDateAddYearTest : public TestWithParam<std::tuple<int, int, int, int, int, int, int>> {};
+INSTANTIATE_TEST_CASE_P(JulianDate, JulianDateAddYearTest, Values(
   //                                               y0, m0, d0,   N,   y1, m1, d1
   std::tuple<int, int, int, int, int, int, int>{    0,  1,  1,   1,    1,  1,  1 },
 
@@ -214,7 +214,7 @@ INSTANTIATE_TEST_CASE_P(GregorianDate, GregorianDateAddYearTest, Values(
   std::tuple<int, int, int, int, int, int, int>{ 1972,  2, 29,   1, 1973,  2, 28 },
   std::tuple<int, int, int, int, int, int, int>{ 1972,  2, 29,   4, 1976,  2, 29 },
   std::tuple<int, int, int, int, int, int, int>{ 1972,  2, 29,  28, 2000,  2, 29 },
-  std::tuple<int, int, int, int, int, int, int>{ 1972,  2, 29, 128, 2100,  2, 28 },
+  std::tuple<int, int, int, int, int, int, int>{ 1972,  2, 29, 128, 2100,  2, 29 },
   std::tuple<int, int, int, int, int, int, int>{ 1972,  2, 29, 428, 2400,  2, 29 },
 
   std::tuple<int, int, int, int, int, int, int>{ 1972,  2, 29,  -1, 1971,  2, 28 },
