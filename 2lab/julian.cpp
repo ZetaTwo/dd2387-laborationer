@@ -35,26 +35,20 @@ namespace lab2 {
   }
 
   JulianDate::DateDecomposition JulianDate::getDecomposition() const {
-    const int D400 = 365 * 400 + 100;
-    const int D100 = 365 * 100 +  25;
-    const int D4   = 365 *   4;
-    const int D1   = 365;
+    const int D4 = 365 * 4 + 1;
+    const int D1 = 365;
 
     const int d = mod_julian_day() - JULIAN_DAY_ZERO_MJD_OFFSET;
 
-    const int c400 = d / D400;
-    const int d400 = d % D400;
+    const int c4 = d / D4;
+    const int d4 = d % D4;
 
-    const int c100 = d400 / D100;
-    const int d100 = d400 % D100;
+    const int cp1 = std::min(d4 / (D1 + 1), 1);
+    const int dp1 = d4 - cp1 * (D1 + 1);
+    const int cb1 = cp1 * dp1 / D1;
+    const int db1 = dp1 - cb1 * D1;
 
-    const int c4 = d100 / D4;
-    const int d4 = d100 % D4;
-
-    const int c1 = d4 / D1;
-    const int d1 = d4 % D1;
-
-    return DateDecomposition{400 * c400 + 100 * c100 + 4 * c4 + c1, d1};
+    return DateDecomposition{4 * c4 + cp1 + cb1, db1};
   }
 
 }
