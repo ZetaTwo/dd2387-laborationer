@@ -107,8 +107,8 @@ INSTANTIATE_TEST_CASE_P(JulianDate, InvalidJulianDateTest, Values(
   std::tuple<int, int, int>{ 2014, 12, 32 }
 ));
 
-class GregorianDateAddMonthTest : public TestWithParam<std::tuple<int, int, int, int, int, int, int>> {};
-INSTANTIATE_TEST_CASE_P(GregorianDate, GregorianDateAddMonthTest, Values(
+class JulianDateAddMonthTest : public TestWithParam<std::tuple<int, int, int, int, int, int, int>> {};
+INSTANTIATE_TEST_CASE_P(JulianDate, JulianDateAddMonthTest, Values(
   //                                               y0, m0, d0, N,   y1, m1, d1
   std::tuple<int, int, int, int, int, int, int>{    0,  1,  1, 1,    0,  2,  1 },
 
@@ -180,8 +180,8 @@ INSTANTIATE_TEST_CASE_P(GregorianDateAddMultipleMonths, GregorianDateAddMonthTes
   std::tuple<int, int, int, int, int, int, int>{ 2014, 12, 31, 13, 2016,  2,  2 }
 ));
 
-class GregorianDateAddNegativeMonthTest : public TestWithParam<std::tuple<int, int, int, int, int, int, int>> {};
-INSTANTIATE_TEST_CASE_P(GregorianDate, GregorianDateAddNegativeMonthTest, Values(
+class JulianDateAddNegativeMonthTest : public TestWithParam<std::tuple<int, int, int, int, int, int, int>> {};
+INSTANTIATE_TEST_CASE_P(JulianDate, JulianDateAddNegativeMonthTest, Values(
   //                                                 y0, m0, d0, N,   y1, m1, d1
   std::tuple<int, int, int, int, int, int, int>{ 2014, 12, 31,  -1, 2014, 12,  1 },
   std::tuple<int, int, int, int, int, int, int>{ 2014, 11, 30,  -2, 2014,  9, 30 },
