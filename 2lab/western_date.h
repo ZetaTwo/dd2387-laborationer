@@ -8,7 +8,9 @@
 namespace lab2 {
   class WesternDate : public MjdOffsetDate {
   public:
-    using MjdOffsetDate::MjdOffsetDate; // Inherit constructors
+    WesternDate() {};
+    WesternDate(int mjd_offset) : MjdOffsetDate(mjd_offset) {};
+    WesternDate(const Date& original) : MjdOffsetDate(original) {};
 
     virtual inline int days_per_week() const override { return 7; }
     virtual inline int months_per_year() const override { return 12; }

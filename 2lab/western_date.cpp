@@ -1,5 +1,8 @@
 #include "western_date.h"
 
+#include <algorithm>
+using namespace std;
+
 namespace lab2 {
   const std::vector<std::string> WesternDate::day_names = {
     "monday",
