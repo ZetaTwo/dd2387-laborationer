@@ -15,7 +15,9 @@ namespace lab2 {
     }
   }
 
-  GregorianDate::GregorianDate(const int year, const int month, const int day) {
+  GregorianDate::GregorianDate(const int year, const int month, const int day) : WesternDate(ymd_to_mjd_offset(year, month, day)) {}
+
+  int GregorianDate::ymd_to_mjd_offset(const int year, const int month, const int day) const {
     if(!is_valid_date(year, month, day)) {
       std::stringstream ss;
       ss << "Invalid Gregorian date: " << year << "-" << month << "-" << day;
@@ -27,7 +29,7 @@ namespace lab2 {
     const int y = year + 4800 - a;
     const int m = month + 12 * a - 3;
 
-    mjd_offset = day
+    return day
       + ((153 * m + 2) / 5)
       + 365L * y + (y / 4)
       - (y / 100)
