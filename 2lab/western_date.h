@@ -29,6 +29,9 @@ namespace lab2 {
     virtual inline std::string week_day_name() const override { return day_names[week_day() - 1]; }
     virtual inline std::string month_name()    const override { return month_names[month() - 1]; }
 
+    virtual WesternDate& add_year (int years  = 1) override;
+    virtual WesternDate& add_month(int months = 1) override;
+
   protected:
     static const int WEEKDAY_OF_MOD_JULIAN_DAY = 2; // monday = 0, sunday = 6
 
@@ -43,6 +46,9 @@ namespace lab2 {
 
     virtual bool is_leap_year(int year) const = 0;
     virtual int ymd_to_mjd_offset(int year, int month, int day) const = 0;
+
+    WesternDate& add_one_month();
+    WesternDate& subtract_one_month();
 
     struct DateDecomposition {
       int year;

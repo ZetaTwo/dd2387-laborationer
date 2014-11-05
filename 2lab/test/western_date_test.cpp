@@ -56,8 +56,6 @@ public:
   virtual int days_this_month() const override { return 0; }
   virtual std::string week_day_name() const override { return ""; }
   virtual std::string month_name()    const override { return ""; }
-  virtual Date& add_year (int) override { return *this; }
-  virtual Date& add_month(int) override { return *this; }
 
   virtual bool is_leap_year(int) const override { return false; }
   virtual int ymd_to_mjd_offset(int, int, int) const override { return 0; }
