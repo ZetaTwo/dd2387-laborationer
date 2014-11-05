@@ -206,6 +206,19 @@ INSTANTIATE_TEST_CASE_P(GregorianDate, GregorianDateAddYearTest, Values(
   std::tuple<int, int, int, int, int, int, int>{ 1973,  2, 28,  -1, 1972,  2, 28 }
 ));
 
+class GregorianDateWeekdayTest : public TestWithParam<std::tuple<int, int, int, int>> {};
+INSTANTIATE_TEST_CASE_P(GregorianDate, GregorianDateWeekdayTest, Values(
+  std::tuple<int, int, int, int>{ 3, 1858, 11, 17 },
+
+  std::tuple<int, int, int, int>{ 4, 1970,  1,  1 },
+
+  std::tuple<int, int, int, int>{ 6, 2014, 11,  1 },
+  std::tuple<int, int, int, int>{ 7, 2014, 11,  2 },
+  std::tuple<int, int, int, int>{ 1, 2014, 11,  3 },
+  std::tuple<int, int, int, int>{ 2, 2014, 11,  4 },
+  std::tuple<int, int, int, int>{ 3, 2014, 11,  5 }
+));
+
 using lab2::Date;
 using lab2::GregorianDate;
 
@@ -422,4 +435,14 @@ TEST_P(GregorianDateAddYearTest, AddYearMovesToSameDayOnAnotherYearAndLeapDayGoe
   EXPECT_EQ(year_after, gd.year());
   EXPECT_EQ(month_after, gd.month());
   EXPECT_EQ(day_after, gd.day());
+}
+
+TEST_P(GregorianDateWeekdayTest, ExampleDatesHaveCorrectWeekday) {
+  const int weekday = std::get<0>(GetParam());
+  const int year = std::get<1>(GetParam());
+  const int month = std::get<2>(GetParam());
+  const int day = std::get<3>(GetParam());
+
+  GregorianDate gd{year, month, day};
+  EXPECT_EQ(weekday, gd.week_day());
 }
