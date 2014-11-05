@@ -9,6 +9,12 @@ def mjd(year, month, day):
     m = month + 12 * a - 3
     return day + floor((153 * m + 2) / 5) + 365 * y + floor(y / 4) - floor(y / 100) + floor(y / 400) - 32045 - 2400001
 
+def mjd_jul(year, month, day) :
+    a = floor((14 - month) / 12)
+    y = year + 4800 - a
+    m = month + 12 * a - 3
+    return day + floor((153 * m + 2) / 5) + 365 * y + floor(y / 4) - 32083 - 2400001
+
 USAGE = "Usage: mod_julian_day.py YEAR MONTH DAY"
 if __name__ == "__main__":
     if(len(argv) > 3):
