@@ -23,19 +23,7 @@ clean:
 test: build/run_test
 	$< $(GTEST_FLAGS)
 
-build/%.o: %.cpp %.h
-	$(MAKE_OBJECT)
-
-build/mjd_offset_date.o: mjd_offset_date.cpp $(DATE_HEADERS)
-	$(MAKE_OBJECT)
-
-build/gregorian_date.o: gregorian_date.cpp $(DATE_HEADERS) $(KATTISTIME)
-	$(MAKE_OBJECT)
-
-build/test/%_test.o: test/%_test.cpp $(DATE_HEADERS)
-	$(MAKE_OBJECT)
-
-build/test/gregorian_date_test.o: test/gregorian_date_test.cpp $(DATE_HEADERS) $(KATTISTIME)
+build/%.o: %.cpp $(DATE_HEADERS) $(KATTISTIME)
 	$(MAKE_OBJECT)
 
 build/run_test: test_runner.cpp $(TEST_OBJECTS) $(DATE_OBJECTS) build/kurskatalog/kattistime.o
