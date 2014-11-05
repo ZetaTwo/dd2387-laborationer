@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include "kattistime.h"
-#include "gregorian.h"
+#include "julian.h"
 
 using ::testing::TestWithParam;
 using ::testing::Values;
@@ -231,95 +231,95 @@ INSTANTIATE_TEST_CASE_P(JulianDate, JulianDateWeekdayTest, Values(
 ));
 
 using lab2::Date;
-using lab2::GregorianDate;
+using lab2::JulianDate;
 
-TEST_P(EpochSecondsToGregorianDateTest, DefaultConstructorSetsResultToToday) {
+TEST_P(EpochSecondsToJulianDateTest, DefaultConstructorSetsResultToToday) {
   const long long current_epoch_seconds = std::get<0>(GetParam());
   const int expected_year = std::get<1>(GetParam());
   const int expected_month = std::get<2>(GetParam());
   const int expected_day = std::get<3>(GetParam());
 
   set_k_time(current_epoch_seconds);
-  const GregorianDate d;
+  const JulianDate d;
 
   EXPECT_EQ(expected_year, d.year());
   EXPECT_EQ(expected_month, d.month());
   EXPECT_EQ(expected_day, d.day());
 }
 
-TEST_P(ValidGregorianDateTest, YmdConstructorFailsForInvalidDates) {
+TEST_P(ValidJulianDateTest, YmdConstructorFailsForInvalidDates) {
   const int year = std::get<0>(GetParam());
   const int month = std::get<1>(GetParam());
   const int day = std::get<2>(GetParam());
 
   EXPECT_NO_THROW({
-    GregorianDate d(year, month, day);
+    JulianDate d(year, month, day);
   });
 }
 
-TEST_P(InvalidGregorianDateTest, YmdConstructorFailsForInvalidDates) {
+TEST_P(InvalidJulianDateTest, YmdConstructorFailsForInvalidDates) {
   const int year = std::get<0>(GetParam());
   const int month = std::get<1>(GetParam());
   const int day = std::get<2>(GetParam());
 
   EXPECT_THROW({
-    GregorianDate d(year, month, day);
+    JulianDate d(year, month, day);
   }, std::out_of_range);
 }
 
-TEST_P(ValidGregorianDateTest, YmdConstructorSetsResultToArgument) {
+TEST_P(ValidJulianDateTest, YmdConstructorSetsResultToArgument) {
   const int year = std::get<0>(GetParam());
   const int month = std::get<1>(GetParam());
   const int day = std::get<2>(GetParam());
 
-  const GregorianDate d(year, month, day);
+  const JulianDate d(year, month, day);
 
   EXPECT_EQ(year, d.year());
   EXPECT_EQ(month, d.month());
   EXPECT_EQ(day, d.day());
 }
 
-TEST_P(ValidGregorianDateTest, CopyConstructorMakesResultEqualToArgument) {
+TEST_P(ValidJulianDateTest, CopyConstructorMakesResultEqualToArgument) {
   const int year = std::get<0>(GetParam());
   const int month = std::get<1>(GetParam());
   const int day = std::get<2>(GetParam());
 
-  const GregorianDate gda{year, month, day};
+  const JulianDate gda{year, month, day};
   const Date& da = gda;
-  const GregorianDate gdb{da};
+  const JulianDate gdb{da};
 
   EXPECT_EQ(da, gdb);
   EXPECT_EQ(0, da - gdb);
 }
 
-TEST_P(ValidGregorianDateTest, CopyConstructorDoesNotModifyOriginal) {
+TEST_P(ValidJulianDateTest, CopyConstructorDoesNotModifyOriginal) {
   const int year = std::get<0>(GetParam());
   const int month = std::get<1>(GetParam());
   const int day = std::get<2>(GetParam());
 
-  const GregorianDate gda{year, month, day};
+  const JulianDate gda{year, month, day};
   const Date& da = gda;
 
   ASSERT_EQ(year, da.year());
   ASSERT_EQ(month, da.month());
   ASSERT_EQ(day, da.day());
 
-  const GregorianDate gdb{da};
+  const JulianDate gdb{da};
 
   EXPECT_EQ(year, da.year());
   EXPECT_EQ(month, da.month());
   EXPECT_EQ(day, da.day());
 }
 
-TEST_P(ValidGregorianDateTest, OperatorAssignmentSetsSelfEqualToArgument) {
+TEST_P(ValidJulianDateTest, OperatorAssignmentSetsSelfEqualToArgument) {
   const int year = std::get<0>(GetParam());
   const int month = std::get<1>(GetParam());
   const int day = std::get<2>(GetParam());
 
-  const GregorianDate gda{year, month, day};
+  const JulianDate gda{year, month, day};
   const Date& da = gda;
 
-  GregorianDate gdb{};
+  JulianDate gdb{};
   Date& db = gdb;
 
   db = da;
@@ -336,19 +336,19 @@ TEST_P(ValidGregorianDateTest, OperatorAssignmentSetsSelfEqualToArgument) {
   EXPECT_EQ(0, gdb - da);
 }
 
-TEST_P(ValidGregorianDateTest, OperatorAssignmentDoesNotModifyOriginal) {
+TEST_P(ValidJulianDateTest, OperatorAssignmentDoesNotModifyOriginal) {
   const int year = std::get<0>(GetParam());
   const int month = std::get<1>(GetParam());
   const int day = std::get<2>(GetParam());
 
-  const GregorianDate gda{year, month, day};
+  const JulianDate gda{year, month, day};
   const Date& da = gda;
 
   ASSERT_EQ(year, da.year());
   ASSERT_EQ(month, da.month());
   ASSERT_EQ(day, da.day());
 
-  GregorianDate gdb{};
+  JulianDate gdb{};
   Date& db = gdb;
 
   db = da;
@@ -358,7 +358,7 @@ TEST_P(ValidGregorianDateTest, OperatorAssignmentDoesNotModifyOriginal) {
   EXPECT_EQ(day, da.day());
 }
 
-TEST_P(GregorianDateAddMonthTest, AddMonthAddsOneMonthIfPossibleOtherwiseAdds30Days) {
+TEST_P(JulianDateAddMonthTest, AddMonthAddsOneMonthIfPossibleOtherwiseAdds30Days) {
   const int year_before = std::get<0>(GetParam());
   const int month_before = std::get<1>(GetParam());
   const int day_before = std::get<2>(GetParam());
@@ -369,8 +369,8 @@ TEST_P(GregorianDateAddMonthTest, AddMonthAddsOneMonthIfPossibleOtherwiseAdds30D
   const int month_after = std::get<5>(GetParam());
   const int day_after = std::get<6>(GetParam());
 
-  GregorianDate gda{year_before, month_before, day_before};
-  GregorianDate gdb{year_before, month_before, day_before};
+  JulianDate gda{year_before, month_before, day_before};
+  JulianDate gdb{year_before, month_before, day_before};
 
   ASSERT_EQ(year_before, gda.year());
   ASSERT_EQ(month_before, gda.month());
@@ -391,7 +391,7 @@ TEST_P(GregorianDateAddMonthTest, AddMonthAddsOneMonthIfPossibleOtherwiseAdds30D
   EXPECT_EQ(day_after, gdb.day());
 }
 
-TEST_P(GregorianDateAddNegativeMonthTest, AddNegativeMonthsSubtractsOneMonthIfPossibleOtherwiseSubtracts30Days) {
+TEST_P(JulianDateAddNegativeMonthTest, AddNegativeMonthsSubtractsOneMonthIfPossibleOtherwiseSubtracts30Days) {
   const int year_before = std::get<0>(GetParam());
   const int month_before = std::get<1>(GetParam());
   const int day_before = std::get<2>(GetParam());
@@ -402,8 +402,8 @@ TEST_P(GregorianDateAddNegativeMonthTest, AddNegativeMonthsSubtractsOneMonthIfPo
   const int month_after = std::get<5>(GetParam());
   const int day_after = std::get<6>(GetParam());
 
-  GregorianDate gda{year_before, month_before, day_before};
-  GregorianDate gdb{year_before, month_before, day_before};
+  JulianDate gda{year_before, month_before, day_before};
+  JulianDate gdb{year_before, month_before, day_before};
 
   ASSERT_EQ(year_before, gda.year());
   ASSERT_EQ(month_before, gda.month());
@@ -424,7 +424,7 @@ TEST_P(GregorianDateAddNegativeMonthTest, AddNegativeMonthsSubtractsOneMonthIfPo
   EXPECT_EQ(day_after, gdb.day());
 }
 
-TEST_P(GregorianDateAddYearTest, AddYearMovesToSameDayOnAnotherYearAndLeapDayGoesToLastFebruary) {
+TEST_P(JulianDateAddYearTest, AddYearMovesToSameDayOnAnotherYearAndLeapDayGoesToLastFebruary) {
   const int year_before = std::get<0>(GetParam());
   const int month_before = std::get<1>(GetParam());
   const int day_before = std::get<2>(GetParam());
@@ -435,7 +435,7 @@ TEST_P(GregorianDateAddYearTest, AddYearMovesToSameDayOnAnotherYearAndLeapDayGoe
   const int month_after = std::get<5>(GetParam());
   const int day_after = std::get<6>(GetParam());
 
-  GregorianDate gd{year_before, month_before, day_before};
+  JulianDate gd{year_before, month_before, day_before};
 
   ASSERT_EQ(year_before, gd.year());
   ASSERT_EQ(month_before, gd.month());
@@ -448,12 +448,12 @@ TEST_P(GregorianDateAddYearTest, AddYearMovesToSameDayOnAnotherYearAndLeapDayGoe
   EXPECT_EQ(day_after, gd.day());
 }
 
-TEST_P(GregorianDateWeekdayTest, ExampleDatesHaveCorrectWeekday) {
+TEST_P(JulianDateWeekdayTest, ExampleDatesHaveCorrectWeekday) {
   const int weekday = std::get<0>(GetParam());
   const int year = std::get<1>(GetParam());
   const int month = std::get<2>(GetParam());
   const int day = std::get<3>(GetParam());
 
-  GregorianDate gd{year, month, day};
+  JulianDate gd{year, month, day};
   EXPECT_EQ(weekday, gd.week_day());
 }
