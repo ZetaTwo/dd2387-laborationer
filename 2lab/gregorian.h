@@ -8,7 +8,7 @@ namespace lab2 {
 
     // Utility functions
     static inline bool is_leap_year_util(const int year) {
-      return ((year % 400) == 0) || ((year % 4) == 0) && ((year % 100) != 0);
+      return ((year % 400) == 0) || (((year % 4) == 0) && ((year % 100) != 0));
     }
     virtual inline bool is_leap_year(const int year) const override {
       return is_leap_year_util(year);
