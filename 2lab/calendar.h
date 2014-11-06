@@ -11,20 +11,23 @@ namespace lab2 {
 
   template<class D>
   class Calendar {
-    public:
-      Calendar();
-
       typedef std::string Event;
       typedef std::map<const D, std::list<Event> > EventCollection;
 
       D current_date;
       EventCollection events;
 
+    public:
+      Calendar();
+
       template<class D_other>
       Calendar(const Calendar<D_other>& original);
 
       template<class D_other>
       Calendar& operator=(const Calendar<D_other>& other);
+
+      inline const Date& get_date() const { return current_date; }
+      inline const EventCollection& get_events() const { return events; }
 
       bool set_date(int year, int month, int day);
 
@@ -64,8 +67,8 @@ namespace lab2 {
 
   template<class D>
   template<class D_other>
-  Calendar<D>::Calendar(const Calendar<D_other>& original) : current_date(original.current_date), events(EventCollection{}) {
-    for(const typename Calendar<D_other>::EventCollection::value_type date_and_events : original.events) {
+  Calendar<D>::Calendar(const Calendar<D_other>& original) : current_date(original.get_date()), events(EventCollection{}) {
+    for(const std::pair<const D_other, const std::list<std::string>> date_and_events : original.get_events()) {
       events[date_and_events.first] = date_and_events.second;
     }
   }
@@ -73,8 +76,8 @@ namespace lab2 {
   template<class D>
   template<class D_other>
   Calendar<D>& Calendar<D>::operator=(const Calendar<D_other>& original) {
-    current_date = original.current_date;
-    for(const typename Calendar<D_other>::EventCollection::value_type date_and_events : original.events) {
+    current_date = original.get_date();
+    for(const std::pair<const D_other, const std::list<std::string>> date_and_events : original.get_events()) {
       events[date_and_events.first] = date_and_events.second;
     }
     return *this;
