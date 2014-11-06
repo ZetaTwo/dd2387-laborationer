@@ -12,6 +12,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DateTests", "DateTests\Date
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Calendar", "Calendar\Calendar.vcxproj", "{CE2CAA86-2756-4092-818A-E4C31284DFEB}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DateTestKattisJulian", "DateTestKattisJulian\DateTestKattisJulian.vcxproj", "{60BA0625-FBE9-48BC-8008-7D182E65864A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{462640DA-E01B-4A55-B09E-FB39ED059A7C} = {462640DA-E01B-4A55-B09E-FB39ED059A7C}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -30,6 +35,10 @@ Global
 		{CE2CAA86-2756-4092-818A-E4C31284DFEB}.Debug|Win32.Build.0 = Debug|Win32
 		{CE2CAA86-2756-4092-818A-E4C31284DFEB}.Release|Win32.ActiveCfg = Release|Win32
 		{CE2CAA86-2756-4092-818A-E4C31284DFEB}.Release|Win32.Build.0 = Release|Win32
+		{60BA0625-FBE9-48BC-8008-7D182E65864A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{60BA0625-FBE9-48BC-8008-7D182E65864A}.Debug|Win32.Build.0 = Debug|Win32
+		{60BA0625-FBE9-48BC-8008-7D182E65864A}.Release|Win32.ActiveCfg = Release|Win32
+		{60BA0625-FBE9-48BC-8008-7D182E65864A}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

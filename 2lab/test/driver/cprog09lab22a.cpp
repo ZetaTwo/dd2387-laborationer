@@ -15,6 +15,10 @@
 #include <cassert>
 #include <stdexcept>
 
+#if _WIN32
+//#define scanf scanf_s
+#endif
+
 using std::size_t;
 using std::cout;
 using std::endl;
@@ -35,7 +39,11 @@ namespace {
 	 */
 	size_t read_idx_or_die() {
 		size_t ret;
-		if(scanf("%zu", &ret) != 1) {
+#ifdef _MSC_VER
+		if(scanf("%lu", &ret) != 1) {
+#else
+    if (scanf("%zu", &ret) != 1) {
+#endif
 			assert(!"Tried to read idx but failed");
 		}
 		assert(ret < dates.size());
