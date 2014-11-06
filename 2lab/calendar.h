@@ -23,9 +23,6 @@ namespace lab2 {
       template<class D_other>
       Calendar(const Calendar<D_other>& original);
 
-      template<class D_other>
-      Calendar& operator=(const Calendar<D_other>& other);
-
       inline const Date& get_date() const { return current_date; }
       inline const EventCollection& get_events() const { return events; }
 
@@ -71,16 +68,6 @@ namespace lab2 {
     for(const std::pair<const D_other, const std::list<std::string>> date_and_events : original.get_events()) {
       events[date_and_events.first] = date_and_events.second;
     }
-  }
-
-  template<class D>
-  template<class D_other>
-  Calendar<D>& Calendar<D>::operator=(const Calendar<D_other>& original) {
-    current_date = original.get_date();
-    for(const std::pair<const D_other, const std::list<std::string>> date_and_events : original.get_events()) {
-      events[date_and_events.first] = date_and_events.second;
-    }
-    return *this;
   }
 
   template<class D>
