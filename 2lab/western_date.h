@@ -44,7 +44,7 @@ namespace lab2 {
     static const std::vector<int> month_lengths;
 
     virtual inline bool is_leap_year() const = 0;
-    virtual inline bool is_leap_year(int year) const = 0;
+    virtual inline bool is_leap_year(const int year) const = 0;
     static inline bool is_valid_date(const bool leapyear, const int month, const int day) {
       return month <= 12 && month >= 1 && day >= 1 && day <= (month_lengths[month - 1] + (month == 2 && leapyear ? 1 : 0));
     }
