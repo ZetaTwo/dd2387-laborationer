@@ -221,7 +221,13 @@ INSTANTIATE_TEST_CASE_P(GregorianDate, GregorianDateAddYearTest, Values(
   std::tuple<int, int, int, int, int, int, int>{ 1972,  2, 29, 428, 2400,  2, 29 },
 
   std::tuple<int, int, int, int, int, int, int>{ 1972,  2, 29,  -1, 1971,  2, 28 },
-  std::tuple<int, int, int, int, int, int, int>{ 1973,  2, 28,  -1, 1972,  2, 28 }
+  std::tuple<int, int, int, int, int, int, int>{ 1973,  2, 28,  -1, 1972,  2, 28 },
+
+  std::tuple<int, int, int, int, int, int, int>{ 2098, 12, 31,   1, 2099, 12, 31 },
+  std::tuple<int, int, int, int, int, int, int>{ 2099,  1,  1,   1, 2100,  1,  1 },
+
+  std::tuple<int, int, int, int, int, int, int>{ 2398, 12, 31,   1, 2399, 12, 31 },
+  std::tuple<int, int, int, int, int, int, int>{ 2399,  1,  1,   1, 2400,  1,  1 }
 ));
 
 class GregorianDateWeekdayTest : public TestWithParam<std::tuple<int, int, int, int>> {};
