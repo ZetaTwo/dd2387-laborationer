@@ -27,6 +27,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DateTestKattisGregorianJuli
 		{462640DA-E01B-4A55-B09E-FB39ED059A7C} = {462640DA-E01B-4A55-B09E-FB39ED059A7C}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DateTestKattisCalendar", "DateTestKattisCalendar\DateTestKattisCalendar.vcxproj", "{BB5A0F63-80AC-4D36-ABE6-905990EDDD6F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -57,6 +59,10 @@ Global
 		{8D607D69-1BAE-4CC1-AD25-B3690F5D6358}.Debug|Win32.Build.0 = Debug|Win32
 		{8D607D69-1BAE-4CC1-AD25-B3690F5D6358}.Release|Win32.ActiveCfg = Release|Win32
 		{8D607D69-1BAE-4CC1-AD25-B3690F5D6358}.Release|Win32.Build.0 = Release|Win32
+		{BB5A0F63-80AC-4D36-ABE6-905990EDDD6F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BB5A0F63-80AC-4D36-ABE6-905990EDDD6F}.Debug|Win32.Build.0 = Debug|Win32
+		{BB5A0F63-80AC-4D36-ABE6-905990EDDD6F}.Release|Win32.ActiveCfg = Release|Win32
+		{BB5A0F63-80AC-4D36-ABE6-905990EDDD6F}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
