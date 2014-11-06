@@ -85,7 +85,10 @@ INSTANTIATE_TEST_CASE_P(GregorianDate, ValidGregorianDateTest, Values(
   std::tuple<int, int, int>{ 2014, 11,  4 },
   std::tuple<int, int, int>{ 2014, 11, 30 },
   std::tuple<int, int, int>{ 2014, 12,  1 },
-  std::tuple<int, int, int>{ 2014, 12, 31 }
+  std::tuple<int, int, int>{ 2014, 12, 31 },
+
+  std::tuple<int, int, int>{ 2292, 12, 31 },
+  std::tuple<int, int, int>{ 2293,  1,  1 }
 ));
 
 class InvalidGregorianDateTest : public TestWithParam<std::tuple<int, int, int>> {};
