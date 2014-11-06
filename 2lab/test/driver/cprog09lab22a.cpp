@@ -15,10 +15,6 @@
 #include <cassert>
 #include <stdexcept>
 
-#if _WIN32
-//#define scanf scanf_s
-#endif
-
 using std::size_t;
 using std::cout;
 using std::endl;

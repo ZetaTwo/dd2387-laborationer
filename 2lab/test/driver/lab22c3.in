@@ -1,0 +1,7 @@
+julian 2391 12 7
+gregoriancopy 0
+add_year 1
+mod_julian_day 1
+days_this_month 1
+d++ 1
+d+= 1 7
