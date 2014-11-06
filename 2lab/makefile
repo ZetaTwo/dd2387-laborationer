@@ -27,6 +27,8 @@ clean:
 run_test: build/run_test
 	$< $(GTEST_FLAGS)
 
+run_drivers: run_driver_lab22a run_driver_lab22b run_driver_lab22c
+
 valgrind_test: build/run_test
 	valgrind $< $(GTEST_FLAGS)
 
@@ -54,3 +56,10 @@ build/test/datetest: test/datetest.cpp $(DATE_OBJECTS) build/kurskatalog/kattist
 
 build/test/test_calendar: test/test_calendar.cpp calendar.h $(DATE_HEADERS) $(DATE_OBJECTS) $(KATTISTIME) build/kurskatalog/kattistime.o
 	$(MAKE_EXECUTABLE)
+
+build/test/driver/%: test/driver/cprog09%.cpp $(DATE_HEADERS) $(DATE_OBJECTS) $(KATTISTIME) build/kurskatalog/kattistime.o
+	$(MAKE_EXECUTABLE)
+
+run_driver_%: build/test/driver/% test/driver/%.in test/driver/%.out
+	$< < test/driver/$*.in > build/test/driver/$*.out
+	diff -u test/driver/$*.out build/test/driver/$*.out
