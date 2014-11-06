@@ -22,12 +22,12 @@ namespace lab2 {
     virtual int day()             const override;
 
     virtual inline int week_day() const override {
-      return ((WEEKDAY_OF_MOD_JULIAN_DAY + mod_julian_day()) % days_per_week()) + 1;
+      return ((((WEEKDAY_OF_MOD_JULIAN_DAY + mod_julian_day()) % days_per_week()) + days_per_week()) % days_per_week()) + 1;
     }
 
     virtual inline int days_this_month() const override {
       const int m = month();
-      return  month_lengths[m - 1] + ((m == 2) ? 1 : 0);
+      return  month_lengths[m - 1] + ((m == 2 && is_leap_year()) ? 1 : 0);
     }
 
     virtual inline std::string week_day_name() const override { return day_names[week_day() - 1]; }
