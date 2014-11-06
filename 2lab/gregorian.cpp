@@ -64,7 +64,7 @@ namespace lab2 {
     const int cb1 = dp1 / D12;
     const int db1 = dp1 % D12;
 
-    return DateDecomposition{400 * c400 + 100 * (cp100 + cb100) + 4 * (cp4 + cb4) + cp1 + cb1, db1};
+    return DateDecomposition{almost_year + cb1, db1};
   }
 
 }
