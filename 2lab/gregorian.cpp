@@ -47,8 +47,8 @@ namespace lab2 {
 
     const int cp100 = std::min(d400 / (D100 + 1), 1);
     const int dp100 = d400 - cp100 * (D100 + 1);
-    const int cb100 = dp100 / D100;
-    const int db100 = dp100 % D100;
+    const int cb100 = cp100 * dp100 / D100;
+    const int db100 = dp100 - cb100 * D100;
 
     const int cp4 = cp100 * std::min(db100 / (D4 - 1), 1);
     const int dp4 = db100 - cp4 * (D4 - 1);
