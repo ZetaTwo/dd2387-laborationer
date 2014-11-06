@@ -57,8 +57,12 @@ namespace lab2 {
 
     const int cp1 = (1 - cp100 * (1 - cp4)) * std::min(db4 / (D1 + 1), 1);
     const int dp1 =  db4 - cp1 * (D1 + 1);
-    const int cb1 = dp1 / D1;
-    const int db1 = dp1 % D1;
+
+    const int almost_year = 400 * c400 + 100 * (cp100 + cb100) + 4 * (cp4 + cb4) + cp1;
+    const int D12 = D1 + (is_leap_year_util(almost_year)?1:0);
+
+    const int cb1 = dp1 / D12;
+    const int db1 = dp1 % D12;
 
     return DateDecomposition{400 * c400 + 100 * (cp100 + cb100) + 4 * (cp4 + cb4) + cp1 + cb1, db1};
   }
