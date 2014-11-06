@@ -84,7 +84,7 @@ namespace lab2 {
     const int year_after = year() + (month_after == 1 ? 1 : 0);
     const int current_day = day();
 
-    if(is_valid_date(year_after, month_after, current_day, is_leap_year())) {
+    if(is_valid_date(year_after, month_after, current_day, is_leap_year(year_after))) {
       this->set(ymd_to_mjd_offset(year_after, month_after, current_day));
     } else {
       *this += 30;
@@ -99,7 +99,7 @@ namespace lab2 {
     const int year_after = year() - (month_after == 12 ? 1 : 0);
     const int current_day = day();
 
-    if (is_valid_date(year_after, month_after, current_day, is_leap_year())) {
+    if (is_valid_date(year_after, month_after, current_day, is_leap_year(year_after))) {
       this->set(ymd_to_mjd_offset(year_after, month_after, current_day));
     } else {
       *this -= 30;
