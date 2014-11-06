@@ -111,7 +111,7 @@ namespace lab2 {
   WesternDate& WesternDate::add_year(int years) {
     const int year_after = year() + years;
 
-    if (is_valid_date(year_after, month(), day(), is_leap_year())) {
+    if (is_valid_date(year_after, month(), day(), is_leap_year(year_after))) {
       this->set(ymd_to_mjd_offset(year_after, month(), day()));
     } else {
       this->set(ymd_to_mjd_offset(year_after, month(), month_lengths[1]));

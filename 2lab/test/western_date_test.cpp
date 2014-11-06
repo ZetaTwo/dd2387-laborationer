@@ -58,6 +58,7 @@ public:
   virtual std::string month_name()    const override { return ""; }
 
   virtual bool is_leap_year() const override { return false; }
+  virtual bool is_leap_year(int) const override { return false; }
   virtual int ymd_to_mjd_offset(int, int, int) const override { return 0; }
   virtual DateDecomposition getDecomposition() const { return DateDecomposition{0, 0}; }
 };
