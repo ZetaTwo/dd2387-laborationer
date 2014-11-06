@@ -323,6 +323,8 @@ TEST_P(ValidGregorianDateTest, OperatorAssignmentSetsSelfEqualToArgument) {
   const GregorianDate gda{year, month, day};
   const Date& da = gda;
 
+  set_k_time(0);
+
   GregorianDate gdb{};
   Date& db = gdb;
 
@@ -351,6 +353,8 @@ TEST_P(ValidGregorianDateTest, OperatorAssignmentDoesNotModifyOriginal) {
   ASSERT_EQ(year, da.year());
   ASSERT_EQ(month, da.month());
   ASSERT_EQ(day, da.day());
+
+  set_k_time(0);
 
   GregorianDate gdb{};
   Date& db = gdb;

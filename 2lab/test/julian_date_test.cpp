@@ -319,6 +319,8 @@ TEST_P(ValidJulianDateTest, OperatorAssignmentSetsSelfEqualToArgument) {
   const JulianDate gda{year, month, day};
   const Date& da = gda;
 
+  set_k_time(0);
+
   JulianDate gdb{};
   Date& db = gdb;
 
@@ -347,6 +349,8 @@ TEST_P(ValidJulianDateTest, OperatorAssignmentDoesNotModifyOriginal) {
   ASSERT_EQ(year, da.year());
   ASSERT_EQ(month, da.month());
   ASSERT_EQ(day, da.day());
+
+  set_k_time(0);
 
   JulianDate gdb{};
   Date& db = gdb;
