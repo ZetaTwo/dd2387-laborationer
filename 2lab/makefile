@@ -17,6 +17,8 @@ TEST_OBJECTS=$(patsubst %.cpp,build/%.o,$(wildcard test/*_test.cpp))
 
 default: run_test run_given_test run_calendar_test
 
+date_objects: $(DATE_OBJECTS)
+
 valgrind: valgrind_test valgrind_given_test
 
 clean:
