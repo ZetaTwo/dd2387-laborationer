@@ -2,8 +2,9 @@
 #include <string>
 #include <ostream>
 #include <map>
-#include <set>
+#include <list>
 #include <stdexcept>
+#include <algorithm>
 #include "date.h"
 
 namespace lab2 {
@@ -18,7 +19,7 @@ namespace lab2 {
       Calendar();
 
       typedef std::string Event;
-      typedef std::map<const D, std::set<Event>> EventCollection;
+      typedef std::map<const D, std::list<Event> > EventCollection;
 
       D current_date;
       EventCollection events;
@@ -80,7 +81,7 @@ namespace lab2 {
     if(year == UNSPECIFIED_EVENT_DATE_PART) {
       year = current_date.year();
     }
-    return D{year, month, day};
+    return D{ year, month, day };
   }
 
   template<class D>
@@ -95,14 +96,37 @@ namespace lab2 {
 
   template<class D>
   bool Calendar<D>::add_event(const Event& event, const int day, const int month, const int year) {
-    const D target_date = fill_blanks_in_date(day, month, year);
-    return events[target_date].insert(event).second;
+    try {
+      const D target_date = fill_blanks_in_date(day, month, year);
+      std::list<Event>::iterator it = std::find(events[target_date].begin(), events[target_date].end(), event);
+      if (it == events[target_date].end()) {
+        events[target_date].push_back(event);
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+    catch (std::out_of_range e) {
+      return false;
+    }
   }
 
   template<class D>
   bool Calendar<D>::remove_event(const Event& event, const int day, const int month, const int year) {
-    const D target_date = fill_blanks_in_date(day, month, year);
-    return events[target_date].erase(event) > 0;
+    try {
+      const D target_date = fill_blanks_in_date(day, month, year);
+     
+      std::list<Event>::iterator it = std::find(events[target_date].begin(), events[target_date].end(), event);
+      if (it == events[target_date].end()) {
+        return false;
+      }
+      events[target_date].erase(it);
+      return true;
+    }
+    catch (std::out_of_range e) {
+      return false;
+    }
   }
 
   template<class D>
@@ -110,6 +134,9 @@ namespace lab2 {
     for(typename EventCollection::const_iterator it = events.lower_bound(current_date);
         it != events.end();
         ++it) {
+      if (it->first <= current_date) {
+        continue;
+      }
       for(const Event event : it->second) {
         os << it->first << " : " << event << std::endl;
       }
@@ -119,7 +146,7 @@ namespace lab2 {
 
   template<class D>
   std::ostream& operator<<(std::ostream& os, const Calendar<D>& cal) {
-    return cal.printTo(os);;
+    return cal.printTo(os);
   }
 
 }
