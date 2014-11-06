@@ -15,7 +15,7 @@ namespace lab2 {
   GregorianDate::GregorianDate(const Date& original) : WesternDate(original.mod_julian_day()) {}
 
   int GregorianDate::ymd_to_mjd_offset(const int year, const int month, const int day) const {
-    if(!is_valid_date(year, month, day)) {
+    if(!is_valid_date(year, month, day, is_leap_year(year))) {
       std::stringstream ss;
       ss << "Invalid Gregorian date: " << year << "-" << month << "-" << day;
       throw std::out_of_range(ss.str());

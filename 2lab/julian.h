@@ -7,7 +7,8 @@ namespace lab2 {
     static const int JULIAN_DAY_ZERO_MJD_OFFSET = -678943; // MJD number of Julian 0000-01-01
 
     // Utility functions
-    virtual inline bool is_leap_year(int year) const override { return year % 4 == 0; }
+    virtual inline bool is_leap_year() const override { return is_leap_year(year()); }
+    static inline bool is_leap_year(int year) { return year % 4 == 0; }
     virtual int ymd_to_mjd_offset(int year, int month, int day) const override;
     virtual DateDecomposition getDecomposition() const override;
 

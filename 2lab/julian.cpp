@@ -17,7 +17,7 @@ namespace lab2 {
   JulianDate::JulianDate(const Date* const original) : JulianDate(*original) {}
 
   int JulianDate::ymd_to_mjd_offset(const int year, const int month, const int day) const {
-    if(!is_valid_date(year, month, day)) {
+    if (!is_valid_date(year, month, day, is_leap_year(year))) {
       std::stringstream ss;
       ss << "Invalid Julian date: " << year << "-" << month << "-" << day;
       throw std::out_of_range(ss.str());

@@ -43,14 +43,13 @@ namespace lab2 {
     static const std::vector<std::string> month_names;
     static const std::vector<int> month_lengths;
 
-    inline bool is_leap_year() const { return is_leap_year(year()); }
-    inline bool is_valid_date(int year, int month, int day) const {
-      return month <= 12 && month >= 1 && day >= 1 && day <= (month_lengths[month-1] + (month == 2 && is_leap_year(year) ? 1 : 0));
+    virtual inline bool is_leap_year() const = 0;
+    static inline bool is_valid_date(int year, int month, int day, bool leapyear) {
+      return month <= 12 && month >= 1 && day >= 1 && day <= (month_lengths[month - 1] + (month == 2 && leapyear ? 1 : 0));
     }
 
     int utc_seconds_to_mjd_offset(time_t utc_seconds) const;
 
-    virtual bool is_leap_year(int year) const = 0;
     virtual int ymd_to_mjd_offset(int year, int month, int day) const = 0;
 
     WesternDate& add_one_month();
