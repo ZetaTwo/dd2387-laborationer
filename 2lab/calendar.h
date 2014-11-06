@@ -11,10 +11,6 @@ namespace lab2 {
 
   template<class D>
   class Calendar {
-    private:
-      static const int UNSPECIFIED_EVENT_DATE_PART = -1;
-      D fill_blanks_in_date(int day, int month, int year) const;
-
     public:
       Calendar();
 
@@ -32,14 +28,28 @@ namespace lab2 {
 
       bool set_date(int year, int month, int day);
 
-      bool add_event(const Event& event,
-        int day   = UNSPECIFIED_EVENT_DATE_PART,
-        int month = UNSPECIFIED_EVENT_DATE_PART,
-        int year  = UNSPECIFIED_EVENT_DATE_PART);
-      bool remove_event(const Event& event,
-        int day   = UNSPECIFIED_EVENT_DATE_PART,
-        int month = UNSPECIFIED_EVENT_DATE_PART,
-        int year  = UNSPECIFIED_EVENT_DATE_PART);
+      bool add_event(const Event& event, int day, int month, int year);
+      inline bool add_event(const Event& event, const int day, const int month) {
+        return add_event(event, day, month, current_date.year());
+      }
+      inline bool add_event(const Event& event, const int day) {
+        return add_event(event, day, current_date.month());
+      }
+      inline bool add_event(const Event& event) {
+        return add_event(event, current_date.day());
+      }
+
+      bool remove_event(const Event& event, int day, int month, int year);
+      inline bool remove_event(const Event& event, const int day, const int month) {
+        return remove_event(event, day, month, current_date.year());
+      }
+      inline bool remove_event(const Event& event, const int day) {
+        return remove_event(event, day, current_date.month());
+      }
+      inline bool remove_event(const Event& event) {
+        return remove_event(event, current_date.day());
+      }
+
 
       std::ostream& printTo(std::ostream& os) const;
   };
@@ -71,20 +81,6 @@ namespace lab2 {
   }
 
   template<class D>
-  D Calendar<D>::fill_blanks_in_date(int day, int month, int year) const {
-    if(day == UNSPECIFIED_EVENT_DATE_PART) {
-      day = current_date.day();
-    }
-    if(month == UNSPECIFIED_EVENT_DATE_PART) {
-      month = current_date.month();
-    }
-    if(year == UNSPECIFIED_EVENT_DATE_PART) {
-      year = current_date.year();
-    }
-    return D{ year, month, day };
-  }
-
-  template<class D>
   bool Calendar<D>::set_date(const int year, const int month, const int day) {
     try {
       current_date = D{year, month, day};
@@ -97,7 +93,7 @@ namespace lab2 {
   template<class D>
   bool Calendar<D>::add_event(const Event& event, const int day, const int month, const int year) {
     try {
-      const D target_date = fill_blanks_in_date(day, month, year);
+      const D target_date{year, month, day};
       std::list<Event>::iterator it = std::find(events[target_date].begin(), events[target_date].end(), event);
       if (it == events[target_date].end()) {
         events[target_date].push_back(event);
@@ -115,7 +111,7 @@ namespace lab2 {
   template<class D>
   bool Calendar<D>::remove_event(const Event& event, const int day, const int month, const int year) {
     try {
-      const D target_date = fill_blanks_in_date(day, month, year);
+      const D target_date{year, month, day};
      
       std::list<Event>::iterator it = std::find(events[target_date].begin(), events[target_date].end(), event);
       if (it == events[target_date].end()) {
