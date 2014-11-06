@@ -50,12 +50,20 @@ namespace lab2 {
         return remove_event(event, current_date.day());
       }
 
-
-      std::ostream& printTo(std::ostream& os) const;
+      friend std::ostream& operator<<(std::ostream& os, const Calendar& cal) {
+        for(typename EventCollection::const_iterator it = cal.get_events().lower_bound(cal.get_date());
+            it != cal.get_events().end();
+            ++it) {
+          if (it->first <= cal.get_date()) {
+            continue;
+          }
+          for(const Event event : it->second) {
+            os << it->first << " : " << event << std::endl;
+          }
+        }
+        return os;
+      }
   };
-
-  template<class D>
-  std::ostream& operator<<(std::ostream& os, const Calendar<D>& cal);
 
   // Implementations
 
@@ -113,26 +121,6 @@ namespace lab2 {
     catch (std::out_of_range e) {
       return false;
     }
-  }
-
-  template<class D>
-  std::ostream& Calendar<D>::printTo(std::ostream& os) const {
-    for(typename EventCollection::const_iterator it = events.lower_bound(current_date);
-        it != events.end();
-        ++it) {
-      if (it->first <= current_date) {
-        continue;
-      }
-      for(const Event event : it->second) {
-        os << it->first << " : " << event << std::endl;
-      }
-    }
-    return os;
-  }
-
-  template<class D>
-  std::ostream& operator<<(std::ostream& os, const Calendar<D>& cal) {
-    return cal.printTo(os);
   }
 
 }
