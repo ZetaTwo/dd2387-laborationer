@@ -66,7 +66,7 @@ namespace lab2 {
     return day + 1;
   }
 
-  WesternDate& WesternDate::add_month(int months) {
+  WesternDate& WesternDate::add_month(const int months) {
     if(months > 0) {
       for(int i = 0; i < months; ++i) {
         add_one_month();
@@ -108,7 +108,7 @@ namespace lab2 {
     return *this;
   }
 
-  WesternDate& WesternDate::add_year(int years) {
+  WesternDate& WesternDate::add_year(const int years) {
     const int year_after = year() + years;
 
     if (is_valid_date(year_after, month(), day(), is_leap_year(year_after))) {

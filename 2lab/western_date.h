@@ -45,7 +45,7 @@ namespace lab2 {
 
     virtual inline bool is_leap_year() const = 0;
     virtual inline bool is_leap_year(int year) const = 0;
-    static inline bool is_valid_date(int year, int month, int day, bool leapyear) {
+    static inline bool is_valid_date(const int year, const int month, const int day, const bool leapyear) {
       return month <= 12 && month >= 1 && day >= 1 && day <= (month_lengths[month - 1] + (month == 2 && leapyear ? 1 : 0));
     }
 

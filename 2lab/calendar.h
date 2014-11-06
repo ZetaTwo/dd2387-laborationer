@@ -94,13 +94,13 @@ namespace lab2 {
   }
 
   template<class D>
-  bool Calendar<D>::add_event(const Event& event, int day, int month, int year) {
+  bool Calendar<D>::add_event(const Event& event, const int day, const int month, const int year) {
     const D target_date = fill_blanks_in_date(day, month, year);
     return events[target_date].insert(event).second;
   }
 
   template<class D>
-  bool Calendar<D>::remove_event(const Event& event, int day, int month, int year) {
+  bool Calendar<D>::remove_event(const Event& event, const int day, const int month, const int year) {
     const D target_date = fill_blanks_in_date(day, month, year);
     return events[target_date].erase(event) > 0;
   }
