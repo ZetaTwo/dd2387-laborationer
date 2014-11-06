@@ -49,7 +49,7 @@ namespace lab2 {
       return month <= 12 && month >= 1 && day >= 1 && day <= (month_lengths[month - 1] + (month == 2 && leapyear ? 1 : 0));
     }
 
-    int utc_seconds_to_mjd_offset(time_t utc_seconds) const;
+    static int utc_seconds_to_mjd_offset(time_t utc_seconds);
 
     virtual int ymd_to_mjd_offset(int year, int month, int day) const = 0;
 
