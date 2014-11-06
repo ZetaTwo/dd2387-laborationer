@@ -128,7 +128,7 @@ UIntVector::UIntVector(const UIntVector& other) : count(other.count), max_size(o
 
 UIntVector::UIntVector(const std::initializer_list<unsigned int>& list) : count(list.size()), max_size(1 << static_cast<int>(ceil(log2(count)))), data(new unsigned int[max_size]) {
   size_t i;
-  typename std::initializer_list<unsigned int>::iterator item;
+  std::initializer_list<unsigned int>::iterator item;
   for(i = 0, item = list.begin(); item != list.end(); ++i, ++item) {
     data[i] = *item;
   }
@@ -219,7 +219,7 @@ UIntVector& UIntVector::operator=(const std::initializer_list<unsigned int>& lis
 
   count = list.size();
   size_t i;
-  typename std::initializer_list<unsigned int>::iterator item;
+  std::initializer_list<unsigned int>::iterator item;
   for(i = 0, item = list.begin(); item != list.end(); ++i, ++item) {
     data[i] = *item;
   }
@@ -342,17 +342,17 @@ void UIntVector::increase_memory(size_t num_elements, bool copy) {
 }
 
 
-typename UIntVector::iterator UIntVector::begin() {
+UIntVector::iterator UIntVector::begin() {
   return iterator(&data[0]);
 }
 
 
-typename UIntVector::iterator UIntVector::end() {
+UIntVector::iterator UIntVector::end() {
   return iterator(&data[count]);
 }
 
 
-typename UIntVector::iterator UIntVector::find(unsigned int value) {
+UIntVector::iterator UIntVector::find(unsigned int value) {
   UIntVector::iterator el = begin();
   for (; el != end(); el++) {
     if (*el == value) {
@@ -364,27 +364,27 @@ typename UIntVector::iterator UIntVector::find(unsigned int value) {
 }
 
 
-typename UIntVector::reverse_iterator UIntVector::rbegin() {
+UIntVector::reverse_iterator UIntVector::rbegin() {
   return reverse_iterator(&data[count]);
 }
 
 
-typename UIntVector::reverse_iterator UIntVector::rend() {
+UIntVector::reverse_iterator UIntVector::rend() {
   return reverse_iterator(&data[0]);
 }
 
 
-typename UIntVector::const_iterator UIntVector::begin() const {
+UIntVector::const_iterator UIntVector::begin() const {
   return const_iterator(&data[0]);
 }
 
 
-typename UIntVector::const_iterator UIntVector::end() const {
+UIntVector::const_iterator UIntVector::end() const {
   return const_iterator(&data[count]);
 }
 
 
-typename UIntVector::const_iterator UIntVector::find(unsigned int value) const {
+UIntVector::const_iterator UIntVector::find(unsigned int value) const {
   UIntVector::const_iterator el = begin();
   for (; el != end(); el++) {
     if (*el == value) {
@@ -396,12 +396,12 @@ typename UIntVector::const_iterator UIntVector::find(unsigned int value) const {
 }
 
 
-typename UIntVector::const_reverse_iterator UIntVector::rbegin() const {
+UIntVector::const_reverse_iterator UIntVector::rbegin() const {
   return const_reverse_iterator(&data[count]);
 }
 
 
-typename UIntVector::const_reverse_iterator UIntVector::rend() const {
+UIntVector::const_reverse_iterator UIntVector::rend() const {
   return const_reverse_iterator(&data[0]);
 }
 
