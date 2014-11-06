@@ -110,6 +110,18 @@ INSTANTIATE_TEST_CASE_P(GregorianDate, InvalidGregorianDateTest, Values(
   std::tuple<int, int, int>{ 2014, 12, 32 }
 ));
 
+class GregorianDateAddDaysTest : public TestWithParam<std::tuple<int, int, int, int, int, int, int>> {};
+INSTANTIATE_TEST_CASE_P(GregorianDate, GregorianDateAddDaysTest, Values(
+  //                                               y0, m0, d0, N,   y1, m1, d1
+  std::tuple<int, int, int, int, int, int, int>{    0,  1,  1, 1,    0,  1,  2 },
+
+  std::tuple<int, int, int, int, int, int, int>{ 1858, 11, 30, 1, 1858, 12,  1 },
+  std::tuple<int, int, int, int, int, int, int>{ 1858, 12, 31, 1, 1859,  1,  1 },
+
+  std::tuple<int, int, int, int, int, int, int>{ 2392, 12, 24, 7, 2392, 12, 31 },
+  std::tuple<int, int, int, int, int, int, int>{ 2392, 12, 24, 8, 2393,  1,  1 }
+));
+
 class GregorianDateAddMonthTest : public TestWithParam<std::tuple<int, int, int, int, int, int, int>> {};
 INSTANTIATE_TEST_CASE_P(GregorianDate, GregorianDateAddMonthTest, Values(
   //                                               y0, m0, d0, N,   y1, m1, d1
@@ -373,6 +385,30 @@ TEST_P(ValidGregorianDateTest, OperatorAssignmentDoesNotModifyOriginal) {
   EXPECT_EQ(year, da.year());
   EXPECT_EQ(month, da.month());
   EXPECT_EQ(day, da.day());
+}
+
+TEST_P(GregorianDateAddDaysTest, OperatorPlusAssignmentAddsArgumentDays) {
+  const int year_before = std::get<0>(GetParam());
+  const int month_before = std::get<1>(GetParam());
+  const int day_before = std::get<2>(GetParam());
+
+  const int num_days = std::get<3>(GetParam());
+
+  const int year_after = std::get<4>(GetParam());
+  const int month_after = std::get<5>(GetParam());
+  const int day_after = std::get<6>(GetParam());
+
+  GregorianDate gd{year_before, month_before, day_before};
+
+  ASSERT_EQ(year_before, gd.year());
+  ASSERT_EQ(month_before, gd.month());
+  ASSERT_EQ(day_before, gd.day());
+
+  gd += num_days;
+
+  EXPECT_EQ(year_after, gd.year());
+  EXPECT_EQ(month_after, gd.month());
+  EXPECT_EQ(day_after, gd.day());
 }
 
 TEST_P(GregorianDateAddMonthTest, AddMonthAddsOneMonthIfPossibleOtherwiseAdds30Days) {
