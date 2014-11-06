@@ -1,7 +1,6 @@
 #include <cmath>
 #include <stdexcept>
 #include <sstream>
-#include <algorithm>
 
 #include "kattistime.h"
 #include "julian.h"
