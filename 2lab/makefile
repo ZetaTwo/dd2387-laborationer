@@ -57,7 +57,7 @@ build/test/datetest: test/datetest.cpp $(DATE_OBJECTS) build/kattistime.o $(DATE
 build/test/test_calendar: test/test_calendar.cpp calendar.h $(DATE_HEADERS) $(DATE_OBJECTS) $(KATTISTIME) build/kattistime.o
 	$(MAKE_EXECUTABLE)
 
-build/test/driver/%: test/driver/cprog09%.cpp $(DATE_HEADERS) calendar.h $(DATE_OBJECTS) $(KATTISTIME) build/kattistime.o
+build/test/driver/%: cprog09%.cpp $(DATE_HEADERS) calendar.h $(DATE_OBJECTS) $(KATTISTIME) build/kattistime.o
 	$(MAKE_EXECUTABLE)
 
 run_driver_%: build/test/driver/% test/driver/%.in test/driver/%.out
