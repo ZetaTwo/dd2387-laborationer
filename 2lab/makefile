@@ -48,7 +48,10 @@ valgrind_given_test: build/test/datetest
 build/%.o: %.cpp $(DATE_HEADERS) $(KATTISTIME)
 	$(MAKE_OBJECT)
 
-build/run_test: test_runner.cpp $(TEST_OBJECTS) $(DATE_OBJECTS) build/kattistime.o
+build/test/test_calendar.o: test/test_calendar.cpp calendar.h $(DATE_HEADERS)
+	$(MAKE_OBJECT)
+
+build/run_test: test_runner.cpp $(DATE_HEADERS) calendar.h $(KATTISTIME) $(TEST_OBJECTS) $(DATE_OBJECTS) build/kurskatalog/kattistime.o
 	$(MAKE_EXECUTABLE) -lgtest
 
 build/test/datetest: test/datetest.cpp $(DATE_OBJECTS) build/kattistime.o $(DATE_HEADERS) $(KATTISTIME)
