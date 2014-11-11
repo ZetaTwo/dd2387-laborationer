@@ -6,6 +6,7 @@
 
 using ::testing::TestWithParam;
 using ::testing::Values;
+using std::get;
 
 using lab2::Calendar;
 using lab2::Gregorian;
@@ -201,4 +202,30 @@ TEST(Calendar, RelatedEventIsMovedWhenBaseEventIsMoved) {
   EXPECT_EQ(1, cal.get_events().at(moved_related_date).size());
   EXPECT_EQ(base_event, cal.get_events().at(moved_base_date).front());
   EXPECT_EQ(related_event, cal.get_events().at(moved_related_date).front());
+}
+
+class BirthdayTest : public TestWithParam<std::tuple<int, int, int, int, int, int, int>> {};
+INSTANTIATE_TEST_CASE_P(Calendar, BirthdayTest, Values(
+  // birthday y, m, d, test day y, m, d, expected age
+  std::tuple<int, int, int, int, int, int, int>{ 2000,  2, 29, 2000,  2, 29,  0 },
+  std::tuple<int, int, int, int, int, int, int>{ 2000,  2, 29, 2000,  3,  1,  0 },
+  std::tuple<int, int, int, int, int, int, int>{ 2000,  2, 29, 2004,  2, 29,  4 },
+  std::tuple<int, int, int, int, int, int, int>{ 2000,  2, 29, 2005,  2, 28,  5 },
+  std::tuple<int, int, int, int, int, int, int>{ 1995, 10, 30, 2027, 10, 29, 31 },
+  std::tuple<int, int, int, int, int, int, int>{ 1995, 10, 30, 2027, 10, 30, 32 },
+  std::tuple<int, int, int, int, int, int, int>{ 1995, 10, 30, 2027, 12, 24, 32 }
+));
+
+TEST_P(BirthdayTest, BirthdaysAreComputedCorrectly) {
+  const Gregorian birthday { get<0>(GetParam()), get<1>(GetParam()), get<2>(GetParam()) };
+  const Gregorian test_day { get<3>(GetParam()), get<4>(GetParam()), get<5>(GetParam()) };
+  const int expected_age = get<6>(GetParam());
+  const std::string name = "Alexander";
+
+  set_k_time(0);
+  Calendar<Gregorian> cal;
+
+  cal.add_birthday(name, birthday);
+
+  EXPECT_EQ(expected_age, cal.compute_age(name, test_day));
 }
