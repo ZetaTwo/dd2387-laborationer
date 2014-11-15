@@ -72,6 +72,7 @@ namespace lab2 {
 
       inline const Date& get_date() const { return current_date; }
       inline const EventCollection& get_static_events() const { return events; }
+      inline const std::list<Event> get_events(const Date& d) const { return events.at(d); }
 
       bool set_date(int year, int month, int day);
 
