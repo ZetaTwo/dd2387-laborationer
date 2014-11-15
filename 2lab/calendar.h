@@ -24,7 +24,7 @@ namespace lab2 {
       Calendar(const Calendar<D_other>& original);
 
       inline const Date& get_date() const { return current_date; }
-      inline const EventCollection& get_events() const { return events; }
+      inline const EventCollection& get_static_events() const { return events; }
 
       bool set_date(int year, int month, int day);
 
@@ -56,8 +56,8 @@ namespace lab2 {
       bool compute_age(const std::string& name, const Date& target_day);
 
       friend std::ostream& operator<<(std::ostream& os, const Calendar& cal) {
-        for(typename EventCollection::const_iterator it = cal.get_events().lower_bound(cal.get_date());
-            it != cal.get_events().end();
+        for(typename EventCollection::const_iterator it = cal.get_static_events().lower_bound(cal.get_date());
+            it != cal.get_static_events().end();
             ++it) {
           if (it->first <= cal.get_date()) {
             continue;
@@ -78,7 +78,7 @@ namespace lab2 {
   template<class D>
   template<class D_other>
   Calendar<D>::Calendar(const Calendar<D_other>& original) : current_date(original.get_date()), events(EventCollection{}) {
-    for(const std::pair<const D_other, const std::list<std::string>> date_and_events : original.get_events()) {
+    for(const std::pair<const D_other, const std::list<std::string>> date_and_events : original.get_static_events()) {
       events[date_and_events.first] = date_and_events.second;
     }
   }
