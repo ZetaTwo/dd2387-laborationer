@@ -5,6 +5,7 @@
 #include <list>
 #include <stdexcept>
 #include <algorithm>
+#include <iterator>
 #include "date.h"
 
 namespace lab2 {
@@ -46,8 +47,22 @@ namespace lab2 {
 
           ~RecurringEvent();
 
-          std::vector<D> get_occurrences(const Date& from, const Date& to) const;
+          class const_iterator : std::iterator<std::forward_iterator_tag, const D> {
+              D current_date;
+            public:
+              const_iterator();
+              const_iterator& operator++();
+              const_iterator  operator++(int);
+              bool operator==(const const_iterator& rhs) const;
+              bool operator!=(const const_iterator& rhs) const;
+              bool operator> (const const_iterator& rhs) const;
+              bool operator< (const const_iterator& rhs) const;
+              const Date& operator*()  const;
+              const Date* operator->() const;
+          };
 
+          const_iterator begin() const;
+          const_iterator end()   const;
       };
 
       Calendar();
