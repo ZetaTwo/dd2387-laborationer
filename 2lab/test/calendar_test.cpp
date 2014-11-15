@@ -11,6 +11,8 @@ using std::get;
 using lab2::Calendar;
 using lab2::Gregorian;
 using std::string;
+typedef lab2::Calendar<Gregorian>::RecurringEvent RecurringEvent;
+typedef RecurringEvent::RecurringType RecurringType;
 
 TEST(Calendar, MoveEventMovesEventFromOriginDateToTargetDate) {
   const Gregorian from { 2014, 11, 7 };
@@ -228,4 +230,87 @@ TEST_P(BirthdayTest, BirthdaysAreComputedCorrectly) {
   cal.add_birthday(name, birthday);
 
   EXPECT_EQ(expected_age, cal.compute_age(name, test_day));
+}
+
+TEST(Calendar, RecurringEventCanRecurDailyForever) {
+  const Gregorian begin_date{2000, 12, 24};
+  const string event = "Vattna blommorna";
+  const unsigned int period_multiplier = 3;
+
+  set_k_time(0);
+  Calendar<Gregorian> cal;
+
+  cal.add_recurring_event(RecurringEvent{event, begin_date, RecurringType::DAILY, period_multiplier});
+
+  for(Gregorian d{begin_date}; d.year() < 4000; d += period_multiplier) {
+    const std::list<string> day_events = cal.get_events(d);
+    EXPECT_EQ(1, day_events.size());
+    EXPECT_EQ(event, day_events.front());
+  }
+}
+
+TEST(Calendar, RecurringEventCanRecurWeeklyForever) {
+  const Gregorian begin_date{2000, 12, 24};
+  const string event = "Fäktning";
+  const unsigned int period_multiplier = 2;
+
+  set_k_time(0);
+  Calendar<Gregorian> cal;
+
+  cal.add_recurring_event(RecurringEvent{event, begin_date, RecurringType::WEEKLY, period_multiplier});
+
+  for(Gregorian d{begin_date}; d.year() < 4000; d += 7 * period_multiplier) {
+    const std::list<string> day_events = cal.get_events(d);
+    EXPECT_EQ(1, day_events.size());
+    EXPECT_EQ(event, day_events.front());
+  }
+}
+
+TEST(Calendar, RecurringEventCanRecurMonthlyForever) {
+  const Gregorian begin_date{2000, 12, 24};
+  const string event = "Kvartalsrapport";
+  const unsigned int period_multiplier = 3;
+
+  set_k_time(0);
+  Calendar<Gregorian> cal;
+
+  cal.add_recurring_event(RecurringEvent{event, begin_date, RecurringType::MONTHLY, period_multiplier});
+
+  for(Gregorian d{begin_date}; d.year() < 4000; d.add_month(period_multiplier)) {
+    const std::list<string> day_events = cal.get_events(d);
+    EXPECT_EQ(1, day_events.size());
+    EXPECT_EQ(event, day_events.front());
+  }
+}
+
+TEST(Calendar, RecurringEventCanRecurYearlyForever) {
+  const Gregorian begin_date{2000, 12, 24};
+  const string event = "Julafton";
+  const unsigned int period_multiplier = 5;
+
+  set_k_time(0);
+  Calendar<Gregorian> cal;
+
+  cal.add_recurring_event(RecurringEvent{event, begin_date, RecurringType::YEARLY, period_multiplier});
+
+  for(Gregorian y{begin_date}; y.year() < 4000; y.add_year(period_multiplier)) {
+    const std::list<string> day_events = cal.get_events(y);
+    EXPECT_EQ(1, day_events.size());
+    EXPECT_EQ(event, day_events.front());
+  }
+}
+
+TEST(Calendar, RecurringEventsCanBeLimited) {
+  const Gregorian begin_date{2014, 2, 5};
+  const Gregorian end_date{2014, 9, 25};
+  const string event = "Fysikalen-rep";
+
+  set_k_time(0);
+  Calendar<Gregorian> cal;
+
+  cal.add_recurring_event(RecurringEvent{event, begin_date, RecurringType::WEEKLY, end_date});
+
+  EXPECT_THROW({
+    cal.get_events(Gregorian{end_date.year(), end_date.month(), end_date.day() + 7});
+  }, std::out_of_range);
 }

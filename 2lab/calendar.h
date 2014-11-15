@@ -18,6 +18,38 @@ namespace lab2 {
       EventCollection events;
 
     public:
+      class RecurringEvent {
+        public:
+          enum RecurringType {
+            DAILY,
+            WEEKLY,
+            MONTHLY,
+            YEARLY
+          };
+
+        private:
+          D begin_date;   // Inclusive
+          Date* end_date; // Inclusive
+
+          RecurringType recurring_type;
+
+          const int period_multiplier;
+
+          const std::string event;
+
+        public:
+
+          RecurringEvent(const std::string& event, const Date& begin_date, RecurringType recurringType);
+          RecurringEvent(const std::string& event, const Date& begin_date, RecurringType recurringType, const Date& end_date);
+          RecurringEvent(const std::string& event, const Date& begin_date, RecurringType recurringType, unsigned int period_multiplier);
+          RecurringEvent(const std::string& event, const Date& begin_date, RecurringType recurringType, const Date& end_date, unsigned int period_multiplier);
+
+          ~RecurringEvent();
+
+          std::vector<D> get_occurrences(const Date& from, const Date& to) const;
+
+      };
+
       Calendar();
 
       template<class D_other>
@@ -54,6 +86,8 @@ namespace lab2 {
       bool add_related_event(const Date& rel_date, int days, std::string rel_event, std::string new_event);
       bool add_birthday(const std::string& name, const Date& birthday);
       bool compute_age(const std::string& name, const Date& target_day);
+
+      bool add_recurring_event(const RecurringEvent& recurring_event);
 
       friend std::ostream& operator<<(std::ostream& os, const Calendar& cal) {
         for(typename EventCollection::const_iterator it = cal.get_static_events().lower_bound(cal.get_date());
