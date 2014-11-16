@@ -105,6 +105,9 @@ namespace lab2 {
 
       bool add_recurring_event(const RecurringEvent& recurring_event);
 
+      void print_events(const Date& begin_date, const Date& end_date) const;
+      std::ostream& print_events(const Date& begin_date, const Date& end_date, std::ostream& os) const;
+
       friend std::ostream& operator<<(std::ostream& os, const Calendar& cal) {
         for(typename EventCollection::const_iterator it = cal.get_static_events().lower_bound(cal.get_date());
             it != cal.get_static_events().end();

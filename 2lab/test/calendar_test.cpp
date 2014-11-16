@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include <string>
+#include <sstream>
 #include "kattistime.h"
 #include "calendar.h"
 #include "gregorian.h"
@@ -313,4 +314,37 @@ TEST(Calendar, RecurringEventsCanBeLimited) {
   EXPECT_THROW({
     cal.get_events(Gregorian{end_date.year(), end_date.month(), end_date.day() + 7});
   }, std::out_of_range);
+}
+
+TEST(Calendar, PrintEventsPrintsAllEventsBetweenArgumentDatesInclusive) {
+  const Gregorian begin_date{2014, 2, 10};
+  const Gregorian end_date{2014, 3, 20};
+  const string recurring_event = "Fysikalen-rep";
+
+  set_k_time(0);
+  Calendar<Gregorian> cal;
+
+  cal.add_recurring_event(RecurringEvent{recurring_event, Gregorian{begin_date.year(), begin_date.month(), begin_date.day() - 7}, RecurringType::WEEKLY, Gregorian{end_date.year(), end_date.month(), end_date.day() + 7}});
+
+  cal.add_event("Städa", 2014, 2, 7);
+  cal.add_event("Köpa choklad", 2014, 2, 14);
+  cal.add_event("Opera", 2014, 2, 25);
+  cal.add_event("Mata katten", 2014, 3, 1);
+  cal.add_event("Firmafest", 2014, 3, 15);
+  cal.add_event("Städa", 2014, 3, 23);
+
+  std::stringstream expected_output;
+  std::stringstream actual_output;
+
+  expected_output << "2014-02-12 : " << recurring_event << std::endl;
+  expected_output << "2014-02-14 : Köpa choklad" << std::endl;
+  expected_output << "2014-02-19 : " << recurring_event << std::endl;
+  expected_output << "2014-02-25 : Opera" << std::endl;
+  expected_output << "2014-02-26 : " << recurring_event << std::endl;
+  expected_output << "2014-03-01 : Mata katten" << std::endl;
+  expected_output << "2014-03-05 : " << recurring_event << std::endl;
+
+  cal.print_events(begin_date, end_date, actual_output);
+
+  EXPECT_EQ(expected_output, actual_output);
 }
