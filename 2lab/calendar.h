@@ -206,6 +206,16 @@ namespace lab2 {
   }
 
   template<class D>
+  bool Calendar<D>::remove_recurring_event(const RecurringEvent& recurring_event) {
+    return false;
+  }
+
+  template<class D>
+  bool Calendar<D>::cancel_recurring_event_instance(const RecurringEvent& recurring_event, const Date& cancelDate) {
+    return false;
+  }
+
+  template<class D>
   void Calendar<D>::print_events(const Date& begin_date, const Date& end_date) const {
   }
 
