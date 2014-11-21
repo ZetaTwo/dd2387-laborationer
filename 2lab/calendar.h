@@ -215,4 +215,16 @@ namespace lab2 {
 
   }
 
+  template<class D>
+  Calendar<D>::RecurringEvent::RecurringEvent(const std::string& event, const Date& begin_date, RecurringType recurringType) : period_multiplier(1) {}
+
+  template<class D>
+  Calendar<D>::RecurringEvent::RecurringEvent(const std::string& event, const Date& begin_date, RecurringType recurringType, const Date& end_date) : period_multiplier(1) {}
+
+  template<class D>
+  Calendar<D>::RecurringEvent::RecurringEvent(const std::string& event, const Date& begin_date, RecurringType recurringType, unsigned int period_multiplier) : period_multiplier(period_multiplier) {}
+
+  template<class D>
+  Calendar<D>::RecurringEvent::RecurringEvent(const std::string& event, const Date& begin_date, RecurringType recurringType, const Date& end_date, unsigned int period_multiplier) : period_multiplier(period_multiplier) {}
+
 }
