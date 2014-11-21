@@ -50,6 +50,11 @@ namespace lab2 {
         return remove_event(event, current_date.day());
       }
 
+      bool move_event(const Date& from, const Date& to, Event event);
+      bool add_related_event(const Date& rel_date, int days, std::string rel_event, std::string new_event);
+      bool add_birthday(const std::string& name, const Date& birthday);
+      bool compute_age(const std::string& name, const Date& target_day);
+
       friend std::ostream& operator<<(std::ostream& os, const Calendar& cal) {
         for(typename EventCollection::const_iterator it = cal.get_events().lower_bound(cal.get_date());
             it != cal.get_events().end();
