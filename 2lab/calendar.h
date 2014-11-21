@@ -180,4 +180,39 @@ namespace lab2 {
     }
   }
 
+  template<class D>
+  bool Calendar<D>::move_event(const Date& from, const Date& to, Event event) {
+    return false;
+  }
+
+  template<class D>
+  bool Calendar<D>::add_related_event(const Date& rel_date, int days, std::string rel_event, std::string new_event) {
+    return false;
+  }
+
+  template<class D>
+  bool Calendar<D>::add_birthday(const std::string& name, const Date& birthday) {
+    return false;
+  }
+
+  template<class D>
+  bool Calendar<D>::compute_age(const std::string& name, const Date& target_day) {
+    return false;
+  }
+
+  template<class D>
+  bool Calendar<D>::add_recurring_event(const RecurringEvent& recurring_event) {
+    return false;
+  }
+
+  template<class D>
+  void Calendar<D>::print_events(const Date& begin_date, const Date& end_date) const {
+  }
+
+  template<class D>
+  std::ostream& Calendar<D>::print_events(const Date& begin_date, const Date& end_date, std::ostream& os) const {
+    return os;
+
+  }
+
 }
