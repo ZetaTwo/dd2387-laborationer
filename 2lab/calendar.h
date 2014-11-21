@@ -6,6 +6,7 @@
 #include <stdexcept>
 #include <algorithm>
 #include <iterator>
+#include <memory>
 #include "date.h"
 
 namespace lab2 {
@@ -30,7 +31,7 @@ namespace lab2 {
 
         private:
           D begin_date;   // Inclusive
-          Date* end_date; // Inclusive
+          std::unique_ptr<Date> end_date; // Inclusive
 
           RecurringType recurring_type;
 
@@ -44,8 +45,6 @@ namespace lab2 {
           RecurringEvent(const std::string& event, const Date& begin_date, RecurringType recurringType, const Date& end_date);
           RecurringEvent(const std::string& event, const Date& begin_date, RecurringType recurringType, unsigned int period_multiplier);
           RecurringEvent(const std::string& event, const Date& begin_date, RecurringType recurringType, const Date& end_date, unsigned int period_multiplier);
-
-          ~RecurringEvent();
 
           class const_iterator : std::iterator<std::forward_iterator_tag, const D> {
               D current_date;
