@@ -348,3 +348,41 @@ TEST(Calendar, PrintEventsPrintsAllEventsBetweenArgumentDatesInclusive) {
 
   EXPECT_EQ(expected_output, actual_output);
 }
+
+TEST(Calendar, RecurringEventCanBeNuked) {
+  const Gregorian begin_date{2014, 2, 5};
+  const Gregorian end_date{2014, 9, 25};
+  const string event = "Slappa";
+
+  const RecurringEvent revent{event, begin_date, RecurringType::WEEKLY, end_date};
+
+  set_k_time(0);
+  Calendar<Gregorian> cal;
+
+  cal.add_recurring_event(revent);
+
+  ASSERT_EQ((end_date - begin_date) / 7 + 1, cal.get_events(begin_date).size());
+
+  cal.remove_recurring_event(revent);
+
+  EXPECT_EQ(0, cal.get_events(begin_date).size());
+}
+
+TEST(Calendar, RecurringEventCanHaveExceptions) {
+  const Gregorian begin_date{2014, 2, 5};
+  const Gregorian end_date{2014, 9, 25};
+  const string event = "Slappa";
+
+  const RecurringEvent revent{event, begin_date, RecurringType::WEEKLY, end_date};
+
+  set_k_time(0);
+  Calendar<Gregorian> cal;
+
+  cal.add_recurring_event(revent);
+
+  ASSERT_EQ((end_date - begin_date) / 7 + 1, cal.get_events(begin_date).size());
+
+  cal.cancel_recurring_event_instance(revent, Gregorian{2014, 2, 12});
+
+  EXPECT_EQ((end_date - begin_date) / 7, cal.get_events(begin_date).size());
+}

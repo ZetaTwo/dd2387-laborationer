@@ -103,6 +103,8 @@ namespace lab2 {
       bool compute_age(const std::string& name, const Date& target_day);
 
       bool add_recurring_event(const RecurringEvent& recurring_event);
+      bool remove_recurring_event(const RecurringEvent& recurring_event);
+      bool cancel_recurring_event_instance(const RecurringEvent& recurring_event, const Date& cancelDate);
 
       void print_events(const Date& begin_date, const Date& end_date) const;
       std::ostream& print_events(const Date& begin_date, const Date& end_date, std::ostream& os) const;
