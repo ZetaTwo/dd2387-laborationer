@@ -227,4 +227,75 @@ namespace lab2 {
   template<class D>
   Calendar<D>::RecurringEvent::RecurringEvent(const std::string& event, const Date& begin_date, RecurringType recurringType, const Date& end_date, unsigned int period_multiplier) : period_multiplier(period_multiplier) {}
 
+  template<class D>
+  typename Calendar<D>::RecurringEvent::const_iterator Calendar<D>::RecurringEvent::begin() const {
+    return const_iterator{};
+  }
+
+  template<class D>
+  typename Calendar<D>::RecurringEvent::const_iterator Calendar<D>::RecurringEvent::end() const {
+    D d{*end_date};
+    return const_iterator{++d};
+  }
+
+
+  template<class D>
+  Calendar<D>::RecurringEvent::const_iterator::const_iterator() : current_date(begin_date) {}
+
+  template<class D>
+  typename Calendar<D>::RecurringEvent::const_iterator& Calendar<D>::RecurringEvent::const_iterator::operator++() {
+    switch(recurring_type) {
+    case DAILY:
+      ++current_date;
+      break;
+    case WEEKLY:
+      current_date += 7;
+      break;
+    case MONTHLY:
+      current_date.add_month();
+      break;
+    case YEARLY:
+      current_date.add_year();
+      break;
+    }
+    return *this;
+  }
+
+  template<class D>
+  typename Calendar<D>::RecurringEvent::const_iterator Calendar<D>::RecurringEvent::const_iterator::operator++(int) {
+    const_iterator tmp(*this);
+    operator++();
+    return tmp;
+  }
+
+  template<class D>
+  bool Calendar<D>::RecurringEvent::const_iterator::operator==(const const_iterator& rhs) const {
+    return current_date == rhs.current_date;
+  }
+
+  template<class D>
+  bool Calendar<D>::RecurringEvent::const_iterator::operator!=(const const_iterator& rhs) const {
+    return current_date != rhs.current_date;
+  }
+
+  template<class D>
+  bool Calendar<D>::RecurringEvent::const_iterator::operator> (const const_iterator& rhs) const {
+    return current_date >  rhs.current_date;
+  }
+
+  template<class D>
+  bool Calendar<D>::RecurringEvent::const_iterator::operator< (const const_iterator& rhs) const {
+    return current_date <  rhs.current_date;
+  }
+
+  template<class D>
+  const Date& Calendar<D>::RecurringEvent::const_iterator::operator*()  const {
+    return current_date;
+  }
+
+  template<class D>
+  const Date* Calendar<D>::RecurringEvent::const_iterator::operator->() const {
+    return &current_date;
+  }
+
 }
