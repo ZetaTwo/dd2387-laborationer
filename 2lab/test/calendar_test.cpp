@@ -343,6 +343,8 @@ TEST(Calendar, PrintEventsPrintsAllEventsBetweenArgumentDatesInclusive) {
   expected_output << "2014-02-26 : " << recurring_event << std::endl;
   expected_output << "2014-03-01 : Mata katten" << std::endl;
   expected_output << "2014-03-05 : " << recurring_event << std::endl;
+  expected_output << "2014-03-12 : " << recurring_event << std::endl;
+  expected_output << "2014-03-15 : Firmafest" << std::endl;
 
   cal.print_events(begin_date, end_date, actual_output);
 
