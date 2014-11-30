@@ -351,6 +351,41 @@ TEST(Calendar, PrintEventsPrintsAllEventsBetweenArgumentDatesInclusive) {
   EXPECT_EQ(expected_output, actual_output);
 }
 
+TEST(Calendar, OutputOperatorPrintsAllEventsFromCurrentDateToDateOfLastStaticEventInclusive) {
+  const Gregorian begin_date{2014, 2, 10};
+  const string recurring_event = "Fysikalen-rep";
+
+  set_k_time(0);
+  Calendar<Gregorian> cal;
+  cal.set_date(2014, 2, 15);
+
+  cal.add_recurring_event(RecurringEvent{recurring_event, Gregorian{begin_date.year(), begin_date.month(), begin_date.day() - 7}, RecurringType::WEEKLY});
+
+  cal.add_event("Städa", 2014, 2, 7);
+  cal.add_event("Köpa choklad", 2014, 2, 14);
+  cal.add_event("Opera", 2014, 2, 25);
+  cal.add_event("Mata katten", 2014, 3, 1);
+  cal.add_event("Firmafest", 2014, 3, 15);
+  cal.add_event("Städa", 2014, 3, 23);
+
+  std::stringstream expected_output;
+  std::stringstream actual_output;
+
+  expected_output << "2014-02-19 : " << recurring_event << std::endl;
+  expected_output << "2014-02-25 : Opera" << std::endl;
+  expected_output << "2014-02-26 : " << recurring_event << std::endl;
+  expected_output << "2014-03-01 : Mata katten" << std::endl;
+  expected_output << "2014-03-05 : " << recurring_event << std::endl;
+  expected_output << "2014-03-12 : " << recurring_event << std::endl;
+  expected_output << "2014-03-15 : Firmafest" << std::endl;
+  expected_output << "2014-03-19 : " << recurring_event << std::endl;
+  expected_output << "2014-03-23 : Städa" << std::endl;
+
+  actual_output << cal;
+
+  EXPECT_EQ(expected_output, actual_output);
+}
+
 TEST(Calendar, RecurringEventCanBeNuked) {
   const Gregorian begin_date{2014, 2, 5};
   const Gregorian end_date{2014, 9, 25};
