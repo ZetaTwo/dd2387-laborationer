@@ -538,3 +538,37 @@ TEST(GregorianDate, OperatorDecrementPostfixReturnsCopyToBeforeState) {
   GregorianDate gd{original};
   EXPECT_EQ(original.mod_julian_day(), (gd--).mod_julian_day());
 }
+
+TEST(GregorianDate, OperatorIncrementPrefixReturnsAnLvalue) {
+  set_k_time(0);
+  GregorianDate gd;
+  const GregorianDate gd2;
+
+  Date& dr = gd;
+
+  ++dr;
+  ASSERT_NE(gd2, gd);
+  ASSERT_NE(gd2, dr);
+
+  (++dr) = gd2;
+
+  EXPECT_EQ(gd2, gd);
+  EXPECT_EQ(gd2, dr);
+}
+
+TEST(GregorianDate, OperatorDecrementPrefixReturnsAnLvalue) {
+  set_k_time(0);
+  GregorianDate gd;
+  const GregorianDate gd2;
+
+  Date& dr = gd;
+
+  --dr;
+  ASSERT_NE(gd2, gd);
+  ASSERT_NE(gd2, dr);
+
+  (--dr) = gd2;
+
+  EXPECT_EQ(gd2, gd);
+  EXPECT_EQ(gd2, dr);
+}

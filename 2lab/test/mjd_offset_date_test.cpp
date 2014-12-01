@@ -121,6 +121,22 @@ TEST(MjdOffsetDate, OperatorIncrementPrefixReturnsSelfAfterModification) {
   EXPECT_EQ(1, (++dr).mod_julian_day());
 }
 
+TEST(MjdOffsetDate, OperatorIncrementPrefixReturnsAnLvalue) {
+  MjdodStub ds(0);
+  const MjdodStub ds0(0);
+
+  Date& dr = ds;
+
+  ++dr;
+  ASSERT_NE(ds0, dr);
+  ASSERT_NE(ds0, ds);
+
+  (++dr) = ds0;
+
+  EXPECT_EQ(ds0, dr);
+  EXPECT_EQ(ds0, ds);
+}
+
 TEST(MjdOffsetDate, OperatorDecrementPrefixDecrementsModJulianDayByOne) {
   MjdodStub ds(0);
   Date& dr = ds;
@@ -136,6 +152,22 @@ TEST(MjdOffsetDate, OperatorDecrementPrefixReturnsSelfAfterModification) {
   Date& dr = ds;
 
   EXPECT_EQ(-1, (--dr).mod_julian_day());
+}
+
+TEST(MjdOffsetDate, OperatorDecrementPrefixReturnsAnLvalue) {
+  MjdodStub ds(0);
+  const MjdodStub ds0(0);
+
+  Date& dr = ds;
+
+  --dr;
+  ASSERT_NE(ds0, dr);
+  ASSERT_NE(ds0, ds);
+
+  (--dr) = ds0;
+
+  EXPECT_EQ(ds0, dr);
+  EXPECT_EQ(ds0, ds);
 }
 
 TEST(MjdOffsetDate, OperatorIncreaseAssignmentIncreasesModJulianDayByArgument) {

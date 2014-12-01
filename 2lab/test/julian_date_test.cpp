@@ -492,3 +492,37 @@ TEST(JulianDate, OperatorDecrementPostfixReturnsCopyToBeforeState) {
   JulianDate jd{original};
   EXPECT_EQ(original.mod_julian_day(), (jd--).mod_julian_day());
 }
+
+TEST(JulianDate, OperatorIncrementPrefixReturnsAnLvalue) {
+  set_k_time(0);
+  JulianDate jd;
+  const JulianDate jd2;
+
+  Date& dr = jd;
+
+  ++dr;
+  ASSERT_NE(jd2, jd);
+  ASSERT_NE(jd2, dr);
+
+  (++dr) = jd2;
+
+  EXPECT_EQ(jd2, jd);
+  EXPECT_EQ(jd2, dr);
+}
+
+TEST(JulianDate, OperatorDecrementPrefixReturnsAnLvalue) {
+  set_k_time(0);
+  JulianDate jd;
+  const JulianDate jd2;
+
+  Date& dr = jd;
+
+  --dr;
+  ASSERT_NE(jd2, jd);
+  ASSERT_NE(jd2, dr);
+
+  (--dr) = jd2;
+
+  EXPECT_EQ(jd2, jd);
+  EXPECT_EQ(jd2, dr);
+}
