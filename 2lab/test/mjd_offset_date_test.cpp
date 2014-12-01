@@ -35,6 +35,8 @@ public:
   virtual std::string month_name()    const override { return ""; }
   virtual Date& add_year (int) override { return *this; }
   virtual Date& add_month(int) override { return *this; }
+  virtual Date&& operator++(int) override { return std::move(MjdodStub{*this}); }
+  virtual Date&& operator--(int) override { return std::move(MjdodStub{*this}); }
 };
 
 TEST(MjdOffsetDate, DefaultConstructorSetsModJulianDayToZero) {

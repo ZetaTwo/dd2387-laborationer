@@ -56,6 +56,8 @@ public:
   virtual int days_this_month() const override { return 0; }
   virtual std::string week_day_name() const override { return ""; }
   virtual std::string month_name()    const override { return ""; }
+  virtual Date&& operator++(int) override { return std::move(WesternDateStub{*this}); }
+  virtual Date&& operator--(int) override { return std::move(WesternDateStub{*this}); }
 
   virtual bool is_leap_year() const override { return false; }
   virtual bool is_leap_year(int) const override { return false; }

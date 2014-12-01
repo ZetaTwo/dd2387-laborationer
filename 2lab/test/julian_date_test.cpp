@@ -464,3 +464,31 @@ TEST_P(JulianDateWeekdayTest, ExampleDatesHaveCorrectWeekday) {
   JulianDate gd{year, month, day};
   EXPECT_EQ(weekday, gd.week_day());
 }
+
+TEST(JulianDate, OperatorIncrementPostfixIncreasesDistanceFromOriginalByOne) {
+  set_k_time(0);
+  const JulianDate original;
+  JulianDate jd{original};
+  jd++;
+  EXPECT_EQ(1, jd - original);
+}
+
+TEST(JulianDate, OperatorIncrementPostfixReturnsCopyToBeforeState) {
+  const JulianDate original;
+  JulianDate jd{original};
+  EXPECT_EQ(original.mod_julian_day(), (jd++).mod_julian_day());
+}
+
+TEST(JulianDate, OperatorDecrementPostfixIncreasesDistanceFromOriginalByOne) {
+  set_k_time(0);
+  const JulianDate original;
+  JulianDate jd{original};
+  jd--;
+  EXPECT_EQ(-1, jd - original);
+}
+
+TEST(JulianDate, OperatorDecrementPostfixReturnsCopyToBeforeState) {
+  const JulianDate original;
+  JulianDate jd{original};
+  EXPECT_EQ(original.mod_julian_day(), (jd--).mod_julian_day());
+}

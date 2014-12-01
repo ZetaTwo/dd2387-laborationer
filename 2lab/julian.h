@@ -20,6 +20,9 @@ namespace lab2 {
     JulianDate(int year, int month, int day);
     JulianDate(const Date& original);
     JulianDate(const Date* original);
+
+    virtual JulianDate&& operator++(int) override;
+    virtual JulianDate&& operator--(int) override;
   };
 
   typedef JulianDate Julian;

@@ -510,3 +510,31 @@ TEST_P(GregorianDateWeekdayTest, ExampleDatesHaveCorrectWeekday) {
   GregorianDate gd{year, month, day};
   EXPECT_EQ(weekday, gd.week_day());
 }
+
+TEST(GregorianDate, OperatorIncrementPostfixIncreasesDistanceFromOriginalByOne) {
+  set_k_time(0);
+  const GregorianDate original;
+  GregorianDate gd{original};
+  gd++;
+  EXPECT_EQ(1, gd - original);
+}
+
+TEST(GregorianDate, OperatorIncrementPostfixReturnsCopyToBeforeState) {
+  const GregorianDate original;
+  GregorianDate gd{original};
+  EXPECT_EQ(original.mod_julian_day(), (gd++).mod_julian_day());
+}
+
+TEST(GregorianDate, OperatorDecrementPostfixIncreasesDistanceFromOriginalByOne) {
+  set_k_time(0);
+  const GregorianDate original;
+  GregorianDate gd{original};
+  gd--;
+  EXPECT_EQ(-1, gd - original);
+}
+
+TEST(GregorianDate, OperatorDecrementPostfixReturnsCopyToBeforeState) {
+  const GregorianDate original;
+  GregorianDate gd{original};
+  EXPECT_EQ(original.mod_julian_day(), (gd--).mod_julian_day());
+}

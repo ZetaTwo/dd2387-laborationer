@@ -24,6 +24,9 @@ namespace lab2 {
     GregorianDate();
     GregorianDate(int year, int month, int day);
     GregorianDate(const Date& original);
+
+    virtual GregorianDate&& operator++(int) override;
+    virtual GregorianDate&& operator--(int) override;
   };
 
   typedef GregorianDate Gregorian;

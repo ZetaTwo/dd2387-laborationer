@@ -67,4 +67,16 @@ namespace lab2 {
     return DateDecomposition{almost_year + cb1, db1};
   }
 
+  GregorianDate&& GregorianDate::operator++(int) {
+    GregorianDate copy{*this};
+    ++(*static_cast<Date*>(this));
+    return std::move(copy);
+  }
+
+  GregorianDate&& GregorianDate::operator--(int) {
+    GregorianDate copy{*this};
+    --(*static_cast<Date*>(this));
+    return std::move(copy);
+  }
+
 }
