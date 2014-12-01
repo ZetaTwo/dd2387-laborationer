@@ -464,3 +464,57 @@ TEST_P(JulianDateWeekdayTest, ExampleDatesHaveCorrectWeekday) {
   JulianDate gd{year, month, day};
   EXPECT_EQ(weekday, gd.week_day());
 }
+
+TEST(JulianDate, OperatorIncrementPostfixIncreasesDistanceFromOriginalByOne) {
+  set_k_time(0);
+  const JulianDate original;
+  JulianDate jd{original};
+  jd++;
+  EXPECT_EQ(1, jd - original);
+}
+
+TEST(JulianDate, OperatorIncrementPostfixReturnsCopyToBeforeState) {
+  const JulianDate original;
+  JulianDate jd{original};
+  EXPECT_EQ(original.mod_julian_day(), (jd++).mod_julian_day());
+}
+
+TEST(JulianDate, OperatorDecrementPostfixIncreasesDistanceFromOriginalByOne) {
+  set_k_time(0);
+  const JulianDate original;
+  JulianDate jd{original};
+  jd--;
+  EXPECT_EQ(-1, jd - original);
+}
+
+TEST(JulianDate, OperatorDecrementPostfixReturnsCopyToBeforeState) {
+  const JulianDate original;
+  JulianDate jd{original};
+  EXPECT_EQ(original.mod_julian_day(), (jd--).mod_julian_day());
+}
+
+TEST(JulianDate, OperatorIncrementPrefixReturnsAnLvalue) {
+  set_k_time(0);
+  JulianDate jd;
+  const JulianDate jd2;
+
+  ++jd;
+  ASSERT_NE(jd2, jd);
+
+  (++jd) = jd2;
+
+  EXPECT_EQ(jd2, jd);
+}
+
+TEST(JulianDate, OperatorDecrementPrefixReturnsAnLvalue) {
+  set_k_time(0);
+  JulianDate jd;
+  const JulianDate jd2;
+
+  --jd;
+  ASSERT_NE(jd2, jd);
+
+  (--jd) = jd2;
+
+  EXPECT_EQ(jd2, jd);
+}
