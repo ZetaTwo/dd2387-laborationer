@@ -43,10 +43,10 @@ public:
   //Iterators
   class const_iterator : public std::iterator<std::random_access_iterator_tag, const T>
   {
-    T* p;
+    const T* p;
   public:
     const_iterator() {}
-    const_iterator(T* x) : p(x) {}
+    const_iterator(const T* x) : p(x) {}
     const_iterator(const const_iterator& mit) : p(mit.p) {}
     const_iterator& operator++() { ++p; return *this; }
     const_iterator operator++(int) { const_iterator tmp(*this); operator++(); return tmp; }
@@ -58,8 +58,8 @@ public:
     bool operator!=(const const_iterator& rhs) const { return p != rhs.p; }
     bool operator>(const const_iterator& rhs) const { return p > rhs.p; }
     bool operator<(const const_iterator& rhs) const { return p < rhs.p; }
-    T& operator[](size_t index) { return *(p + index); }
-    T& operator*() { return *p; }
+    const T& operator[](size_t index) { return *(p + index); }
+    const T& operator*() { return *p; }
     T const * operator->() const { return p; }
   };
 
