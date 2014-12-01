@@ -544,16 +544,12 @@ TEST(GregorianDate, OperatorIncrementPrefixReturnsAnLvalue) {
   GregorianDate gd;
   const GregorianDate gd2;
 
-  Date& dr = gd;
-
-  ++dr;
+  ++gd;
   ASSERT_NE(gd2, gd);
-  ASSERT_NE(gd2, dr);
 
-  (++dr) = gd2;
+  (++gd) = gd2;
 
   EXPECT_EQ(gd2, gd);
-  EXPECT_EQ(gd2, dr);
 }
 
 TEST(GregorianDate, OperatorDecrementPrefixReturnsAnLvalue) {
@@ -561,14 +557,10 @@ TEST(GregorianDate, OperatorDecrementPrefixReturnsAnLvalue) {
   GregorianDate gd;
   const GregorianDate gd2;
 
-  Date& dr = gd;
-
-  --dr;
+  --gd;
   ASSERT_NE(gd2, gd);
-  ASSERT_NE(gd2, dr);
 
-  (--dr) = gd2;
+  (--gd) = gd2;
 
   EXPECT_EQ(gd2, gd);
-  EXPECT_EQ(gd2, dr);
 }

@@ -50,6 +50,14 @@ namespace lab2 {
     return DateDecomposition{4 * c4 + cp1 + cb1, db1};
   }
 
+  JulianDate& JulianDate::operator++() {
+    return static_cast<JulianDate&>(WesternDate::operator++());
+  }
+
+  JulianDate& JulianDate::operator--() {
+    return static_cast<JulianDate&>(WesternDate::operator--());
+  }
+
   JulianDate&& JulianDate::operator++(int) {
     JulianDate copy{*this};
     ++(*static_cast<Date*>(this));

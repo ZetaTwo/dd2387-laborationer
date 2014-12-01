@@ -67,6 +67,14 @@ namespace lab2 {
     return DateDecomposition{almost_year + cb1, db1};
   }
 
+  GregorianDate& GregorianDate::operator++() {
+    return static_cast<GregorianDate&>(WesternDate::operator++());
+  }
+
+  GregorianDate& GregorianDate::operator--() {
+    return static_cast<GregorianDate&>(WesternDate::operator--());
+  }
+
   GregorianDate&& GregorianDate::operator++(int) {
     GregorianDate copy{*this};
     ++(*static_cast<Date*>(this));

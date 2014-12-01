@@ -498,16 +498,12 @@ TEST(JulianDate, OperatorIncrementPrefixReturnsAnLvalue) {
   JulianDate jd;
   const JulianDate jd2;
 
-  Date& dr = jd;
-
-  ++dr;
+  ++jd;
   ASSERT_NE(jd2, jd);
-  ASSERT_NE(jd2, dr);
 
-  (++dr) = jd2;
+  (++jd) = jd2;
 
   EXPECT_EQ(jd2, jd);
-  EXPECT_EQ(jd2, dr);
 }
 
 TEST(JulianDate, OperatorDecrementPrefixReturnsAnLvalue) {
@@ -515,14 +511,10 @@ TEST(JulianDate, OperatorDecrementPrefixReturnsAnLvalue) {
   JulianDate jd;
   const JulianDate jd2;
 
-  Date& dr = jd;
-
-  --dr;
+  --jd;
   ASSERT_NE(jd2, jd);
-  ASSERT_NE(jd2, dr);
 
-  (--dr) = jd2;
+  (--jd) = jd2;
 
   EXPECT_EQ(jd2, jd);
-  EXPECT_EQ(jd2, dr);
 }
