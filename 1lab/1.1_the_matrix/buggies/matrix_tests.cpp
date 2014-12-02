@@ -465,6 +465,8 @@ TEST(Matrix, Case16RepeatedTransposition) {
 
   for(int i = 0; i < 5; ++i) {
     EXPECT_TRUE(MatrixCompare(matrix1, matrix2.transpose()));
+    EXPECT_TRUE(MatrixCompare(matrix1, matrix2));
     EXPECT_TRUE(MatrixCompare(matrix2_original, matrix2.transpose()));
+    EXPECT_TRUE(MatrixCompare(matrix2_original, matrix2));
   }
 }
