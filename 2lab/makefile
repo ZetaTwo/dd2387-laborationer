@@ -75,3 +75,6 @@ build/calendar_demo: build/calendar_demo_spliced.cpp calendar.h $(DATE_HEADERS) 
 
 run_calendar_demo: build/calendar_demo
 	./$<
+
+autorun_calendar_demo:
+	while inotifywait -qqr -e close_write --exclude build/ . ; do make run_calendar_demo; done
