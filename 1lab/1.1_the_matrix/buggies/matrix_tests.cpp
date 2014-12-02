@@ -50,13 +50,6 @@ TEST(Matrix, ConstructorSize) {
   EXPECT_EQ(size, matrix.cols());
 }
 
-TEST(Matrix, ConstructorSizeZero) {
-  const size_t size = 0;
-
-  EXPECT_THROW({
-    Matrix matrix(size);
-  }, std::invalid_argument);
-}
 
 TEST(Matrix, ConstructorSize2) {
   const size_t size_rows = 3, size_cols = 4;
@@ -66,32 +59,10 @@ TEST(Matrix, ConstructorSize2) {
   EXPECT_EQ(size_cols, matrix.cols());
 }
 
-TEST(Matrix, ConstructorSize2ZeroX) {
-  const size_t size_x = 0, size_y = 4;
-
-  EXPECT_THROW({
-    Matrix matrix(size_x, size_y);
-  }, std::invalid_argument);
-}
-
-TEST(Matrix, ConstructorSize2ZeroY) {
-  const size_t size_x = 3, size_y = 0;
-
-  EXPECT_THROW({
-    Matrix matrix(size_x, size_y);
-  }, std::invalid_argument);
-}
-
 TEST(Matrix, ConstructorSerialized) {
   Matrix matrix = StringToMatrix("       [ 1 2 -3 ; 5 6 7 ]");
   EXPECT_EQ(2, matrix.rows());
   EXPECT_EQ(3, matrix.cols());
-}
-
-TEST(Matrix, ConstructorSerializedError1) {
-  EXPECT_THROW({
-    Matrix matrix = StringToMatrix("[ 1 2 -3 ; 5 6 ]");
-  }, std::invalid_argument);
 }
 
 TEST(Matrix, OperatorAssignment) {
