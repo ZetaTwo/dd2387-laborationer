@@ -83,14 +83,14 @@ TEST(Matrix, ConstructorSize2ZeroY) {
 }
 
 TEST(Matrix, ConstructorSerialized) {
-  Matrix matrix("       [ 1 2 -3 ; 5 6 7 ]");
+  Matrix matrix = StringToMatrix("       [ 1 2 -3 ; 5 6 7 ]");
   EXPECT_EQ(2, matrix.rows());
   EXPECT_EQ(3, matrix.cols());
 }
 
 TEST(Matrix, ConstructorSerializedError1) {
   EXPECT_THROW({
-    Matrix matrix("[ 1 2 -3 ; 5 6 ]");
+    Matrix matrix = StringToMatrix("[ 1 2 -3 ; 5 6 ]");
   }, std::invalid_argument);
 }
 
@@ -126,138 +126,138 @@ TEST(Matrix, OperatorAssignmentSelf) {
 }
 
 TEST(Matrix, OperatorEqualTrue) {
-  Matrix matrix1("[ 1 2 -3 ; 5 6 7 ]");
-  Matrix matrix2("[ 1 2 -3 ; 5 6 7 ]");
+  Matrix matrix1 = StringToMatrix("[ 1 2 -3 ; 5 6 7 ]");
+  Matrix matrix2 = StringToMatrix("[ 1 2 -3 ; 5 6 7 ]");
 
-  EXPECT_TRUE(matrix1 == matrix2);
+  EXPECT_TRUE(MatrixCompare(matrix1, matrix2));
 }
 
 TEST(Matrix, OperatorEqualFalseValue) {
-  Matrix matrix1("[ 1 2 -3 ; 5 6 7 ]");
-  Matrix matrix2("[ 1 2 3 ; 5 6 7 ]");
+  Matrix matrix1 = StringToMatrix("[ 1 2 -3 ; 5 6 7 ]");
+  Matrix matrix2 = StringToMatrix("[ 1 2 3 ; 5 6 7 ]");
 
-  EXPECT_FALSE(matrix1 == matrix2);
+  EXPECT_FALSE(MatrixCompare(matrix1, matrix2));
 }
 
 TEST(Matrix, OperatorEqualFalseSize) {
-  Matrix matrix1("[ 1 2 -3 ; 5 6 7 ]");
-  Matrix matrix2("[ 1 2 ; 5 6 ]");
+  Matrix matrix1 = StringToMatrix("[ 1 2 -3 ; 5 6 7 ]");
+  Matrix matrix2 = StringToMatrix("[ 1 2 ; 5 6 ]");
 
-  EXPECT_FALSE(matrix1 == matrix2);
+  EXPECT_FALSE(MatrixCompare(matrix1, matrix2));
 }
 
 TEST(Matrix, OperatorNequalTrueValue) {
-  Matrix matrix1("[ 1 2 -3 ; 5 6 7 ]");
-  Matrix matrix2("[ 1 2 3 ; 5 6 7 ]");
+  Matrix matrix1 = StringToMatrix("[ 1 2 -3 ; 5 6 7 ]");
+  Matrix matrix2 = StringToMatrix("[ 1 2 3 ; 5 6 7 ]");
 
-  EXPECT_TRUE(matrix1 != matrix2);
+  EXPECT_FALSE(MatrixCompare(matrix1, matrix2));
 }
 
 TEST(Matrix, OperatorNequalTrueSize) {
-  Matrix matrix1("[ 1 2 -3 ; 5 6 7 ]");
-  Matrix matrix2("[ 1 2 ; 5 6 ]");
+  Matrix matrix1 = StringToMatrix("[ 1 2 -3 ; 5 6 7 ]");
+  Matrix matrix2 = StringToMatrix("[ 1 2 ; 5 6 ]");
 
-  EXPECT_TRUE(matrix1 != matrix2);
+  EXPECT_FALSE(MatrixCompare(matrix1, matrix2));
 }
 
 TEST(Matrix, OperatorNequalFalse) {
-  Matrix matrix1("[ 1 2 3 ; 5 6 7 ]");
-  Matrix matrix2("[ 1 2 3 ; 5 6 7 ]");
+  Matrix matrix1 = StringToMatrix("[ 1 2 3 ; 5 6 7 ]");
+  Matrix matrix2 = StringToMatrix("[ 1 2 3 ; 5 6 7 ]");
 
-  EXPECT_FALSE(matrix1 != matrix2);
+  EXPECT_TRUE(MatrixCompare(matrix1, matrix2));
 }
 
 TEST(Matrix, OperatorAddition) {
-  Matrix matrix1("[ 1 2 -3 ; 5 6 7 ]");
-  Matrix matrix2("[ 2 -3 1 ; -6 5 7 ]");
-  Matrix matrix3("[ 3 -1 -2; -1 11 14 ]");
+  Matrix matrix1 = StringToMatrix("[ 1 2 -3 ; 5 6 7 ]");
+  Matrix matrix2 = StringToMatrix("[ 2 -3 1 ; -6 5 7 ]");
+  Matrix matrix3 = StringToMatrix("[ 3 -1 -2; -1 11 14 ]");
 
   Matrix matrix4 = matrix1 + matrix2;
-  EXPECT_EQ(matrix3, matrix4);
+  EXPECT_TRUE(MatrixCompare(matrix3, matrix4));
 }
 
 TEST(Matrix, OperatorAdditionSize) {
-  Matrix matrix1("[ 1 2 -3 ; 5 6 7 ]");
-  Matrix matrix2("[ 2 -3 ; -6 5 ]");
+  Matrix matrix1 = StringToMatrix("[ 1 2 -3 ; 5 6 7 ]");
+  Matrix matrix2 = StringToMatrix("[ 2 -3 ; -6 5 ]");
 
   EXPECT_THROW({
     Matrix matrix3 = matrix1 + matrix2;
-  }, std::invalid_argument);
+  }, std::exception);
 }
 
 TEST(Matrix, OperatorMultiplication) {
-  Matrix matrix1("[ 1 2 3 ; 4 5 6 ]");
-  Matrix matrix2("[ 7 8 ; 9 10; 11 12 ]");
-  Matrix matrix3("[ 58 64; 139 154 ]");
+  Matrix matrix1 = StringToMatrix("[ 1 2 3 ; 4 5 6 ]");
+  Matrix matrix2 = StringToMatrix("[ 7 8 ; 9 10; 11 12 ]");
+  Matrix matrix3 = StringToMatrix("[ 58 64; 139 154 ]");
 
   Matrix matrix4 = matrix1 * matrix2;
-  EXPECT_EQ(matrix3, matrix4);
+  EXPECT_TRUE(MatrixCompare(matrix3, matrix4));
 }
 
 TEST(Matrix, OperatorMultiplicationSize) {
-  Matrix matrix1("[ 1 2 3 ; 4 5 6 ]");
-  Matrix matrix2("[ 7 8 ; 9 10 ]");
+  Matrix matrix1 = StringToMatrix("[ 1 2 3 ; 4 5 6 ]");
+  Matrix matrix2 = StringToMatrix("[ 7 8 ; 9 10 ]");
 
   EXPECT_THROW({
     Matrix matrix3 = matrix1 * matrix2;
-  }, std::invalid_argument);
+  }, std::exception);
 }
 
 TEST(Matrix, OperatorMultiplicationScalar) {
-  Matrix matrix1("[ 1 2 3 ; 4 5 6 ]");
-  Matrix matrix2("[ 2 4 6; 8 10 12 ]");
+  Matrix matrix1 = StringToMatrix("[ 1 2 3 ; 4 5 6 ]");
+  Matrix matrix2 = StringToMatrix("[ 2 4 6; 8 10 12 ]");
 
   Matrix matrix3 = 2 * matrix1;
-  EXPECT_EQ(matrix2, matrix3);
+  EXPECT_TRUE(MatrixCompare(matrix2, matrix3));
 }
 
 TEST(Matrix, OperatorMultiplicationScalar2) {
-  Matrix matrix1("[ 1 2 3 ; 4 5 6 ]");
-  Matrix matrix2("[ 2 4 6; 8 10 12 ]");
+  Matrix matrix1 = StringToMatrix("[ 1 2 3 ; 4 5 6 ]");
+  Matrix matrix2 = StringToMatrix("[ 2 4 6; 8 10 12 ]");
 
   Matrix matrix3 = matrix1 * 2;
-  EXPECT_EQ(matrix2, matrix3);
+  EXPECT_TRUE(MatrixCompare(matrix2, matrix3));
 }
 
 TEST(Matrix, OperatorSubtraction) {
-  Matrix matrix1("[ 1 2 -3 ; 5 6 7 ]");
-  Matrix matrix2("[ 2 -3 1 ; -6 5 7 ]");
-  Matrix matrix3("[ -1 5 -4; 11 1 0 ]");
+  Matrix matrix1 = StringToMatrix("[ 1 2 -3 ; 5 6 7 ]");
+  Matrix matrix2 = StringToMatrix("[ 2 -3 1 ; -6 5 7 ]");
+  Matrix matrix3 = StringToMatrix("[ -1 5 -4; 11 1 0 ]");
 
   Matrix matrix4 = matrix1 - matrix2;
-  EXPECT_EQ(matrix3, matrix4);
+  EXPECT_TRUE(MatrixCompare(matrix3, matrix4));
 }
 
 TEST(Matrix, OperatorSubtractionSize) {
-  Matrix matrix1("[ 1 2 -3 ; 5 6 7 ]");
-  Matrix matrix2("[ 2 -3 ; -6 5 ]");
+  Matrix matrix1 = StringToMatrix("[ 1 2 -3 ; 5 6 7 ]");
+  Matrix matrix2 = StringToMatrix("[ 2 -3 ; -6 5 ]");
 
   EXPECT_THROW({
     Matrix matrix3 = matrix1 - matrix2;
-  }, std::invalid_argument);
+  }, std::exception);
 }
 
 TEST(Matrix, OperatorNegative) {
-  Matrix matrix1("[ 1 2 -3 ; 5 6 7 ]");
-  Matrix matrix2("[ -1 -2 3 ; -5 -6 -7 ]");
+  Matrix matrix1 = StringToMatrix("[ 1 2 -3 ; 5 6 7 ]");
+  Matrix matrix2 = StringToMatrix("[ -1 -2 3 ; -5 -6 -7 ]");
 
   Matrix matrix3 = -matrix1;
-  EXPECT_EQ(matrix2, matrix3);
+  EXPECT_TRUE(MatrixCompare(matrix2, matrix3));
 }
 
 TEST(Matrix, Transpose) {
-  Matrix matrix1("[ 1 2 -3 ; 5 6 7 ]");
-  Matrix matrix2("[ 1 5; 2 6; -3 7 ]");
-  EXPECT_EQ(matrix1, matrix2.transpose());
+  Matrix matrix1 = StringToMatrix("[ 1 2 -3 ; 5 6 7 ]");
+  Matrix matrix2 = StringToMatrix("[ 1 5; 2 6; -3 7 ]");
+  EXPECT_TRUE(MatrixCompare(matrix1, matrix2.transpose()));
 }
 
 TEST(Matrix, OperatorIndex) {
-  Matrix matrix1("[ 1 2 -3 ; 5 6 7 ]");
+  Matrix matrix1 = StringToMatrix("[ 1 2 -3 ; 5 6 7 ]");
   EXPECT_EQ(6, matrix1[1][1]);
 }
 
 TEST(Matrix, OperatorIndexRange) {
-  Matrix matrix1("[ 1 2 -3 ; 5 6 7 ]");
+  Matrix matrix1 = StringToMatrix("[ 1 2 -3 ; 5 6 7 ]");
   EXPECT_THROW({
     int a = matrix1[3][0];
   }, std::out_of_range);
@@ -273,28 +273,28 @@ TEST(Matrix, OperatorIndexRange) {
 }
 
 TEST(Matrix, Rows) {
-  Matrix matrix1("[ 1 2 -3 ; 5 6 7 ]");
+  Matrix matrix1 = StringToMatrix("[ 1 2 -3 ; 5 6 7 ]");
   EXPECT_EQ(2, matrix1.rows());
 }
 
 TEST(Matrix, Cols) {
-  Matrix matrix1("[ 1 2 -3 ; 5 6 7 ]");
+  Matrix matrix1 = StringToMatrix("[ 1 2 -3 ; 5 6 7 ]");
   EXPECT_EQ(3, matrix1.cols());
 }
 
 TEST(Matrix, OperatorIstream) {
   std::stringstream ss("[ 1 2 -3 ; 5 6 7 ]");
   Matrix matrix1;
-  Matrix matrix2("[ 1 2 -3 ; 5 6 7 ]");
+  Matrix matrix2 = StringToMatrix("[ 1 2 -3 ; 5 6 7 ]");
   ss >> matrix1;
 
-  EXPECT_EQ(matrix1, matrix2);
+  EXPECT_TRUE(MatrixCompare(matrix1, matrix2));
 }
 
 TEST(Matrix, OperatorOstream) {
   std::stringstream ss;
   std::string string1("[ 1 2 -3 \n; 5 6 7 ]");
-  Matrix matrix1("[ 1 2 -3 ; 5 6 7 ]");
+  Matrix matrix1 = StringToMatrix("[ 1 2 -3 ; 5 6 7 ]");
 
   ss << matrix1;
 
