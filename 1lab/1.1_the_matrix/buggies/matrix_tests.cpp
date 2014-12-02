@@ -446,3 +446,14 @@ TEST(Matrix, Case14ScalarMultiplicationConstCorrectness) {
   EXPECT_TRUE(MatrixCompare(matrix1_original, m1));
   EXPECT_EQ(5, c);
 }
+
+TEST(Matrix, Case15NegationConstCorrectness) {
+  const Matrix matrix1_original = StringToMatrix("[ 1 2 -3 ; 5 6 7 ]");
+  Matrix m1 = matrix1_original;
+
+  for(int i = 0; i < 9; ++i) {
+    -m1;
+  }
+
+  EXPECT_TRUE(MatrixCompare(matrix1_original, m1));
+}
