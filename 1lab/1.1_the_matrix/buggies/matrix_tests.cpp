@@ -433,3 +433,16 @@ TEST(Matrix, Case13MultiplicationConstCorrectness) {
   EXPECT_TRUE(MatrixCompare(matrix1_original, m1));
   EXPECT_TRUE(MatrixCompare(matrix2_original, m2));
 }
+
+TEST(Matrix, Case14ScalarMultiplicationConstCorrectness) {
+  const Matrix matrix1_original = StringToMatrix("[ 1 2 -3 ; 5 6 7 ]");
+  const int c = 5;
+  Matrix m1 = matrix1_original;
+
+  for(int i = 0; i < 10; ++i) {
+    c * m1 * c;
+  }
+
+  EXPECT_TRUE(MatrixCompare(matrix1_original, m1));
+  EXPECT_EQ(5, c);
+}
