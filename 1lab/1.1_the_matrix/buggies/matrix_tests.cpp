@@ -399,7 +399,7 @@ TEST(Matrix, Case11AdditionConstCorrectness) {
   Matrix m2 = matrix2_original;
 
   for(int i = 0; i < 10; ++i) {
-    m1 + m2;
+    m2 + m1 + m2;
   }
 
   EXPECT_TRUE(MatrixCompare(matrix1_original, m1));
@@ -413,7 +413,7 @@ TEST(Matrix, Case12SubtractionConstCorrectness) {
   Matrix m2 = matrix2_original;
 
   for(int i = 0; i < 10; ++i) {
-    m1 - m2;
+    m2 - m1 - m2;
   }
 
   EXPECT_TRUE(MatrixCompare(matrix1_original, m1));
@@ -427,7 +427,7 @@ TEST(Matrix, Case13MultiplicationConstCorrectness) {
   Matrix m2 = matrix2_original;
 
   for(int i = 0; i < 10; ++i) {
-    m1 * m2;
+    m2 * m1 * m2;
   }
 
   EXPECT_TRUE(MatrixCompare(matrix1_original, m1));
