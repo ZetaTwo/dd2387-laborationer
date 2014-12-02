@@ -4,7 +4,7 @@
 
 
 //Verify tests
-bool MatrixCompare(Matrix& a, Matrix& b) {
+bool MatrixCompare(const Matrix& a, const Matrix& b) {
   if(a.rows() != b.rows() || a.cols() != b.cols()) {
     return false;
   }
@@ -26,7 +26,7 @@ std::string MatrixToString(Matrix& matrix) {
   return ss.str();
 }
 
-Matrix StringToMatrix(std::string data) {
+Matrix StringToMatrix(const std::string data) {
   std::stringstream ss(data);
   Matrix m;
   ss >> m;
