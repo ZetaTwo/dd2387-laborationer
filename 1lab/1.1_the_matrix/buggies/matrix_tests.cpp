@@ -470,3 +470,123 @@ TEST(Matrix, Case16RepeatedTransposition) {
     EXPECT_TRUE(MatrixCompare(matrix2_original, matrix2));
   }
 }
+
+TEST(Matrix, DoLotsOfStuffToSeeWhatHappens) {
+  Matrix m1 = StringToMatrix("[ 1 2 -3 ; 4 -5 6 ]");
+  Matrix m1t = m1.transpose();
+  m1.transpose();
+  Matrix m2 = StringToMatrix("[ 7 -8 9 ; 10 -11 12 ]");
+  Matrix m2t = m2.transpose();
+  m2.transpose();
+
+  EXPECT_TRUE(MatrixCompare(StringToMatrix("[ 1 2 -3 ; 4 -5 6 ]"), m1));
+  EXPECT_TRUE(MatrixCompare(StringToMatrix("[ 1 4 ; 2 -5 ; -3 6 ]"), m1t));
+  EXPECT_TRUE(MatrixCompare(StringToMatrix("[ 7 -8 9 ; 10 -11 12 ]"), m2));
+  EXPECT_TRUE(MatrixCompare(StringToMatrix("[ 7 10 ; -8 -11 ; 9 12 ]"), m2t));
+
+  Matrix m3 = m1 - m2;
+  m3 = m3 + m1 - m2;
+  m3 = m3 * m2t * m1;
+
+  EXPECT_TRUE(MatrixCompare(StringToMatrix("[ 1 2 -3 ; 4 -5 6 ]"), m1));
+  EXPECT_TRUE(MatrixCompare(StringToMatrix("[ 1 4 ; 2 -5 ; -3 6 ]"), m1t));
+  EXPECT_TRUE(MatrixCompare(StringToMatrix("[ 7 -8 9 ; 10 -11 12 ]"), m2));
+  EXPECT_TRUE(MatrixCompare(StringToMatrix("[ 7 10 ; -8 -11 ; 9 12 ]"), m2t));
+  EXPECT_TRUE(MatrixCompare(StringToMatrix("[ -2972 2220 -2388 ; -1872 1404 -1512 ]"), m3));
+
+  m3 = m1;
+
+  EXPECT_TRUE(MatrixCompare(StringToMatrix("[ 1 2 -3 ; 4 -5 6 ]"), m1));
+  EXPECT_TRUE(MatrixCompare(StringToMatrix("[ 1 4 ; 2 -5 ; -3 6 ]"), m1t));
+  EXPECT_TRUE(MatrixCompare(StringToMatrix("[ 1 2 -3 ; 4 -5 6 ]"), m3));
+
+  m3 = 5 * m2 + 3 * m1;
+  m3.transpose();
+
+  EXPECT_TRUE(MatrixCompare(StringToMatrix("[ 1 2 -3 ; 4 -5 6 ]"), m1));
+  EXPECT_TRUE(MatrixCompare(StringToMatrix("[ 1 4 ; 2 -5 ; -3 6 ]"), m1t));
+  EXPECT_TRUE(MatrixCompare(StringToMatrix("[ 7 -8 9 ; 10 -11 12 ]"), m2));
+  EXPECT_TRUE(MatrixCompare(StringToMatrix("[ 7 10 ; -8 -11 ; 9 12 ]"), m2t));
+  EXPECT_TRUE(MatrixCompare(StringToMatrix("[ 38 62 ; -34 -70 ; 36 78 ]"), m3));
+
+  EXPECT_EQ(2, m1.rows());
+  EXPECT_EQ(3, m1.cols());
+  EXPECT_EQ(3, m1t.rows());
+  EXPECT_EQ(2, m1t.cols());
+  EXPECT_EQ(2, m2.rows());
+  EXPECT_EQ(3, m2.cols());
+  EXPECT_EQ(3, m2t.rows());
+  EXPECT_EQ(2, m2t.cols());
+  EXPECT_EQ(3, m3.rows());
+  EXPECT_EQ(2, m3.cols());
+
+  EXPECT_TRUE(MatrixCompare(StringToMatrix("[ 1 2 -3 ; 4 -5 6 ]"), m1));
+  EXPECT_TRUE(MatrixCompare(StringToMatrix("[ 1 4 ; 2 -5 ; -3 6 ]"), m1t));
+  EXPECT_TRUE(MatrixCompare(StringToMatrix("[ 7 -8 9 ; 10 -11 12 ]"), m2));
+  EXPECT_TRUE(MatrixCompare(StringToMatrix("[ 7 10 ; -8 -11 ; 9 12 ]"), m2t));
+  EXPECT_TRUE(MatrixCompare(StringToMatrix("[ 38 62 ; -34 -70 ; 36 78 ]"), m3));
+
+  EXPECT_EQ(2, m1.rows());
+  EXPECT_EQ(3, m1.cols());
+  EXPECT_EQ(3, m1t.rows());
+  EXPECT_EQ(2, m1t.cols());
+  EXPECT_EQ(2, m2.rows());
+  EXPECT_EQ(3, m2.cols());
+  EXPECT_EQ(3, m2t.rows());
+  EXPECT_EQ(2, m2t.cols());
+  EXPECT_EQ(3, m3.rows());
+  EXPECT_EQ(2, m3.cols());
+
+  std::stringstream devnull;
+
+  for(int i = 0; i < 10; ++i) {
+    devnull << m3;
+  }
+
+  EXPECT_TRUE(MatrixCompare(StringToMatrix("[ 1 2 -3 ; 4 -5 6 ]"), m1));
+  EXPECT_TRUE(MatrixCompare(StringToMatrix("[ 1 4 ; 2 -5 ; -3 6 ]"), m1t));
+  EXPECT_TRUE(MatrixCompare(StringToMatrix("[ 7 -8 9 ; 10 -11 12 ]"), m2));
+  EXPECT_TRUE(MatrixCompare(StringToMatrix("[ 7 10 ; -8 -11 ; 9 12 ]"), m2t));
+  EXPECT_TRUE(MatrixCompare(StringToMatrix("[ 38 62 ; -34 -70 ; 36 78 ]"), m3));
+
+  EXPECT_EQ(2, m1.rows());
+  EXPECT_EQ(3, m1.cols());
+  EXPECT_EQ(3, m1t.rows());
+  EXPECT_EQ(2, m1t.cols());
+  EXPECT_EQ(2, m2.rows());
+  EXPECT_EQ(3, m2.cols());
+  EXPECT_EQ(3, m2t.rows());
+  EXPECT_EQ(2, m2t.cols());
+  EXPECT_EQ(3, m3.rows());
+  EXPECT_EQ(2, m3.cols());
+
+  EXPECT_TRUE(MatrixCompare(StringToMatrix("[ 1 2 -3 ; 4 -5 6 ]"), m1));
+  EXPECT_TRUE(MatrixCompare(StringToMatrix("[ 1 4 ; 2 -5 ; -3 6 ]"), m1t));
+  EXPECT_TRUE(MatrixCompare(StringToMatrix("[ 7 -8 9 ; 10 -11 12 ]"), m2));
+  EXPECT_TRUE(MatrixCompare(StringToMatrix("[ 7 10 ; -8 -11 ; 9 12 ]"), m2t));
+  EXPECT_TRUE(MatrixCompare(StringToMatrix("[ 38 62 ; -34 -70 ; 36 78 ]"), m3));
+
+  EXPECT_TRUE(MatrixCompare(StringToMatrix("[ -38 -62 ; 34 70 ; -36 -78 ]"), -m3));
+  EXPECT_TRUE(MatrixCompare(StringToMatrix("[ -38 -62 ; 34 70 ; -36 -78 ]"), -m3));
+
+  EXPECT_EQ(  38, m3[0][0] );
+  EXPECT_EQ(  62, m3[0][1] );
+  EXPECT_EQ( -34, m3[1][0] );
+  EXPECT_EQ( -70, m3[1][1] );
+  EXPECT_EQ(  36, m3[2][0] );
+  EXPECT_EQ(  78, m3[2][1] );
+  EXPECT_EQ(  38, m3[0][0] );
+  EXPECT_EQ(  62, m3[0][1] );
+  EXPECT_EQ( -34, m3[1][0] );
+  EXPECT_EQ( -70, m3[1][1] );
+  EXPECT_EQ(  36, m3[2][0] );
+  EXPECT_EQ(  78, m3[2][1] );
+  EXPECT_EQ(  38, m3[0][0] );
+  EXPECT_EQ(  62, m3[0][1] );
+  EXPECT_EQ( -34, m3[1][0] );
+  EXPECT_EQ( -70, m3[1][1] );
+  EXPECT_EQ(  36, m3[2][0] );
+  EXPECT_EQ(  78, m3[2][1] );
+
+  std::cout << m3 << std::endl;
+}
