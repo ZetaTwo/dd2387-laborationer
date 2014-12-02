@@ -128,3 +128,7 @@ build/$(EX14DIR)/%_tests.o: $(EX14DIR)/%_tests.cpp $(EX14DIR)/kth_cprog_vektor_b
 
 build/$(EX14DIR)/vector_bool_tests.exe: ../test_runner.cpp $(patsubst %.cpp,build/%.o,$(wildcard $(EX14DIR)/*_tests.cpp))
 	$(MAKE_EXECUTABLE)
+
+BUGGIES_REMAINING=7 8
+autotest_buggies:
+	while inotifywait -e close_write 1.1_the_matrix/buggies/*; do make $(foreach i,$(BUGGIES_REMAINING),run/1.1_the_matrix/buggies/test0$i); done
