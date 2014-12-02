@@ -22,6 +22,9 @@ int main() {
   c.add_event("Besöka mormor på månen", 5, 3);
   cout << c << endl;
 
+  c.move_event(Gregorian{2048, 2, 29}, Gregorian{2048, 3, 1}, "Besöka mormor på månen");
+  cout << c << endl;
+
   const RecurringEvent training{"Rymdfotbollsträning", Gregorian{2047, 11, 23}, RecurringEvent::RecurringType::WEEKLY};
 
   c.add_recurring_event(training);
