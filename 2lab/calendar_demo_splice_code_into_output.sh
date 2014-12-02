@@ -9,4 +9,7 @@
 #         whitespace; 2: the following text until the first semicolon
 # \1std::cout << "\2" << std::endl : And insert std::cout<<" before and "<<std::endl around the instruction
 # }     : End the block of commands
-sed '/^  /{p;s/^\(\s\+\)\([^;]*\)/\1std::cout << "\2" << std::endl/}' calendar_demo.cpp
+sed '/^  /{
+p;
+s/^\(\s\+\)\([^;]*\)/\1std::cout << "\2" << std::endl/;
+}' calendar_demo.cpp
