@@ -382,3 +382,12 @@ TEST(Matrix, Case9RepeatedAddition) {
   EXPECT_EQ(2, m_o2.cols());
   EXPECT_TRUE(MatrixCompare(m_o2, m_result));
 }
+
+TEST(Matrix, Case10Subtraction) {
+  Matrix matrix1 = StringToMatrix("[ 1 2 -3 ; 5 6 7 ]");
+  Matrix matrix2 = StringToMatrix("[ 2 -3 1 ; -6 5 7 ]");
+  Matrix matrix3 = StringToMatrix("[ -1 5 -4; 11 1 0 ]");
+
+  Matrix matrix4 = matrix1 - matrix2;
+  EXPECT_TRUE(MatrixCompare(matrix3, matrix4));
+}
