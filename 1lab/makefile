@@ -32,6 +32,9 @@ lab1: ex01 ex02 ex03 ex04 ex05 ex06 ex07 ex11 ex13 ex14
 clean:
 	rm -rf build
 
+# Kep intermediate files
+.SECONDARY:
+
 build/%.o: %.cpp %.h
 	$(MAKE_OBJECT)
 
