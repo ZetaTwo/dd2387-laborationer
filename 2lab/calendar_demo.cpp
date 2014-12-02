@@ -16,6 +16,7 @@ int main() {
   set_k_time(0);
 
   const std::string granny = "Besöka mormor på månen";
+  const std::string move = "Flytta till Mars";
 
   Calendar<Gregorian> c;
   cout << c << endl;
@@ -32,10 +33,16 @@ int main() {
 
   c.add_recurring_event(training);
   c.add_event(granny, 15, 3);
-  c.add_event("Flytta till Mars", 28, 3);
+  c.add_event(move, 28, 3);
   cout << c << endl;
 
   c.cancel_recurring_event_instance(training, Gregorian{2048, 1, 11});
+  cout << c << endl;
+
+  c.add_related_event(Gregorian{2048, 3, 28}, 170, move, "Inflyttning");
+  cout << c << endl;
+
+  c.move_event(Gregorian{2048, 3, 28}, Gregorian{2048, 5, 17}, move);
   cout << c << endl;
 
 }
