@@ -33,7 +33,7 @@ Matrix StringToMatrix(std::string data) {
   return m;
 }
 
-TEST(Matrix, Case1) {
+TEST(Matrix, Case1Multiplication) {
   Matrix matrix1 = StringToMatrix("[ 1 2 3 ; 4 5 6 ]");
   Matrix matrix2 = StringToMatrix("[ 7 8 ; 9 10; 11 12 ]");
   Matrix matrix3 = StringToMatrix("[ 58 64; 139 154 ]");
@@ -43,26 +43,26 @@ TEST(Matrix, Case1) {
   EXPECT_TRUE(MatrixCompare(matrix3, matrix4));
 }
 
-TEST(Matrix, Case2) {
+TEST(Matrix, Case2SelfAssignment) {
   Matrix matrix1 = StringToMatrix("[ 1 2 -3 ; 5 6 7 ]");
   matrix1 = matrix1;
   EXPECT_EQ("[ 1 2 -3 \n; 5 6 7 ]", MatrixToString(matrix1));
 }
 
-TEST(Matrix, Case3) {
+TEST(Matrix, Case3OutputConstCorrectness) {
   Matrix matrix1 = StringToMatrix("[ 1 2 3 ; 4 5 6 ]");
 
   EXPECT_EQ("[ 1 2 3 \n; 4 5 6 ]", MatrixToString(matrix1));
   EXPECT_EQ("[ 1 2 3 \n; 4 5 6 ]", MatrixToString(matrix1));
 }
 
-TEST(Matrix, Case4) {
+TEST(Matrix, Case4InputOutput) {
   Matrix matrix1 = StringToMatrix("[ 1 2 3 ; 4 5 6 ]");
 
   EXPECT_EQ("[ 1 2 3 \n; 4 5 6 ]", MatrixToString(matrix1));
 }
 
-TEST(Matrix, Case5) {
+TEST(Matrix, Case5Addition) {
   Matrix matrix1 = StringToMatrix("[ 1 2 -3 ; 5 6 7 ]");
   Matrix matrix2 = StringToMatrix("[ 2 -3 1 ; -6 5 7 ]");
   Matrix matrix3 = StringToMatrix("[ 3 -1 -2; -1 11 14 ]");
@@ -72,7 +72,7 @@ TEST(Matrix, Case5) {
   EXPECT_TRUE(MatrixCompare(matrix3, matrix4));
 }
 
-TEST(Matrix, Case6) {
+TEST(Matrix, Case6Transposition) {
   Matrix matrix1 = StringToMatrix("[ 1 2 -3 ; 5 6 7 ]");
   Matrix matrix2 = StringToMatrix("[ 1 5; 2 6; -3 7 ]");
 
@@ -81,7 +81,7 @@ TEST(Matrix, Case6) {
   EXPECT_TRUE(MatrixCompare(matrix1, matrix2));
 }
 
-TEST(Matrix, Case7) {
+TEST(Matrix, Case7Negation) {
   Matrix matrix1 = StringToMatrix("[ 1 2 -3 ; 5 6 7 ]");
   Matrix matrix2 = StringToMatrix("[ -1 -2 3 ; -5 -6 -7 ]");
 
@@ -90,7 +90,7 @@ TEST(Matrix, Case7) {
   EXPECT_TRUE(MatrixCompare(matrix2, matrix3));
 }
 
-TEST(Matrix, Case8) {
+TEST(Matrix, Case8ScalarMultiplication) {
   Matrix matrix1 = StringToMatrix("[ 1 2 3 ; 4 5 6 ]");
   Matrix matrix2 = StringToMatrix("[ 2 4 6; 8 10 12 ]");
 
@@ -98,7 +98,7 @@ TEST(Matrix, Case8) {
   EXPECT_TRUE(MatrixCompare(matrix2, matrix3));
 }
 
-TEST(Matrix, Case9) {
+TEST(Matrix, Case9RepeatedAddition) {
   Matrix m1, m2, m3, m_o1, m_o2, m_result;
 
   m1 = StringToMatrix("[ 2 3 ; 3 4 ]");
