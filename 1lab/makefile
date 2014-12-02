@@ -68,7 +68,7 @@ ex07: ex07_given_tests ex07_tests
 ex07_given_tests: valgrind/$(EX07DIR)/test_template_vec
 ex07_tests: run/$(EX07DIR)/vector_tests
 
-ex11: run/$(EX11DIR)/matrix_tests ex11_compiler_tests ex11buggy
+ex11: run/$(EX11DIR)/matrix_tests ex11_compiler_tests
 ex11buggy: $(patsubst $(EX11BUGSDIR)/Matrix0%.o,run/$(EX11BUGSDIR)/test0%,$(wildcard $(EX11BUGSDIR)/Matrix0*.o))
 ex13: run/$(EX13DIR)/hypercube_tests
 ex14: run/$(EX14DIR)/vector_bool_tests
