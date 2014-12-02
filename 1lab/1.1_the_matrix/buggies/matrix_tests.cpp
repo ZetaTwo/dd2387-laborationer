@@ -1,18 +1,16 @@
 #include <gtest/gtest.h>
 #include <sstream>
-#include <string>
-#include <iostream>
 #include "Matrix.h"
 
-bool MatrixCompare(const Matrix& a, const Matrix& b) {
+
+//Verify tests
+bool MatrixCompare(Matrix& a, Matrix& b) {
   if(a.rows() != b.rows() || a.cols() != b.cols()) {
     return false;
   }
 
-  for (int y = 0; y < a.rows(); ++y)
-  {
-    for (int x = 0; x < a.cols(); ++x)
-    {
+  for(size_t y = 0; y < a.rows(); ++y) {
+    for(size_t x = 0; x < a.cols(); ++x) {
       if(a[y][x] != b[y][x]) {
         return false;
       }
