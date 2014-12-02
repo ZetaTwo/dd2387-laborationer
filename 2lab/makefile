@@ -66,3 +66,12 @@ build/test/driver/%: cprog09%.cpp $(DATE_HEADERS) calendar.h $(DATE_OBJECTS) $(K
 run_driver_%: build/test/driver/% test/driver/%.in test/driver/%.out
 	$< < test/driver/$*.in > build/test/driver/$*.out
 	diff -u test/driver/$*.out build/test/driver/$*.out
+
+build/calendar_demo_spliced.cpp: calendar_demo_splice_code_into_output.sh calendar_demo.cpp
+	./$< > $@
+
+build/calendar_demo: build/calendar_demo_spliced.cpp calendar.h $(DATE_HEADERS) $(DATE_OBJECTS) $(KATTISTIME) build/kattistime.o
+	$(MAKE_EXECUTABLE)
+
+run_calendar_demo: build/calendar_demo
+	./$<
