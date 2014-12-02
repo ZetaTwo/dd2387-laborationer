@@ -457,3 +457,14 @@ TEST(Matrix, Case15NegationConstCorrectness) {
 
   EXPECT_TRUE(MatrixCompare(matrix1_original, m1));
 }
+
+TEST(Matrix, Case16RepeatedTransposition) {
+  const Matrix matrix1 = StringToMatrix("[ 1 2 -3 ; 5 6 7 ]");
+  const Matrix matrix2_original = StringToMatrix("[ 1 5; 2 6; -3 7 ]");
+  Matrix matrix2 = matrix2_original;
+
+  for(int i = 0; i < 5; ++i) {
+    EXPECT_TRUE(MatrixCompare(matrix1, matrix2.transpose()));
+    EXPECT_TRUE(MatrixCompare(matrix2_original, matrix2.transpose()));
+  }
+}
