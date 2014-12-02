@@ -1,14 +1,13 @@
-LDFLAGS := -lpthread -lgtest -lgtest_main
+# Change these
+cxxtestpath = /info/cprog11/cxxtest/
+testcode    = example_test.h
 
-.PHONY: all
+testcode.cpp: $(testcode)
+	python $(cxxtestpath)cxxtestgen.py --error-printer -o testcode.cpp $(testcode)
 
-tests:
-	g++ -c matrix_tests.cpp -o matrix_tests.o
-	g++ -c test_runner.cpp -o test_runner.o
-
-runtest0%: tests
-	g++ -o runtest0$* matrix_tests.o test_runner.o Matrix0$*.o $(LDFLAGS)
+runtest0%: testcode.cpp
+	g++ -I $(cxxtestpath) -o runtest0$* testcode.cpp Matrix0$*.o
 
 clean:
-	touch runtest01 matrix_tests.o
-	rm runtest0* matrix_tests.o
+	touch runtest01 testcode.cpp
+	rm runtest0* testcode.cpp
