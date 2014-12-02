@@ -561,3 +561,26 @@ TEST(Matrix, DoLotsOfStuffToSeeWhatHappens) {
 
   std::cout << m3 << std::endl;
 }
+
+TEST(Matrix, Case17SizeConstructor) {
+  const Matrix m1{42};
+  EXPECT_EQ(42, m1.rows());
+  EXPECT_EQ(42, m1.cols());
+}
+
+TEST(Matrix, Case17ZeroSizeConstructor) {
+  Matrix m1{0};
+  EXPECT_EQ(0, m1.rows());
+  EXPECT_EQ(0, m1.cols());
+  m1 * 3;
+  m1 * m1;
+  3 * m1;
+  m1 + m1;
+  m1.transpose();
+}
+
+TEST(Matrix, Case18SizeSizeConstructor) {
+  const Matrix m1{42, 1337};
+  EXPECT_EQ(42, m1.rows());
+  EXPECT_EQ(1337, m1.cols());
+}
