@@ -22,9 +22,14 @@ int main() {
   c.add_event("Besöka mormor på månen", 5, 3);
   cout << c << endl;
 
-  c.add_recurring_event(RecurringEvent{"Rymdfotbollsträning", Gregorian{2047, 11, 23}, RecurringEvent::RecurringType::WEEKLY});
+  const RecurringEvent training{"Rymdfotbollsträning", Gregorian{2047, 11, 23}, RecurringEvent::RecurringType::WEEKLY};
+
+  c.add_recurring_event(training);
   c.add_event("Besöka mormor på månen", 15, 3);
   c.add_event("Flytta till Mars", 28, 3);
+  cout << c << endl;
+
+  c.cancel_recurring_event_instance(training, Gregorian{2048, 1, 11});
   cout << c << endl;
 
 }
