@@ -10,6 +10,8 @@ EX06DIR=0.6_the_simple_container
 EX07DIR=0.7_the_template_vector
 
 EX11DIR=1.1_the_matrix
+EX11BUGSDIR=1.1_the_matrix/buggies
+EX11BUGSPREFIX=
 EX13DIR=1.3_the_hypercube
 EX14DIR=1.4_space_is_not_infinite
 
@@ -66,7 +68,8 @@ ex07: ex07_given_tests ex07_tests
 ex07_given_tests: valgrind/$(EX07DIR)/test_template_vec
 ex07_tests: run/$(EX07DIR)/vector_tests
 
-ex11: run/$(EX11DIR)/matrix_tests ex11_compiler_tests run/$(EX11DIR)/example_test
+ex11: run/$(EX11DIR)/matrix_tests ex11_compiler_tests ex11buggy
+ex11buggy: $(patsubst $(EX11BUGSDIR)/Matrix0%.o,run/$(EX11BUGSDIR)/test0%,$(wildcard $(EX11BUGSDIR)/Matrix0*.o))
 ex13: run/$(EX13DIR)/hypercube_tests
 ex14: run/$(EX14DIR)/vector_bool_tests
 
@@ -105,11 +108,11 @@ build/$(EX11DIR)/matrix_tests.o: $(EX11DIR)/matrix_tests.cpp build/$(EX11DIR)/Ma
 build/$(EX11DIR)/matrix_tests.exe: ../test_runner.cpp build/$(EX11DIR)/matrix_tests.o build/$(EX11DIR)/Matrix.o
 	$(MAKE_EXECUTABLE)
 
-build/$(EX11DIR)/example_test.cpp: $(EX11DIR)/example_test.h
-	$(MAKE_CXXTEST_CODE)
+build/$(EX11BUGSDIR)/test0%.o: $(EX11BUGSDIR)/matrix_tests.cpp $(EX11BUGSDIR)/Matrix.h
+	$(MAKE_OBJECT)
 
-build/$(EX11DIR)/example_test.exe: build/$(EX11DIR)/example_test.cpp build/$(EX11DIR)/Matrix.o $(MATRIX_HEADER)
-	$(MAKE_EXECUTABLE) -I $(CXXTEST_DIR) -I .
+build/$(EX11BUGSDIR)/test0%.exe: test_runner.cpp build/$(EX11BUGSDIR)/test0%.o $(EX11BUGSDIR)/$(EX11BUGSPREFIX)Matrix0%.o $(EX11BUGSDIR)/Matrix.h
+	$(MAKE_EXECUTABLE)
 
 build/$(EX13DIR)/hypercube_tests.o: $(EX13DIR)/hypercube_tests.cpp $(EX13DIR)/hypercube.hpp $(TEMPLATE_VECTOR_HEADER)
 	$(MAKE_OBJECT)
