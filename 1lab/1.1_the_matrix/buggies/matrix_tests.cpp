@@ -419,3 +419,17 @@ TEST(Matrix, Case12SubtractionConstCorrectness) {
   EXPECT_TRUE(MatrixCompare(matrix1_original, m1));
   EXPECT_TRUE(MatrixCompare(matrix2_original, m2));
 }
+
+TEST(Matrix, Case13MultiplicationConstCorrectness) {
+  const Matrix matrix1_original = StringToMatrix("[ 1 2 -3 ; 5 6 7 ]");
+  const Matrix matrix2_original = StringToMatrix("[ 2 -3 1 ; -6 5 7 ]").transpose();
+  Matrix m1 = matrix1_original;
+  Matrix m2 = matrix2_original;
+
+  for(int i = 0; i < 10; ++i) {
+    m1 * m2;
+  }
+
+  EXPECT_TRUE(MatrixCompare(matrix1_original, m1));
+  EXPECT_TRUE(MatrixCompare(matrix2_original, m2));
+}
