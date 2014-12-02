@@ -39,7 +39,7 @@ build/%.exe: %.cpp
 	$(MAKE_EXECUTABLE)
 
 run/%: build/%.exe
-	./$^
+	./$^ $(GTEST_FLAGS)
 
 valgrind/%: build/%.exe
 	valgrind ./$^
