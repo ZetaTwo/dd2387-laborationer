@@ -114,7 +114,7 @@ namespace lab2 {
       bool move_event(const Date& from, const Date& to, Event event);
       bool add_related_event(const Date& rel_date, int days, std::string rel_event, std::string new_event);
       bool add_birthday(const std::string& name, const Date& birthday);
-      bool compute_age(const std::string& name, const Date& target_day);
+      int compute_age(const std::string& name, const Date& target_day);
 
       bool add_recurring_event(const RecurringEvent& recurring_event);
       bool remove_recurring_event(const RecurringEvent& recurring_event);
@@ -296,7 +296,7 @@ namespace lab2 {
   }
 
   template<class D>
-  bool Calendar<D>::compute_age(const std::string& name, const Date& target_day) {
+  int Calendar<D>::compute_age(const std::string& name, const Date& target_day) {
     return false;
   }
 
