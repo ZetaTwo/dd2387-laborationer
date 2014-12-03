@@ -47,4 +47,6 @@ int main() {
   c.move_event(Gregorian{2048, 3, 28}, Gregorian{2048, 5, 17}, move);
   cout << c << endl;
 
+  c.print_events(Gregorian{2048, 2, 15}, Gregorian{2048, 3, 15});
+
 }
