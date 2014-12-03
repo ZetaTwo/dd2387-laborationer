@@ -207,6 +207,55 @@ TEST(Calendar, RelatedEventIsMovedWhenBaseEventIsMoved) {
   EXPECT_EQ(related_event, cal.get_static_events().at(moved_related_date).front());
 }
 
+TEST(Calendar, RelatedEventIsMovedWhenBaseEventIsMovedTwice) {
+  const Gregorian base_date { 2014, 11, 7 };
+  const int move_base_days = 7;
+  const string base_event = "foo";
+  const int related_days = 1;
+  const string related_event = "bar";
+
+  Gregorian related_date{base_date};
+  related_date += related_days;
+
+  Gregorian moved_base_date{base_date};
+  moved_base_date += move_base_days;
+
+  Gregorian moved_related_date{related_date};
+  moved_related_date += move_base_days;
+
+  set_k_time(0);
+  Calendar<Gregorian> cal;
+
+  cal.add_event(base_event, base_date.day(), base_date.month(), base_date.year());
+  cal.add_related_event(base_date, related_days, base_event, related_event);
+
+  ASSERT_EQ(1, cal.get_static_events().at(base_date).size());
+  ASSERT_EQ(base_event, cal.get_static_events().at(base_date).front());
+  ASSERT_EQ(1, cal.get_static_events().at(related_date).size());
+  ASSERT_EQ(related_event, cal.get_static_events().at(related_date).front());
+
+  const bool success = cal.move_event(base_date, moved_base_date, base_event);
+  EXPECT_TRUE(success);
+
+  EXPECT_EQ(0, cal.get_static_events().at(base_date).size());
+  EXPECT_EQ(0, cal.get_static_events().at(related_date).size());
+
+  EXPECT_EQ(1, cal.get_static_events().at(moved_base_date).size());
+  EXPECT_EQ(1, cal.get_static_events().at(moved_related_date).size());
+  EXPECT_EQ(base_event, cal.get_static_events().at(moved_base_date).front());
+  EXPECT_EQ(related_event, cal.get_static_events().at(moved_related_date).front());
+
+  EXPECT_TRUE(cal.move_event(moved_base_date, base_date, base_event));
+
+  EXPECT_EQ(0, cal.get_static_events().at(moved_base_date).size());
+  EXPECT_EQ(0, cal.get_static_events().at(moved_related_date).size());
+
+  ASSERT_EQ(1, cal.get_static_events().at(base_date).size());
+  ASSERT_EQ(1, cal.get_static_events().at(related_date).size());
+  EXPECT_EQ(base_event, cal.get_static_events().at(base_date).front());
+  EXPECT_EQ(related_event, cal.get_static_events().at(related_date).front());
+}
+
 TEST(Calendar, RelatedEventIsRemovedWhenBaseEventIsRemoved) {
   const Gregorian base_date { 2014, 11, 7 };
   const string base_event = "foo";
