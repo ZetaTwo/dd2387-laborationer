@@ -66,7 +66,6 @@ namespace lab2 {
               D current_date;
             public:
               const_iterator(const RecurringEvent& parent);
-              const_iterator(const RecurringEvent& parent, const Date& current_date);
               const_iterator& operator++();
               const_iterator  operator++(int);
               bool has_next() const;
@@ -78,7 +77,6 @@ namespace lab2 {
           bool occurs_on(const Date& date) const;
 
           const_iterator begin() const;
-          const_iterator end()   const;
       };
 
       Calendar();
@@ -441,19 +439,9 @@ namespace lab2 {
     return const_iterator{*this};
   }
 
-  template<class D>
-  typename Calendar<D>::RecurringEvent::const_iterator Calendar<D>::RecurringEvent::end() const {
-    D d{*end_date};
-    return const_iterator{*this, ++d};
-  }
-
 
   template<class D>
   Calendar<D>::RecurringEvent::const_iterator::const_iterator(const RecurringEvent& parent) : parent(parent), current_date(parent.begin_date) {}
-
-  template<class D>
-  Calendar<D>::RecurringEvent::const_iterator::const_iterator(const RecurringEvent& parent, const Date& current_date) :
-    parent(parent), current_date(current_date) {}
 
   template<class D>
   typename Calendar<D>::RecurringEvent::const_iterator& Calendar<D>::RecurringEvent::const_iterator::operator++() {
