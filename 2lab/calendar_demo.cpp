@@ -44,7 +44,21 @@ int main() {
   c.add_related_event(Gregorian{2332, 3, 28}, 170, move, "Inflyttning");
   cout << c << endl;
 
+  c.add_related_event(Gregorian{2332, 9, 14}, 14, "Inflyttning", "Inflyttningsfest");
+  cout << c << endl;
+
   c.move_event(Gregorian{2332, 3, 28}, Gregorian{2332, 5, 17}, move);
+  cout << c << endl;
+
+  c.move_event(Gregorian{2332, 5, 17}, Gregorian{2332, 5, 18}, move);
+  cout << c << endl;
+
+  // After this, Inflyttningsfest should not move when Inflyttning moves
+  c.remove_event("Inflyttningsfest", 18, 11, 2332);
+  c.add_event("Inflyttningsfest", 18, 11, 2332);
+  cout << c << endl;
+
+  c.move_event(Gregorian{2332, 5, 18}, Gregorian{2332, 5, 19}, move);
   cout << c << endl;
 
   c.print_events(Gregorian{2332, 2, 15}, Gregorian{2332, 3, 15});
