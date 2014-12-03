@@ -30,6 +30,8 @@ namespace lab2 {
       std::list<EventRelation> event_relations;
 
       bool event_exists_at_date(const Event& event, const Date& date) const;
+      void remove_event_relations(const Event& event, const Date& date);
+      void move_related_events(const Event& base_event, const Date& base_event_from, const Date& base_event_to);
 
     public:
       class RecurringEvent {
@@ -202,33 +204,7 @@ namespace lab2 {
       }
       events[target_date].erase(it);
 
-      std::list<typename std::list<EventRelation>::iterator> dead_relations_iterators;
-      std::list<EventRelation> relations_based_on_argument_event;
-
-      // Copy EventRelations to another list so we can modify the original list in recursive remove_event calls
-      for(
-          typename std::list<EventRelation>::iterator rel_it = event_relations.begin();
-          rel_it != event_relations.end();
-          ++rel_it
-          ) {
-        const EventRelation& rel = *rel_it;
-        if(rel.dependee_event == event && rel.dependee_date == target_date) {
-          // This event is the base for other events related to it
-          relations_based_on_argument_event.push_back(rel);
-          dead_relations_iterators.push_back(rel_it);
-        } else if(rel.dependent_event == event && rel.get_dependent_date() == target_date) {
-          // This event is related to some other one, remove this dead relation
-          dead_relations_iterators.push_back(rel_it);
-        }
-      }
-
-      for(const typename std::list<EventRelation>::iterator rel_it : dead_relations_iterators) {
-        event_relations.erase(rel_it);
-      }
-      for(const EventRelation rel : relations_based_on_argument_event) {
-        const Date& dependent_date = rel.get_dependent_date();
-        remove_event(rel.dependent_event, dependent_date.day(), dependent_date.month(), dependent_date.year());
-      }
+      remove_event_relations(event, target_date);
 
       return true;
     }
@@ -238,30 +214,66 @@ namespace lab2 {
   }
 
   template<class D>
+  void Calendar<D>::remove_event_relations(const Event& event, const Date& target_date) {
+    std::list<typename std::list<EventRelation>::iterator> dead_relations_iterators;
+    std::list<EventRelation> relations_based_on_argument_event;
+
+    // Copy EventRelations to another list so we can modify the original list in recursive remove_event calls
+    for(
+        typename std::list<EventRelation>::iterator rel_it = event_relations.begin();
+        rel_it != event_relations.end();
+        ++rel_it
+        ) {
+      const EventRelation& rel = *rel_it;
+      if(rel.dependee_event == event && rel.dependee_date == target_date) {
+        // This event is the base for other events related to it
+        relations_based_on_argument_event.push_back(rel);
+        dead_relations_iterators.push_back(rel_it);
+      } else if(rel.dependent_event == event && rel.get_dependent_date() == target_date) {
+        // This event is related to some other one, remove this dead relation
+        dead_relations_iterators.push_back(rel_it);
+      }
+    }
+
+    for(const typename std::list<EventRelation>::iterator rel_it : dead_relations_iterators) {
+      event_relations.erase(rel_it);
+    }
+    for(const EventRelation rel : relations_based_on_argument_event) {
+      const Date& dependent_date = rel.get_dependent_date();
+      remove_event(rel.dependent_event, dependent_date.day(), dependent_date.month(), dependent_date.year());
+    }
+  }
+
+  template<class D>
   bool Calendar<D>::move_event(const Date& from, const Date& to, Event event) {
     if(!event_exists_at_date(event, from) || event_exists_at_date(event, to)) {
       return false;
     }
 
+    move_related_events(event, from, to);
+
+    return add_event(event, to.day(), to.month(), to.year())
+      && remove_event(event, from.day(), from.month(), from.year());
+  }
+
+  template<class D>
+  void Calendar<D>::move_related_events(const Event& base_event, const Date& base_event_from, const Date& base_event_to) {
     std::list<EventRelation> relations_based_on_argument_event;
 
     // Copy EventRelations to another list so we can modify the original list in recursive move_event calls
     for(EventRelation& rel : event_relations) {
-      if(rel.dependee_event == event && rel.dependee_date == from) {
+      if(rel.dependee_event == base_event && rel.dependee_date == base_event_from) {
         relations_based_on_argument_event.push_back(rel);
       }
     }
     for(EventRelation& rel : relations_based_on_argument_event) {
       D new_dependent_date = rel.get_dependent_date();
-      new_dependent_date += (to - from);
+      new_dependent_date += (base_event_to - base_event_from);
       if(move_event(rel.get_dependent_date(), new_dependent_date, rel.dependent_event)) {
-        rel.dependee_date = to;
+        rel.dependee_date = base_event_to;
         event_relations.push_back(rel);
       }
     }
-
-    return add_event(event, to.day(), to.month(), to.year())
-      && remove_event(event, from.day(), from.month(), from.year());
   }
 
   template<class D>
