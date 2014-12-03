@@ -35,7 +35,7 @@ TEST(Calendar, MoveEventMovesEventFromOriginDateToTargetDate) {
   EXPECT_TRUE(success);
 
   EXPECT_EQ(0, cal.get_static_events().at(from).size());
-  EXPECT_EQ(1, cal.get_static_events().at(to).size());
+  ASSERT_EQ(1, cal.get_static_events().at(to).size());
   EXPECT_EQ(event, cal.get_static_events().at(to).front());
 }
 
@@ -77,8 +77,8 @@ TEST(Calendar, MoveEventReturnsFalseAndDoesNothingIfEventAlreadyExistsAtTargetDa
   const bool success = cal.move_event(from, to, event);
   EXPECT_FALSE(success);
 
-  EXPECT_EQ(1, cal.get_static_events().at(from).size());
-  EXPECT_EQ(1, cal.get_static_events().at(to).size());
+  ASSERT_EQ(1, cal.get_static_events().at(from).size());
+  ASSERT_EQ(1, cal.get_static_events().at(to).size());
   EXPECT_EQ(event, cal.get_static_events().at(from).front());
   EXPECT_EQ(event, cal.get_static_events().at(to).front());
 }
@@ -106,8 +106,8 @@ TEST(Calendar, AddRelatedEventAddsEventAtGivenOffsetRelativeToBaseEvent) {
   const bool success = cal.add_related_event(base_date, related_days, base_event, related_event);
   EXPECT_TRUE(success);
 
-  EXPECT_EQ(1, cal.get_static_events().at(base_date).size());
-  EXPECT_EQ(1, cal.get_static_events().at(base_date).size());
+  ASSERT_EQ(1, cal.get_static_events().at(base_date).size());
+  ASSERT_EQ(1, cal.get_static_events().at(base_date).size());
   EXPECT_EQ(base_event, cal.get_static_events().at(base_date).front());
   EXPECT_EQ(related_event, cal.get_static_events().at(related_date).front());
 }
@@ -162,9 +162,9 @@ TEST(Calendar, AddRelatedEventReturnsFalseAndDoesNothingIfRelativeEventCollidesW
   const bool success = cal.add_related_event(base_date, related_days, base_event, related_event);
   EXPECT_FALSE(success);
 
-  EXPECT_EQ(1, cal.get_static_events().at(base_date).size());
+  ASSERT_EQ(1, cal.get_static_events().at(base_date).size());
   EXPECT_EQ(base_event, cal.get_static_events().at(base_date).front());
-  EXPECT_EQ(1, cal.get_static_events().at(related_date).size());
+  ASSERT_EQ(1, cal.get_static_events().at(related_date).size());
   EXPECT_EQ(related_event, cal.get_static_events().at(related_date).front());
 }
 
@@ -201,8 +201,8 @@ TEST(Calendar, RelatedEventIsMovedWhenBaseEventIsMoved) {
   EXPECT_EQ(0, cal.get_static_events().at(base_date).size());
   EXPECT_EQ(0, cal.get_static_events().at(related_date).size());
 
-  EXPECT_EQ(1, cal.get_static_events().at(moved_base_date).size());
-  EXPECT_EQ(1, cal.get_static_events().at(moved_related_date).size());
+  ASSERT_EQ(1, cal.get_static_events().at(moved_base_date).size());
+  ASSERT_EQ(1, cal.get_static_events().at(moved_related_date).size());
   EXPECT_EQ(base_event, cal.get_static_events().at(moved_base_date).front());
   EXPECT_EQ(related_event, cal.get_static_events().at(moved_related_date).front());
 }
@@ -240,8 +240,8 @@ TEST(Calendar, RelatedEventIsMovedWhenBaseEventIsMovedTwice) {
   EXPECT_EQ(0, cal.get_static_events().at(base_date).size());
   EXPECT_EQ(0, cal.get_static_events().at(related_date).size());
 
-  EXPECT_EQ(1, cal.get_static_events().at(moved_base_date).size());
-  EXPECT_EQ(1, cal.get_static_events().at(moved_related_date).size());
+  ASSERT_EQ(1, cal.get_static_events().at(moved_base_date).size());
+  ASSERT_EQ(1, cal.get_static_events().at(moved_related_date).size());
   EXPECT_EQ(base_event, cal.get_static_events().at(moved_base_date).front());
   EXPECT_EQ(related_event, cal.get_static_events().at(moved_related_date).front());
 
@@ -353,7 +353,7 @@ TEST(Calendar, RecurringEventCanRecurDailyForever) {
 
   for(Gregorian d{begin_date}; d.year() < 4000; d += period_multiplier) {
     const std::list<string> day_events = cal.get_events(d);
-    EXPECT_EQ(1, day_events.size());
+    ASSERT_EQ(1, day_events.size());
     EXPECT_EQ(event, day_events.front());
   }
 }
@@ -370,7 +370,7 @@ TEST(Calendar, RecurringEventCanRecurWeeklyForever) {
 
   for(Gregorian d{begin_date}; d.year() < 4000; d += 7 * period_multiplier) {
     const std::list<string> day_events = cal.get_events(d);
-    EXPECT_EQ(1, day_events.size());
+    ASSERT_EQ(1, day_events.size());
     EXPECT_EQ(event, day_events.front());
   }
 }
@@ -387,7 +387,7 @@ TEST(Calendar, RecurringEventCanRecurMonthlyForever) {
 
   for(Gregorian d{begin_date}; d.year() < 4000; d.add_month(period_multiplier)) {
     const std::list<string> day_events = cal.get_events(d);
-    EXPECT_EQ(1, day_events.size());
+    ASSERT_EQ(1, day_events.size());
     EXPECT_EQ(event, day_events.front());
   }
 }
@@ -404,7 +404,7 @@ TEST(Calendar, RecurringEventCanRecurYearlyForever) {
 
   for(Gregorian y{begin_date}; y.year() < 4000; y.add_year(period_multiplier)) {
     const std::list<string> day_events = cal.get_events(y);
-    EXPECT_EQ(1, day_events.size());
+    ASSERT_EQ(1, day_events.size());
     EXPECT_EQ(event, day_events.front());
   }
 }
