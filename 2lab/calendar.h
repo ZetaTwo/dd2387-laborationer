@@ -184,7 +184,34 @@ namespace lab2 {
 
   template<class D>
   bool Calendar<D>::move_event(const Date& from, const Date& to, Event event) {
-    return false;
+    try {
+      const std::list<Event>& existingFromEvents = events.at(from);
+      if(std::find(
+          existingFromEvents.begin(),
+          existingFromEvents.end(),
+          event
+        ) == existingFromEvents.end()) {
+        return false;
+      }
+    } catch(std::out_of_range e) {
+      return false;
+    }
+
+    try {
+      const std::list<Event>& existingToEvents = events.at(to);
+      if(std::find(
+          existingToEvents.begin(),
+          existingToEvents.end(),
+          event
+        ) != existingToEvents.end()) {
+        return false;
+      }
+    } catch(std::out_of_range e) {
+      // All good, there's definitely no collision at 'to' if there isn't even a list
+    }
+
+    return add_event(event, to.day(), to.month(), to.year())
+      && remove_event(event, from.day(), from.month(), from.year());
   }
 
   template<class D>
