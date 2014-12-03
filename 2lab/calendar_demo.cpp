@@ -52,4 +52,11 @@ int main() {
   c.remove_recurring_event(meditation);
   cout << c << endl;
 
+  c.add_birthday("Mormor", Gregorian{2016, 2, 29});
+  cout << c << endl;
+
+  cout << c.compute_age("Mormor", Gregorian{2332, 2, 28}) << endl;
+  cout << c.compute_age("Mormor", Gregorian{2332, 2, 29}) << endl;
+  cout << c.compute_age("Mormor", Gregorian{2332, 3, 1}) << endl;
+
 }
