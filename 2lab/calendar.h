@@ -28,6 +28,7 @@ namespace lab2 {
       D current_date;
       EventCollection events;
       std::list<EventRelation> event_relations;
+      std::map<std::string, D> birthdays;
 
       bool event_exists_at_date(const Event& event, const Date& date) const;
       void remove_event_relations(const Event& event, const Date& date);
@@ -292,12 +293,34 @@ namespace lab2 {
 
   template<class D>
   bool Calendar<D>::add_birthday(const std::string& name, const Date& birthday) {
-    return false;
+    if(birthdays.count(name) > 0) {
+      return false;
+    }
+    birthdays[name] = birthday;
+    return true;
   }
 
   template<class D>
-  int Calendar<D>::compute_age(const std::string& name, const Date& target_day) {
-    return false;
+  int Calendar<D>::compute_age(const std::string& name, const Date& target_date) {
+    const Date& birthday = birthdays.at(name);
+    const int year_diff = target_date.year() - birthday.year();
+    if(target_date.month() < birthday.month()) {
+      return year_diff - 1;
+    }
+    if(target_date.month() == birthday.month()) {
+      const int year = target_date.year();
+      const bool target_date_is_in_gregorian_leap_year =
+          ((year % 400) == 0) || (((year % 4) == 0) && ((year % 100) != 0));
+
+      if(birthday.month() == 2
+          && birthday.day() == 29
+          && target_date.day() == 28
+          && !target_date_is_in_gregorian_leap_year) {
+        return year_diff;
+      }
+      return year_diff - (target_date.day() < birthday.day() ? 1 : 0);
+    }
+    return year_diff;
   }
 
   template<class D>
