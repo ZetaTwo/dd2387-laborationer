@@ -19,6 +19,8 @@ namespace lab2 {
       D current_date;
       EventCollection events;
 
+      bool event_exists_at_date(const Event& event, const Date& date) const;
+
     public:
       class RecurringEvent {
         public:
@@ -138,6 +140,20 @@ namespace lab2 {
   }
 
   template<class D>
+  bool Calendar<D>::event_exists_at_date(const Event& event, const Date& date) const {
+    try {
+      const std::list<Event>& existingFromEvents = events.at(date);
+      return std::find(
+          existingFromEvents.begin(),
+          existingFromEvents.end(),
+          event
+        ) != existingFromEvents.end();
+    } catch(std::out_of_range e) {
+      return false;
+    }
+  }
+
+  template<class D>
   bool Calendar<D>::set_date(const int year, const int month, const int day) {
     try {
       current_date = D{year, month, day};
@@ -184,30 +200,8 @@ namespace lab2 {
 
   template<class D>
   bool Calendar<D>::move_event(const Date& from, const Date& to, Event event) {
-    try {
-      const std::list<Event>& existingFromEvents = events.at(from);
-      if(std::find(
-          existingFromEvents.begin(),
-          existingFromEvents.end(),
-          event
-        ) == existingFromEvents.end()) {
-        return false;
-      }
-    } catch(std::out_of_range e) {
+    if(!event_exists_at_date(event, from) || event_exists_at_date(event, to)) {
       return false;
-    }
-
-    try {
-      const std::list<Event>& existingToEvents = events.at(to);
-      if(std::find(
-          existingToEvents.begin(),
-          existingToEvents.end(),
-          event
-        ) != existingToEvents.end()) {
-        return false;
-      }
-    } catch(std::out_of_range e) {
-      // All good, there's definitely no collision at 'to' if there isn't even a list
     }
 
     return add_event(event, to.day(), to.month(), to.year())
