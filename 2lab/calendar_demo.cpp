@@ -49,4 +49,7 @@ int main() {
 
   c.print_events(Gregorian{2048, 2, 15}, Gregorian{2048, 3, 15});
 
+  c.remove_recurring_event(meditation);
+  cout << c << endl;
+
 }
