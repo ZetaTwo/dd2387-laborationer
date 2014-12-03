@@ -317,7 +317,10 @@ INSTANTIATE_TEST_CASE_P(Calendar, BirthdayTest, Values(
   // birthday y, m, d, test day y, m, d, expected age
   std::tuple<int, int, int, int, int, int, int>{ 2000,  2, 29, 2000,  2, 29,  0 },
   std::tuple<int, int, int, int, int, int, int>{ 2000,  2, 29, 2000,  3,  1,  0 },
+  std::tuple<int, int, int, int, int, int, int>{ 2000,  2, 29, 2004,  2, 28,  3 },
   std::tuple<int, int, int, int, int, int, int>{ 2000,  2, 29, 2004,  2, 29,  4 },
+  std::tuple<int, int, int, int, int, int, int>{ 2000,  2, 29, 2004,  3,  1,  4 },
+  std::tuple<int, int, int, int, int, int, int>{ 2000,  2, 29, 2005,  2, 27,  4 },
   std::tuple<int, int, int, int, int, int, int>{ 2000,  2, 29, 2005,  2, 28,  5 },
   std::tuple<int, int, int, int, int, int, int>{ 1995, 10, 30, 2027, 10, 29, 31 },
   std::tuple<int, int, int, int, int, int, int>{ 1995, 10, 30, 2027, 10, 30, 32 },
