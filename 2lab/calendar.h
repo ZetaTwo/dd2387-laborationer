@@ -56,10 +56,11 @@ namespace lab2 {
 
         public:
 
-          RecurringEvent(const std::string& event, const Date& begin_date, RecurringType recurringType);
-          RecurringEvent(const std::string& event, const Date& begin_date, RecurringType recurringType, const Date& end_date);
-          RecurringEvent(const std::string& event, const Date& begin_date, RecurringType recurringType, unsigned int period_multiplier);
-          RecurringEvent(const std::string& event, const Date& begin_date, RecurringType recurringType, const Date& end_date, unsigned int period_multiplier);
+          RecurringEvent(const RecurringEvent& e);
+          RecurringEvent(const std::string& event, const Date& begin_date, RecurringType recurring_type);
+          RecurringEvent(const std::string& event, const Date& begin_date, RecurringType recurring_type, const Date& end_date);
+          RecurringEvent(const std::string& event, const Date& begin_date, RecurringType recurring_type, unsigned int period_multiplier);
+          RecurringEvent(const std::string& event, const Date& begin_date, RecurringType recurring_type, const Date& end_date, unsigned int period_multiplier);
 
           class const_iterator : std::iterator<std::forward_iterator_tag, const D> {
               D current_date;
@@ -356,16 +357,44 @@ namespace lab2 {
   }
 
   template<class D>
-  Calendar<D>::RecurringEvent::RecurringEvent(const std::string& event, const Date& begin_date, RecurringType recurringType) : period_multiplier(1) {}
+  Calendar<D>::RecurringEvent::RecurringEvent(const RecurringEvent& original) :
+    begin_date(original.begin_date),
+    end_date(original.end_date == nullptr ? nullptr : new D{*original.end_date}),
+    recurring_type(original.recurring_type),
+    period_multiplier(original.period_multiplier),
+    event(original.event) {}
 
   template<class D>
-  Calendar<D>::RecurringEvent::RecurringEvent(const std::string& event, const Date& begin_date, RecurringType recurringType, const Date& end_date) : period_multiplier(1) {}
+  Calendar<D>::RecurringEvent::RecurringEvent(const std::string& event, const Date& begin_date, RecurringType recurring_type) :
+    begin_date(begin_date),
+    end_date(nullptr),
+    recurring_type(recurring_type),
+    period_multiplier(1),
+    event(event) {}
 
   template<class D>
-  Calendar<D>::RecurringEvent::RecurringEvent(const std::string& event, const Date& begin_date, RecurringType recurringType, unsigned int period_multiplier) : period_multiplier(period_multiplier) {}
+  Calendar<D>::RecurringEvent::RecurringEvent(const std::string& event, const Date& begin_date, RecurringType recurring_type, const Date& end_date) :
+    begin_date(begin_date),
+    end_date(new D{end_date}),
+    recurring_type(recurring_type),
+    period_multiplier(1),
+    event(event) {}
 
   template<class D>
-  Calendar<D>::RecurringEvent::RecurringEvent(const std::string& event, const Date& begin_date, RecurringType recurringType, const Date& end_date, unsigned int period_multiplier) : period_multiplier(period_multiplier) {}
+  Calendar<D>::RecurringEvent::RecurringEvent(const std::string& event, const Date& begin_date, RecurringType recurring_type, unsigned int period_multiplier) :
+    begin_date(begin_date),
+    end_date(nullptr),
+    recurring_type(recurring_type),
+    period_multiplier(period_multiplier),
+    event(event) {}
+
+  template<class D>
+  Calendar<D>::RecurringEvent::RecurringEvent(const std::string& event, const Date& begin_date, RecurringType recurring_type, const Date& end_date, unsigned int period_multiplier) :
+    begin_date(begin_date),
+    end_date(new D{end_date}),
+    recurring_type(recurring_type),
+    period_multiplier(period_multiplier),
+    event(event) {}
 
   template<class D>
   typename Calendar<D>::RecurringEvent::const_iterator Calendar<D>::RecurringEvent::begin() const {
