@@ -52,9 +52,8 @@ namespace lab2 {
 
           const int period_multiplier;
 
-          const std::string event;
-
         public:
+          const std::string event;
 
           RecurringEvent(const RecurringEvent& e);
           RecurringEvent(const std::string& event, const Date& begin_date, RecurringType recurring_type);
@@ -63,18 +62,20 @@ namespace lab2 {
           RecurringEvent(const std::string& event, const Date& begin_date, RecurringType recurring_type, const Date& end_date, unsigned int period_multiplier);
 
           class const_iterator : std::iterator<std::forward_iterator_tag, const D> {
+              const RecurringEvent& parent;
               D current_date;
             public:
-              const_iterator();
+              const_iterator(const RecurringEvent& parent);
+              const_iterator(const RecurringEvent& parent, const Date& current_date);
               const_iterator& operator++();
               const_iterator  operator++(int);
-              bool operator==(const const_iterator& rhs) const;
-              bool operator!=(const const_iterator& rhs) const;
-              bool operator> (const const_iterator& rhs) const;
-              bool operator< (const const_iterator& rhs) const;
+              bool has_next() const;
               const Date& operator*()  const;
               const Date* operator->() const;
           };
+
+          bool operator==(const RecurringEvent& other) const;
+          bool occurs_on(const Date& date) const;
 
           const_iterator begin() const;
           const_iterator end()   const;
@@ -87,7 +88,7 @@ namespace lab2 {
 
       inline const Date& get_date() const { return current_date; }
       inline const EventCollection& get_static_events() const { return events; }
-      inline const std::list<Event> get_events(const Date& d) const { return events.at(d); }
+      const std::list<Event> get_events(const Date& d) const;
 
       bool set_date(int year, int month, int day);
 
@@ -138,6 +139,9 @@ namespace lab2 {
         }
         return os;
       }
+
+    private:
+      std::list<RecurringEvent> recurring_events;
   };
 
   // Implementations
@@ -165,6 +169,25 @@ namespace lab2 {
     } catch(std::out_of_range e) {
       return false;
     }
+  }
+
+  template<class D>
+  const std::list<typename Calendar<D>::Event> Calendar<D>::get_events(const Date& date) const {
+    std::list<Event> result;
+
+    try {
+      std::copy(events.at(date).begin(), events.at(date).end(), result.end());
+    } catch(std::out_of_range e) {
+      // Whoops, looks like there were no static events on that day
+    }
+
+    for(const RecurringEvent& revent : recurring_events) {
+      if(revent.occurs_on(date)) {
+        result.push_back(revent.event);
+      }
+    }
+
+    return result;
   }
 
   template<class D>
@@ -326,12 +349,14 @@ namespace lab2 {
 
   template<class D>
   bool Calendar<D>::add_recurring_event(const RecurringEvent& recurring_event) {
-    return false;
+    recurring_events.push_back(recurring_event);
+    return true;
   }
 
   template<class D>
   bool Calendar<D>::remove_recurring_event(const RecurringEvent& recurring_event) {
-    return false;
+    recurring_events.remove(recurring_event);
+    return true;
   }
 
   template<class D>
@@ -397,23 +422,42 @@ namespace lab2 {
     event(event) {}
 
   template<class D>
+  bool Calendar<D>::RecurringEvent::operator==(const RecurringEvent& other) const {
+    return begin_date == other.begin_date && event == other.event;
+  }
+
+  template<class D>
+  bool Calendar<D>::RecurringEvent::occurs_on(const Date& date) const {
+    for(RecurringEvent::const_iterator it = begin(); it.has_next(); ++it) {
+      if(*it == date) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  template<class D>
   typename Calendar<D>::RecurringEvent::const_iterator Calendar<D>::RecurringEvent::begin() const {
-    return const_iterator{};
+    return const_iterator{*this};
   }
 
   template<class D>
   typename Calendar<D>::RecurringEvent::const_iterator Calendar<D>::RecurringEvent::end() const {
     D d{*end_date};
-    return const_iterator{++d};
+    return const_iterator{*this, ++d};
   }
 
 
   template<class D>
-  Calendar<D>::RecurringEvent::const_iterator::const_iterator() : current_date(begin_date) {}
+  Calendar<D>::RecurringEvent::const_iterator::const_iterator(const RecurringEvent& parent) : parent(parent), current_date(parent.begin_date) {}
+
+  template<class D>
+  Calendar<D>::RecurringEvent::const_iterator::const_iterator(const RecurringEvent& parent, const Date& current_date) :
+    parent(parent), current_date(current_date) {}
 
   template<class D>
   typename Calendar<D>::RecurringEvent::const_iterator& Calendar<D>::RecurringEvent::const_iterator::operator++() {
-    switch(recurring_type) {
+    switch(parent.recurring_type) {
     case DAILY:
       ++current_date;
       break;
@@ -438,23 +482,8 @@ namespace lab2 {
   }
 
   template<class D>
-  bool Calendar<D>::RecurringEvent::const_iterator::operator==(const const_iterator& rhs) const {
-    return current_date == rhs.current_date;
-  }
-
-  template<class D>
-  bool Calendar<D>::RecurringEvent::const_iterator::operator!=(const const_iterator& rhs) const {
-    return current_date != rhs.current_date;
-  }
-
-  template<class D>
-  bool Calendar<D>::RecurringEvent::const_iterator::operator> (const const_iterator& rhs) const {
-    return current_date >  rhs.current_date;
-  }
-
-  template<class D>
-  bool Calendar<D>::RecurringEvent::const_iterator::operator< (const const_iterator& rhs) const {
-    return current_date <  rhs.current_date;
+  bool Calendar<D>::RecurringEvent::const_iterator::has_next() const {
+    return parent.end_date == nullptr || current_date <= *parent.end_date;
   }
 
   template<class D>
