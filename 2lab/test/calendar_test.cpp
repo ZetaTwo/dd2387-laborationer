@@ -234,6 +234,35 @@ TEST(Calendar, RelatedEventIsRemovedWhenBaseEventIsRemoved) {
   EXPECT_EQ(0, cal.get_static_events().at(related_date).size());
 }
 
+TEST(Calendar, EventRelationIsRemovedWhenRelatedEventIsRemoved) {
+  const Gregorian base_date { 2014, 11, 7 };
+  const string base_event = "foo";
+  const int related_days = 1;
+  const string related_event = "bar";
+
+  Gregorian related_date{base_date};
+  related_date += related_days;
+
+  set_k_time(0);
+  Calendar<Gregorian> cal;
+
+  cal.add_event(base_event, base_date.day(), base_date.month(), base_date.year());
+  cal.add_related_event(base_date, related_days, base_event, related_event);
+
+  ASSERT_EQ(1, cal.get_static_events().at(base_date).size());
+  ASSERT_EQ(base_event, cal.get_static_events().at(base_date).front());
+  ASSERT_EQ(1, cal.get_static_events().at(related_date).size());
+  ASSERT_EQ(related_event, cal.get_static_events().at(related_date).front());
+
+  cal.remove_event(related_event, related_date.day(), related_date.month(), related_date.year());
+  cal.add_event(related_event, related_date.day(), related_date.month(), related_date.year());
+
+  cal.remove_event(base_event, base_date.day(), base_date.month(), base_date.year());
+
+  EXPECT_EQ(0, cal.get_static_events().at(base_date).size());
+  EXPECT_EQ(1, cal.get_static_events().at(related_date).size());
+}
+
 class BirthdayTest : public TestWithParam<std::tuple<int, int, int, int, int, int, int>> {};
 INSTANTIATE_TEST_CASE_P(Calendar, BirthdayTest, Values(
   // birthday y, m, d, test day y, m, d, expected age
