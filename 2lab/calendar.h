@@ -16,8 +16,18 @@ namespace lab2 {
       typedef std::string Event;
       typedef std::map<const D, std::list<Event> > EventCollection;
 
+      struct EventRelation {
+        std::string dependee_event;
+        std::string dependent_event;
+        D dependee_date;
+        int dependent_offset;
+
+        D get_dependent_date() const;
+      };
+
       D current_date;
       EventCollection events;
+      std::list<EventRelation> event_relations;
 
       bool event_exists_at_date(const Event& event, const Date& date) const;
 
@@ -191,6 +201,35 @@ namespace lab2 {
         return false;
       }
       events[target_date].erase(it);
+
+      std::list<typename std::list<EventRelation>::iterator> dead_relations_iterators;
+      std::list<EventRelation> relations_based_on_argument_event;
+
+      // Copy EventRelations to another list so we can modify the original list in recursive remove_event calls
+      for(
+          typename std::list<EventRelation>::iterator rel_it = event_relations.begin();
+          rel_it != event_relations.end();
+          ++rel_it
+          ) {
+        const EventRelation& rel = *rel_it;
+        if(rel.dependee_event == event && rel.dependee_date == target_date) {
+          // This event is the base for other events related to it
+          relations_based_on_argument_event.push_back(rel);
+          dead_relations_iterators.push_back(rel_it);
+        } else if(rel.dependent_event == event && rel.get_dependent_date() == target_date) {
+          // This event is related to some other one, remove this dead relation
+          dead_relations_iterators.push_back(rel_it);
+        }
+      }
+
+      for(const typename std::list<EventRelation>::iterator rel_it : dead_relations_iterators) {
+        event_relations.erase(rel_it);
+      }
+      for(const EventRelation rel : relations_based_on_argument_event) {
+        const Date& dependent_date = rel.get_dependent_date();
+        remove_event(rel.dependent_event, dependent_date.day(), dependent_date.month(), dependent_date.year());
+      }
+
       return true;
     }
     catch (std::out_of_range e) {
@@ -204,12 +243,38 @@ namespace lab2 {
       return false;
     }
 
+    std::list<EventRelation> relations_based_on_argument_event;
+
+    // Copy EventRelations to another list so we can modify the original list in recursive move_event calls
+    for(EventRelation& rel : event_relations) {
+      if(rel.dependee_event == event && rel.dependee_date == from) {
+        relations_based_on_argument_event.push_back(rel);
+      }
+    }
+    for(EventRelation& rel : relations_based_on_argument_event) {
+      D new_dependent_date = rel.get_dependent_date();
+      new_dependent_date += (to - from);
+      if(move_event(rel.get_dependent_date(), new_dependent_date, rel.dependent_event)) {
+        rel.dependee_date = to;
+        event_relations.push_back(rel);
+      }
+    }
+
     return add_event(event, to.day(), to.month(), to.year())
       && remove_event(event, from.day(), from.month(), from.year());
   }
 
   template<class D>
   bool Calendar<D>::add_related_event(const Date& rel_date, int days, std::string rel_event, std::string new_event) {
+    if(!event_exists_at_date(rel_event, rel_date)) {
+      return false;
+    }
+    D new_date = rel_date;
+    new_date += days;
+    if(add_event(new_event, new_date.day(), new_date.month(), new_date.year())) {
+      event_relations.push_back(EventRelation{rel_event, new_event, rel_date, days});
+      return true;
+    }
     return false;
   }
 
@@ -246,6 +311,13 @@ namespace lab2 {
   std::ostream& Calendar<D>::print_events(const Date& begin_date, const Date& end_date, std::ostream& os) const {
     return os;
 
+  }
+
+  template<class D>
+  D Calendar<D>::EventRelation::get_dependent_date() const {
+    D result = dependee_date;
+    result += dependent_offset;
+    return result;
   }
 
   template<class D>
