@@ -351,7 +351,7 @@ TEST(Calendar, RecurringEventCanRecurDailyForever) {
 
   cal.add_recurring_event(RecurringEvent{event, begin_date, RecurringType::DAILY, period_multiplier});
 
-  for(Gregorian d{begin_date}; d.year() < 4000; d += period_multiplier) {
+  for(Gregorian d{begin_date}; d.year() < 2010; d += period_multiplier) {
     const std::list<string> day_events = cal.get_events(d);
     ASSERT_EQ(1, day_events.size());
     EXPECT_EQ(event, day_events.front());
@@ -368,7 +368,7 @@ TEST(Calendar, RecurringEventCanRecurWeeklyForever) {
 
   cal.add_recurring_event(RecurringEvent{event, begin_date, RecurringType::WEEKLY, period_multiplier});
 
-  for(Gregorian d{begin_date}; d.year() < 4000; d += 7 * period_multiplier) {
+  for(Gregorian d{begin_date}; d.year() < 2010; d += 7 * period_multiplier) {
     const std::list<string> day_events = cal.get_events(d);
     ASSERT_EQ(1, day_events.size());
     EXPECT_EQ(event, day_events.front());
@@ -385,7 +385,7 @@ TEST(Calendar, RecurringEventCanRecurMonthlyForever) {
 
   cal.add_recurring_event(RecurringEvent{event, begin_date, RecurringType::MONTHLY, period_multiplier});
 
-  for(Gregorian d{begin_date}; d.year() < 4000; d.add_month(period_multiplier)) {
+  for(Gregorian d{begin_date}; d.year() < 2100; d.add_month(period_multiplier)) {
     const std::list<string> day_events = cal.get_events(d);
     ASSERT_EQ(1, day_events.size());
     EXPECT_EQ(event, day_events.front());
