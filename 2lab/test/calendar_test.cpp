@@ -456,7 +456,7 @@ TEST(Calendar, PrintEventsPrintsAllEventsBetweenArgumentDatesInclusive) {
 
   cal.print_events(begin_date, end_date, actual_output);
 
-  EXPECT_EQ(expected_output, actual_output);
+  EXPECT_EQ(expected_output.str(), actual_output.str());
 }
 
 TEST(Calendar, OutputOperatorPrintsAllEventsFromCurrentDateToDateOfLastStaticEventInclusive) {
@@ -491,7 +491,7 @@ TEST(Calendar, OutputOperatorPrintsAllEventsFromCurrentDateToDateOfLastStaticEve
 
   actual_output << cal;
 
-  EXPECT_EQ(expected_output, actual_output);
+  EXPECT_EQ(expected_output.str(), actual_output.str());
 }
 
 TEST(Calendar, RecurringEventCanBeNuked) {
