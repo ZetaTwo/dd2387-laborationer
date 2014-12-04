@@ -353,8 +353,9 @@ namespace lab2 {
 
   template<class D>
   bool Calendar<D>::remove_recurring_event(const RecurringEvent& recurring_event) {
+    const size_t size_before = recurring_events.size();
     recurring_events.remove(recurring_event);
-    return true;
+    return size_before > recurring_events.size();
   }
 
   template<class D>
