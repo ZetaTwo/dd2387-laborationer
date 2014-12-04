@@ -2,6 +2,7 @@
 #include <string>
 #include <ostream>
 #include <map>
+#include <set>
 #include <list>
 #include <stdexcept>
 #include <algorithm>
@@ -47,6 +48,7 @@ namespace lab2 {
         private:
           D begin_date;   // Inclusive
           std::unique_ptr<Date> end_date; // Inclusive
+          std::set<D> exceptions;
 
           RecurringType recurring_type;
 
@@ -75,6 +77,7 @@ namespace lab2 {
 
           bool operator==(const RecurringEvent& other) const;
           bool occurs_on(const Date& date) const;
+          bool add_exception(const Date& date);
 
           const_iterator begin() const;
       };
@@ -360,6 +363,10 @@ namespace lab2 {
 
   template<class D>
   bool Calendar<D>::cancel_recurring_event_instance(const RecurringEvent& recurring_event, const Date& cancelDate) {
+    auto it = std::find(recurring_events.begin(), recurring_events.end(), recurring_event);
+    if(it != recurring_events.end()) {
+      return it->add_exception(cancelDate);
+    }
     return false;
   }
 
@@ -427,12 +434,21 @@ namespace lab2 {
 
   template<class D>
   bool Calendar<D>::RecurringEvent::occurs_on(const Date& date) const {
+    if(exceptions.count(date) > 0) {
+      return false;
+    }
     for(RecurringEvent::const_iterator it = begin(); it.has_next(); ++it) {
       if(*it == date) {
         return true;
       }
     }
     return false;
+  }
+
+  template<class D>
+  bool Calendar<D>::RecurringEvent::add_exception(const Date& exception_date) {
+    exceptions.insert(exception_date);
+    return true;
   }
 
   template<class D>
