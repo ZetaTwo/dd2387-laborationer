@@ -54,7 +54,7 @@ build/test/calendar_test.o: test/calendar_test.cpp calendar.h $(DATE_HEADERS)
 build/test/test_calendar.o: test/test_calendar.cpp calendar.h $(DATE_HEADERS)
 	$(MAKE_OBJECT)
 
-build/run_test: test_runner.cpp $(DATE_HEADERS) calendar.h $(KATTISTIME) $(TEST_OBJECTS) $(DATE_OBJECTS) build/kurskatalog/kattistime.o
+build/run_test: test_runner.cpp $(DATE_HEADERS) calendar.h $(KATTISTIME) $(TEST_OBJECTS) $(DATE_OBJECTS) build/kattistime.o
 	$(MAKE_EXECUTABLE) -lgtest
 
 build/test/datetest: test/datetest.cpp $(DATE_OBJECTS) build/kattistime.o $(DATE_HEADERS) $(KATTISTIME)
