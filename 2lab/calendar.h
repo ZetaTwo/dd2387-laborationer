@@ -128,16 +128,23 @@ namespace lab2 {
       std::ostream& print_events(const Date& begin_date, const Date& end_date, std::ostream& os) const;
 
       friend std::ostream& operator<<(std::ostream& os, const Calendar& cal) {
-        for(typename EventCollection::const_iterator it = cal.get_static_events().lower_bound(cal.get_date());
-            it != cal.get_static_events().end();
-            ++it) {
-          if (it->first <= cal.get_date()) {
-            continue;
+        const typename EventCollection::const_reverse_iterator last_static_event_date_it = std::find_if(
+          cal.get_static_events().rbegin(),
+          cal.get_static_events().rend(),
+          [](const typename EventCollection::const_reverse_iterator::value_type& pair) {
+            return pair.second.size() > 0;
           }
-          for(const Event event : it->second) {
-            os << it->first << " : " << event << std::endl;
+        );
+
+        if(last_static_event_date_it != cal.get_static_events().rend()) {
+          const Date& last_static_event_date = last_static_event_date_it->first;
+          for(D iter_date = cal.get_date(); iter_date <= last_static_event_date; ++iter_date) {
+            for(const Event& e : cal.get_events(iter_date)) {
+              os << iter_date << " : " << e << std::endl;
+            }
           }
         }
+
         return os;
       }
 
