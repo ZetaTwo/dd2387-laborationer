@@ -425,8 +425,8 @@ TEST(Calendar, RecurringEventsCanBeLimited) {
 }
 
 TEST(Calendar, PrintEventsPrintsAllEventsBetweenArgumentDatesInclusive) {
-  const Gregorian begin_date{2014, 2, 10};
-  const Gregorian end_date{2014, 3, 20};
+  const Gregorian begin_date{2014, 2, 12};
+  const Gregorian end_date{2014, 3, 19};
   const string recurring_event = "Fysikalen-rep";
 
   set_k_time(0);
@@ -459,6 +459,7 @@ TEST(Calendar, PrintEventsPrintsAllEventsBetweenArgumentDatesInclusive) {
   expected_output << "2014-03-05 : " << recurring_event << std::endl;
   expected_output << "2014-03-12 : " << recurring_event << std::endl;
   expected_output << "2014-03-15 : Firmafest" << std::endl;
+  expected_output << "2014-03-19 : " << recurring_event << std::endl;
 
   cal.print_events(begin_date, end_date, actual_output);
 
@@ -466,7 +467,7 @@ TEST(Calendar, PrintEventsPrintsAllEventsBetweenArgumentDatesInclusive) {
 }
 
 TEST(Calendar, OutputOperatorPrintsAllEventsFromCurrentDateToDateOfLastStaticEventInclusive) {
-  const Gregorian begin_date{2014, 2, 10};
+  const Gregorian begin_date{2014, 2, 12};
   const string recurring_event = "Fysikalen-rep";
 
   set_k_time(0);

@@ -29,8 +29,8 @@ int main() {
   c.move_event(Gregorian{2332, 2, 29}, Gregorian{2332, 3, 1}, granny);
   cout << c << endl;
 
-  const RecurringEvent training{"Rymdfotbollsträning", Gregorian{2047, 11, 23}, RecurringEvent::RecurringType::WEEKLY, Gregorian{2332, 3, 7}};
-  const RecurringEvent meditation{"Meditation", Gregorian{2047, 11, 23}, RecurringEvent::RecurringType::DAILY, 3};
+  const RecurringEvent training{"Rymdfotbollsträning", Gregorian{2331, 11, 23}, RecurringEvent::RecurringType::WEEKLY, Gregorian{2332, 3, 7}};
+  const RecurringEvent meditation{"Meditation", Gregorian{2331, 11, 23}, RecurringEvent::RecurringType::DAILY, 3};
 
   c.add_recurring_event(training);
   c.add_recurring_event(meditation);
