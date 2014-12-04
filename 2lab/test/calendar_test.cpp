@@ -434,12 +434,12 @@ TEST(Calendar, PrintEventsPrintsAllEventsBetweenArgumentDatesInclusive) {
 
   cal.add_recurring_event(RecurringEvent{recurring_event, Gregorian{begin_date.year(), begin_date.month(), begin_date.day() - 7}, RecurringType::WEEKLY, Gregorian{end_date.year(), end_date.month(), end_date.day() + 7}});
 
-  cal.add_event("Städa", 2014, 2, 7);
-  cal.add_event("Köpa choklad", 2014, 2, 14);
-  cal.add_event("Opera", 2014, 2, 25);
-  cal.add_event("Mata katten", 2014, 3, 1);
-  cal.add_event("Firmafest", 2014, 3, 15);
-  cal.add_event("Städa", 2014, 3, 23);
+  cal.add_event("Städa", 7, 2, 2014);
+  cal.add_event("Köpa choklad", 14, 2, 2014);
+  cal.add_event("Opera", 25, 2, 2014);
+  cal.add_event("Mata katten", 1, 3, 2014);
+  cal.add_event("Firmafest", 15, 3, 2014);
+  cal.add_event("Städa", 23, 3, 2014);
 
   std::stringstream expected_output;
   std::stringstream actual_output;
@@ -469,12 +469,12 @@ TEST(Calendar, OutputOperatorPrintsAllEventsFromCurrentDateToDateOfLastStaticEve
 
   cal.add_recurring_event(RecurringEvent{recurring_event, Gregorian{begin_date.year(), begin_date.month(), begin_date.day() - 7}, RecurringType::WEEKLY});
 
-  cal.add_event("Städa", 2014, 2, 7);
-  cal.add_event("Köpa choklad", 2014, 2, 14);
-  cal.add_event("Opera", 2014, 2, 25);
-  cal.add_event("Mata katten", 2014, 3, 1);
-  cal.add_event("Firmafest", 2014, 3, 15);
-  cal.add_event("Städa", 2014, 3, 23);
+  cal.add_event("Städa", 7, 2, 2014);
+  cal.add_event("Köpa choklad", 14, 2, 2014);
+  cal.add_event("Opera", 25, 2, 2014);
+  cal.add_event("Mata katten", 1, 3, 2014);
+  cal.add_event("Firmafest", 15, 3, 2014);
+  cal.add_event("Städa", 23, 3, 2014);
 
   std::stringstream expected_output;
   std::stringstream actual_output;
