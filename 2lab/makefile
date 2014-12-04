@@ -11,11 +11,11 @@ MAKE_EXECUTABLE=$(COMPILE)
 DATE_FILENAMES=date mjd_offset_date western_date gregorian julian
 DATE_HEADERS=$(foreach name,$(DATE_FILENAMES),$(name).h)
 DATE_OBJECTS=$(foreach name,$(DATE_FILENAMES),build/$(name).o)
-KATTISTIME=kurskatalog/kattistime.h
+KATTISTIME=kattistime.h
 
 TEST_OBJECTS=$(patsubst %.cpp,build/%.o,$(wildcard test/*_test.cpp))
 
-default: run_test run_given_test run_calendar_test
+default: run_test run_given_test run_calendar_test run_calendar_demo
 
 date_objects: $(DATE_OBJECTS)
 
@@ -48,18 +48,37 @@ valgrind_given_test: build/test/datetest
 build/%.o: %.cpp $(DATE_HEADERS) $(KATTISTIME)
 	$(MAKE_OBJECT)
 
-build/run_test: test_runner.cpp $(TEST_OBJECTS) $(DATE_OBJECTS) build/kurskatalog/kattistime.o
+build/test/calendar_test.o: test/calendar_test.cpp calendar.h $(DATE_HEADERS)
+	$(MAKE_OBJECT)
+
+build/test/test_calendar.o: test/test_calendar.cpp calendar.h $(DATE_HEADERS)
+	$(MAKE_OBJECT)
+
+build/run_test: test_runner.cpp $(DATE_HEADERS) calendar.h $(KATTISTIME) $(TEST_OBJECTS) $(DATE_OBJECTS) build/kattistime.o
 	$(MAKE_EXECUTABLE) -lgtest
 
-build/test/datetest: test/datetest.cpp $(DATE_OBJECTS) build/kurskatalog/kattistime.o $(DATE_HEADERS) $(KATTISTIME)
+build/test/datetest: test/datetest.cpp $(DATE_OBJECTS) build/kattistime.o $(DATE_HEADERS) $(KATTISTIME)
 	$(MAKE_EXECUTABLE)
 
-build/test/test_calendar: test/test_calendar.cpp calendar.h $(DATE_HEADERS) $(DATE_OBJECTS) $(KATTISTIME) build/kurskatalog/kattistime.o
+build/test/test_calendar: test/test_calendar.cpp calendar.h $(DATE_HEADERS) $(DATE_OBJECTS) $(KATTISTIME) build/kattistime.o
 	$(MAKE_EXECUTABLE)
 
-build/test/driver/%: test/driver/cprog09%.cpp $(DATE_HEADERS) calendar.h $(DATE_OBJECTS) $(KATTISTIME) build/kurskatalog/kattistime.o
+build/test/driver/%: cprog09%.cpp $(DATE_HEADERS) calendar.h $(DATE_OBJECTS) $(KATTISTIME) build/kattistime.o
 	$(MAKE_EXECUTABLE)
 
 run_driver_%: build/test/driver/% test/driver/%.in test/driver/%.out
 	$< < test/driver/$*.in > build/test/driver/$*.out
 	diff -u test/driver/$*.out build/test/driver/$*.out
+
+build/calendar_demo_spliced.cpp: calendar_demo_splice_code_into_output.sh calendar_demo.cpp
+	mkdir -p $(dir $@)
+	./$< > $@
+
+build/calendar_demo: build/calendar_demo_spliced.cpp calendar.h $(DATE_HEADERS) $(DATE_OBJECTS) $(KATTISTIME) build/kattistime.o
+	$(MAKE_EXECUTABLE)
+
+run_calendar_demo: build/calendar_demo
+	./$<
+
+autorun_calendar_demo:
+	while inotifywait -qqr -e close_write --exclude build/ . ; do make run_calendar_demo; done
