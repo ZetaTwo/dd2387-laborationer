@@ -177,7 +177,7 @@ namespace lab2 {
     std::list<Event> result;
 
     try {
-      std::copy(events.at(date).begin(), events.at(date).end(), result.end());
+      std::copy(events.at(date).begin(), events.at(date).end(), std::back_inserter(result));
     } catch(std::out_of_range e) {
       // Whoops, looks like there were no static events on that day
     }
