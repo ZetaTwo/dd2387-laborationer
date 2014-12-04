@@ -379,12 +379,17 @@ namespace lab2 {
 
   template<class D>
   void Calendar<D>::print_events(const Date& begin_date, const Date& end_date) const {
+    print_events(begin_date, end_date, std::cout);
   }
 
   template<class D>
   std::ostream& Calendar<D>::print_events(const Date& begin_date, const Date& end_date, std::ostream& os) const {
+    for(D iter_date = begin_date; iter_date <= end_date; ++iter_date) {
+      for(Event e : get_events(iter_date)) {
+        os << iter_date << " : " << e << std::endl;
+      }
+    }
     return os;
-
   }
 
   template<class D>
