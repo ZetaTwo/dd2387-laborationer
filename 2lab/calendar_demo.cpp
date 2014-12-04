@@ -30,10 +30,10 @@ int main() {
   cout << c << endl;
 
   const RecurringEvent training{"Rymdfotbollsträning", Gregorian{2331, 11, 23}, RecurringEvent::RecurringType::WEEKLY, Gregorian{2332, 3, 7}};
-  const RecurringEvent meditation{"Meditation", Gregorian{2331, 11, 23}, RecurringEvent::RecurringType::DAILY, 3};
+  const RecurringEvent spacesuit{"Kontrollera rymddräkten", Gregorian{2331, 11, 23}, RecurringEvent::RecurringType::MONTHLY, 3};
 
   c.add_recurring_event(training);
-  c.add_recurring_event(meditation);
+  c.add_recurring_event(spacesuit);
   c.add_event(granny, 15, 3);
   c.add_event(move, 28, 3);
   cout << c << endl;
@@ -63,7 +63,7 @@ int main() {
 
   c.print_events(Gregorian{2332, 2, 15}, Gregorian{2332, 3, 15});
 
-  c.remove_recurring_event(meditation);
+  c.remove_recurring_event(spacesuit);
   cout << c << endl;
 
   c.add_birthday("Mormor", Gregorian{2016, 2, 29});
