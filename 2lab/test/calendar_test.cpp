@@ -506,7 +506,9 @@ TEST(Calendar, RecurringEventCanBeNuked) {
 
   cal.add_recurring_event(revent);
 
-  ASSERT_EQ((end_date - begin_date) / 7 + 1, cal.get_events(begin_date).size());
+  for(Gregorian test_date = begin_date; test_date <= end_date; test_date += 7) {
+    ASSERT_EQ(1, cal.get_events(test_date).size());
+  }
 
   cal.remove_recurring_event(revent);
 
