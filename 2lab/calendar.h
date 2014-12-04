@@ -437,7 +437,7 @@ namespace lab2 {
     if(exceptions.count(date) > 0) {
       return false;
     }
-    for(RecurringEvent::const_iterator it = begin(); it.has_next(); ++it) {
+    for(RecurringEvent::const_iterator it = begin(); *it <= date && it.has_next(); ++it) {
       if(*it == date) {
         return true;
       }
