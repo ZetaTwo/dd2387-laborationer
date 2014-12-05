@@ -6,6 +6,7 @@
 #include <cmath>
 #include <sstream>
 #include <algorithm> //sort
+#include <functional>
 
 template<typename T> 
 class Vector {
@@ -244,8 +245,15 @@ Vector<T>& Vector<T>::insert(size_t index, const T& element) {
     increase_memory(count + 1);
   }
 
-  for(size_t i = count; i > index; i--) {
-    data[i] = data[i-1];
+  size_t i;
+  try {
+    for (i = count; i > index; i--) {
+      data[i] = std::move_if_noexcept(data[i - 1]);
+    }
+  }
+  catch (...) {
+    count = i;
+    throw;
   }
 
   data[index] = element;
@@ -261,8 +269,16 @@ Vector<T>& Vector<T>::erase(size_t index) {
     msg << "Attempted to insert at index " << index << ", expected < " << count;
     throw std::out_of_range(msg.str());
   }
-  for(size_t i = index; i < count-1; i++ ) {
-    data[i] = data[i+1];
+
+  size_t i;
+  try {
+    for (i = index; i < count - 1; i++) {
+      data[i] = std::move_if_noexcept(data[i + 1]);
+    }
+  }
+  catch (...) {
+    count = i;
+    throw;
   }
   --count;
   return *this;
@@ -290,7 +306,7 @@ Vector<T>& Vector<T>::sort(bool ascending) {
   if(ascending) {
     std::sort(begin, end);
   } else {
-    std::sort(begin, end, [](const T& a, const T& b) { return b < a; });
+    std::sort(begin, end, std::greater<T>());
   }
   return *this;
 }
@@ -334,7 +350,7 @@ void Vector<T>::increase_memory(size_t num_elements, bool copy) {
 
   if(copy) {
     for(size_t i = 0; i < count; i++) {
-      new_data[i] = data[i];
+      new_data[i] = std::move_if_noexcept(data[i]);
     }
   }
 
