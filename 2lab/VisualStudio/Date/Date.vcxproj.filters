@@ -27,10 +27,10 @@
     <ClCompile Include="..\..\gregorian.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\kurskatalog\kattistime.cpp">
+    <ClCompile Include="..\..\julian.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\julian.cpp">
+    <ClCompile Include="..\..\kattistime.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

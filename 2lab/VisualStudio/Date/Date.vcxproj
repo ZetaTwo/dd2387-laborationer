@@ -74,7 +74,7 @@
     <ClCompile Include="..\..\date.cpp" />
     <ClCompile Include="..\..\gregorian.cpp" />
     <ClCompile Include="..\..\julian.cpp" />
-    <ClCompile Include="..\..\kurskatalog\kattistime.cpp" />
+    <ClCompile Include="..\..\kattistime.cpp" />
     <ClCompile Include="..\..\mjd_offset_date.cpp" />
     <ClCompile Include="..\..\western_date.cpp" />
   </ItemGroup>

@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\test\driver\cprog09lab23.cpp">
+    <ClCompile Include="..\..\cprog09lab23.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
