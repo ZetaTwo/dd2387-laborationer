@@ -45,6 +45,20 @@ INSTANTIATE_TEST_CASE_P(Matrix, AdditionTest, Values(
   tuple<string, string, string>{"[ 1 2 -3 ; 5 6 7 ]", "[ 2 -3 1 ; -6 5 7 ]", "[ 3 -1 -2; -1 11 14 ]"}
 ));
 
+class MultiplicationTest : public TestWithParam<tuple<string, string, string>> {};
+INSTANTIATE_TEST_CASE_P(Matrix, MultiplicationTest, Values(
+  tuple<string, string, string>{"[ 1 2 ; 3 4 ]", "[ 0 0 ; 0 0 ]", "[ 0 0 ; 0 0 ]"},
+  tuple<string, string, string>{"[ 1 2 3 ; 4 5 6 ]", "[ 7 8 ; 9 10; 11 12 ]", "[ 58 64; 139 154 ]"}
+));
+
+class ScalarMultiplicationTest : public TestWithParam<tuple<string, int, string>> {};
+INSTANTIATE_TEST_CASE_P(Matrix, ScalarMultiplicationTest, Values(
+  tuple<string, int, string>{"[ 1 2 ; 3 4 ]", 0, "[ 0 0 ; 0 0 ]"},
+  tuple<string, int, string>{"[ 1 2 ; 3 4 ]", 1, "[ 1 2 ; 3 4 ]"},
+  tuple<string, int, string>{"[ 1 2 ; 3 4 ]", 2, "[ 2 4 ; 6 8 ]"},
+  tuple<string, int, string>{"[ 1 2 ; 3 4 ]", -1, "[ -1 -2 ; -3 -4 ]"}
+));
+
 TEST(Matrix, ConstructorDefault) {
   EXPECT_NO_THROW({
     Matrix matrix1;
@@ -168,13 +182,13 @@ TEST(Matrix, OperatorAdditionSize) {
   }, std::exception);
 }
 
-TEST(Matrix, OperatorMultiplication) {
-  Matrix matrix1 = StringToMatrix("[ 1 2 3 ; 4 5 6 ]");
-  Matrix matrix2 = StringToMatrix("[ 7 8 ; 9 10; 11 12 ]");
-  Matrix matrix3 = StringToMatrix("[ 58 64; 139 154 ]");
+TEST_P(MultiplicationTest, OperatorMultiplication) {
+  const Matrix factor1 = StringToMatrix(get<0>(GetParam()));
+  const Matrix factor2 = StringToMatrix(get<1>(GetParam()));
+  const Matrix expected_result = StringToMatrix(get<2>(GetParam()));
 
-  Matrix matrix4 = matrix1 * matrix2;
-  EXPECT_TRUE(MatrixCompare(matrix3, matrix4));
+  Matrix result = factor1 * factor2;
+  EXPECT_TRUE(MatrixCompare(expected_result, result)) << "Actual result: " << std::endl << MatrixToString(result);
 }
 
 TEST(Matrix, OperatorMultiplicationSize) {
@@ -186,20 +200,15 @@ TEST(Matrix, OperatorMultiplicationSize) {
   }, std::exception);
 }
 
-TEST(Matrix, OperatorMultiplicationScalar) {
-  Matrix matrix1 = StringToMatrix("[ 1 2 3 ; 4 5 6 ]");
-  Matrix matrix2 = StringToMatrix("[ 2 4 6; 8 10 12 ]");
+TEST_P(ScalarMultiplicationTest, OperatorMultiplicationScalar) {
+  const Matrix matrix = StringToMatrix(get<0>(GetParam()));
+  const int factor = get<1>(GetParam());
+  const Matrix expected_result = StringToMatrix(get<2>(GetParam()));
 
-  Matrix matrix3 = 2 * matrix1;
-  EXPECT_TRUE(MatrixCompare(matrix2, matrix3));
-}
-
-TEST(Matrix, OperatorMultiplicationScalar2) {
-  Matrix matrix1 = StringToMatrix("[ 1 2 3 ; 4 5 6 ]");
-  Matrix matrix2 = StringToMatrix("[ 2 4 6; 8 10 12 ]");
-
-  Matrix matrix3 = matrix1 * 2;
-  EXPECT_TRUE(MatrixCompare(matrix2, matrix3));
+  Matrix resultL = factor * matrix;
+  Matrix resultR = factor * matrix;
+  EXPECT_TRUE(MatrixCompare(expected_result, resultL)) << "Actual result: " << std::endl << MatrixToString(resultL);
+  EXPECT_TRUE(MatrixCompare(expected_result, resultR)) << "Actual result: " << std::endl << MatrixToString(resultR);
 }
 
 TEST(Matrix, OperatorSubtraction) {
