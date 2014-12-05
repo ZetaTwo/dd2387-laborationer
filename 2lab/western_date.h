@@ -36,12 +36,13 @@ namespace lab2 {
     virtual WesternDate& add_year (int years  = 1) override;
     virtual WesternDate& add_month(int months = 1) override;
 
-  protected:
-    static const int WEEKDAY_OF_MOD_JULIAN_DAY = 2; // monday = 0, sunday = 6
-
     static const std::vector<std::string> day_names;
+    static const std::vector<std::string> day_short_names;
     static const std::vector<std::string> month_names;
     static const std::vector<int> month_lengths;
+
+  protected:
+    static const int WEEKDAY_OF_MOD_JULIAN_DAY = 2; // monday = 0, sunday = 6
 
     virtual bool is_leap_year() const = 0;
     virtual bool is_leap_year(const int year) const = 0;

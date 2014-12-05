@@ -124,8 +124,39 @@ namespace lab2 {
       bool remove_recurring_event(const RecurringEvent& recurring_event);
       bool cancel_recurring_event_instance(const RecurringEvent& recurring_event, const Date& cancelDate);
 
+      enum format { list, cal, iCalendar };
+      format current_format;
+      void set_format(const format& f) {
+        current_format = f;
+      }
+
       void print_events(const Date& begin_date, const Date& end_date) const;
       std::ostream& print_events(const Date& begin_date, const Date& end_date, std::ostream& os) const;
+
+      std::ostream& print_calendar(std::ostream& os, const Date& month) {
+        month -= month.day() - 1;
+
+
+        os << "    " << month.month_name() << " " << month.year() << endl;
+        os << "må  ti  on  to  fr  lö  sö";
+
+        int weeks_this_month =  1 + ((month.days_this_month() - 1) / month.days_per_week());
+        int days_this_cal = weeks_this_month * month.days_per_week();
+        for (int i = 0; i < days_this_cal; i++) {
+          if (i + 1 % 7 == 0) cout << endl;
+          if (i - month.week_day() >= 0) {
+            cout << " " << i << " ";
+          }
+        }
+
+        for (int i = 0; i < month.days_this_month(); i++) {
+          for (const auto& e : get_events(month)) {
+            cout << month << " " << e << endl;
+          }
+          month++;
+        }
+        
+      }
 
       friend std::ostream& operator<<(std::ostream& os, const Calendar& cal) {
         const typename EventCollection::const_reverse_iterator last_static_event_date_it = std::find_if(

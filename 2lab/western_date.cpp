@@ -13,6 +13,15 @@ namespace lab2 {
     "saturday",
     "sunday",
   };
+  const std::vector<std::string> WesternDate::day_short_names = {
+    "mo",
+    "tu",
+    "we",
+    "th",
+    "fr",
+    "sa",
+    "su",
+  };
   const std::vector<std::string> WesternDate::month_names = {
     "january",
     "february",
