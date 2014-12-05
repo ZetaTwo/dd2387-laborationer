@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include "kth_cprog_template_container.hpp"
+#include "counter_class.hpp"
 
 TEST(Vector, ConstructorDefault) {
   EXPECT_NO_THROW({
@@ -418,4 +419,38 @@ TEST(Vector, Basic1) {
   A = std::move(A);
   B = B;
   EXPECT_EQ(6, B[512]);
+}
+
+
+TEST(Vector, Kattis1) {
+  Vector<std::string> a;
+  a.push_back("10");
+  a.push_back("10");
+  a.push_back("10");
+  a.push_back("10");
+  a.push_back("10");
+  a.push_back("10");
+  a.push_back("10");
+  a.push_back("10");
+  a.push_back("10");
+  a.push_back("10");
+  a.push_back("10");
+  a.push_back("10");
+  a.push_back("10");
+  a.push_back("10");
+  a.push_back("10");
+  a.push_back("10");
+  a.push_back("10");
+}
+
+TEST(Vector, Kattis2) {
+  Vector<std::string> a(1000, "A");
+  a.push_back("B");
+  a.insert(0, "C");
+}
+
+TEST(Vector, Kattis3) {
+  Vector<CounterClass> a(10, 42);
+  a.erase(0);
+  EXPECT_EQ(9, CounterClass::object_count);
 }

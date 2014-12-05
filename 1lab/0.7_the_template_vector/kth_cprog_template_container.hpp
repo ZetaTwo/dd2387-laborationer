@@ -17,7 +17,7 @@ public:
   Vector(const std::initializer_list<T>& list);
   Vector(Vector<T>&& other); //Move
   explicit Vector(size_t size);
-  Vector(size_t size, T element);
+  Vector(size_t size, const T& element);
   ~Vector();
 
   //Operators
@@ -59,8 +59,8 @@ public:
     bool operator!=(const const_iterator& rhs) const { return p != rhs.p; }
     bool operator>(const const_iterator& rhs) const { return p > rhs.p; }
     bool operator<(const const_iterator& rhs) const { return p < rhs.p; }
-    T& operator[](size_t index) { return *(p + index); }
-    T& operator*() { return *p; }
+    const T& operator[](size_t index) { return *(p + index); }
+    const T& operator*() { return *p; }
     T const * operator->() const { return p; }
   };
 
@@ -108,8 +108,10 @@ private:
   size_t count; //Actual number of elements in the vector
   size_t max_size; //Allocated memory for elements. Will be 2^n for some n
   std::unique_ptr<T[]> data; //A pointer to the vector data
+  std::allocator<T> allocator;
 
   void increase_memory(size_t num_elements, bool copy = true); //Increases memory to fit at least num_elements number of elements
+  void release(std::unique_ptr<T[]>& data, size_t count, size_t max_size);
 };
 
 template<typename T>
@@ -117,49 +119,63 @@ std::ostream& operator<<(std::ostream& os, const Vector<T>& vector);
 
 //Member implementations
 template<typename T>
-Vector<T>::Vector() : count(0), max_size(DEFAULT_SIZE), data(new T[max_size]) {
+Vector<T>::Vector() : count(0), max_size(DEFAULT_SIZE), data(allocator.allocate(max_size)) {
 }
 
 template<typename T>
-Vector<T>::Vector(const Vector<T>& other) : count(other.count), max_size(other.max_size), data(new T[max_size]) {
+Vector<T>::Vector(const Vector<T>& other) : count(other.count), max_size(other.max_size), data(allocator.allocate(max_size)) {
   for(size_t i = 0; i < count; ++i) {
-    data[i] = other.data[i];
+    allocator.construct(&data[i], other.data[i]);
   }
 }
 
 template<typename T>
-Vector<T>::Vector(const std::initializer_list<T>& list) : count(list.size()), max_size(1 << static_cast<int>(ceil(log2(count)))), data(new T[max_size]) {
+Vector<T>::Vector(const std::initializer_list<T>& list) : count(list.size()), max_size(1 << static_cast<int>(ceil(log2(count)))), data(allocator.allocate(max_size)) {
   size_t i;
   typename std::initializer_list<T>::iterator item;
   for(i = 0, item = list.begin(); item != list.end(); ++i, ++item) {
-    data[i] = *item;
+    allocator.construct(&data[i], *item);
   }
 }
 
 template<typename T>
 Vector<T>::Vector(Vector<T>&& other) : data(std::move(other.data)), count(other.count), max_size(other.max_size) {
+  /*for (size_t i = 0; i < count; ++i) {
+    allocator.destroy(&other.data[i]);
+  }*/
+
   other.count = 0;
   other.max_size = 0;
 }
 
 template<typename T>
-Vector<T>::Vector(size_t size) : count(size), max_size(1 << static_cast<int>(ceil(log2(count)))), data(new T[max_size]) {
+Vector<T>::Vector(size_t size) : count(size), max_size(1 << static_cast<int>(ceil(log2(count)))), data(allocator.allocate(max_size)) {
   for(size_t i = 0; i < count; ++i) {
-    data[i] = T();
+    allocator.construct(&data[i], T{});
   }
 }
 
 template<typename T>
-Vector<T>::Vector(size_t size, T element) : count(size), max_size(1 << static_cast<int>(ceil(log2(count)))), data(new T[max_size]) {
+Vector<T>::Vector(size_t size, const T& element) : count(size), max_size(1 << static_cast<int>(ceil(log2(count)))), data(allocator.allocate(max_size)) {
   for(size_t i = 0; i < count; ++i) {
-    data[i] = element;
+    allocator.construct(&data[i], element);
   }
 }
 
 template<typename T>
 Vector<T>::~Vector() {
+  release(data, count, max_size);
   count = 0;
   max_size = 0;
+}
+
+template<typename T>
+void Vector<T>::release(std::unique_ptr<T[]>& data, size_t count, size_t max_size) {
+  for (size_t i = 0; i < count; ++i) {
+    allocator.destroy(&data[i]);
+  }
+  allocator.deallocate(data.get(), max_size);
+  data.release();
 }
 
 template<typename T>
@@ -192,7 +208,7 @@ Vector<T>& Vector<T>::operator=(const Vector<T>& other) {
 
   count = other.size();
   for(size_t i = 0; i < other.count; ++i) {
-    data[i] = other[i];
+    allocator.construct(&data[i], other[i]);
   }
 
   return *this;
@@ -223,7 +239,7 @@ Vector<T>& Vector<T>::operator=(const std::initializer_list<T>& list) {
   size_t i;
   typename std::initializer_list<T>::iterator item;
   for(i = 0, item = list.begin(); item != list.end(); ++i, ++item) {
-    data[i] = *item;
+    allocator.construct(&data[i], *item);
   }
 
   return *this;
@@ -248,7 +264,7 @@ Vector<T>& Vector<T>::insert(size_t index, const T& element) {
   size_t i;
   try {
     for (i = count; i > index; i--) {
-      data[i] = std::move_if_noexcept(data[i - 1]);
+      allocator.construct(&data[i], std::move_if_noexcept(data[i - 1]));
     }
   }
   catch (...) {
@@ -256,7 +272,12 @@ Vector<T>& Vector<T>::insert(size_t index, const T& element) {
     throw;
   }
 
-  data[index] = element;
+  if (index == count) {
+    allocator.construct(&data[index], element);
+  }
+  else {
+    data[index] = element;
+  }
   ++count;
 
   return *this;
@@ -271,6 +292,7 @@ Vector<T>& Vector<T>::erase(size_t index) {
   }
 
   size_t i;
+  allocator.destroy(&data[index]);
   try {
     for (i = index; i < count - 1; i++) {
       data[i] = std::move_if_noexcept(data[i + 1]);
@@ -280,12 +302,17 @@ Vector<T>& Vector<T>::erase(size_t index) {
     count = i;
     throw;
   }
+  
   --count;
   return *this;
 }
 
 template<typename T>
 Vector<T>& Vector<T>::clear() {
+  for (size_t i = 0; i < count; ++i) {
+    allocator.destroy(&data[i]);
+  }
+
   count = 0;
   return *this;
 }
@@ -346,14 +373,15 @@ void Vector<T>::increase_memory(size_t num_elements, bool copy) {
     throw std::invalid_argument("Vector already large enough");
   }
 
-  std::unique_ptr<T[]> new_data(new T[new_max_size]);
+  std::unique_ptr<T[]> new_data(allocator.allocate(new_max_size));
 
   if(copy) {
     for(size_t i = 0; i < count; i++) {
-      new_data[i] = std::move_if_noexcept(data[i]);
+      allocator.construct(&new_data[i], std::move_if_noexcept(data[i]));
     }
   }
 
+  release(data, count, max_size);
   data = std::move(new_data);
   max_size = new_max_size;
 }
