@@ -233,7 +233,12 @@ TEST(Matrix, Transpose) {
 
 TEST(Matrix, OperatorIndex) {
   Matrix matrix1 = StringToMatrix("[ 1 2 -3 ; 5 6 7 ]");
+  EXPECT_EQ(1, matrix1[0][0]);
+  EXPECT_EQ(2, matrix1[0][1]);
+  EXPECT_EQ(-3, matrix1[0][2]);
+  EXPECT_EQ(5, matrix1[1][0]);
   EXPECT_EQ(6, matrix1[1][1]);
+  EXPECT_EQ(7, matrix1[1][2]);
 }
 
 TEST(Matrix, OperatorIndexRange) {
