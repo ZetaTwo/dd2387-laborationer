@@ -16,12 +16,12 @@ EX13DIR=1.3_the_hypercube
 EX14DIR=1.4_space_is_not_infinite
 
 CXX=clang++
-CPPFLAGS=-std=c++11 -Wall -g -lgtest
+CPPFLAGS=-std=c++11 -Wall -g
 INCLUDE_PREREQUISITE_HEADER_DIRECTORIES=$(foreach file,$(filter %.h %.hpp,$^),-I $(dir $(file)))
 COMPILE=mkdir -p $(dir $@); $(CXX) $(CPPFLAGS) $(INCLUDE_PREREQUISITE_HEADER_DIRECTORIES) -o $@ $(filter-out %.h,$^)
 
 MAKE_OBJECT=$(COMPILE) -c
-MAKE_EXECUTABLE=$(COMPILE)
+MAKE_EXECUTABLE=$(COMPILE) -lgtest
 MAKE_CXXTEST_CODE=mkdir -p $(@D); python2 $(CXXTEST_DIR)/cxxtestgen.py --error-printer -o $@ $<
 
 TEMPLATE_VECTOR_HEADER=$(EX07DIR)/kth_cprog_template_container.hpp
