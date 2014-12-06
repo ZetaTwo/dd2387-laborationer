@@ -177,6 +177,8 @@ TEST_P(AdditionTest, OperatorAddition) {
 
   Matrix result = term1 + term2;
   EXPECT_TRUE(MatrixCompare(expected_result, result)) << "Actual result: " << std::endl << MatrixToString(result);
+  result = term1 + term2;
+  EXPECT_TRUE(MatrixCompare(expected_result, result)) << "Actual result: " << std::endl << MatrixToString(result);
 }
 
 TEST(Matrix, OperatorAdditionSize) {
@@ -194,6 +196,8 @@ TEST_P(MultiplicationTest, OperatorMultiplication) {
   const Matrix expected_result = StringToMatrix(get<2>(GetParam()));
 
   Matrix result = factor1 * factor2;
+  EXPECT_TRUE(MatrixCompare(expected_result, result)) << "Actual result: " << std::endl << MatrixToString(result);
+  result = factor1 * factor2;
   EXPECT_TRUE(MatrixCompare(expected_result, result)) << "Actual result: " << std::endl << MatrixToString(result);
 }
 
@@ -215,6 +219,11 @@ TEST_P(ScalarMultiplicationTest, OperatorMultiplicationScalar) {
   Matrix resultR = factor * matrix;
   EXPECT_TRUE(MatrixCompare(expected_result, resultL)) << "Actual result: " << std::endl << MatrixToString(resultL);
   EXPECT_TRUE(MatrixCompare(expected_result, resultR)) << "Actual result: " << std::endl << MatrixToString(resultR);
+
+  resultL = factor * matrix;
+  resultR = factor * matrix;
+  EXPECT_TRUE(MatrixCompare(expected_result, resultL)) << "Actual result: " << std::endl << MatrixToString(resultL);
+  EXPECT_TRUE(MatrixCompare(expected_result, resultR)) << "Actual result: " << std::endl << MatrixToString(resultR);
 }
 
 TEST_P(SubtractionTest, OperatorSubtraction) {
@@ -223,6 +232,8 @@ TEST_P(SubtractionTest, OperatorSubtraction) {
   const Matrix expected_result = StringToMatrix(get<2>(GetParam()));
 
   Matrix result = term1 - term2;
+  EXPECT_TRUE(MatrixCompare(expected_result, result)) << "Actual result: " << std::endl << MatrixToString(result);
+  result = term1 - term2;
   EXPECT_TRUE(MatrixCompare(expected_result, result)) << "Actual result: " << std::endl << MatrixToString(result);
 }
 
