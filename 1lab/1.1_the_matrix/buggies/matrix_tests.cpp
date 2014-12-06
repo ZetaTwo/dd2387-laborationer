@@ -141,48 +141,6 @@ TEST(Matrix, OperatorAssignmentSelf) {
   EXPECT_EQ(13, matrix1[1][1]);
 }
 
-TEST(Matrix, OperatorEqualTrue) {
-  Matrix matrix1 = StringToMatrix("[ 1 2 -3 ; 5 6 7 ]");
-  Matrix matrix2 = StringToMatrix("[ 1 2 -3 ; 5 6 7 ]");
-
-  EXPECT_TRUE(MatrixCompare(matrix1, matrix2));
-}
-
-TEST(Matrix, OperatorEqualFalseValue) {
-  Matrix matrix1 = StringToMatrix("[ 1 2 -3 ; 5 6 7 ]");
-  Matrix matrix2 = StringToMatrix("[ 1 2 3 ; 5 6 7 ]");
-
-  EXPECT_FALSE(MatrixCompare(matrix1, matrix2));
-}
-
-TEST(Matrix, OperatorEqualFalseSize) {
-  Matrix matrix1 = StringToMatrix("[ 1 2 -3 ; 5 6 7 ]");
-  Matrix matrix2 = StringToMatrix("[ 1 2 ; 5 6 ]");
-
-  EXPECT_FALSE(MatrixCompare(matrix1, matrix2));
-}
-
-TEST(Matrix, OperatorNequalTrueValue) {
-  Matrix matrix1 = StringToMatrix("[ 1 2 -3 ; 5 6 7 ]");
-  Matrix matrix2 = StringToMatrix("[ 1 2 3 ; 5 6 7 ]");
-
-  EXPECT_FALSE(MatrixCompare(matrix1, matrix2));
-}
-
-TEST(Matrix, OperatorNequalTrueSize) {
-  Matrix matrix1 = StringToMatrix("[ 1 2 -3 ; 5 6 7 ]");
-  Matrix matrix2 = StringToMatrix("[ 1 2 ; 5 6 ]");
-
-  EXPECT_FALSE(MatrixCompare(matrix1, matrix2));
-}
-
-TEST(Matrix, OperatorNequalFalse) {
-  Matrix matrix1 = StringToMatrix("[ 1 2 3 ; 5 6 7 ]");
-  Matrix matrix2 = StringToMatrix("[ 1 2 3 ; 5 6 7 ]");
-
-  EXPECT_TRUE(MatrixCompare(matrix1, matrix2));
-}
-
 TEST_P(AdditionTest, OperatorAddition) {
   const Matrix term1 = StringToMatrix(get<0>(GetParam()));
   const Matrix term2 = StringToMatrix(get<1>(GetParam()));
