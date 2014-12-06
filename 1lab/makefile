@@ -26,6 +26,8 @@ MAKE_CXXTEST_CODE=mkdir -p $(@D); python2 $(CXXTEST_DIR)/cxxtestgen.py --error-p
 
 TEMPLATE_VECTOR_HEADER=$(EX07DIR)/kth_cprog_template_container.hpp
 MATRIX_HEADER=$(EX11DIR)/Matrix.h $(TEMPLATE_VECTOR_HEADER)
+TEST_RUNNER_CODE=../test_runner.cpp
+TEST_RUNNER_OBJECT=build/test_runner.o
 
 lab1: ex01 ex02 ex03 ex04 ex05 ex06 ex07 ex11 ex13 ex14
 
@@ -46,6 +48,9 @@ run/%: build/%.exe
 
 valgrind/%: build/%.exe
 	valgrind ./$^
+
+$(TEST_RUNNER_OBJECT): $(TEST_RUNNER_CODE)
+	$(MAKE_OBJECT)
 
 ex01: run/$(EX01DIR)/hello_world
 
@@ -94,7 +99,7 @@ build/$(EX06DIR)/test_vec.exe: $(EX06DIR)/test_vec.cpp $(EX06DIR)/kth_cprog_simp
 build/$(EX07DIR)/%_tests.o: $(EX07DIR)/%_tests.cpp $(TEMPLATE_VECTOR_HEADER)
 	$(MAKE_OBJECT)
 
-build/$(EX07DIR)/vector_tests.exe: ../test_runner.cpp $(patsubst %.cpp,build/%.o,$(wildcard $(EX07DIR)/*_tests.cpp))
+build/$(EX07DIR)/vector_tests.exe: $(TEST_RUNNER_OBJECT) $(patsubst %.cpp,build/%.o,$(wildcard $(EX07DIR)/*_tests.cpp))
 	$(MAKE_EXECUTABLE)
 
 ex11_compiler_tests: $(patsubst $(EX11DIR)/compiler_tests/%.cpp,ex11_compiler_test_%,$(wildcard $(EX11DIR)/compiler_tests/*.cpp))
@@ -108,25 +113,25 @@ build/$(EX11DIR)/Matrix.o: $(EX11DIR)/Matrix.cpp $(MATRIX_HEADER)
 build/$(EX11DIR)/matrix_tests.o: $(EX11DIR)/matrix_tests.cpp build/$(EX11DIR)/Matrix.o $(MATRIX_HEADER)
 	$(MAKE_OBJECT)
 
-build/$(EX11DIR)/matrix_tests.exe: ../test_runner.cpp build/$(EX11DIR)/matrix_tests.o build/$(EX11DIR)/Matrix.o
+build/$(EX11DIR)/matrix_tests.exe: $(TEST_RUNNER_OBJECT) build/$(EX11DIR)/matrix_tests.o build/$(EX11DIR)/Matrix.o
 	$(MAKE_EXECUTABLE)
 
-build/$(EX11BUGSDIR)/test0%.o: $(EX11BUGSDIR)/matrix_tests.cpp $(EX11BUGSDIR)/Matrix.h
+build/$(EX11BUGSDIR)/test.o: $(EX11BUGSDIR)/matrix_tests.cpp $(EX11BUGSDIR)/Matrix.h
 	$(MAKE_OBJECT)
 
-build/$(EX11BUGSDIR)/test0%.exe: test_runner.cpp build/$(EX11BUGSDIR)/test0%.o $(EX11BUGSDIR)/$(EX11BUGSPREFIX)Matrix0%.o $(EX11BUGSDIR)/Matrix.h
+build/$(EX11BUGSDIR)/test0%.exe: $(TEST_RUNNER_OBJECT) build/$(EX11BUGSDIR)/test.o $(EX11BUGSDIR)/$(EX11BUGSPREFIX)Matrix0%.o $(EX11BUGSDIR)/Matrix.h
 	$(MAKE_EXECUTABLE)
 
 build/$(EX13DIR)/hypercube_tests.o: $(EX13DIR)/hypercube_tests.cpp $(EX13DIR)/hypercube.hpp $(TEMPLATE_VECTOR_HEADER)
 	$(MAKE_OBJECT)
 
-build/$(EX13DIR)/hypercube_tests.exe: ../test_runner.cpp build/$(EX13DIR)/hypercube_tests.o
+build/$(EX13DIR)/hypercube_tests.exe: $(TEST_RUNNER_OBJECT) build/$(EX13DIR)/hypercube_tests.o
 	$(MAKE_EXECUTABLE)
 
 build/$(EX14DIR)/%_tests.o: $(EX14DIR)/%_tests.cpp $(EX14DIR)/kth_cprog_vektor_bool.hpp $(TEMPLATE_VECTOR_HEADER)
 	$(MAKE_OBJECT)
 
-build/$(EX14DIR)/vector_bool_tests.exe: ../test_runner.cpp $(patsubst %.cpp,build/%.o,$(wildcard $(EX14DIR)/*_tests.cpp))
+build/$(EX14DIR)/vector_bool_tests.exe: $(TEST_RUNNER_OBJECT) $(patsubst %.cpp,build/%.o,$(wildcard $(EX14DIR)/*_tests.cpp))
 	$(MAKE_EXECUTABLE)
 
 BUGGIES_REMAINING=7 8
