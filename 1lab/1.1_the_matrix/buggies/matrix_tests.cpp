@@ -584,9 +584,17 @@ TEST(Matrix, DoLotsOfStuffToSeeWhatHappens) {
 }
 
 TEST(Matrix, Case17SizeConstructor) {
-  const Matrix m1{42};
-  EXPECT_EQ(42, m1.rows());
-  EXPECT_EQ(42, m1.cols());
+  const int size = 42;
+  const Matrix m1{size};
+
+  EXPECT_EQ(size, m1.rows());
+  EXPECT_EQ(size, m1.cols());
+
+  for(int row = 0; row < size; ++row) {
+    for(int col = 0; col < size; ++col) {
+      EXPECT_EQ(row == col ? 1 : 0, m1[row][col]);
+    }
+  }
 }
 
 TEST(Matrix, Case17ZeroSizeConstructor) {
@@ -601,7 +609,16 @@ TEST(Matrix, Case17ZeroSizeConstructor) {
 }
 
 TEST(Matrix, Case18SizeSizeConstructor) {
-  const Matrix m1{42, 1337};
-  EXPECT_EQ(42, m1.rows());
-  EXPECT_EQ(1337, m1.cols());
+  const int rows = 42;
+  const int cols = 1337;
+  const Matrix m1{rows, cols};
+
+  EXPECT_EQ(rows, m1.rows());
+  EXPECT_EQ(cols, m1.cols());
+
+  for(int row = 0; row < rows; ++row) {
+    for(int col = 0; col < cols; ++col) {
+      EXPECT_EQ(0, m1[row][col]);
+    }
+  }
 }
