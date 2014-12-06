@@ -108,13 +108,19 @@ TEST(Matrix, OperatorAssignment) {
   matrix2[0][2] = 15;
 
   EXPECT_EQ(13, matrix1[0][0]);
-  EXPECT_EQ(13, matrix2[0][0]);
-
   EXPECT_EQ(14, matrix1[0][1]);
-  EXPECT_EQ(0, matrix2[0][1]);
-
   EXPECT_EQ(0, matrix1[0][2]);
+
+  EXPECT_EQ(13, matrix2[0][0]);
+  EXPECT_EQ(0, matrix2[0][1]);
   EXPECT_EQ(15, matrix2[0][2]);
+
+  for(size_t row = 1; row < size; ++row) {
+    for(size_t col = 1; col < size; ++col) {
+      EXPECT_EQ(row == col ? 1 : 0, matrix1[row][col]);
+      EXPECT_EQ(row == col ? 1 : 0, matrix2[row][col]);
+    }
+  }
 }
 
 TEST(Matrix, OperatorAssignmentSelf) {
