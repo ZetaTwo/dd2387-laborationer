@@ -59,6 +59,12 @@ INSTANTIATE_TEST_CASE_P(Matrix, ScalarMultiplicationTest, Values(
   tuple<string, int, string>{"[ 1 2 ; 3 4 ]", -1, "[ -1 -2 ; -3 -4 ]"}
 ));
 
+class SubtractionTest : public TestWithParam<tuple<string, string, string>> {};
+INSTANTIATE_TEST_CASE_P(Matrix, SubtractionTest, Values(
+  tuple<string, string, string>{"[ 1 2 -3 ; 5 6 7 ]", "[ 0 0 0 ; 0 0 0 ]", "[ 1 2 -3 ; 5 6 7 ]"},
+  tuple<string, string, string>{"[ 1 2 -3 ; 5 6 7 ]", "[ 2 -3 1 ; -6 5 7 ]", "[ -1 5 -4; 11 1 0 ]"}
+));
+
 TEST(Matrix, ConstructorDefault) {
   EXPECT_NO_THROW({
     Matrix matrix1;
@@ -211,13 +217,13 @@ TEST_P(ScalarMultiplicationTest, OperatorMultiplicationScalar) {
   EXPECT_TRUE(MatrixCompare(expected_result, resultR)) << "Actual result: " << std::endl << MatrixToString(resultR);
 }
 
-TEST(Matrix, OperatorSubtraction) {
-  Matrix matrix1 = StringToMatrix("[ 1 2 -3 ; 5 6 7 ]");
-  Matrix matrix2 = StringToMatrix("[ 2 -3 1 ; -6 5 7 ]");
-  Matrix matrix3 = StringToMatrix("[ -1 5 -4; 11 1 0 ]");
+TEST_P(SubtractionTest, OperatorSubtraction) {
+  const Matrix term1 = StringToMatrix(get<0>(GetParam()));
+  const Matrix term2 = StringToMatrix(get<1>(GetParam()));
+  const Matrix expected_result = StringToMatrix(get<2>(GetParam()));
 
-  Matrix matrix4 = matrix1 - matrix2;
-  EXPECT_TRUE(MatrixCompare(matrix3, matrix4));
+  Matrix result = term1 - term2;
+  EXPECT_TRUE(MatrixCompare(expected_result, result)) << "Actual result: " << std::endl << MatrixToString(result);
 }
 
 TEST(Matrix, OperatorSubtractionSize) {
