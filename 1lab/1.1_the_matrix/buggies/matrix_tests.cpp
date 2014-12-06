@@ -243,18 +243,21 @@ TEST(Matrix, OperatorIndex) {
 
 TEST(Matrix, OperatorIndexRange) {
   Matrix matrix1 = StringToMatrix("[ 1 2 -3 ; 5 6 7 ]");
-  EXPECT_THROW({
-    int a = matrix1[3][0];
-  }, std::out_of_range);
-  EXPECT_THROW({
-    int a = matrix1[-1][0];
-  }, std::out_of_range);
-  EXPECT_THROW({
-    int a = matrix1[0][3];
-  }, std::out_of_range);
-  EXPECT_THROW({
-    int a = matrix1[0][-1];
-  }, std::out_of_range);
+
+  for(int i = -1; i < 4; ++i) {
+    EXPECT_THROW({
+      matrix1[3][i];
+    }, std::out_of_range);
+    EXPECT_THROW({
+      matrix1[-1][i];
+    }, std::out_of_range);
+    EXPECT_THROW({
+      matrix1[i][3];
+    }, std::out_of_range);
+    EXPECT_THROW({
+      matrix1[i][-1];
+    }, std::out_of_range);
+  }
 }
 
 TEST(Matrix, Rows) {
