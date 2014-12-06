@@ -125,6 +125,9 @@ TEST(Matrix, OperatorAssignmentSelf) {
   matrix1 = matrix1;
   EXPECT_EQ(size, matrix1.rows());
   EXPECT_EQ(size, matrix1.cols());
+  EXPECT_EQ(0, matrix1[0][0]);
+  EXPECT_EQ(0, matrix1[0][1]);
+  EXPECT_EQ(0, matrix1[1][0]);
   EXPECT_EQ(13, matrix1[1][1]);
 }
 
