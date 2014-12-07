@@ -60,7 +60,8 @@ INSTANTIATE_TEST_CASE_P(Matrix, MultiplicationTest, Values(
   tuple<string, string, string>{"[ 1 2 ; 3 4 ]", "[ -1 0 ; 0 -1 ]", "[ -1 -2 ; -3 -4 ]"},
   tuple<string, string, string>{"[ 1 2 ; 3 4 ]", "[ 0 1 ; 1 0 ]", "[ 2 1 ; 4 3 ]"},
   tuple<string, string, string>{"[ 1 2 ; 3 4 ]", "[ 0 -1 ; -1 0 ]", "[ -2 -1 ; -4 -3 ]"},
-  tuple<string, string, string>{"[ 1 2 3 ; 4 5 6 ]", "[ 7 8 ; 9 10; 11 12 ]", "[ 58 64; 139 154 ]"}
+  tuple<string, string, string>{"[ 1 2 3 ; 4 5 6 ]", "[ 7 8 ; 9 10; 11 12 ]", "[ 58 64; 139 154 ]"},
+  tuple<string, string, string>{"[ 1 2 3 ; 4 5 6 ]", "[ 7 8 ; 9 10 ]", "throw"}
 ));
 
 class ScalarMultiplicationTest : public TestWithParam<tuple<string, int>> {};
@@ -173,23 +174,21 @@ TEST(Matrix, OperatorAdditionSize) {
 }
 
 TEST_P(MultiplicationTest, OperatorMultiplication) {
-  const Matrix factor1 = StringToMatrix(get<0>(GetParam()));
-  const Matrix factor2 = StringToMatrix(get<1>(GetParam()));
-  Matrix expected_result = StringToMatrix(get<2>(GetParam()));
+  Matrix factor1 = StringToMatrix(get<0>(GetParam()));
+  Matrix factor2 = StringToMatrix(get<1>(GetParam()));
 
-  Matrix result = factor1 * factor2;
-  ExpectActualResultEqualsExpectedResult(expected_result, result);
-  result = factor1 * factor2;
-  ExpectActualResultEqualsExpectedResult(expected_result, result);
-}
+  if(get<2>(GetParam()) == "throw") {
+    EXPECT_THROW({
+      factor1 * factor2;
+    }, std::exception);
+  } else {
+    Matrix expected_result = StringToMatrix(get<2>(GetParam()));
 
-TEST(Matrix, OperatorMultiplicationSize) {
-  const Matrix matrix1 = StringToMatrix("[ 1 2 3 ; 4 5 6 ]");
-  const Matrix matrix2 = StringToMatrix("[ 7 8 ; 9 10 ]");
-
-  EXPECT_THROW({
-    matrix1 * matrix2;
-  }, std::exception);
+    Matrix result = factor1 * factor2;
+    ExpectActualResultEqualsExpectedResult(expected_result, result);
+    result = factor1 * factor2;
+    ExpectActualResultEqualsExpectedResult(expected_result, result);
+  }
 }
 
 TEST_P(ScalarMultiplicationTest, OperatorMultiplicationScalar) {
