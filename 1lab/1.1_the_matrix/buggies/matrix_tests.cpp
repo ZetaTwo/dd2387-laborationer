@@ -65,7 +65,11 @@ INSTANTIATE_TEST_CASE_P(Matrix, MultiplicationTest, Values(
   tuple<string, string, string>{"[ 1 2 ; 3 4 ]", "[ 0 -1 ; -1 0 ]", "[ -2 -1 ; -4 -3 ]"},
   tuple<string, string, string>{"[ 1 2 3 ; 4 5 6 ]", "[ 7 8 ; 9 10; 11 12 ]", "[ 58 64; 139 154 ]"},
   tuple<string, string, string>{magicA, magicB, magicAxB},
-  tuple<string, string, string>{"[ 1 2 3 ; 4 5 6 ]", "[ 7 8 ; 9 10 ]", "throw"}
+  tuple<string, string, string>{magicA, "[ 0 ; 0 ; 0 ; 0 ]", "[ 0 ; 0 ; 0 ; 0 ]"},
+  tuple<string, string, string>{magicA, "[ 1 ; 1 ; 1 ; 1 ]", "[ 34 ; 34 ; 34 ; 34 ]"},
+  tuple<string, string, string>{magicA, "[ 1 0 0 0 ; 0 1 0 0 ; 0 0 1 0 ; 0 0 0 1 ]", magicA},
+  tuple<string, string, string>{"[ 1 2 3 ; 4 5 6 ]", "[ 7 8 ; 9 10 ]", "throw"},
+  tuple<string, string, string>{"[ 1 2 3 ; 4 5 6 ]", "[ 7 8 ; 9 10 ; 11 12 ; 13 14 ]", "throw"}
 ));
 
 class ScalarMultiplicationTest : public TestWithParam<tuple<string, int>> {};
