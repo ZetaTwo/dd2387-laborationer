@@ -188,6 +188,14 @@ TEST_P(MultiplicationTest, OperatorMultiplication) {
     ExpectActualResultEqualsExpectedResult(expected_result, result);
     result = factor1 * factor2;
     ExpectActualResultEqualsExpectedResult(expected_result, result);
+
+    expected_result.transpose();
+    factor1.transpose();
+    factor2.transpose();
+    result = factor2 * factor1;
+    ExpectActualResultEqualsExpectedResult(expected_result, result);
+    result = factor2 * factor1;
+    ExpectActualResultEqualsExpectedResult(expected_result, result);
   }
 }
 
