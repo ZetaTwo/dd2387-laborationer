@@ -33,6 +33,12 @@ Matrix StringToMatrix(const std::string data) {
   return m;
 }
 
+void ExpectActualResultEqualsExpectedResult(Matrix& expected_result, Matrix& result) {
+  EXPECT_TRUE(MatrixCompare(expected_result, result))
+    << "Expected result: " << std::endl << MatrixToString(expected_result) << std::endl
+    << "Actual result: " << std::endl << MatrixToString(result);
+}
+
 using std::string;
 using std::tuple;
 using std::get;
@@ -149,12 +155,12 @@ TEST(Matrix, OperatorAssignmentSelf) {
 TEST_P(AdditionTest, OperatorAddition) {
   const Matrix term1 = StringToMatrix(get<0>(GetParam()));
   const Matrix term2 = StringToMatrix(get<1>(GetParam()));
-  const Matrix expected_result = StringToMatrix(get<2>(GetParam()));
+  Matrix expected_result = StringToMatrix(get<2>(GetParam()));
 
   Matrix result = term1 + term2;
-  EXPECT_TRUE(MatrixCompare(expected_result, result)) << "Actual result: " << std::endl << MatrixToString(result);
+  ExpectActualResultEqualsExpectedResult(expected_result, result);
   result = term1 + term2;
-  EXPECT_TRUE(MatrixCompare(expected_result, result)) << "Actual result: " << std::endl << MatrixToString(result);
+  ExpectActualResultEqualsExpectedResult(expected_result, result);
 }
 
 TEST(Matrix, OperatorAdditionSize) {
@@ -169,12 +175,12 @@ TEST(Matrix, OperatorAdditionSize) {
 TEST_P(MultiplicationTest, OperatorMultiplication) {
   const Matrix factor1 = StringToMatrix(get<0>(GetParam()));
   const Matrix factor2 = StringToMatrix(get<1>(GetParam()));
-  const Matrix expected_result = StringToMatrix(get<2>(GetParam()));
+  Matrix expected_result = StringToMatrix(get<2>(GetParam()));
 
   Matrix result = factor1 * factor2;
-  EXPECT_TRUE(MatrixCompare(expected_result, result)) << "Actual result: " << std::endl << MatrixToString(result);
+  ExpectActualResultEqualsExpectedResult(expected_result, result);
   result = factor1 * factor2;
-  EXPECT_TRUE(MatrixCompare(expected_result, result)) << "Actual result: " << std::endl << MatrixToString(result);
+  ExpectActualResultEqualsExpectedResult(expected_result, result);
 }
 
 TEST(Matrix, OperatorMultiplicationSize) {
@@ -204,12 +210,12 @@ TEST_P(ScalarMultiplicationTest, OperatorMultiplicationScalar) {
 TEST_P(SubtractionTest, OperatorSubtraction) {
   const Matrix term1 = StringToMatrix(get<0>(GetParam()));
   const Matrix term2 = StringToMatrix(get<1>(GetParam()));
-  const Matrix expected_result = StringToMatrix(get<2>(GetParam()));
+  Matrix expected_result = StringToMatrix(get<2>(GetParam()));
 
   Matrix result = term1 - term2;
-  EXPECT_TRUE(MatrixCompare(expected_result, result)) << "Actual result: " << std::endl << MatrixToString(result);
+  ExpectActualResultEqualsExpectedResult(expected_result, result);
   result = term1 - term2;
-  EXPECT_TRUE(MatrixCompare(expected_result, result)) << "Actual result: " << std::endl << MatrixToString(result);
+  ExpectActualResultEqualsExpectedResult(expected_result, result);
 }
 
 TEST(Matrix, OperatorSubtractionSize) {
