@@ -37,6 +37,8 @@ using std::string;
 using std::tuple;
 using std::get;
 using ::testing::TestWithParam;
+using ::testing::Combine;
+using ::testing::Range;
 using ::testing::Values;
 
 class AdditionTest : public TestWithParam<tuple<string, string, string>> {};
@@ -55,12 +57,15 @@ INSTANTIATE_TEST_CASE_P(Matrix, MultiplicationTest, Values(
   tuple<string, string, string>{"[ 1 2 3 ; 4 5 6 ]", "[ 7 8 ; 9 10; 11 12 ]", "[ 58 64; 139 154 ]"}
 ));
 
-class ScalarMultiplicationTest : public TestWithParam<tuple<string, int, string>> {};
-INSTANTIATE_TEST_CASE_P(Matrix, ScalarMultiplicationTest, Values(
-  tuple<string, int, string>{"[ 1 2 ; 3 4 ]", 0, "[ 0 0 ; 0 0 ]"},
-  tuple<string, int, string>{"[ 1 2 ; 3 4 ]", 1, "[ 1 2 ; 3 4 ]"},
-  tuple<string, int, string>{"[ 1 2 ; 3 4 ]", 2, "[ 2 4 ; 6 8 ]"},
-  tuple<string, int, string>{"[ 1 2 ; 3 4 ]", -1, "[ -1 -2 ; -3 -4 ]"}
+class ScalarMultiplicationTest : public TestWithParam<tuple<string, int>> {};
+INSTANTIATE_TEST_CASE_P(Matrix, ScalarMultiplicationTest, Combine(
+  Values(
+    "[ 1 2 ; 3 4 ]",
+    "[ 8 1 6 ; 3 5 7 ; 4 9 2 ]",
+    "[ 8 1 6 ; 3 5 7 ]",
+    "[ 8 1 ; 3 5 ; 4 9 ]"
+  ),
+  Range(-2, 3)
 ));
 
 class SubtractionTest : public TestWithParam<tuple<string, string, string>> {};
@@ -184,17 +189,16 @@ TEST(Matrix, OperatorMultiplicationSize) {
 TEST_P(ScalarMultiplicationTest, OperatorMultiplicationScalar) {
   const Matrix matrix = StringToMatrix(get<0>(GetParam()));
   const int factor = get<1>(GetParam());
-  const Matrix expected_result = StringToMatrix(get<2>(GetParam()));
 
   Matrix resultL = factor * matrix;
-  Matrix resultR = factor * matrix;
-  EXPECT_TRUE(MatrixCompare(expected_result, resultL)) << "Actual result: " << std::endl << MatrixToString(resultL);
-  EXPECT_TRUE(MatrixCompare(expected_result, resultR)) << "Actual result: " << std::endl << MatrixToString(resultR);
+  Matrix resultR = matrix * factor;
 
-  resultL = factor * matrix;
-  resultR = factor * matrix;
-  EXPECT_TRUE(MatrixCompare(expected_result, resultL)) << "Actual result: " << std::endl << MatrixToString(resultL);
-  EXPECT_TRUE(MatrixCompare(expected_result, resultR)) << "Actual result: " << std::endl << MatrixToString(resultR);
+  for(size_t r = 0; r < matrix.rows(); ++r) {
+    for(size_t c = 0; c < matrix.cols(); ++c) {
+      EXPECT_EQ(factor * matrix[r][c], resultL[r][c]);
+      EXPECT_EQ(factor * matrix[r][c], resultR[r][c]);
+    }
+  }
 }
 
 TEST_P(SubtractionTest, OperatorSubtraction) {
@@ -342,14 +346,6 @@ TEST(Matrix, Case7Negation) {
 
   Matrix matrix3 = -matrix1;
   EXPECT_EQ("[ -1 -2 3 \n; -5 -6 -7 ]", MatrixToString(matrix3));
-  EXPECT_TRUE(MatrixCompare(matrix2, matrix3));
-}
-
-TEST(Matrix, Case8ScalarMultiplication) {
-  Matrix matrix1 = StringToMatrix("[ 1 2 3 ; 4 5 6 ]");
-  Matrix matrix2 = StringToMatrix("[ 2 4 6; 8 10 12 ]");
-
-  Matrix matrix3 = 2 * matrix1;
   EXPECT_TRUE(MatrixCompare(matrix2, matrix3));
 }
 
