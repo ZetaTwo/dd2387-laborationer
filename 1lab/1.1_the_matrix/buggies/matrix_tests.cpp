@@ -60,7 +60,12 @@ INSTANTIATE_TEST_CASE_P(Matrix, SubtractionTest, Values(
 ));
 
 auto diffdims = Values(
-  tuple<string, string, string>{"[ 1 2 -3 ; 5 6 7 ]", "[ 2 -3 ; -6 5 ]", "throw"}
+  tuple<string, string, string>{"[ 1 2 -3 ; 5 6 7 ]", "[ 2 -3 ; -6 5 ]", "throw"},
+  tuple<string, string, string>{"[ 1 2 -3 ; 5 6 7 ]", "[ 0 0 ; 0 0 ]", "throw"},
+  tuple<string, string, string>{"[ 1 2 -3 ; 5 6 7 ]", "[ 1 2 3 4 ; 5 6 7 8 ]", "throw"},
+  tuple<string, string, string>{"[ 1 2 -3 ; 5 6 7 ]", "[ 1 2 ; 3 4 ; 5 6 ; 7 8 ]", "throw"},
+  tuple<string, string, string>{"[ 1 ]", "[ 2 -3 ]", "throw"},
+  tuple<string, string, string>{"[ 1 ]", "[ 2 ; -3 ]", "throw"}
 );
 INSTANTIATE_TEST_CASE_P(MatrixDifferentDimensions, AdditionTest, diffdims);
 INSTANTIATE_TEST_CASE_P(MatrixDifferentDimensions, SubtractionTest, diffdims);
