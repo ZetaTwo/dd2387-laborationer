@@ -100,6 +100,12 @@ INSTANTIATE_TEST_CASE_P(Matrix, ScalarMultiplicationTest, Combine(
   Range(-2, 3)
 ));
 
+class SizeTest : public TestWithParam<int> {};
+INSTANTIATE_TEST_CASE_P(Matrix, SizeTest, Values(0, 1, 2, 3, 4, 100));
+
+class SizeSizeTest : public TestWithParam<tuple<int, int>> {};
+INSTANTIATE_TEST_CASE_P(Matrix, SizeSizeTest, Combine(Values(0, 1, 2, 3, 4, 100), Values(0, 1, 2, 3, 4, 100)));
+
 TEST(Matrix, ConstructorDefault) {
   EXPECT_NO_THROW({
     const Matrix matrix1;
@@ -109,21 +115,55 @@ TEST(Matrix, ConstructorDefault) {
 
 }
 
-TEST(Matrix, ConstructorSize) {
-  const size_t size = 3;
+TEST_P(SizeTest, ConstructorSize) {
+  const int size = GetParam();
+  Matrix m1{size};
 
-  const Matrix matrix(size);
-  EXPECT_EQ(size, matrix.rows());
-  EXPECT_EQ(size, matrix.cols());
+  EXPECT_EQ(size, m1.rows());
+  EXPECT_EQ(size, m1.cols());
+
+  for(int row = 0; row < size; ++row) {
+    for(int col = 0; col < size; ++col) {
+      EXPECT_EQ(row == col ? 1 : 0, m1[row][col]);
+    }
+  }
+
+  -m1;
+  m1 + m1;
+  m1 - m1;
+  m1 * 3;
+  m1 * m1;
+  3 * m1;
+  m1.transpose();
 }
 
+TEST_P(SizeSizeTest, ConstructorSize2) {
+  const size_t rows = get<0>(GetParam());
+  const size_t cols = get<1>(GetParam());
+  Matrix m1{rows, cols};
 
-TEST(Matrix, ConstructorSize2) {
-  const size_t size_rows = 3, size_cols = 4;
+  EXPECT_EQ(rows, m1.rows());
+  EXPECT_EQ(cols, m1.cols());
 
-  const Matrix matrix(size_rows, size_cols);
-  EXPECT_EQ(size_rows, matrix.rows());
-  EXPECT_EQ(size_cols, matrix.cols());
+  for(size_t row = 0; row < rows; ++row) {
+    for(size_t col = 0; col < cols; ++col) {
+      EXPECT_EQ(0, m1[row][col]);
+    }
+  }
+
+  -m1;
+  m1 + m1;
+  m1 - m1;
+  m1 * 3;
+  3 * m1;
+  if(rows == cols) {
+    m1 * m1;
+  } else if(rows > 0 && cols > 0) {
+    EXPECT_THROW({
+      m1 * m1;
+    }, std::exception);
+  }
+  m1.transpose();
 }
 
 TEST(Matrix, ConstructorSerialized) {
@@ -742,44 +782,4 @@ TEST(Matrix, DoLotsOfStuffToSeeWhatHappens) {
   EXPECT_TRUE(MatrixCompare(StringToMatrix("[ 7 -8 9 ; 10 -11 12 ]"), m2));
   EXPECT_TRUE(MatrixCompare(StringToMatrix("[ 7 10 ; -8 -11 ; 9 12 ]"), m2t));
   EXPECT_TRUE(MatrixCompare(StringToMatrix("[ -9425 14126 -17391 ; -13022 19576 -24114 ]"), m3));
-}
-
-TEST(Matrix, Case17SizeConstructor) {
-  const int size = 42;
-  const Matrix m1{size};
-
-  EXPECT_EQ(size, m1.rows());
-  EXPECT_EQ(size, m1.cols());
-
-  for(int row = 0; row < size; ++row) {
-    for(int col = 0; col < size; ++col) {
-      EXPECT_EQ(row == col ? 1 : 0, m1[row][col]);
-    }
-  }
-}
-
-TEST(Matrix, Case17ZeroSizeConstructor) {
-  Matrix m1{0};
-  EXPECT_EQ(0, m1.rows());
-  EXPECT_EQ(0, m1.cols());
-  m1 * 3;
-  m1 * m1;
-  3 * m1;
-  m1 + m1;
-  m1.transpose();
-}
-
-TEST(Matrix, Case18SizeSizeConstructor) {
-  const int rows = 42;
-  const int cols = 1337;
-  const Matrix m1{rows, cols};
-
-  EXPECT_EQ(rows, m1.rows());
-  EXPECT_EQ(cols, m1.cols());
-
-  for(int row = 0; row < rows; ++row) {
-    for(int col = 0; col < cols; ++col) {
-      EXPECT_EQ(0, m1[row][col]);
-    }
-  }
 }
