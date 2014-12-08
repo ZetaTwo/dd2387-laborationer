@@ -59,6 +59,12 @@ INSTANTIATE_TEST_CASE_P(Matrix, SubtractionTest, Values(
   tuple<string, string, string>{"[ 1 2 -3 ; 5 6 7 ]", "[ 2 -3 1 ; -6 5 7 ]", "[ -1 5 -4; 11 1 0 ]"}
 ));
 
+auto diffdims = Values(
+  tuple<string, string, string>{"[ 1 2 -3 ; 5 6 7 ]", "[ 2 -3 ; -6 5 ]", "throw"}
+);
+INSTANTIATE_TEST_CASE_P(MatrixDifferentDimensions, AdditionTest, diffdims);
+INSTANTIATE_TEST_CASE_P(MatrixDifferentDimensions, SubtractionTest, diffdims);
+
 const string magicA = "[ 16 2 3 13 ; 5 11 10 8 ; 9 7 6 12 ; 4 14 15 1 ]";
 const string magicB = "[ 13 3 2 16 ; 8 10 11 5 ; 12 6 7 9 ; 1 15 14 4 ]";
 const string magicAxB = "[ 273 281 257 345; 281 305 313 257; 257 313 305 281; 345 257 281 273 ]";
@@ -164,21 +170,19 @@ TEST(Matrix, OperatorAssignmentSelf) {
 TEST_P(AdditionTest, OperatorAddition) {
   const Matrix term1 = StringToMatrix(get<0>(GetParam()));
   const Matrix term2 = StringToMatrix(get<1>(GetParam()));
-  Matrix expected_result = StringToMatrix(get<2>(GetParam()));
 
-  Matrix result = term1 + term2;
-  ExpectActualResultEqualsExpectedResult(expected_result, result);
-  result = term1 + term2;
-  ExpectActualResultEqualsExpectedResult(expected_result, result);
-}
+  if(get<2>(GetParam()) == "throw") {
+    EXPECT_THROW({
+      term1 + term2;
+    }, std::exception);
+  } else {
+    Matrix expected_result = StringToMatrix(get<2>(GetParam()));
 
-TEST(Matrix, OperatorAdditionSize) {
-  const Matrix matrix1 = StringToMatrix("[ 1 2 -3 ; 5 6 7 ]");
-  const Matrix matrix2 = StringToMatrix("[ 2 -3 ; -6 5 ]");
-
-  EXPECT_THROW({
-    Matrix matrix3 = matrix1 + matrix2;
-  }, std::exception);
+    Matrix result = term1 + term2;
+    ExpectActualResultEqualsExpectedResult(expected_result, result);
+    result = term1 + term2;
+    ExpectActualResultEqualsExpectedResult(expected_result, result);
+  }
 }
 
 TEST_P(MultiplicationTest, OperatorMultiplication) {
@@ -225,21 +229,19 @@ TEST_P(ScalarMultiplicationTest, OperatorMultiplicationScalar) {
 TEST_P(SubtractionTest, OperatorSubtraction) {
   const Matrix term1 = StringToMatrix(get<0>(GetParam()));
   const Matrix term2 = StringToMatrix(get<1>(GetParam()));
-  Matrix expected_result = StringToMatrix(get<2>(GetParam()));
 
-  Matrix result = term1 - term2;
-  ExpectActualResultEqualsExpectedResult(expected_result, result);
-  result = term1 - term2;
-  ExpectActualResultEqualsExpectedResult(expected_result, result);
-}
+  if(get<2>(GetParam()) == "throw") {
+    EXPECT_THROW({
+      term1 - term2;
+    }, std::exception);
+  } else {
+    Matrix expected_result = StringToMatrix(get<2>(GetParam()));
 
-TEST(Matrix, OperatorSubtractionSize) {
-  const Matrix matrix1 = StringToMatrix("[ 1 2 -3 ; 5 6 7 ]");
-  const Matrix matrix2 = StringToMatrix("[ 2 -3 ; -6 5 ]");
-
-  EXPECT_THROW({
-    matrix1 - matrix2;
-  }, std::exception);
+    Matrix result = term1 - term2;
+    ExpectActualResultEqualsExpectedResult(expected_result, result);
+    result = term1 - term2;
+    ExpectActualResultEqualsExpectedResult(expected_result, result);
+  }
 }
 
 TEST(Matrix, OperatorNegative) {
