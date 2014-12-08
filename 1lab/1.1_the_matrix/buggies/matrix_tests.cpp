@@ -53,6 +53,12 @@ INSTANTIATE_TEST_CASE_P(Matrix, AdditionTest, Values(
   tuple<string, string, string>{"[ 1 2 -3 ; 5 6 7 ]", "[ 2 -3 1 ; -6 5 7 ]", "[ 3 -1 -2; -1 11 14 ]"}
 ));
 
+class SubtractionTest : public TestWithParam<tuple<string, string, string>> {};
+INSTANTIATE_TEST_CASE_P(Matrix, SubtractionTest, Values(
+  tuple<string, string, string>{"[ 1 2 -3 ; 5 6 7 ]", "[ 0 0 0 ; 0 0 0 ]", "[ 1 2 -3 ; 5 6 7 ]"},
+  tuple<string, string, string>{"[ 1 2 -3 ; 5 6 7 ]", "[ 2 -3 1 ; -6 5 7 ]", "[ -1 5 -4; 11 1 0 ]"}
+));
+
 const string magicA = "[ 16 2 3 13 ; 5 11 10 8 ; 9 7 6 12 ; 4 14 15 1 ]";
 const string magicB = "[ 13 3 2 16 ; 8 10 11 5 ; 12 6 7 9 ; 1 15 14 4 ]";
 const string magicAxB = "[ 273 281 257 345; 281 305 313 257; 257 313 305 281; 345 257 281 273 ]";
@@ -81,12 +87,6 @@ INSTANTIATE_TEST_CASE_P(Matrix, ScalarMultiplicationTest, Combine(
     "[ 8 1 ; 3 5 ; 4 9 ]"
   ),
   Range(-2, 3)
-));
-
-class SubtractionTest : public TestWithParam<tuple<string, string, string>> {};
-INSTANTIATE_TEST_CASE_P(Matrix, SubtractionTest, Values(
-  tuple<string, string, string>{"[ 1 2 -3 ; 5 6 7 ]", "[ 0 0 0 ; 0 0 0 ]", "[ 1 2 -3 ; 5 6 7 ]"},
-  tuple<string, string, string>{"[ 1 2 -3 ; 5 6 7 ]", "[ 2 -3 1 ; -6 5 7 ]", "[ -1 5 -4; 11 1 0 ]"}
 ));
 
 TEST(Matrix, ConstructorDefault) {
