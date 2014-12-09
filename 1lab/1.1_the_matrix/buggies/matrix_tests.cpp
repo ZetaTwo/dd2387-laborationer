@@ -303,9 +303,9 @@ TEST(Matrix, OperatorNegative) {
 }
 
 TEST(Matrix, Transpose) {
-  const Matrix matrix1 = StringToMatrix("[ 1 2 -3 ; 5 6 7 ]");
+  Matrix matrix1 = StringToMatrix("[ 1 2 -3 ; 5 6 7 ]");
   Matrix matrix2 = StringToMatrix("[ 1 5; 2 6; -3 7 ]");
-  EXPECT_TRUE(MatrixCompare(matrix1, matrix2.transpose()));
+  ExpectActualResultEqualsExpectedResult(matrix1, matrix2.transpose());
 }
 
 TEST(Matrix, OperatorIndex) {
