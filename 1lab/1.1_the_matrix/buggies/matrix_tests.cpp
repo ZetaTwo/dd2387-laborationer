@@ -220,12 +220,15 @@ TEST_P(AdditionTest, OperatorAddition) {
     EXPECT_THROW({
       term1 + term2;
     }, std::exception);
+    EXPECT_THROW({
+      term2 + term1;
+    }, std::exception);
   } else {
     Matrix expected_result = StringToMatrix(get<2>(GetParam()));
 
     Matrix result = term1 + term2;
     ExpectActualResultEqualsExpectedResult(expected_result, result);
-    result = term1 + term2;
+    result = term2 + term1;
     ExpectActualResultEqualsExpectedResult(expected_result, result);
   }
 }
@@ -279,12 +282,15 @@ TEST_P(SubtractionTest, OperatorSubtraction) {
     EXPECT_THROW({
       term1 - term2;
     }, std::exception);
+    EXPECT_THROW({
+      term2 - term1;
+    }, std::exception);
   } else {
     Matrix expected_result = StringToMatrix(get<2>(GetParam()));
 
     Matrix result = term1 - term2;
     ExpectActualResultEqualsExpectedResult(expected_result, result);
-    result = term1 - term2;
+    result = -(term2 - term1);
     ExpectActualResultEqualsExpectedResult(expected_result, result);
   }
 }
