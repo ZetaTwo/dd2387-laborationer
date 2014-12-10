@@ -428,7 +428,7 @@ namespace lab2 {
         os << "*";
       } else if(day == get_date()) {
         os << ">";
-      } else {
+      } else if(day.week_day() < 7 && day.day() < month.days_this_month()) {
         os << " ";
       }
       if(day.week_day() == 7 || day.day() == month.days_this_month()) {
@@ -440,7 +440,7 @@ namespace lab2 {
 
     for(D day = first_day_of_month; day.month() == month.month(); ++day) {
       for(const auto& e : get_events(day)) {
-        os << "  " << day << " " << e << std::endl;
+        os << "  " << day << ": " << e << std::endl;
       }
     }
 
