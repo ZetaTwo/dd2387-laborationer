@@ -78,4 +78,7 @@ int main() {
   c.print_calendar(cout, Gregorian{2332, 2, 15});
   c.print_calendar(cout, Gregorian{2333, 2, 15});
 
+  c.set_format(c.format::cal);
+  cout << c << endl;
+
 }
