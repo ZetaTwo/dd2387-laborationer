@@ -59,14 +59,14 @@ namespace lab2 {
     return static_cast<JulianDate&>(WesternDate::operator--());
   }
 
-  const JulianDate& JulianDate::operator++(int) {
-    JulianDate copy{*this};
+  JulianDate JulianDate::operator++(int) {
+    const JulianDate copy{ *this };
     WesternDate::operator++();
     return copy;
   }
 
-  const JulianDate& JulianDate::operator--(int) {
-    JulianDate copy{*this};
+  JulianDate JulianDate::operator--(int) {
+    const JulianDate copy{ *this };
     WesternDate::operator--();
     return copy;
   }
