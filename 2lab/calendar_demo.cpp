@@ -84,4 +84,9 @@ int main() {
   c.set_date(2332, 1, 4);
   cout << c << endl;
 
+  c.set_date(2007, 12, 2);
+  c.add_event("Min andra cykel", 20);
+  c.add_event("Julafton", 24);
+  cout << c << endl;
+
 }
