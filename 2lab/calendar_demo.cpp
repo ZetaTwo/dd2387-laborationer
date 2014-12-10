@@ -81,4 +81,7 @@ int main() {
   c.set_format(c.format::cal);
   cout << c << endl;
 
+  c.set_date(2332, 1, 4);
+  cout << c << endl;
+
 }

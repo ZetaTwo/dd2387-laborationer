@@ -425,7 +425,9 @@ namespace lab2 {
         os << " ";
       }
       os << day.day();
-      if(day == get_date()) {
+      if(get_events(day).size() > 0) {
+        os << "*";
+      } else if(day == get_date()) {
         os << ">";
       } else {
         os << " ";
