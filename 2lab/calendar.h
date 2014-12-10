@@ -131,28 +131,12 @@ namespace lab2 {
       }
 
       void print_events(const Date& begin_date, const Date& end_date) const;
+      std::ostream& print_list(std::ostream& os) const;
       std::ostream& print_events(const Date& begin_date, const Date& end_date, std::ostream& os) const;
       std::ostream& print_calendar(std::ostream& os, const Date& month) const;
 
       friend std::ostream& operator<<(std::ostream& os, const Calendar& cal) {
-        const typename EventCollection::const_reverse_iterator last_static_event_date_it = std::find_if(
-          cal.get_static_events().rbegin(),
-          cal.get_static_events().rend(),
-          [](const typename EventCollection::const_reverse_iterator::value_type& pair) {
-            return pair.second.size() > 0;
-          }
-        );
-
-        if(last_static_event_date_it != cal.get_static_events().rend()) {
-          const Date& last_static_event_date = last_static_event_date_it->first;
-          for(D iter_date = cal.get_date(); iter_date <= last_static_event_date; ++iter_date) {
-            for(const Event& e : cal.get_events(iter_date)) {
-              os << iter_date << " : " << e << std::endl;
-            }
-          }
-        }
-
-        return os;
+        return cal.print_list(os);
       }
 
     private:
@@ -382,6 +366,28 @@ namespace lab2 {
       return it->add_exception(cancelDate);
     }
     return false;
+  }
+
+  template<class D>
+  std::ostream& Calendar<D>::print_list(std::ostream& os) const {
+    const typename EventCollection::const_reverse_iterator last_static_event_date_it = std::find_if(
+      get_static_events().rbegin(),
+      get_static_events().rend(),
+      [](const typename EventCollection::const_reverse_iterator::value_type& pair) {
+        return pair.second.size() > 0;
+      }
+    );
+
+    if(last_static_event_date_it != get_static_events().rend()) {
+      const Date& last_static_event_date = last_static_event_date_it->first;
+      for(D iter_date = get_date(); iter_date <= last_static_event_date; ++iter_date) {
+        for(const Event& e : get_events(iter_date)) {
+          os << iter_date << " : " << e << std::endl;
+        }
+      }
+    }
+
+    return os;
   }
 
   template<class D>
