@@ -14,6 +14,12 @@ namespace lab2 {
 
   template<class D>
   class Calendar {
+    public:
+      enum format { list, cal, iCalendar };
+
+    private:
+      format current_format = list;
+
       typedef std::string Event;
       typedef std::map<const D, std::list<Event> > EventCollection;
 
@@ -124,8 +130,6 @@ namespace lab2 {
       bool remove_recurring_event(const RecurringEvent& recurring_event);
       bool cancel_recurring_event_instance(const RecurringEvent& recurring_event, const Date& cancelDate);
 
-      enum format { list, cal, iCalendar };
-      format current_format;
       void set_format(const format& f) {
         current_format = f;
       }
