@@ -138,7 +138,7 @@ namespace lab2 {
 
 
         os << "    " << month.month_name() << " " << month.year() << endl;
-        os << "må  ti  on  to  fr  lö  sö";
+        os << "mÃ¥  ti  on  to  fr  lÃ¶  sÃ¶";
 
         int weeks_this_month =  1 + ((month.days_this_month() - 1) / month.days_per_week());
         int days_this_cal = weeks_this_month * month.days_per_week();
