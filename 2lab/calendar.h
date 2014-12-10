@@ -134,28 +134,45 @@ namespace lab2 {
       std::ostream& print_events(const Date& begin_date, const Date& end_date, std::ostream& os) const;
 
       std::ostream& print_calendar(std::ostream& os, const Date& month) {
-        month -= month.day() - 1;
+        D first_day_of_month{month};
+        first_day_of_month -= month.day() - 1;
 
+        os << "     " << month.month_name() << " " << month.year() << std::endl;
+        os << " må  ti  on  to  fr  lö  sö" << std::endl;
+        const int week_day_of_first_day_of_month = first_day_of_month.week_day() - 1;
 
-        os << "    " << month.month_name() << " " << month.year() << endl;
-        os << "må  ti  on  to  fr  lö  sö";
-
-        int weeks_this_month =  1 + ((month.days_this_month() - 1) / month.days_per_week());
-        int days_this_cal = weeks_this_month * month.days_per_week();
-        for (int i = 0; i < days_this_cal; i++) {
-          if (i + 1 % 7 == 0) cout << endl;
-          if (i - month.week_day() >= 0) {
-            cout << " " << i << " ";
+        for(int i = 0; i < week_day_of_first_day_of_month; ++i) {
+          os << "    ";
+        }
+        for(D day = first_day_of_month; day.month() == month.month(); ++day) {
+          if(day == get_date()) {
+            os << "<";
+          } else {
+            os << " ";
+          }
+          if(day.day() < 10) {
+            os << " ";
+          }
+          os << day.day();
+          if(day == get_date()) {
+            os << ">";
+          } else {
+            os << " ";
+          }
+          if(day.week_day() == 7 || day.day() == month.days_this_month()) {
+            os << std::endl;
           }
         }
 
-        for (int i = 0; i < month.days_this_month(); i++) {
-          for (const auto& e : get_events(month)) {
-            cout << month << " " << e << endl;
+        os << std::endl;
+
+        for(D day = first_day_of_month; day.month() == month.month(); ++day) {
+          for(const auto& e : get_events(day)) {
+            os << " " << day << " " << e << std::endl;
           }
-          month++;
         }
         
+        return os;
       }
 
       friend std::ostream& operator<<(std::ostream& os, const Calendar& cal) {
