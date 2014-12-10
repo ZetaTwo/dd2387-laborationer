@@ -75,4 +75,7 @@ int main() {
   cout << c.compute_age("Mormor", Gregorian{2333, 2, 27}) << endl;
   cout << c.compute_age("Mormor", Gregorian{2333, 2, 28}) << endl;
 
+  c.print_calendar(cout, Gregorian{2332, 2, 15});
+  c.print_calendar(cout, Gregorian{2333, 2, 15});
+
 }
