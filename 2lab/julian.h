@@ -23,8 +23,8 @@ namespace lab2 {
 
     virtual JulianDate& operator++() override;
     virtual JulianDate& operator--() override;
-    virtual JulianDate& operator++(int) override;
-    virtual JulianDate& operator--(int) override;
+    virtual const JulianDate& operator++(int) override;
+    virtual const JulianDate& operator--(int) override;
   };
 
   typedef JulianDate Julian;

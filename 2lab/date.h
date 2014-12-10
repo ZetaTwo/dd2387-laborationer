@@ -34,8 +34,8 @@ namespace lab2 {
 
     virtual Date& operator++() = 0;
     virtual Date& operator--() = 0;
-    virtual Date& operator++(int) = 0;
-    virtual Date& operator--(int) = 0;
+    virtual const Date& operator++(int) = 0;
+    virtual const Date& operator--(int) = 0;
     virtual Date& operator+=(int) = 0;
     virtual Date& operator-=(int) = 0;
 

@@ -75,13 +75,13 @@ namespace lab2 {
     return static_cast<GregorianDate&>(MjdOffsetDate::operator--());
   }
 
-  GregorianDate& GregorianDate::operator++(int) {
+  const GregorianDate& GregorianDate::operator++(int) {
     GregorianDate copy{ *this };
     MjdOffsetDate::operator++();
     return copy;
   }
 
-  GregorianDate& GregorianDate::operator--(int) {
+  const GregorianDate& GregorianDate::operator--(int) {
     GregorianDate copy{ *this };
     MjdOffsetDate::operator--();
     return copy;
