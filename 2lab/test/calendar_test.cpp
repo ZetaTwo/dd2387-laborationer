@@ -553,7 +553,8 @@ TEST(Calendar, RecurringEventCanHaveExceptions) {
 
 TEST(Calendar, CalendarOutputFormatIsCorrectForExampleInLabInstructions) {
   std::stringstream expected_output;
-  expected_output << "     december 2007\n"
+  expected_output
+    << "     december 2007\n"
     << " må  ti  on  to  fr  lö  sö\n"
     << "                      1 < 2>\n"
     << "  3   4   5   6   7   8   9\n"
