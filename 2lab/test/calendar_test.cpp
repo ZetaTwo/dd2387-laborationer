@@ -550,3 +550,30 @@ TEST(Calendar, RecurringEventCanHaveExceptions) {
     EXPECT_EQ(test_date == cancel_date ? 0 : 1, cal.get_events(test_date).size());
   }
 }
+
+TEST(Calendar, CalendarOutputFormatIsCorrectForExampleInLabInstructions) {
+  std::stringstream expected_output;
+  expected_output << "     december 2007\n"
+    << " må  ti  on  to  fr  lö  sö\n"
+    << "                      1 < 2>\n"
+    << "  3   4   5   6   7   8   9\n"
+    << " 10  11  12  13  14  15  16\n"
+    << " 17  18  19  20* 21  22  23\n"
+    << " 24* 25  26  27  28  29  30\n"
+    << " 31\n"
+    << "\n"
+    << "  2007-12-20: Min andra cykel\n"
+    << "  2007-12-24: Julafton\n";
+
+  set_k_time(0);
+  Calendar<Gregorian> cal;
+  cal.set_date(2007, 12, 2);
+  cal.add_event("Min andra cykel", 20);
+  cal.add_event("Julafton", 24);
+  cal.set_format(cal.format::cal);
+
+  std::stringstream actual_output;
+  actual_output << cal;
+
+  EXPECT_EQ(expected_output.str(), actual_output.str());
+}
