@@ -440,7 +440,7 @@ namespace lab2 {
 
     for(D day = first_day_of_month; day.month() == month.month(); ++day) {
       for(const auto& e : get_events(day)) {
-        os << " " << day << " " << e << std::endl;
+        os << "  " << day << " " << e << std::endl;
       }
     }
 
