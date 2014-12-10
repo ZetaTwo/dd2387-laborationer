@@ -410,9 +410,8 @@ namespace lab2 {
 
     os << "     " << month.month_name() << " " << month.year() << std::endl;
     os << " må  ti  on  to  fr  lö  sö" << std::endl;
-    const int week_day_of_first_day_of_month = first_day_of_month.week_day() - 1;
 
-    for(int i = 0; i < week_day_of_first_day_of_month; ++i) {
+    for(int i = 0; i < first_day_of_month.week_day() - 1; ++i) {
       os << "    ";
     }
     for(D day = first_day_of_month; day.month() == month.month(); ++day) {
