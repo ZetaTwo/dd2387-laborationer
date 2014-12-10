@@ -68,23 +68,23 @@ namespace lab2 {
   }
 
   GregorianDate& GregorianDate::operator++() {
-    return static_cast<GregorianDate&>(WesternDate::operator++());
+    return static_cast<GregorianDate&>(MjdOffsetDate::operator++());
   }
 
   GregorianDate& GregorianDate::operator--() {
-    return static_cast<GregorianDate&>(WesternDate::operator--());
+    return static_cast<GregorianDate&>(MjdOffsetDate::operator--());
   }
 
-  GregorianDate&& GregorianDate::operator++(int) {
-    GregorianDate copy{*this};
-    ++(*static_cast<Date*>(this));
-    return std::move(copy);
+  GregorianDate& GregorianDate::operator++(int) {
+    GregorianDate copy{ *this };
+    MjdOffsetDate::operator++();
+    return copy;
   }
 
-  GregorianDate&& GregorianDate::operator--(int) {
-    GregorianDate copy{*this};
-    --(*static_cast<Date*>(this));
-    return std::move(copy);
+  GregorianDate& GregorianDate::operator--(int) {
+    GregorianDate copy{ *this };
+    MjdOffsetDate::operator--();
+    return copy;
   }
 
 }

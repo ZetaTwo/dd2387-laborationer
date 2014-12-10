@@ -521,8 +521,10 @@ TEST(GregorianDate, OperatorIncrementPostfixIncreasesDistanceFromOriginalByOne) 
 
 TEST(GregorianDate, OperatorIncrementPostfixReturnsCopyToBeforeState) {
   const GregorianDate original;
-  GregorianDate gd{original};
-  EXPECT_EQ(original.mod_julian_day(), (gd++).mod_julian_day());
+  GregorianDate gd{ original };
+  GregorianDate gd2{ gd++ };
+
+  EXPECT_EQ(original.mod_julian_day(), gd2.mod_julian_day());
 }
 
 TEST(GregorianDate, OperatorDecrementPostfixIncreasesDistanceFromOriginalByOne) {
@@ -536,7 +538,9 @@ TEST(GregorianDate, OperatorDecrementPostfixIncreasesDistanceFromOriginalByOne) 
 TEST(GregorianDate, OperatorDecrementPostfixReturnsCopyToBeforeState) {
   const GregorianDate original;
   GregorianDate gd{original};
-  EXPECT_EQ(original.mod_julian_day(), (gd--).mod_julian_day());
+  GregorianDate gd2{ gd-- };
+
+  EXPECT_EQ(original.mod_julian_day(), gd2.mod_julian_day());
 }
 
 TEST(GregorianDate, OperatorIncrementPrefixReturnsAnLvalue) {
