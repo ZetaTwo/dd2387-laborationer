@@ -139,8 +139,12 @@ namespace lab2 {
       std::ostream& print_events(const Date& begin_date, const Date& end_date, std::ostream& os) const;
       std::ostream& print_calendar(std::ostream& os, const Date& month) const;
 
-      friend std::ostream& operator<<(std::ostream& os, const Calendar& cal) {
-        return cal.print_list(os);
+      friend std::ostream& operator<<(std::ostream& os, const Calendar& calendar) {
+        switch(calendar.current_format) {
+        case cal:
+          return calendar.print_calendar(os, calendar.get_date());
+        }
+        return calendar.print_list(os);
       }
 
     private:
