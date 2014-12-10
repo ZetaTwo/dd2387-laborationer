@@ -132,48 +132,7 @@ namespace lab2 {
 
       void print_events(const Date& begin_date, const Date& end_date) const;
       std::ostream& print_events(const Date& begin_date, const Date& end_date, std::ostream& os) const;
-
-      std::ostream& print_calendar(std::ostream& os, const Date& month) {
-        D first_day_of_month{month};
-        first_day_of_month -= month.day() - 1;
-
-        os << "     " << month.month_name() << " " << month.year() << std::endl;
-        os << " må  ti  on  to  fr  lö  sö" << std::endl;
-        const int week_day_of_first_day_of_month = first_day_of_month.week_day() - 1;
-
-        for(int i = 0; i < week_day_of_first_day_of_month; ++i) {
-          os << "    ";
-        }
-        for(D day = first_day_of_month; day.month() == month.month(); ++day) {
-          if(day == get_date()) {
-            os << "<";
-          } else {
-            os << " ";
-          }
-          if(day.day() < 10) {
-            os << " ";
-          }
-          os << day.day();
-          if(day == get_date()) {
-            os << ">";
-          } else {
-            os << " ";
-          }
-          if(day.week_day() == 7 || day.day() == month.days_this_month()) {
-            os << std::endl;
-          }
-        }
-
-        os << std::endl;
-
-        for(D day = first_day_of_month; day.month() == month.month(); ++day) {
-          for(const auto& e : get_events(day)) {
-            os << " " << day << " " << e << std::endl;
-          }
-        }
-        
-        return os;
-      }
+      std::ostream& print_calendar(std::ostream& os, const Date& month) const;
 
       friend std::ostream& operator<<(std::ostream& os, const Calendar& cal) {
         const typename EventCollection::const_reverse_iterator last_static_event_date_it = std::find_if(
@@ -428,6 +387,49 @@ namespace lab2 {
   template<class D>
   void Calendar<D>::print_events(const Date& begin_date, const Date& end_date) const {
     print_events(begin_date, end_date, std::cout);
+  }
+
+  template<class D>
+  std::ostream& Calendar<D>::print_calendar(std::ostream& os, const Date& month) const {
+    D first_day_of_month{month};
+    first_day_of_month -= month.day() - 1;
+
+    os << "     " << month.month_name() << " " << month.year() << std::endl;
+    os << " må  ti  on  to  fr  lö  sö" << std::endl;
+    const int week_day_of_first_day_of_month = first_day_of_month.week_day() - 1;
+
+    for(int i = 0; i < week_day_of_first_day_of_month; ++i) {
+      os << "    ";
+    }
+    for(D day = first_day_of_month; day.month() == month.month(); ++day) {
+      if(day == get_date()) {
+        os << "<";
+      } else {
+        os << " ";
+      }
+      if(day.day() < 10) {
+        os << " ";
+      }
+      os << day.day();
+      if(day == get_date()) {
+        os << ">";
+      } else {
+        os << " ";
+      }
+      if(day.week_day() == 7 || day.day() == month.days_this_month()) {
+        os << std::endl;
+      }
+    }
+
+    os << std::endl;
+
+    for(D day = first_day_of_month; day.month() == month.month(); ++day) {
+      for(const auto& e : get_events(day)) {
+        os << " " << day << " " << e << std::endl;
+      }
+    }
+
+    return os;
   }
 
   template<class D>
