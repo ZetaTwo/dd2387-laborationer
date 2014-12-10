@@ -32,8 +32,6 @@ namespace lab3 {
       virtual bool give_item(CarriedItem& item, Actor& recipient);
       virtual bool remove_item(CarriedItem& item);
 
-      virtual bool move(direction_t direction, unsigned int distance = 1);
-
       virtual bool override_ticker(ActorTicker& ticker_override);
       virtual void interact(Actor& interactee);
   };
