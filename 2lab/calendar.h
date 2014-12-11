@@ -423,7 +423,22 @@ namespace lab2 {
   std::ostream& Calendar<D>::print_list(std::ostream& os) const {
     const std::unique_ptr<const Date> last_static_event_date_p = get_last_static_event_date();
     if(last_static_event_date_p != nullptr) {
-      for(D iter_date = get_date(); iter_date <= *last_static_event_date_p; ++iter_date) {
+      std::set<D> dates_to_print;
+
+      for(const std::pair<const D, std::list<Event>> pair : get_static_events()) {
+        if(pair.first >= get_date()) {
+          dates_to_print.insert(pair.first);
+        }
+      }
+      for(const RecurringEvent& revent : recurring_events) {
+        for(typename RecurringEvent::const_iterator date_it = revent.begin(); date_it.has_next() && *date_it <= *last_static_event_date_p; ++date_it) {
+          if(*date_it >= get_date()) {
+            dates_to_print.insert(*date_it);
+          }
+        }
+      }
+
+      for(const Date& iter_date : dates_to_print) {
         for(const Event& e : get_events(iter_date)) {
           os << iter_date << " : " << e << std::endl;
         }
