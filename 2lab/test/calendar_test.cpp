@@ -554,17 +554,17 @@ TEST(Calendar, RecurringEventCanHaveExceptions) {
 TEST(Calendar, CalendarOutputFormatIsCorrectForExampleInLabInstructions) {
   std::stringstream expected_output;
   expected_output
-    << "     december 2007\n"
-    << " må  ti  on  to  fr  lö  sö\n"
-    << "                      1 < 2>\n"
-    << "  3   4   5   6   7   8   9\n"
-    << " 10  11  12  13  14  15  16\n"
-    << " 17  18  19  20* 21  22  23\n"
-    << " 24* 25  26  27  28  29  30\n"
-    << " 31\n"
-    << "\n"
-    << "  2007-12-20: Min andra cykel\n"
-    << "  2007-12-24: Julafton\n";
+    << "     december 2007" << std::endl
+    << " må  ti  on  to  fr  lö  sö" << std::endl
+    << "                      1 < 2>" << std::endl
+    << "  3   4   5   6   7   8   9" << std::endl
+    << " 10  11  12  13  14  15  16" << std::endl
+    << " 17  18  19  20* 21  22  23" << std::endl
+    << " 24* 25  26  27  28  29  30" << std::endl
+    << " 31" << std::endl
+    << "" << std::endl
+    << "  2007-12-20: Min andra cykel" << std::endl
+    << "  2007-12-24: Julafton" << std::endl;
 
   set_k_time(0);
   Calendar<Gregorian> cal;
