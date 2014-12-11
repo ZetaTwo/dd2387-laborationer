@@ -578,3 +578,34 @@ TEST(Calendar, CalendarOutputFormatIsCorrectForExampleInLabInstructions) {
 
   EXPECT_EQ(expected_output.str(), actual_output.str());
 }
+
+TEST(Calendar, iCalOutputFormatIsCorrectForExampleInLabInstructions) {
+  std::stringstream expected_output;
+  expected_output
+    << "BEGIN:VCALENDAR" << std::endl
+    << "VERSION:2.0" << std::endl
+    << "PRODID:-//carlsvemlun//A good (enough) calendar by <strike>Calle Svensson</strike> and Emil Lundberg and Calle Svensson//" << std::endl
+    << "BEGIN:VEVENT" << std::endl
+    << "DTSTART:20071220T080000" << std::endl
+    << "DTEND:20071220T090000" << std::endl
+    << "SUMMARY:Min andra cykel" << std::endl
+    << "END:VEVENT" << std::endl
+    << "BEGIN:VEVENT" << std::endl
+    << "DTSTART:20071224T080000" << std::endl
+    << "DTEND:20071224T090000" << std::endl
+    << "SUMMARY:Julafton" << std::endl
+    << "END:VEVENT" << std::endl
+    << "END:VCALENDAR" << std::endl;
+
+  set_k_time(0);
+  Calendar<Gregorian> cal;
+  cal.set_date(2007, 12, 2);
+  cal.add_event("Min andra cykel", 20);
+  cal.add_event("Julafton", 24);
+  cal.set_format(cal.format::iCalendar);
+
+  std::stringstream actual_output;
+  actual_output << cal;
+
+  EXPECT_EQ(expected_output.str(), actual_output.str());
+}
