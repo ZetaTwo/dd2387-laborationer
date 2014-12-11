@@ -649,11 +649,11 @@ Vector<bool>::reverse_iterator Vector<bool>::rend() {
 }
 
 Vector<bool>::const_reverse_iterator Vector<bool>::rbegin() const {
-  return const_reverse_iterator(const_iterator(&data[count / STORAGE_BLOCK_SIZE], count % MAX_SUBINDEX));
+  return const_reverse_iterator(const_iterator(data.get() + (count / STORAGE_BLOCK_SIZE), count % STORAGE_BLOCK_SIZE));
 }
 
 Vector<bool>::const_reverse_iterator Vector<bool>::rend() const {
-  return const_reverse_iterator(const_iterator(&data[0], 0));
+  return const_reverse_iterator(const_iterator(data.get(), 0));
 }
 
 Vector<bool>::operator unsigned int() const {
