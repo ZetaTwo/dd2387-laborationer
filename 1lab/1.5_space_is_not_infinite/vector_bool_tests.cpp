@@ -882,6 +882,28 @@ TEST_P(SizeTest, Size) {
   EXPECT_EQ(size, vector.size());
 }
 
+TEST_P(AlternatingVectorsTest, ForwardIteratorAgreesWithIndexOperator) {
+  Vec v = GetParam();
+
+  int i = 0;
+  Vec::iterator it = v.begin();
+  for(; i < v.size() && it != v.end(); ++i, ++it) {
+    EXPECT_EQ(v[i], *it);
+  }
+  EXPECT_EQ(v.end(), it);
+}
+
+TEST_P(AlternatingVectorsTest, ForwardConstIteratorAgreesWithIndexOperator) {
+  const Vec v = GetParam();
+
+  int i = 0;
+  Vec::const_iterator it = v.begin();
+  for(; i < v.size() && it != v.end(); ++i, ++it) {
+    EXPECT_EQ(v[i], *it);
+  }
+  EXPECT_EQ(v.end(), it);
+}
+
 TEST_P(AlternatingVectorsTest, ItrBeginEnd) {
   Vec vector1 = GetParam();
   Vec vector2;
