@@ -466,13 +466,13 @@ TEST(Calendar, PrintEventsPrintsAllEventsBetweenArgumentDatesInclusive) {
   EXPECT_EQ(expected_output.str(), actual_output.str());
 }
 
-TEST(Calendar, OutputOperatorPrintsAllEventsFromCurrentDateToDateOfLastStaticEventInclusive) {
+TEST(Calendar, OutputOperatorPrintsAllEventsFromCurrentDateExclusiveToDateOfLastStaticEventInclusive) {
   const Gregorian begin_date{2014, 2, 12};
   const string recurring_event = "Fysikalen-rep";
 
   set_k_time(0);
   Calendar<Gregorian> cal;
-  cal.set_date(2014, 2, 15);
+  cal.set_date(2014, 2, 14);
 
   ASSERT_TRUE(cal.add_recurring_event(RecurringEvent{
       recurring_event,

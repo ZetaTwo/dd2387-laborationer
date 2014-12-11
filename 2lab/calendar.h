@@ -65,12 +65,13 @@ namespace lab2 {
 
           RecurringType recurring_type;
 
-          const int period_multiplier;
+          int period_multiplier;
 
         public:
-          const std::string event;
+          std::string event;
 
           RecurringEvent(const RecurringEvent& e);
+          RecurringEvent& operator=(const RecurringEvent& other);
           RecurringEvent(const std::string& event, const Date& begin_date, RecurringType recurring_type);
           RecurringEvent(const std::string& event, const Date& begin_date, RecurringType recurring_type, const Date& end_date);
           RecurringEvent(const std::string& event, const Date& begin_date, RecurringType recurring_type, unsigned int period_multiplier);
@@ -420,12 +421,30 @@ namespace lab2 {
 
   template<class D>
   std::ostream& Calendar<D>::print_list(std::ostream& os) const {
-    const std::unique_ptr<const Date> last_static_event_date_p = get_last_static_event_date();
-    if(last_static_event_date_p != nullptr) {
-      for(D iter_date = get_date(); iter_date <= *last_static_event_date_p; ++iter_date) {
-        for(const Event& e : get_events(iter_date)) {
-          os << iter_date << " : " << e << std::endl;
+    std::set<D> dates_to_print;
+
+    for(const std::pair<const D, std::list<Event>> pair : get_static_events()) {
+      if(pair.first > get_date()) {
+        dates_to_print.insert(pair.first);
+      }
+    }
+
+    if(dates_to_print.size() < 1) {
+      return os;
+    }
+
+    const Date& last_static_event_date = *(dates_to_print.rbegin());
+    for(const RecurringEvent& revent : recurring_events) {
+      for(typename RecurringEvent::const_iterator date_it = revent.begin(); date_it.has_next() && *date_it <= last_static_event_date; ++date_it) {
+        if(*date_it > get_date()) {
+          dates_to_print.insert(*date_it);
         }
+      }
+    }
+
+    for(const Date& iter_date : dates_to_print) {
+      for(const Event& e : get_events(iter_date)) {
+        os << iter_date << " : " << e << std::endl;
       }
     }
 
@@ -537,6 +556,15 @@ namespace lab2 {
     recurring_type(original.recurring_type),
     period_multiplier(original.period_multiplier),
     event(original.event) {}
+
+  template<class D>
+  typename Calendar<D>::RecurringEvent& Calendar<D>::RecurringEvent::operator=(const RecurringEvent& other) {
+    begin_date = other.begin_date;
+    end_date.reset(other.end_date == nullptr ? nullptr : new D{*other.end_date});
+    recurring_type = other.recurring_type;
+    period_multiplier = other.period_multiplier;
+    event = other.event;
+  }
 
   template<class D>
   Calendar<D>::RecurringEvent::RecurringEvent(const std::string& event, const Date& begin_date, RecurringType recurring_type) :
