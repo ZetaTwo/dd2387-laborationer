@@ -8,7 +8,11 @@
 #include <algorithm>
 #include <iterator>
 #include <memory>
+#include <iomanip>
 #include "date.h"
+
+using std::setw;
+using std::setfill;
 
 namespace lab2 {
 
@@ -147,6 +151,8 @@ namespace lab2 {
         switch(calendar.current_format) {
         case cal:
           return calendar.print_calendar(os, calendar.get_date());
+        case iCalendar:
+          return calendar.print_ical(os);
         }
         return calendar.print_list(os);
       }
@@ -490,6 +496,29 @@ namespace lab2 {
     os << "BEGIN:VCALENDAR" << std::endl
        << "VERSION:2.0" << std::endl
        << "PRODID:-//carlsvemlun//A good (enough) calendar by <strike>Calle Svensson</strike> and Emil Lundberg and Calle Svensson//" << std::endl;
+
+    const std::unique_ptr<const Date> first_date_p = get_first_static_event_date();
+    const std::unique_ptr<const Date> last_date_p = get_last_static_event_date();
+
+    if(last_date_p != nullptr) {
+      for(D iter_date = first_date_p == nullptr ? get_date() : *first_date_p; iter_date <= *last_date_p; ++iter_date) {
+        for(const Event e : get_events(iter_date)) {
+          os << "BEGIN:VEVENT" << std::endl
+          << "DTSTART:"
+          << setw(4) << setfill('0') << iter_date.year()
+          << setw(2) << iter_date.month()
+          << setw(2) << iter_date.day()
+          << "T080000" << std::endl
+          << "DTEND:"
+          << setw(4) << setfill('0') << iter_date.year()
+          << setw(2) << iter_date.month()
+          << setw(2) << iter_date.day()
+          << "T090000" << std::endl
+          << "SUMMARY:" << e << std::endl
+          << "END:VEVENT" << std::endl;
+        }
+      }
+    }
 
     return os << "END:VCALENDAR" << std::endl;
   }
