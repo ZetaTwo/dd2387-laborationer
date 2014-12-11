@@ -603,7 +603,7 @@ Vector<bool>::iterator Vector<bool>::begin() {
 }
 
 Vector<bool>::iterator Vector<bool>::end() {
-  return iterator(data.get() + (count / STORAGE_BLOCK_SIZE), count % MAX_SUBINDEX);
+  return iterator(data.get() + (count / STORAGE_BLOCK_SIZE), count % STORAGE_BLOCK_SIZE);
 }
 
 Vector<bool>::iterator Vector<bool>::find(bool value) {
@@ -622,7 +622,7 @@ Vector<bool>::const_iterator Vector<bool>::begin() const {
 }
 
 Vector<bool>::const_iterator Vector<bool>::end() const {
-  return const_iterator(data.get() + (count / STORAGE_BLOCK_SIZE), count % MAX_SUBINDEX);
+  return const_iterator(data.get() + (count / STORAGE_BLOCK_SIZE), count % STORAGE_BLOCK_SIZE);
 }
 
 Vector<bool>::const_iterator Vector<bool>::find(bool value) const {
