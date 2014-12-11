@@ -882,70 +882,60 @@ TEST_P(SizeTest, Size) {
   EXPECT_EQ(size, vector.size());
 }
 
-TEST(VectorBool, ItrBeginEnd) {
-  Vec vector1({ true, false, true, false });
+TEST_P(AlternatingVectorsTest, ItrBeginEnd) {
+  Vec vector1 = GetParam();
   Vec vector2;
 
   for(Vec::iterator itr = vector1.begin(); itr != vector1.end(); ++itr) {
     vector2.push_back(*itr);
   }
 
-  EXPECT_EQ(vector1.size(), vector2.size());
-  EXPECT_EQ(vector1[0], vector2[0]);
-  EXPECT_EQ(vector1[1], vector2[1]);
-  EXPECT_EQ(vector1[2], vector2[2]);
-  EXPECT_EQ(vector1[3], vector2[3]);
+  ASSERT_EQ(vector1.size(), vector2.size());
+  for(size_t i = 0; i < vector1.size(); ++i) {
+    EXPECT_EQ(vector1[i], vector2[i]);
+  }
 }
 
-TEST(VectorBool, ItrCBeginEnd) {
-  const Vec vector1({ true, false, true, false });
+TEST_P(AlternatingVectorsTest, ItrCBeginEnd) {
+  const Vec vector1 = GetParam();
   Vec vector2;
 
   for(Vec::const_iterator itr = vector1.begin(); itr != vector1.end(); ++itr) {
     vector2.push_back(*itr);
   }
 
-  EXPECT_EQ(vector1.size(), vector2.size());
-  EXPECT_EQ(vector1[0], vector2[0]);
-  EXPECT_EQ(vector1[1], vector2[1]);
-  EXPECT_EQ(vector1[2], vector2[2]);
-  EXPECT_EQ(vector1[3], vector2[3]);
+  ASSERT_EQ(vector1.size(), vector2.size());
+  for(size_t i = 0; i < vector1.size(); ++i) {
+    EXPECT_EQ(vector1[i], vector2[i]);
+  }
 }
 
-TEST(VectorBool, ItrRBeginEnd) {
-  Vec vector1({ true, false, true, false, true, true, false, false });
-  Vec vector2({ false, false, true, true, false, true, false, true });
-  Vec vector3;
+TEST_P(AlternatingVectorsTest, ItrRBeginEnd) {
+  Vec vector1 = GetParam();
+  Vec vector2;
 
   for(Vec::reverse_iterator itr = vector1.rbegin(); itr != vector1.rend(); ++itr) {
-    vector3.push_back(*itr);
+    vector2.push_back(*itr);
   }
 
-  EXPECT_EQ(vector2.size(), vector3.size());
-  EXPECT_EQ(vector2[0], vector3[0]);
-  EXPECT_EQ(vector2[1], vector3[1]);
-  EXPECT_EQ(vector2[2], vector3[2]);
-  EXPECT_EQ(vector2[3], vector3[3]);
-  EXPECT_EQ(vector2[4], vector3[4]);
-  EXPECT_EQ(vector2[5], vector3[5]);
-  EXPECT_EQ(vector2[6], vector3[6]);
-  EXPECT_EQ(vector2[7], vector3[7]);
+  ASSERT_EQ(vector1.size(), vector2.size());
+  for(size_t i = 0; i < vector1.size(); ++i) {
+    EXPECT_EQ(vector1[i], vector2[vector1.size() - i - 1]);
+  }
 }
 
-TEST(VectorBool, ItrRCBeginEnd) {
-  const Vec vector1({ true, false, true, false });
-  Vec vector2({ false, true, false, true });
-  Vec vector3;
+TEST_P(AlternatingVectorsTest, ItrRCBeginEnd) {
+  const Vec vector1 = GetParam();
+  Vec vector2;
 
   for(Vec::const_reverse_iterator itr = vector1.rbegin(); itr != vector1.rend(); ++itr) {
-    vector3.push_back(*itr);
+    vector2.push_back(*itr);
   }
 
-  EXPECT_EQ(vector2.size(), vector3.size());
-  EXPECT_EQ(vector2[0], vector3[0]);
-  EXPECT_EQ(vector2[1], vector3[1]);
-  EXPECT_EQ(vector2[2], vector3[2]);
-  EXPECT_EQ(vector2[3], vector3[3]);
+  ASSERT_EQ(vector1.size(), vector2.size());
+  for(size_t i = 0; i < vector1.size(); ++i) {
+    EXPECT_EQ(vector1[i], vector2[vector1.size() - i - 1]);
+  }
 }
 
 TEST_P(AlternatingVectorsTest, OperatorNot) {
