@@ -138,6 +138,7 @@ namespace lab2 {
       std::ostream& print_list(std::ostream& os) const;
       std::ostream& print_events(const Date& begin_date, const Date& end_date, std::ostream& os) const;
       std::ostream& print_calendar(std::ostream& os, const Date& month) const;
+      std::ostream& print_ical(std::ostream& os) const;
 
       friend std::ostream& operator<<(std::ostream& os, const Calendar& calendar) {
         switch(calendar.current_format) {
@@ -455,6 +456,15 @@ namespace lab2 {
       }
     }
     return os;
+  }
+
+  template<class D>
+  std::ostream& Calendar<D>::print_ical(std::ostream& os) const {
+    os << "BEGIN:VCALENDAR" << std::endl
+       << "VERSION:2.0" << std::endl
+       << "PRODID:-//carlsvemlun//A good (enough) calendar by <strike>Calle Svensson</strike> and Emil Lundberg and Calle Svensson//" << std::endl;
+
+    return os << "END:VCALENDAR" << std::endl;
   }
 
   template<class D>
