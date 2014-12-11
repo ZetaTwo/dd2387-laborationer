@@ -12,8 +12,8 @@ EX07DIR=0.7_the_template_vector
 EX11DIR=1.1_the_matrix
 EX11BUGSDIR=1.1_the_matrix/buggies
 EX11BUGSPREFIX=
-EX13DIR=1.3_the_hypercube
-EX14DIR=1.4_space_is_not_infinite
+EX14DIR=1.4_the_hypercube
+EX15DIR=1.5_space_is_not_infinite
 
 CXX=clang++
 CPPFLAGS=-std=c++11 -Wall -g
@@ -29,7 +29,7 @@ MATRIX_HEADER=$(EX11DIR)/Matrix.h $(TEMPLATE_VECTOR_HEADER)
 TEST_RUNNER_CODE=../test_runner.cpp
 TEST_RUNNER_OBJECT=build/test_runner.o
 
-lab1: ex01 ex02 ex03 ex04 ex05 ex06 ex07 ex11 ex13 ex14
+lab1: ex01 ex02 ex03 ex04 ex05 ex06 ex07 ex11 ex14 ex15
 
 clean:
 	rm -rf build
@@ -78,8 +78,8 @@ ex07_tests: run/$(EX07DIR)/vector_tests
 
 ex11: run/$(EX11DIR)/matrix_tests ex11_compiler_tests
 ex11buggy: $(patsubst $(EX11BUGSDIR)/Matrix0%.o,run/$(EX11BUGSDIR)/test0%,$(wildcard $(EX11BUGSDIR)/Matrix0*.o))
-ex13: run/$(EX13DIR)/hypercube_tests
-ex14: run/$(EX14DIR)/vector_bool_tests
+ex14: run/$(EX14DIR)/hypercube_tests
+ex15: run/$(EX15DIR)/vector_bool_tests
 
 build/$(EX02DIR)/hello.exe: $(EX02DIR)/main.cpp build/$(EX02DIR)/hello.o
 	$(MAKE_EXECUTABLE)
@@ -122,16 +122,16 @@ build/$(EX11BUGSDIR)/test.o: $(EX11BUGSDIR)/matrix_tests.cpp $(EX11BUGSDIR)/Matr
 build/$(EX11BUGSDIR)/test0%.exe: $(TEST_RUNNER_OBJECT) build/$(EX11BUGSDIR)/test.o $(EX11BUGSDIR)/$(EX11BUGSPREFIX)Matrix0%.o $(EX11BUGSDIR)/Matrix.h
 	$(MAKE_EXECUTABLE)
 
-build/$(EX13DIR)/hypercube_tests.o: $(EX13DIR)/hypercube_tests.cpp $(EX13DIR)/hypercube.hpp $(TEMPLATE_VECTOR_HEADER)
+build/$(EX14DIR)/hypercube_tests.o: $(EX14DIR)/hypercube_tests.cpp $(EX14DIR)/hypercube.hpp $(TEMPLATE_VECTOR_HEADER)
 	$(MAKE_OBJECT)
 
-build/$(EX13DIR)/hypercube_tests.exe: $(TEST_RUNNER_OBJECT) build/$(EX13DIR)/hypercube_tests.o
+build/$(EX14DIR)/hypercube_tests.exe: $(TEST_RUNNER_OBJECT) build/$(EX14DIR)/hypercube_tests.o
 	$(MAKE_EXECUTABLE)
 
-build/$(EX14DIR)/%_tests.o: $(EX14DIR)/%_tests.cpp $(EX14DIR)/kth_cprog_vektor_bool.hpp $(TEMPLATE_VECTOR_HEADER)
+build/$(EX15DIR)/%_tests.o: $(EX15DIR)/%_tests.cpp $(EX15DIR)/kth_cprog_vektor_bool.hpp $(TEMPLATE_VECTOR_HEADER)
 	$(MAKE_OBJECT)
 
-build/$(EX14DIR)/vector_bool_tests.exe: $(TEST_RUNNER_OBJECT) $(patsubst %.cpp,build/%.o,$(wildcard $(EX14DIR)/*_tests.cpp))
+build/$(EX15DIR)/vector_bool_tests.exe: $(TEST_RUNNER_OBJECT) $(patsubst %.cpp,build/%.o,$(wildcard $(EX15DIR)/*_tests.cpp))
 	$(MAKE_EXECUTABLE)
 
 BUGGIES_REMAINING=7 8
