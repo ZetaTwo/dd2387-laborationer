@@ -18,7 +18,7 @@ EX15DIR=1.5_space_is_not_infinite
 CXX=clang++
 CPPFLAGS=-std=c++11 -Wall -g
 INCLUDE_PREREQUISITE_HEADER_DIRECTORIES=$(foreach file,$(filter %.h %.hpp,$^),-I $(dir $(file)))
-COMPILE=mkdir -p $(dir $@); $(CXX) $(CPPFLAGS) $(INCLUDE_PREREQUISITE_HEADER_DIRECTORIES) -o $@ $(filter-out %.h,$^)
+COMPILE=mkdir -p $(dir $@); $(CXX) $(CPPFLAGS) $(INCLUDE_PREREQUISITE_HEADER_DIRECTORIES) -o $@ $(filter-out %.h %.hpp,$^)
 
 MAKE_OBJECT=$(COMPILE) -c
 MAKE_EXECUTABLE=$(COMPILE) -lgtest
