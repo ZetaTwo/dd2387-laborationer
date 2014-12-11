@@ -56,11 +56,11 @@ public:
   virtual int days_this_month() const override { return 0; }
   virtual std::string week_day_name() const override { return ""; }
   virtual std::string month_name()    const override { return ""; }
-  virtual Date&& operator++(int) override { return std::move(WesternDateStub{*this}); }
-  virtual Date&& operator--(int) override { return std::move(WesternDateStub{*this}); }
+  const WesternDateStub operator++(int) { return WesternDateStub{ *this }; }
+  const WesternDateStub operator--(int) { return WesternDateStub{ *this }; }
 
   virtual bool is_leap_year() const override { return false; }
-  virtual bool is_leap_year(int) const override { return false; }
+  virtual bool is_leap_year(const int) const override { return false; }
   virtual int ymd_to_mjd_offset(int, int, int) const override { return 0; }
   virtual DateDecomposition getDecomposition() const { return DateDecomposition{0, 0}; }
 };

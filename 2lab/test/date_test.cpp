@@ -37,8 +37,8 @@ public:
   virtual std::string month_name()    const override { return ""; }
   virtual Date& operator++() override { return *this; }
   virtual Date& operator--() override { return *this; }
-  virtual Date&& operator++(int) override { return std::move(DateStub{*this}); }
-  virtual Date&& operator--(int) override { return std::move(DateStub{*this}); }
+  DateStub operator++(int) { return DateStub{ *this }; }
+  DateStub operator--(int) { return DateStub{ *this }; }
   virtual Date& operator+=(int) override { return *this; }
   virtual Date& operator-=(int) override { return *this; }
   virtual Date& add_year (int) override { return *this; }

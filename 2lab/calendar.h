@@ -8,12 +8,22 @@
 #include <algorithm>
 #include <iterator>
 #include <memory>
+#include <iomanip>
 #include "date.h"
+
+using std::setw;
+using std::setfill;
 
 namespace lab2 {
 
   template<class D>
   class Calendar {
+    public:
+      enum format { list, cal, iCalendar };
+
+    private:
+      format current_format = list;
+
       typedef std::string Event;
       typedef std::map<const D, std::list<Event> > EventCollection;
 
@@ -34,6 +44,9 @@ namespace lab2 {
       bool event_exists_at_date(const Event& event, const Date& date) const;
       void remove_event_relations(const Event& event, const Date& date);
       void move_related_events(const Event& base_event, const Date& base_event_from, const Date& base_event_to);
+
+      std::unique_ptr<const Date> get_first_static_event_date() const;
+      std::unique_ptr<const Date> get_last_static_event_date() const;
 
     public:
       class RecurringEvent {
@@ -124,59 +137,24 @@ namespace lab2 {
       bool remove_recurring_event(const RecurringEvent& recurring_event);
       bool cancel_recurring_event_instance(const RecurringEvent& recurring_event, const Date& cancelDate);
 
-      enum format { list, cal, iCalendar };
-      format current_format;
       void set_format(const format& f) {
         current_format = f;
       }
 
       void print_events(const Date& begin_date, const Date& end_date) const;
+      std::ostream& print_list(std::ostream& os) const;
       std::ostream& print_events(const Date& begin_date, const Date& end_date, std::ostream& os) const;
+      std::ostream& print_calendar(std::ostream& os, const Date& month) const;
+      std::ostream& print_ical(std::ostream& os) const;
 
-      std::ostream& print_calendar(std::ostream& os, const Date& month) {
-        month -= month.day() - 1;
-
-
-        os << "    " << month.month_name() << " " << month.year() << endl;
-        os << "må  ti  on  to  fr  lö  sö";
-
-        int weeks_this_month =  1 + ((month.days_this_month() - 1) / month.days_per_week());
-        int days_this_cal = weeks_this_month * month.days_per_week();
-        for (int i = 0; i < days_this_cal; i++) {
-          if (i + 1 % 7 == 0) cout << endl;
-          if (i - month.week_day() >= 0) {
-            cout << " " << i << " ";
-          }
+      friend std::ostream& operator<<(std::ostream& os, const Calendar& calendar) {
+        switch(calendar.current_format) {
+        case cal:
+          return calendar.print_calendar(os, calendar.get_date());
+        case iCalendar:
+          return calendar.print_ical(os);
         }
-
-        for (int i = 0; i < month.days_this_month(); i++) {
-          for (const auto& e : get_events(month)) {
-            cout << month << " " << e << endl;
-          }
-          month++;
-        }
-        
-      }
-
-      friend std::ostream& operator<<(std::ostream& os, const Calendar& cal) {
-        const typename EventCollection::const_reverse_iterator last_static_event_date_it = std::find_if(
-          cal.get_static_events().rbegin(),
-          cal.get_static_events().rend(),
-          [](const typename EventCollection::const_reverse_iterator::value_type& pair) {
-            return pair.second.size() > 0;
-          }
-        );
-
-        if(last_static_event_date_it != cal.get_static_events().rend()) {
-          const Date& last_static_event_date = last_static_event_date_it->first;
-          for(D iter_date = cal.get_date(); iter_date <= last_static_event_date; ++iter_date) {
-            for(const Event& e : cal.get_events(iter_date)) {
-              os << iter_date << " : " << e << std::endl;
-            }
-          }
-        }
-
-        return os;
+        return calendar.print_list(os);
       }
 
     private:
@@ -409,8 +387,98 @@ namespace lab2 {
   }
 
   template<class D>
+  std::unique_ptr<const Date> Calendar<D>::get_first_static_event_date() const {
+    const typename EventCollection::const_iterator first_static_event_date_it = std::find_if(
+      get_static_events().begin(),
+      get_static_events().end(),
+      [](const typename EventCollection::const_iterator::value_type& pair) {
+        return pair.second.size() > 0;
+      }
+    );
+
+    if(first_static_event_date_it == get_static_events().end()) {
+      return nullptr;
+    }
+    return std::unique_ptr<const Date>{new D{first_static_event_date_it->first}};
+  }
+
+  template<class D>
+  std::unique_ptr<const Date> Calendar<D>::get_last_static_event_date() const {
+    const typename EventCollection::const_reverse_iterator last_static_event_date_it = std::find_if(
+      get_static_events().rbegin(),
+      get_static_events().rend(),
+      [](const typename EventCollection::const_reverse_iterator::value_type& pair) {
+        return pair.second.size() > 0;
+      }
+    );
+
+    if(last_static_event_date_it == get_static_events().rend()) {
+      return nullptr;
+    }
+    return std::unique_ptr<const Date>{new D{last_static_event_date_it->first}};
+  }
+
+  template<class D>
+  std::ostream& Calendar<D>::print_list(std::ostream& os) const {
+    const std::unique_ptr<const Date> last_static_event_date_p = get_last_static_event_date();
+    if(last_static_event_date_p != nullptr) {
+      for(D iter_date = get_date(); iter_date <= *last_static_event_date_p; ++iter_date) {
+        for(const Event& e : get_events(iter_date)) {
+          os << iter_date << " : " << e << std::endl;
+        }
+      }
+    }
+
+    return os;
+  }
+
+  template<class D>
   void Calendar<D>::print_events(const Date& begin_date, const Date& end_date) const {
     print_events(begin_date, end_date, std::cout);
+  }
+
+  template<class D>
+  std::ostream& Calendar<D>::print_calendar(std::ostream& os, const Date& month) const {
+    D first_day_of_month{month};
+    first_day_of_month -= month.day() - 1;
+
+    os << "     " << month.month_name() << " " << month.year() << std::endl;
+    os << " mÃ¥  ti  on  to  fr  lÃ¶  sÃ¶" << std::endl;
+
+    for(int i = 0; i < first_day_of_month.week_day() - 1; ++i) {
+      os << "    ";
+    }
+    for(D day = first_day_of_month; day.month() == month.month(); ++day) {
+      if(day == get_date()) {
+        os << "<";
+      } else {
+        os << " ";
+      }
+      if(day.day() < 10) {
+        os << " ";
+      }
+      os << day.day();
+      if(get_events(day).size() > 0) {
+        os << "*";
+      } else if(day == get_date()) {
+        os << ">";
+      } else if(day.week_day() < 7 && day.day() < month.days_this_month()) {
+        os << " ";
+      }
+      if(day.week_day() == 7 || day.day() == month.days_this_month()) {
+        os << std::endl;
+      }
+    }
+
+    os << std::endl;
+
+    for(D day = first_day_of_month; day.month() == month.month(); ++day) {
+      for(const auto& e : get_events(day)) {
+        os << "  " << day << ": " << e << std::endl;
+      }
+    }
+
+    return os;
   }
 
   template<class D>
@@ -421,6 +489,38 @@ namespace lab2 {
       }
     }
     return os;
+  }
+
+  template<class D>
+  std::ostream& Calendar<D>::print_ical(std::ostream& os) const {
+    os << "BEGIN:VCALENDAR" << std::endl
+       << "VERSION:2.0" << std::endl
+       << "PRODID:-//carlsvemlun//A good (enough) calendar by <strike>Calle Svensson</strike> and Emil Lundberg and Calle Svensson//" << std::endl;
+
+    const std::unique_ptr<const Date> first_date_p = get_first_static_event_date();
+    const std::unique_ptr<const Date> last_date_p = get_last_static_event_date();
+
+    if(last_date_p != nullptr) {
+      for(D iter_date = first_date_p == nullptr ? get_date() : *first_date_p; iter_date <= *last_date_p; ++iter_date) {
+        for(const Event e : get_events(iter_date)) {
+          os << "BEGIN:VEVENT" << std::endl
+          << "DTSTART:"
+          << setw(4) << setfill('0') << iter_date.year()
+          << setw(2) << iter_date.month()
+          << setw(2) << iter_date.day()
+          << "T080000" << std::endl
+          << "DTEND:"
+          << setw(4) << setfill('0') << iter_date.year()
+          << setw(2) << iter_date.month()
+          << setw(2) << iter_date.day()
+          << "T090000" << std::endl
+          << "SUMMARY:" << e << std::endl
+          << "END:VEVENT" << std::endl;
+        }
+      }
+    }
+
+    return os << "END:VCALENDAR" << std::endl;
   }
 
   template<class D>

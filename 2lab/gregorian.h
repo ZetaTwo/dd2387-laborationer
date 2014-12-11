@@ -27,8 +27,8 @@ namespace lab2 {
 
     virtual GregorianDate& operator++() override;
     virtual GregorianDate& operator--() override;
-    virtual GregorianDate&& operator++(int) override;
-    virtual GregorianDate&& operator--(int) override;
+    GregorianDate operator++(int);
+    GregorianDate operator--(int);
   };
 
   typedef GregorianDate Gregorian;

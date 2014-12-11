@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <string>
 
 #include "gregorian.h"
@@ -74,5 +75,29 @@ int main() {
   cout << c.compute_age("Mormor", Gregorian{2332, 3, 1}) << endl;
   cout << c.compute_age("Mormor", Gregorian{2333, 2, 27}) << endl;
   cout << c.compute_age("Mormor", Gregorian{2333, 2, 28}) << endl;
+
+  c.print_calendar(cout, Gregorian{2332, 2, 15});
+  c.print_calendar(cout, Gregorian{2333, 2, 15});
+
+  c.set_format(c.format::cal);
+  cout << c << endl;
+
+  c.set_date(2332, 1, 4);
+  cout << c << endl;
+
+  c.set_date(2007, 12, 2);
+  c.add_event("Min andra cykel", 20);
+  c.add_event("Julafton", 24);
+  cout << c << endl;
+
+  c.set_date(2014, 12, 10);
+  c.add_event("Redovisa lab1 och lab2", 11);
+  cout << c << endl;
+
+  c.set_format(c.format::iCalendar);
+  std::ofstream fout;
+  fout.open("demo.ical");
+  fout << c << endl;
+  fout.close();
 
 }

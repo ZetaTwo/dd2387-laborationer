@@ -476,7 +476,8 @@ TEST(JulianDate, OperatorIncrementPostfixIncreasesDistanceFromOriginalByOne) {
 TEST(JulianDate, OperatorIncrementPostfixReturnsCopyToBeforeState) {
   const JulianDate original;
   JulianDate jd{original};
-  EXPECT_EQ(original.mod_julian_day(), (jd++).mod_julian_day());
+  JulianDate jd2{ jd++ };
+  EXPECT_EQ(original.mod_julian_day(), jd2.mod_julian_day());
 }
 
 TEST(JulianDate, OperatorDecrementPostfixIncreasesDistanceFromOriginalByOne) {
@@ -490,7 +491,9 @@ TEST(JulianDate, OperatorDecrementPostfixIncreasesDistanceFromOriginalByOne) {
 TEST(JulianDate, OperatorDecrementPostfixReturnsCopyToBeforeState) {
   const JulianDate original;
   JulianDate jd{original};
-  EXPECT_EQ(original.mod_julian_day(), (jd--).mod_julian_day());
+  JulianDate jd2{ jd-- };
+
+  EXPECT_EQ(original.mod_julian_day(), jd2.mod_julian_day());
 }
 
 TEST(JulianDate, OperatorIncrementPrefixReturnsAnLvalue) {

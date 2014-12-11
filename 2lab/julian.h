@@ -8,7 +8,7 @@ namespace lab2 {
 
     // Utility functions
     virtual inline bool is_leap_year() const override { return is_leap_year_util(year()); }
-    virtual inline bool is_leap_year(int year) const override { return is_leap_year_util(year); }
+    virtual inline bool is_leap_year(const int year) const override { return is_leap_year_util(year); }
     static inline bool is_leap_year_util(int year) { return year % 4 == 0; }
 
     virtual int ymd_to_mjd_offset(int year, int month, int day) const override;
@@ -23,8 +23,8 @@ namespace lab2 {
 
     virtual JulianDate& operator++() override;
     virtual JulianDate& operator--() override;
-    virtual JulianDate&& operator++(int) override;
-    virtual JulianDate&& operator--(int) override;
+    JulianDate operator++(int);
+    JulianDate operator--(int);
   };
 
   typedef JulianDate Julian;
