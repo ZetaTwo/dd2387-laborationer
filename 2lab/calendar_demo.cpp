@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <string>
 
 #include "gregorian.h"
@@ -94,6 +95,9 @@ int main() {
   cout << c << endl;
 
   c.set_format(c.format::iCalendar);
-  cout << c << endl;
+  std::ofstream fout;
+  fout.open("demo.ical");
+  fout << c << endl;
+  fout.close();
 
 }
