@@ -366,22 +366,22 @@ typename Vector<T>::iterator Vector<T>::find(T value) {
 
 template<typename T>
 typename Vector<T>::reverse_iterator Vector<T>::rbegin() {
-  return reverse_iterator(&data[count]);
+  return reverse_iterator(data.get() + count);
 }
 
 template<typename T>
 typename Vector<T>::reverse_iterator Vector<T>::rend() {
-  return reverse_iterator(&data[0]);
+  return reverse_iterator(data.get());
 }
 
 template<typename T>
 typename Vector<T>::const_iterator Vector<T>::begin() const {
-  return const_iterator(&data[0]);
+  return const_iterator(data.get());
 }
 
 template<typename T>
 typename Vector<T>::const_iterator Vector<T>::end() const {
-  return const_iterator(&data[count]);
+  return const_iterator(data.get() + count);
 }
 
 template<typename T>
