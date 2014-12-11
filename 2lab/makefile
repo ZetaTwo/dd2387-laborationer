@@ -17,7 +17,7 @@ TEST_OBJECTS=$(patsubst %.cpp,build/%.o,$(wildcard test/*_test.cpp))
 
 .SECONDARY:
 
-default: run_test run_given_test run_calendar_test run_calendar_demo
+default: run_test run_given_test run_calendar_test run_drivers run_calendar_demo
 
 date_objects: $(DATE_OBJECTS)
 
@@ -29,7 +29,7 @@ clean:
 run_test: build/run_test
 	$< $(GTEST_FLAGS)
 
-run_drivers: run_driver_lab22a run_driver_lab22b run_driver_lab22c
+run_drivers: run_driver_lab22a run_driver_lab22c run_driver_lab23
 
 valgrind_test: build/run_test
 	valgrind $< $(GTEST_FLAGS)
