@@ -89,4 +89,11 @@ int main() {
   c.add_event("Julafton", 24);
   cout << c << endl;
 
+  c.set_date(2014, 12, 10);
+  c.add_event("Redovisa lab1 och lab2", 11);
+  cout << c << endl;
+
+  c.set_format(c.format::iCalendar);
+  cout << c << endl;
+
 }
