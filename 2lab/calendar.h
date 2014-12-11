@@ -41,8 +41,8 @@ namespace lab2 {
       void remove_event_relations(const Event& event, const Date& date);
       void move_related_events(const Event& base_event, const Date& base_event_from, const Date& base_event_to);
 
-      std::unique_ptr<Date> get_first_static_event_date() const;
-      std::unique_ptr<Date> get_last_static_event_date() const;
+      std::unique_ptr<const Date> get_first_static_event_date() const;
+      std::unique_ptr<const Date> get_last_static_event_date() const;
 
     public:
       class RecurringEvent {
@@ -381,7 +381,7 @@ namespace lab2 {
   }
 
   template<class D>
-  std::unique_ptr<Date> Calendar<D>::get_first_static_event_date() const {
+  std::unique_ptr<const Date> Calendar<D>::get_first_static_event_date() const {
     const typename EventCollection::const_iterator first_static_event_date_it = std::find_if(
       get_static_events().begin(),
       get_static_events().end(),
@@ -393,11 +393,11 @@ namespace lab2 {
     if(first_static_event_date_it == get_static_events().end()) {
       return nullptr;
     }
-    return std::unique_ptr<Date>{new D{first_static_event_date_it->first}};
+    return std::unique_ptr<const Date>{new D{first_static_event_date_it->first}};
   }
 
   template<class D>
-  std::unique_ptr<Date> Calendar<D>::get_last_static_event_date() const {
+  std::unique_ptr<const Date> Calendar<D>::get_last_static_event_date() const {
     const typename EventCollection::const_reverse_iterator last_static_event_date_it = std::find_if(
       get_static_events().rbegin(),
       get_static_events().rend(),
@@ -409,12 +409,12 @@ namespace lab2 {
     if(last_static_event_date_it == get_static_events().rend()) {
       return nullptr;
     }
-    return std::unique_ptr<Date>{new D{last_static_event_date_it->first}};
+    return std::unique_ptr<const Date>{new D{last_static_event_date_it->first}};
   }
 
   template<class D>
   std::ostream& Calendar<D>::print_list(std::ostream& os) const {
-    const std::unique_ptr<Date> last_static_event_date_p = get_last_static_event_date();
+    const std::unique_ptr<const Date> last_static_event_date_p = get_last_static_event_date();
     if(last_static_event_date_p != nullptr) {
       for(D iter_date = get_date(); iter_date <= *last_static_event_date_p; ++iter_date) {
         for(const Event& e : get_events(iter_date)) {
