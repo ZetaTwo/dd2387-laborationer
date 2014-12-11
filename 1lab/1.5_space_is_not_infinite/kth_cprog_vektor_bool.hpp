@@ -599,11 +599,11 @@ inline size_t Vector<bool>::initial_size(const size_t& minimumSize) const {
 
 
 Vector<bool>::iterator Vector<bool>::begin() {
-  return iterator(&data[0], 0);
+  return iterator(data.get(), 0);
 }
 
 Vector<bool>::iterator Vector<bool>::end() {
-  return iterator(&data[count / STORAGE_BLOCK_SIZE], count % MAX_SUBINDEX);
+  return iterator(data.get() + (count / STORAGE_BLOCK_SIZE), count % STORAGE_BLOCK_SIZE);
 }
 
 Vector<bool>::iterator Vector<bool>::find(bool value) {
@@ -618,11 +618,11 @@ Vector<bool>::iterator Vector<bool>::find(bool value) {
 }
 
 Vector<bool>::const_iterator Vector<bool>::begin() const {
-  return const_iterator(&data[0], 0);
+  return const_iterator(data.get(), 0);
 }
 
 Vector<bool>::const_iterator Vector<bool>::end() const {
-  return const_iterator(&data[count / STORAGE_BLOCK_SIZE], count % MAX_SUBINDEX);
+  return const_iterator(data.get() + (count / STORAGE_BLOCK_SIZE), count % STORAGE_BLOCK_SIZE);
 }
 
 Vector<bool>::const_iterator Vector<bool>::find(bool value) const {
@@ -649,11 +649,11 @@ Vector<bool>::reverse_iterator Vector<bool>::rend() {
 }
 
 Vector<bool>::const_reverse_iterator Vector<bool>::rbegin() const {
-  return const_reverse_iterator(const_iterator(&data[count / STORAGE_BLOCK_SIZE], count % MAX_SUBINDEX));
+  return const_reverse_iterator(const_iterator(data.get() + (count / STORAGE_BLOCK_SIZE), count % STORAGE_BLOCK_SIZE));
 }
 
 Vector<bool>::const_reverse_iterator Vector<bool>::rend() const {
-  return const_reverse_iterator(const_iterator(&data[0], 0));
+  return const_reverse_iterator(const_iterator(data.get(), 0));
 }
 
 Vector<bool>::operator unsigned int() const {

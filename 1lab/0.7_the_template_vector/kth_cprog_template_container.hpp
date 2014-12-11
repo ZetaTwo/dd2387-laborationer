@@ -455,8 +455,8 @@ std::ostream& operator<<(std::ostream& os, const Vector<T>& vector) {
   os << "[";
   if(vector.size() > 0) {
     os << vector[0];
-    for(typename Vector<T>::const_iterator item = ++vector.begin(); item != vector.end(); ++item) {
-      os << ", " << *item;
+    for(size_t i = 1; i < vector.size(); ++i) {
+      os << ", " << vector[i];
     }
   }
   os << "]";
