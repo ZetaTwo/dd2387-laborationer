@@ -41,6 +41,7 @@ namespace lab2 {
       void remove_event_relations(const Event& event, const Date& date);
       void move_related_events(const Event& base_event, const Date& base_event_from, const Date& base_event_to);
 
+      std::unique_ptr<Date> get_first_static_event_date() const;
       std::unique_ptr<Date> get_last_static_event_date() const;
 
     public:
@@ -377,6 +378,22 @@ namespace lab2 {
       return it->add_exception(cancelDate);
     }
     return false;
+  }
+
+  template<class D>
+  std::unique_ptr<Date> Calendar<D>::get_first_static_event_date() const {
+    const typename EventCollection::const_iterator first_static_event_date_it = std::find_if(
+      get_static_events().begin(),
+      get_static_events().end(),
+      [](const typename EventCollection::const_iterator::value_type& pair) {
+        return pair.second.size() > 0;
+      }
+    );
+
+    if(first_static_event_date_it == get_static_events().end()) {
+      return nullptr;
+    }
+    return std::unique_ptr<Date>{new D{first_static_event_date_it->first}};
   }
 
   template<class D>
