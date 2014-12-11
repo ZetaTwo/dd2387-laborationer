@@ -15,11 +15,14 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\0.7_the_template_vector\kth_cprog_template_container.hpp">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="..\..\1.5_space_is_not_infinite\kth_cprog_vektor_bool.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\1.4_space_is_not_infinite\kth_cprog_vektor_bool.hpp">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="..\..\1.3_concurrency_is_the_new_black\kth_cprog_safe_vector.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\0.7_the_template_vector\kth_cprog_template_container.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
