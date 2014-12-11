@@ -426,13 +426,13 @@ namespace lab2 {
       std::set<D> dates_to_print;
 
       for(const std::pair<const D, std::list<Event>> pair : get_static_events()) {
-        if(pair.first >= get_date()) {
+        if(pair.first > get_date()) {
           dates_to_print.insert(pair.first);
         }
       }
       for(const RecurringEvent& revent : recurring_events) {
         for(typename RecurringEvent::const_iterator date_it = revent.begin(); date_it.has_next() && *date_it <= *last_static_event_date_p; ++date_it) {
-          if(*date_it >= get_date()) {
+          if(*date_it > get_date()) {
             dates_to_print.insert(*date_it);
           }
         }
