@@ -1,6 +1,8 @@
 COURSEDIR=../kurskatalog
 CXXTEST_DIR=$(COURSEDIR)/cxxtest
 
+KATTISSUBMIT:=~/bin/kattissubmit
+
 EX01DIR=0.1_make_it_happen
 EX02DIR=0.2_hello_world
 EX03DIR=0.3_trainspotting
@@ -137,3 +139,6 @@ build/$(EX15DIR)/vector_bool_tests.exe: $(TEST_RUNNER_OBJECT) $(patsubst %.cpp,b
 BUGGIES_REMAINING=7 8
 autotest_buggies:
 	while inotifywait -e close_write 1.1_the_matrix/buggies/*; do make $(foreach i,$(BUGGIES_REMAINING),run/1.1_the_matrix/buggies/test0$i); done
+
+kattis:
+	$(KATTISSUBMIT) -f -p kth:cprog:lab1:templatecontainer -l c++ $(TEMPLATE_VECTOR_HEADER)
