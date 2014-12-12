@@ -76,3 +76,17 @@ TEST_F(VectorBoolIterator, IsGreaterEqualComparable) {
 TEST_F(VectorBoolIterator, IsLessEqualComparable) {
   bool a = b <= e;
 }
+
+// BidirectionalIterator
+
+TEST_F(VectorBoolIterator, IsPrefixDecrementable) {
+  It& it = --b;
+}
+
+TEST_F(VectorBoolIterator, IsPostfixDecrementable) {
+  const It& it = b--;
+}
+
+TEST_F(VectorBoolIterator, IsPostfixDecrementDefererencible) {
+  reference r = *b--;
+}
