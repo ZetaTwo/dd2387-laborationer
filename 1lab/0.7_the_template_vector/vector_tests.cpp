@@ -409,7 +409,9 @@ TEST(Vector, Capacity) {
 }
 
 TEST(Vector, StreamInput) {
-  std::cout << Vector<int>({0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597}) << std::endl;
+  std::stringstream ss;
+  ss << Vector<int>({0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597});
+  EXPECT_EQ("[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597]", ss.str());
 }
 
 TEST(Vector, Basic1) {
