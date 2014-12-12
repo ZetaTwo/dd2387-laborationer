@@ -90,3 +90,17 @@ TEST_F(VectorBoolIterator, IsPostfixDecrementable) {
 TEST_F(VectorBoolIterator, IsPostfixDecrementDefererencible) {
   reference r = *b--;
 }
+
+// ForwardIterator
+
+TEST_F(VectorBoolIterator, IsPrefixIncrementable) {
+  It& it = ++b;
+}
+
+TEST_F(VectorBoolIterator, IsPostfixIncrementable) {
+  It it = b++;
+}
+
+TEST_F(VectorBoolIterator, IsPostfixIncrementDereferenceable) {
+  reference it = *b++;
+}
