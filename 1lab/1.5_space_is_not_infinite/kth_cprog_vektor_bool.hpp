@@ -118,15 +118,24 @@ public:
   const_iterator(const const_iterator& mit);
   const_iterator& operator++();
   const_iterator operator++(int);
+  const_iterator& operator+=(difference_type);
   const_iterator& operator--();
   const_iterator operator--(int);
+  const_iterator& operator-=(difference_type);
+  const_iterator operator+(difference_type) const;
   const_iterator operator-(size_t offset) const;
   size_t operator-(const const_iterator& other) const;
   bool operator==(const const_iterator& rhs) const;
   bool operator!=(const const_iterator& rhs) const;
+  bool operator<(const const_iterator& rhs) const;
+  bool operator>(const const_iterator& rhs) const;
+  bool operator>=(const const_iterator& rhs) const;
+  bool operator<=(const const_iterator& rhs) const;
   bool_proxy operator[](size_t index);
   bool operator*();
 };
+
+Vector<bool>::const_iterator operator+(const Vector<bool>::const_iterator::difference_type&, const Vector<bool>::const_iterator& it);
 
 class Vector<bool>::iterator : public Vector<bool>::const_iterator {
   storage_type const* element;
@@ -138,8 +147,11 @@ public:
   iterator(const iterator& mit);
   iterator& operator++();
   iterator operator++(int);
+  iterator& operator+=(difference_type);
   iterator& operator--();
   iterator operator--(int);
+  iterator& operator-=(difference_type);
+  iterator operator+(difference_type offset) const;
   iterator operator-(size_t offset) const;
   size_t operator-(const iterator& other) const;
   bool operator==(const iterator& rhs) const;
@@ -147,6 +159,8 @@ public:
   bool operator[](size_t index);
   bool operator*();
 };
+
+Vector<bool>::iterator operator+(const Vector<bool>::iterator::difference_type&, const Vector<bool>::iterator& it);
 
 Vector<bool>::const_iterator::const_iterator() {}
 
@@ -194,19 +208,23 @@ Vector<bool>::const_iterator Vector<bool>::const_iterator::operator-(size_t offs
   tmp.element -= (offset / MAX_SUBINDEX);
   return tmp;
 }
-size_t Vector<bool>::const_iterator::operator-(const const_iterator& other) const {
 
+size_t Vector<bool>::const_iterator::operator-(const const_iterator& other) const {
   return STORAGE_BLOCK_SIZE * (element - other.element) + (index - other.index);
 }
+
 bool Vector<bool>::const_iterator::operator==(const const_iterator& rhs) const {
   return element == rhs.element && index == rhs.index;
 }
+
 bool Vector<bool>::const_iterator::operator!=(const const_iterator& rhs) const {
   return !(*this == rhs);
 }
+
 Vector<bool>::bool_proxy Vector<bool>::const_iterator::operator[](size_t index) {
   return bool_proxy(element, index);
 }
+
 bool Vector<bool>::const_iterator::operator*() {
   return bool_proxy(element, index);
 }
