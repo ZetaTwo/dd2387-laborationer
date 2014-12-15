@@ -164,13 +164,11 @@ int main() {
 
   cout << endl << (i == i) << " " << (i == j) << endl;
 
-  Map m{
-    {
-      { FireTile::get_instance(), FireTile::get_instance(), FireTile::get_instance() },
-      { FireTile::get_instance(), FireTile::get_instance(), FireTile::get_instance() },
-      { FireTile::get_instance(), FireTile::get_instance(), FireTile::get_instance() }
-    }
-  };
+  Map m;
+
+  m.set_tile(Coord{3, 4}, std::make_shared<FireTile>());
+  m.set_tile(Coord{2, 1}, std::make_shared<FireTile>());
+  m.set_tile(Coord{5, 3}, std::make_shared<FireTile>());
 
   cout << m.range() << endl;
 
