@@ -1,3 +1,4 @@
+#pragma once
 #include "kth_cprog_template_container.hpp"
 #include <climits> // CHAR_BIT
 
