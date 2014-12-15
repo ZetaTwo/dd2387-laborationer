@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "game.h"
+#include "map.h"
 #include "tile.h"
 #include "renderer.h"
 
@@ -162,4 +163,27 @@ int main() {
   cout << k.get_id() << " " << k.i << " " << endl;
 
   cout << endl << (i == i) << " " << (i == j) << endl;
+
+  Map m{
+    {
+      { FireTile::get_instance(), FireTile::get_instance(), FireTile::get_instance() },
+      { FireTile::get_instance(), FireTile::get_instance(), FireTile::get_instance() },
+      { FireTile::get_instance(), FireTile::get_instance(), FireTile::get_instance() }
+    }
+  };
+
+  cout << m.range() << endl;
+
+  cout << m.top_left() << endl;
+  cout << m.btm_right() << endl;
+
+  cout << *(m.range().begin()) << endl;
+  cout << *(m.range().end()) << endl;
+
+  cout << (Coord{0, 0} == Coord{0, 0}) << endl;
+  cout << (Coord{0, 0} == Coord{1, 0}) << endl;
+  cout << (Coord{0, 0} != Coord{0, 0}) << endl;
+  cout << (Coord{0, 0} != Coord{1, 0}) << endl;
+
+  cout << m << endl;
 }

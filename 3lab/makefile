@@ -16,7 +16,7 @@ clean:
 build/%.o: %.cpp %.h
 	$(MAKE_OBJECT)
 
-build/test: test.cpp build/util.o $(wildcard %.h)
+build/test: test.cpp build/map.o build/util.o $(wildcard %.h)
 	$(MAKE_EXECUTABLE)
 
 run_test: build/test
