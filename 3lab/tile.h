@@ -40,4 +40,10 @@ namespace lab3 {
   template<class T>
   weak_ptr<T> StatelessTile<T>::the_instance;
 
+  class EmptyTile : public StatelessTile<EmptyTile> {
+    virtual inline void enter(weak_ptr<Entity>) override {}
+    virtual inline void exit(Entity&) override {}
+    virtual inline void stay(Entity&) override {}
+    virtual inline void tick() override {}
+  };
 }
