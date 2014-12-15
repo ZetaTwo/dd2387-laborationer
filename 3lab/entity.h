@@ -5,6 +5,8 @@
 
 namespace lab3 {
 
+  class Map;
+
   class Entity : public Identifiable, public virtual Named {
     public:
       virtual bool is_solid()   const = 0;
