@@ -20,12 +20,15 @@ namespace lab3 {
       typedef vector<tile_ptr_t> row_t;
       typedef vector<row_t> rows_t;
 
+      tile_ptr_t default_tile_p;
       rows_t rows;
 
     public:
       Map();
+      Map(tile_ptr_t default_tile);
       Map(const Map& original);
       Map(rows_t rows);
+      Map(rows_t rows, tile_ptr_t default_tile);
 
       inline Coord top_left() const { return Coord{0, 0}; }
       Coord btm_right() const;
