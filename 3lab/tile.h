@@ -26,8 +26,9 @@ namespace lab3 {
 
   template<class T>
   class StatelessTile : public Tile {
-    public:
       static weak_ptr<T> the_instance;
+
+    public:
       static shared_ptr<T> get_instance() {
         if(the_instance.expired()) {
           shared_ptr<T> new_instance = std::make_shared<T>();
