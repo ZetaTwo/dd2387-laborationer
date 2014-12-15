@@ -1,10 +1,12 @@
 #pragma once
+#include <iostream>
 #include <memory>
 #include <vector>
 
 #include "tile.h"
 #include "util.h"
 
+using std::ostream;
 using std::shared_ptr;
 using std::vector;
 
@@ -24,5 +26,7 @@ namespace lab3 {
 
       void tick();
   };
+
+  ostream& operator<<(ostream& os, const Map& map);
 
 }
