@@ -1,4 +1,4 @@
-#include "kth_cprog_vektor_bool.hpp"
+#include "kth_cprog_vektor_bool.h"
 
 Vector<bool>::const_iterator::const_iterator() {}
 

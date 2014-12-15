@@ -130,10 +130,10 @@ build/$(EX14DIR)/hypercube_tests.o: $(EX14DIR)/hypercube_tests.cpp $(EX14DIR)/hy
 build/$(EX14DIR)/hypercube_tests.exe: $(TEST_RUNNER_OBJECT) build/$(EX14DIR)/hypercube_tests.o
 	$(MAKE_EXECUTABLE)
 
-build/$(EX15DIR)/kth_cprog_vektor_bool.o: $(EX15DIR)/kth_cprog_vektor_bool.cpp $(EX15DIR)/kth_cprog_vektor_bool.hpp $(TEMPLATE_VECTOR_HEADER)
+build/$(EX15DIR)/kth_cprog_vektor_bool.o: $(EX15DIR)/kth_cprog_vektor_bool.cpp $(EX15DIR)/kth_cprog_vektor_bool.h $(TEMPLATE_VECTOR_HEADER)
 	$(MAKE_OBJECT)
 
-build/$(EX15DIR)/%_tests.o: $(EX15DIR)/%_tests.cpp $(EX15DIR)/kth_cprog_vektor_bool.hpp $(TEMPLATE_VECTOR_HEADER)
+build/$(EX15DIR)/%_tests.o: $(EX15DIR)/%_tests.cpp $(EX15DIR)/kth_cprog_vektor_bool.h $(TEMPLATE_VECTOR_HEADER)
 	$(MAKE_OBJECT)
 
 build/$(EX15DIR)/vector_bool_tests.exe: $(TEST_RUNNER_OBJECT) build/$(EX15DIR)/kth_cprog_vektor_bool.o $(patsubst %.cpp,build/%.o,$(wildcard $(EX15DIR)/*_tests.cpp))
