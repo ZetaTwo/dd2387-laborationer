@@ -43,6 +43,9 @@ namespace lab3 {
     typedef size_t coord_t;
     coord_t x;
     coord_t y;
+
+    inline bool operator==(const Coord& rhs) const { return x == rhs.x && y == rhs.y; }
+    inline bool operator!=(const Coord& rhs) const { return !(*this == rhs); }
   };
   ostream& operator<<(ostream& os, const Coord& coord);
 
