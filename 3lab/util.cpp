@@ -41,9 +41,25 @@ namespace lab3 {
     return *this;
   }
 
+  //CoordRectangle::const_iterator CoordRectangle::const_iterator::operator++(int) {}
+  //CoordRectangle::const_iterator& CoordRectangle::const_iterator::operator+=(difference_type) {}
+  //CoordRectangle::const_iterator CoordRectangle::const_iterator::operator+(difference_type) const {}
+  //CoordRectangle::const_iterator& CoordRectangle::const_iterator::operator--() {}
+  //CoordRectangle::const_iterator CoordRectangle::const_iterator::operator--(int) {}
+  //CoordRectangle::const_iterator& CoordRectangle::const_iterator::operator-=(difference_type) {}
+  //CoordRectangle::const_iterator CoordRectangle::const_iterator::operator-(difference_type offset) const {}
+  //CoordRectangle::const_iterator::difference_type CoordRectangle::const_iterator::operator-(const const_iterator& other) const {}
+  //bool CoordRectangle::const_iterator::operator==(const const_iterator& rhs) const {}
+
   bool CoordRectangle::const_iterator::operator!=(const const_iterator& rhs) const {
     return rectangle != rhs.rectangle || current_coord != rhs.current_coord;
   }
+
+  //bool CoordRectangle::const_iterator::operator<(const const_iterator& rhs) const {}
+  //bool CoordRectangle::const_iterator::operator>(const const_iterator& rhs) const {}
+  //bool CoordRectangle::const_iterator::operator>=(const const_iterator& rhs) const {}
+  //bool CoordRectangle::const_iterator::operator<=(const const_iterator& rhs) const {}
+  //const Coord& CoordRectangle::const_iterator::operator[](difference_type index) const {}
 
   const Coord& CoordRectangle::const_iterator::operator*() {
     return current_coord;
