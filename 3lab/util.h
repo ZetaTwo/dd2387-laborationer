@@ -25,7 +25,6 @@ namespace lab3 {
       inline identifier_t get_id() const { return id; }
       inline bool operator==(const Identifiable& other) { return id == other.id; }
   };
-  Identifiable::identifier_t Identifiable::next_id = 0;
 
   class Named {
       string name;
