@@ -40,8 +40,9 @@ namespace lab3 {
   };
 
   struct Coord {
-    int x;
-    int y;
+    typedef size_t coord_t;
+    coord_t x;
+    coord_t y;
   };
   ostream& operator<<(ostream& os, const Coord& coord);
 
