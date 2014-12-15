@@ -17,7 +17,9 @@ namespace lab3 {
   class Map : public virtual Identifiable {
 
     public:
-      Map(vector<vector<shared_ptr<Tile>>> tiles);
+      Map();
+      Map(const Map& original);
+      Map(vector<vector<shared_ptr<Tile>>> rows);
 
       inline Coord top_left() const { return Coord{0, 0}; }
       Coord btm_right() const;
