@@ -1,5 +1,23 @@
 #include "kth_cprog_vektor_bool.h"
 
+Vector<bool>::bool_proxy::bool_proxy(storage_type* element, subindex_type index) :
+  element(element),
+  index(index) {}
+
+Vector<bool>::bool_proxy& Vector<bool>::bool_proxy::operator=(const bool value) {
+  if(value) {
+    *element |= 1 << index;
+  } else {
+    *element &= ~(1 << index);
+  }
+
+  return *this;
+}
+
+Vector<bool>::bool_proxy::operator const bool () const {
+  return ((*element) & (1 << index)) != 0;
+}
+
 Vector<bool>::const_iterator::const_iterator() {}
 
 Vector<bool>::const_iterator::const_iterator(storage_type* element, subindex_type index) :

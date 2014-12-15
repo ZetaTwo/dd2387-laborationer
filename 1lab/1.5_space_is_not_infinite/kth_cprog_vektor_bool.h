@@ -92,19 +92,9 @@ private:
   storage_type* element;
   subindex_type index;
 public:
-  bool_proxy(storage_type* element, subindex_type index) : element(element), index(index) {}
-  bool_proxy& operator=(const bool value) {
-    if(value) {
-      *element |= 1 << index;
-    } else {
-      *element &= ~(1 << index);
-    }
-
-    return *this;
-  }
-  operator const bool () const {
-    return ((*element) & (1 << index)) != 0;
-  }
+  bool_proxy(storage_type* element, subindex_type index);
+  bool_proxy& operator=(const bool value);
+  operator const bool () const;
 };
 
 class Vector<bool>::const_iterator : public std::iterator<std::random_access_iterator_tag, const bool> {
