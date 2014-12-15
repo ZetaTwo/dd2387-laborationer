@@ -7,7 +7,18 @@ using std::max_element;
 
 namespace lab3 {
 
+  Map::Map() :
+    default_tile_p(EmptyTile::get_instance()) { }
+
+  Map::Map(tile_ptr_t default_tile_p) :
+    default_tile_p(default_tile_p) { }
+
   Map::Map(rows_t rows) :
+    default_tile_p(EmptyTile::get_instance()),
+    rows(rows) { }
+
+  Map::Map(rows_t rows, tile_ptr_t default_tile_p) :
+    default_tile_p(default_tile_p),
     rows(rows) { }
 
   Coord Map::btm_right() const {
