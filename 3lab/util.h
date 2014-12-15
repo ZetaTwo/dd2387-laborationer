@@ -53,4 +53,15 @@ namespace lab3 {
     Identifiable::identifier_t map_id;
   };
 
+  struct CoordRectangle {
+      Coord top_left;
+      Coord btm_right;
+
+      inline bool operator==(const CoordRectangle& rhs) const {
+        return top_left == rhs.top_left && btm_right == rhs.btm_right;
+      }
+      inline bool operator!=(const CoordRectangle& rhs) const { return !(*this == rhs); }
+  };
+  ostream& operator<<(ostream& os, const CoordRectangle& rect);
+
 }

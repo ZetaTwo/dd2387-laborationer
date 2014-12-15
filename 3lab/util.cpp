@@ -8,4 +8,7 @@ namespace lab3 {
     return os << "(" << coord.x << ", " << coord.y << ")";
   }
 
+  ostream& operator<<(ostream& os, const CoordRectangle& rect) {
+    return os << "CoordRectangle(" << rect.top_left << " - " << rect.btm_right << ")";
+  }
 }
