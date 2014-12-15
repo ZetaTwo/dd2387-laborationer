@@ -8,7 +8,7 @@ namespace lab3 {
 
   class Renderer {
     public:
-      Renderer& render(const Game& game);
+      void render(const Game& game);
   };
 
 }
