@@ -16,12 +16,16 @@ namespace lab3 {
 
   class Map : public virtual Identifiable {
     protected:
-      vector<vector<shared_ptr<Tile>>> rows;
+      typedef shared_ptr<Tile> tile_ptr_t;
+      typedef vector<tile_ptr_t> row_t;
+      typedef vector<row_t> rows_t;
+
+      rows_t rows;
 
     public:
       Map();
       Map(const Map& original);
-      Map(vector<vector<shared_ptr<Tile>>> rows);
+      Map(rows_t rows);
 
       inline Coord top_left() const { return Coord{0, 0}; }
       Coord btm_right() const;

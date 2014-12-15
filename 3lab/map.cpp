@@ -7,7 +7,7 @@ using std::max_element;
 
 namespace lab3 {
 
-  Map::Map(vector<vector<shared_ptr<Tile>>> rows) :
+  Map::Map(rows_t rows) :
     rows(rows) { }
 
   Coord Map::btm_right() const {
@@ -16,7 +16,7 @@ namespace lab3 {
     }
 
     auto max_x_row_it = max_element(rows.begin(), rows.end(),
-      [](const vector<shared_ptr<Tile>>& a, const vector<shared_ptr<Tile>>& b) {
+      [](const row_t& a, const row_t& b) {
         return a.size() < b.size();
       }
     );
