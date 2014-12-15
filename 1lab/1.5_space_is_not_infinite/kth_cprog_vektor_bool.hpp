@@ -186,6 +186,19 @@ Vector<bool>::const_iterator Vector<bool>::const_iterator::operator++(int) {
   return tmp;
 }
 
+Vector<bool>::const_iterator& Vector<bool>::const_iterator::operator+=(difference_type distance) {
+  if(distance > 0) {
+    for(difference_type d = distance; d > 0; --d) {
+      ++*this;
+    }
+  } else if(distance < 0) {
+    for(difference_type d = distance; d < 0; ++d) {
+      --*this;
+    }
+  }
+  return *this;
+}
+
 Vector<bool>::const_iterator& Vector<bool>::const_iterator::operator--() {
   if(index == 0) {
     --element;
@@ -200,6 +213,14 @@ Vector<bool>::const_iterator Vector<bool>::const_iterator::operator--(int) {
   const_iterator tmp(*this);
   operator--();
   return tmp;
+}
+
+Vector<bool>::const_iterator& Vector<bool>::const_iterator::operator-=(difference_type distance) {
+  return *this += (-distance);
+}
+
+Vector<bool>::const_iterator Vector<bool>::const_iterator::operator+(difference_type offset) const {
+  return Vector<bool>::const_iterator{*this} += offset;
 }
 
 Vector<bool>::const_iterator Vector<bool>::const_iterator::operator-(difference_type offset) const {
@@ -221,12 +242,32 @@ bool Vector<bool>::const_iterator::operator!=(const const_iterator& rhs) const {
   return !(*this == rhs);
 }
 
+bool Vector<bool>::const_iterator::operator<(const const_iterator& rhs) const {
+  return element < rhs.element || (element == rhs.element && index < rhs.index);
+}
+
+bool Vector<bool>::const_iterator::operator>(const const_iterator& rhs) const {
+  return element > rhs.element || (element == rhs.element && index > rhs.index);
+}
+
+bool Vector<bool>::const_iterator::operator>=(const const_iterator& rhs) const {
+  return element > rhs.element || (element == rhs.element && index >= rhs.index);
+}
+
+bool Vector<bool>::const_iterator::operator<=(const const_iterator& rhs) const {
+  return element < rhs.element || (element == rhs.element && index <= rhs.index);
+}
+
 Vector<bool>::bool_proxy Vector<bool>::const_iterator::operator[](difference_type index) {
   return bool_proxy(element, index);
 }
 
 bool Vector<bool>::const_iterator::operator*() {
   return bool_proxy(element, index);
+}
+
+Vector<bool>::const_iterator operator+(const Vector<bool>::const_iterator::difference_type& distance, const Vector<bool>::const_iterator& it) {
+  return it + distance;
 }
 
 Vector<bool>::iterator::iterator() {}
@@ -253,6 +294,19 @@ Vector<bool>::iterator Vector<bool>::iterator::operator++(int) {
   return tmp;
 }
 
+Vector<bool>::iterator& Vector<bool>::iterator::operator+=(difference_type distance) {
+  if(distance > 0) {
+    for(difference_type d = distance; d > 0; --d) {
+      ++*this;
+    }
+  } else if(distance < 0) {
+    for(difference_type d = distance; d < 0; ++d) {
+      --*this;
+    }
+  }
+  return *this;
+}
+
 Vector<bool>::iterator& Vector<bool>::iterator::operator--() {
   if(index == 0) {
     --element;
@@ -267,6 +321,14 @@ Vector<bool>::iterator Vector<bool>::iterator::operator--(int) {
   iterator tmp(*this);
   operator--();
   return tmp;
+}
+
+Vector<bool>::iterator& Vector<bool>::iterator::operator-=(difference_type distance) {
+  return *this += (-distance);
+}
+
+Vector<bool>::iterator Vector<bool>::iterator::operator+(difference_type offset) const {
+  return Vector<bool>::iterator{*this} += offset;
 }
 
 Vector<bool>::iterator Vector<bool>::iterator::operator-(difference_type offset) const {
@@ -294,6 +356,10 @@ bool Vector<bool>::iterator::operator[](difference_type index) {
 
 bool Vector<bool>::iterator::operator*() {
   return ((*element) & (1 << index)) != 0;
+}
+
+Vector<bool>::iterator operator+(const Vector<bool>::iterator::difference_type& distance, const Vector<bool>::iterator& it) {
+  return it + distance;
 }
 
 //Member implementations
