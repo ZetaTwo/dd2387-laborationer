@@ -25,8 +25,10 @@ namespace lab3 {
     public:
       Identifiable() : id(get_new_identifier()) {}
       Identifiable(Identifiable&& other) : id(other.id) {}
+
       inline identifier_t get_id() const { return id; }
-      inline bool operator==(const Identifiable& other) { return id == other.id; }
+      inline bool operator==(const Identifiable& other) const { return id == other.id; }
+      inline bool operator< (const Identifiable& other) const { return id < other.id; }
   };
 
   class Named {
