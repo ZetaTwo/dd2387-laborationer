@@ -1,6 +1,8 @@
 #pragma once
+#include <iostream>
 #include <string>
 
+using std::ostream;
 using std::string;
 
 namespace lab3 {
@@ -41,6 +43,7 @@ namespace lab3 {
     int x;
     int y;
   };
+  ostream& operator<<(ostream& os, const Coord& coord);
 
   struct WorldCoord : Coord {
     Identifiable::identifier_t map_id;
