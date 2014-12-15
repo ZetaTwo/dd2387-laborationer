@@ -15,6 +15,8 @@ namespace lab3 {
   class Tile;
 
   class Map : public virtual Identifiable {
+    protected:
+      vector<vector<shared_ptr<Tile>>> rows;
 
     public:
       Map();
