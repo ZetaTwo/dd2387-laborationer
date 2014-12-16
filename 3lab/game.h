@@ -19,6 +19,8 @@ namespace lab3 {
       Game();
       Game(shared_ptr<Renderer> renderer_p, shared_ptr<Inputer> inputer_p);
 
+      void tick();
+
     public:
       void run();
 

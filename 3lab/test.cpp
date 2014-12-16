@@ -18,10 +18,5 @@ using std::endl;
 
 int main() {
   Game& g = *Game::get_instance();
-
-  cout << "Map in world:" << endl;
-
-  cout << g.get_world().get_maps().begin()->second << endl;
-
   g.run();
 }

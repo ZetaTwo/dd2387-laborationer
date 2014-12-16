@@ -16,11 +16,16 @@ namespace lab3 {
     renderer_p(renderer_p),
     inputer_p(inputer_p) { }
 
+  void Game::tick() {
+    world.tick();
+    renderer_p->render(*this);
+  }
+
   void Game::run() {
-    world.tick();
-    world.tick();
-    world.tick();
-    world.tick();
+    tick();
+    tick();
+    tick();
+    tick();
   }
 
 }
