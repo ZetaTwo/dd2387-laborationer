@@ -18,6 +18,8 @@ namespace lab3 {
 
     const Map& player_map = game.get_world().get_map(player_position.map_id);
 
+    out << endl << endl << endl << endl << endl;
+
     out << "First map in world:" << endl;
     out << game.get_world().get_maps().begin()->second << endl;
 
