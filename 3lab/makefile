@@ -37,5 +37,6 @@ $(foreach name,$(OBJECT_NAMES),$(eval $(call make-object-rule,$(name))))
 run_test: build/test
 	./$<
 
-build/test: build/test.o $(foreach obj,actor entity game map player renderer tile util world actors/basic tiles/hazards,build/$(obj).o)
+TEST_DEPENDS_ON_OBJECTS=actor entity game map player renderer tile util world actors/basic tiles/hazards
+build/test: build/test.o $(patsubst %,build/%.o,$(TEST_DEPENDS_ON_OBJECTS))
 	$(make-executable)
