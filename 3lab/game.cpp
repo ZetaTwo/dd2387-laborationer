@@ -18,6 +18,14 @@ namespace lab3 {
       world.add_entity(player.get_actor());
     }
 
+  void Game::push_message(const string& message) {
+    messages.push_back(message);
+  }
+
+  void Game::clear_messages() {
+    messages.clear();
+  }
+
   void Game::tick() {
     world.tick();
     renderer_p->render(*this);
