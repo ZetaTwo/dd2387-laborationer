@@ -3,7 +3,7 @@ CPPFLAGS=-std=c++11 -Wall -Wextra -g
 
 INCLUDE_PREREQUISITE_HEADER_DIRECTORIES=$(foreach file,$(filter %.h %.hpp,$^),-I $(dir $(file)))
 
-COMPILE=mkdir -p $(dir $@); $(CXX) $(CPPFLAGS) $(INCLUDE_PREREQUISITE_HEADER_DIRECTORIES) -o $@ $< $(filter %.o,$^)
+COMPILE=mkdir -p $(dir $@); $(CXX) $(CPPFLAGS) $(INCLUDE_PREREQUISITE_HEADER_DIRECTORIES) -o $@ $< $(filter-out $<,$(filter %.o,$^))
 
 MAKE_OBJECT=$(COMPILE) -c
 MAKE_EXECUTABLE=$(COMPILE)
