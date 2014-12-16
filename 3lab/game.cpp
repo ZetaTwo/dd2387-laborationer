@@ -29,6 +29,9 @@ namespace lab3 {
   void Game::tick() {
     clear_messages();
 
+    Entity& player = *get_player().get_actor();
+    world.move_entity(player, WorldCoord{world.get_maps().begin()->first, 3, 4});
+
     world.tick();
 
     renderer_p->render(*this);
