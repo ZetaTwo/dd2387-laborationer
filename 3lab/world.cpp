@@ -33,6 +33,14 @@ namespace lab3 {
     return maps.at(id);
   }
 
+  bool World::add_entity(shared_ptr<Entity> entity_p) {
+    if(entity_ps.count(entity_p->get_id()) > 0) {
+      return false;
+    }
+    entity_ps[entity_p->get_id()] = entity_p;
+    return true;
+  }
+
   bool World::move_entity(Entity& entity, const WorldCoord& destination) {
     shared_ptr<Entity> entity_p = entity_ps.find(entity.get_id())->second;
 

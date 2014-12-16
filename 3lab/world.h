@@ -23,6 +23,7 @@ namespace lab3 {
       inline const map<Identifiable::identifier_t, Map>& get_maps() const { return maps; }
       const Map& get_map(Identifiable::identifier_t id) const;
 
+      bool add_entity(shared_ptr<Entity> entity_p);
       bool move_entity(Entity& entity, const WorldCoord& destination);
   };
 
