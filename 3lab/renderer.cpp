@@ -7,6 +7,9 @@ using std::endl;
 
 namespace lab3 {
 
+  Renderer::Renderer(ostream& out) :
+    out(out) {}
+
   void Renderer::render(const Game& game) {
   };
 

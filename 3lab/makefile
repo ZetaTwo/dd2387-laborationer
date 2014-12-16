@@ -28,7 +28,7 @@ build/tiles/%.o: tiles/%.cpp tiles/%.h tile.h
 build/test.o: test.cpp actors/basic.h game.h map.h tile.h tiles/hazards.h renderer.h
 	$(MAKE_OBJECT)
 
-build/test: build/test.o $(foreach obj,actor entity game map player tile util world actors/basic tiles/hazards,build/$(obj).o)
+build/test: build/test.o $(foreach obj,actor entity game map player renderer tile util world actors/basic tiles/hazards,build/$(obj).o)
 	$(MAKE_EXECUTABLE)
 
 build/actor.o: actor.cpp actor.h entity.h item.h util.h
