@@ -45,6 +45,9 @@ namespace lab3 {
     shared_ptr<Entity> entity_p = entity_ps.find(entity.get_id())->second;
 
     const WorldCoord prev_position = entity_p->get_position();
+    if(prev_position == destination) {
+      return false;
+    }
 
     if(entity_p->set_position(destination)) {
       maps[prev_position.map_id].get_tile(prev_position).exit(entity);
