@@ -17,7 +17,7 @@ using std::cout;
 using std::endl;
 
 int main() {
-  Game g;
+  Game& g = *Game::get_instance();
 
   cout << "Map in world:" << endl;
 

@@ -7,7 +7,7 @@ using std::make_shared;
 
 namespace lab3 {
 
-  Game::Game() :
+  shared_ptr<Game> Game::the_instance;
 
   Game::Game() : Game(make_shared<Renderer>(), make_shared<Inputer>()) { }
 

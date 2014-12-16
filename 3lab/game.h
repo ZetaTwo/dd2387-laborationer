@@ -16,14 +16,25 @@ namespace lab3 {
       shared_ptr<Renderer> renderer_p;
       shared_ptr<Inputer> inputer_p;
 
-    public:
       Game();
       Game(shared_ptr<Renderer> renderer_p, shared_ptr<Inputer> inputer_p);
 
+    public:
       void run();
 
       inline const World& get_world() const { return world; }
       inline const Player& get_player() const { return player; }
+
+    private:
+      static shared_ptr<Game> the_instance;
+
+    public:
+      static shared_ptr<Game> get_instance() {
+        if(the_instance.get() == nullptr) {
+          the_instance.reset(new Game());
+        }
+        return the_instance;
+      }
   };
 
 }
