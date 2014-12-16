@@ -29,7 +29,7 @@ namespace lab3 {
   };
 
   template<class T>
-  class StatelessTile : public Tile {
+  class SingletonTile : public Tile {
       static weak_ptr<T> the_instance;
 
     protected:
@@ -46,9 +46,9 @@ namespace lab3 {
       }
   };
   template<class T>
-  weak_ptr<T> StatelessTile<T>::the_instance;
+  weak_ptr<T> SingletonTile<T>::the_instance;
 
-  class EmptyTile : public StatelessTile<EmptyTile> {
+  class EmptyTile : public SingletonTile<EmptyTile> {
       static string description;
 
     public:
