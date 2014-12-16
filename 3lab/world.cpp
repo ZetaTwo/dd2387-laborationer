@@ -23,10 +23,6 @@ namespace lab3 {
 
     entity_ps[a->get_id()] = a;
     entity_ps[b->get_id()] = b;
-
-    move_entity(*a, WorldCoord{m.get_id(), 3, 4});
-
-    a->interact(*b);
   }
 
   const Map& World::get_map(Identifiable::identifier_t id) const {
