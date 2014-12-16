@@ -1,63 +1,41 @@
 CXX=clang++
 CPPFLAGS=-std=c++11 -Wall -Wextra -g
 
-INCLUDE_PREREQUISITE_HEADER_DIRECTORIES=$(foreach file,$(filter %.h %.hpp,$^),-I $(dir $(file)))
-
-COMPILE=mkdir -p $(dir $@); $(CXX) $(CPPFLAGS) $(INCLUDE_PREREQUISITE_HEADER_DIRECTORIES) -o $@ $< $(filter-out $<,$(filter %.o,$^))
-
-MAKE_OBJECT=$(COMPILE) -c
-MAKE_EXECUTABLE=$(COMPILE)
-
 default: run_test
 
 clean:
 	rm -rf build
 
+INCLUDE_PREREQUISITE_HEADER_DIRECTORIES=$(foreach file,$(filter %.h %.hpp,$^),-I $(dir $(file)))
+
+define compile
+	mkdir -p $(dir $@)
+	$(CXX) $(CPPFLAGS) $(INCLUDE_PREREQUISITE_HEADER_DIRECTORIES) -o $@ $< $(filter-out $<,$(filter %.o,$^))
+endef
+
+define make-executable
+	$(compile)
+endef
+
+define make-object
+	$(compile) -c
+endef
+
+define get-dependencies
+$(wildcard $1.h) $(filter-out $(notdir $1.h),$(shell grep -E '^\#include ".*\.h"' $1.cpp $1.h 2>/dev/null | grep -oE '[^"]+\.h' | sort | uniq ))
+endef
+
+define make-object-rule
+build/$1.o: $1.cpp $(call get-dependencies,$1)
+	$$(make-object)
+endef
+
+OBJECT_NAMES = $(patsubst %.cpp,%,$(wildcard *.cpp */*.cpp))
+
+$(foreach name,$(OBJECT_NAMES),$(eval $(call make-object-rule,$(name))))
+
 run_test: build/test
 	./$<
 
-build/%.o: %.cpp %.h
-	$(MAKE_OBJECT)
-
-build/actors/%.o: actors/%.cpp actors/%.h actor.h
-	$(MAKE_OBJECT)
-
-build/tiles/%.o: tiles/%.cpp tiles/%.h tile.h
-	$(MAKE_OBJECT)
-
-build/test.o: test.cpp actors/basic.h game.h map.h tile.h tiles/hazards.h renderer.h
-	$(MAKE_OBJECT)
-
 build/test: build/test.o $(foreach obj,actor entity game map player renderer tile util world actors/basic tiles/hazards,build/$(obj).o)
-	$(MAKE_EXECUTABLE)
-
-build/actor.o: actor.cpp actor.h entity.h item.h util.h
-	$(MAKE_OBJECT)
-
-build/entity.o: entity.cpp entity.h map.h util.h
-	$(MAKE_OBJECT)
-
-build/game.o: game.cpp game.h inputer.h player.h renderer.h world.h
-	$(MAKE_OBJECT)
-
-build/item.o: item.cpp item.h actor.h entity.h
-
-build/map.o: map.cpp map.h tile.h util.h
-
-build/player.o: player.cpp player.h actors/basic.h actor.h
-	$(MAKE_OBJECT)
-
-build/renderer.o: renderer.cpp renderer.h game.h
-	$(MAKE_OBJECT)
-
-build/tile.o: tile.cpp tile.h
-	$(MAKE_OBJECT)
-
-build/world.o: world.cpp actors/basic.h tiles/hazards.h world.h entity.h map.h util.h
-	$(MAKE_OBJECT)
-
-build/actors/basic.o: actors/basic.cpp actors/basic.h actor.h entity.h
-	$(MAKE_OBJECT)
-
-build/tiles/basic.o: tiles/basic.cpp tiles/basic.h hazards.h tile.h
-	$(MAKE_OBJECT)
+	$(make-executable)
