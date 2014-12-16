@@ -8,10 +8,12 @@
 
 namespace lab3 {
 
+  class Renderer;
+
   class Game {
       World world;
       Player player;
-      Renderer renderer;
+      shared_ptr<Renderer> renderer_p;
       shared_ptr<Inputer> inputer_p;
 
     public:
