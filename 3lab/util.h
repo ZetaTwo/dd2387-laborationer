@@ -54,6 +54,12 @@ namespace lab3 {
 
   struct WorldCoord : Coord {
     Identifiable::identifier_t map_id;
+
+    WorldCoord(Identifiable::identifier_t map_id, coord_t x, coord_t y);
+    WorldCoord& operator=(const WorldCoord& other);
+
+    inline bool operator==(const WorldCoord& rhs) const { return map_id == rhs.map_id && x == rhs.x && y == rhs.y; }
+    inline bool operator!=(const WorldCoord& rhs) const { return !(*this == rhs); }
   };
 
   struct CoordRectangle {

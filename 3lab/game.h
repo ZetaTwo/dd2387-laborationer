@@ -15,7 +15,12 @@ namespace lab3 {
       shared_ptr<Inputer> inputer_p;
 
     public:
+      Game();
+
       void run();
+
+      inline const World& get_world() const { return world; }
+      inline const Player& get_player() const { return player; }
   };
 
 }

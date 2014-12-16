@@ -21,6 +21,12 @@ namespace lab3 {
     default_tile_p(default_tile_p),
     rows(rows) { }
 
+  Map& Map::operator=(const Map& other) {
+    default_tile_p = other.default_tile_p;
+    rows = other.rows;
+    return *this;
+  }
+
   Coord Map::btm_right() const {
     if(rows.size() == 0) {
       return Coord{0, 0};
@@ -38,6 +44,13 @@ namespace lab3 {
     };
   }
 
+  Tile& Map::get_tile(const Coord& coord) {
+    if(coord.y >= rows.size() || coord.x >= rows[coord.y].size()) {
+      return *default_tile_p;
+    }
+    return *(rows[coord.y][coord.x]);
+  }
+
   bool Map::set_tile(const Coord& coord, tile_ptr_t tile_p) {
     while(rows.size() <= coord.y) {
       rows.push_back(row_t{});
@@ -53,6 +66,12 @@ namespace lab3 {
     }
 
     return true;
+  }
+
+  void Map::tick() {
+    for(const Coord& coord : range()) {
+      get_tile(coord).tick();
+    }
   }
 
   ostream& operator<<(ostream& os, const Map& map) {

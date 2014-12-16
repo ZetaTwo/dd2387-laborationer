@@ -22,10 +22,10 @@ namespace lab3 {
       int weight;
 
     public:
-      virtual int getValue() const;
-      virtual int getVolume() const;
-      virtual int getWeight() const;
-      virtual void activate(Actor& activator);
+      virtual inline int getValue() const { return value; }
+      virtual inline int getVolume() const { return volume; }
+      virtual inline int getWeight() const { return weight; }
+      virtual inline void activate(Actor& activator) {}
   };
 
 }

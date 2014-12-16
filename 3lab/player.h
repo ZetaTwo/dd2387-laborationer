@@ -13,7 +13,11 @@ namespace lab3 {
       virtual void do_tick(Actor& tickee) const;
 
     public:
+      Player(shared_ptr<Actor> actor);
+
       bool possess(Actor& new_actor);
+
+      inline const Actor& get_actor() const { return *actor; }
   };
 
 }

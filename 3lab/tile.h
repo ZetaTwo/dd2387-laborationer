@@ -1,11 +1,13 @@
 #pragma once
 #include <list>
 #include <memory>
+#include <string>
 
 #include "entity.h"
 
 using std::list;
 using std::shared_ptr;
+using std::string;
 using std::weak_ptr;
 
 namespace lab3 {
@@ -16,17 +18,22 @@ namespace lab3 {
     protected:
       list<weak_ptr<Entity>> entered_entities;
 
-      virtual void stay(Entity&);
+      virtual void stay(Entity& stayer) = 0;
 
     public:
-      virtual void enter(weak_ptr<Entity> enterer_p);
-      virtual void exit(Entity& exiter);
+      virtual void enter(weak_ptr<Entity> enterer_p) = 0;
+      virtual void exit(Entity& exiter) = 0;
       virtual void tick();
+
+      virtual const string& get_description() const = 0;
   };
 
   template<class T>
   class StatelessTile : public Tile {
       static weak_ptr<T> the_instance;
+
+    protected:
+      using Tile::Tile;
 
     public:
       static shared_ptr<T> get_instance() {
@@ -42,9 +49,13 @@ namespace lab3 {
   weak_ptr<T> StatelessTile<T>::the_instance;
 
   class EmptyTile : public StatelessTile<EmptyTile> {
-    virtual inline void enter(weak_ptr<Entity>) override {}
-    virtual inline void exit(Entity&) override {}
-    virtual inline void stay(Entity&) override {}
-    virtual inline void tick() override {}
+      static string description;
+
+    public:
+      virtual inline void stay(Entity&) { }
+      virtual inline void enter(weak_ptr<Entity>) { }
+      virtual inline void exit(Entity&) { }
+
+      virtual inline const string& get_description() const { return description; }
   };
 }

@@ -29,6 +29,7 @@ namespace lab3 {
       Map(const Map& original);
       Map(rows_t rows);
       Map(rows_t rows, tile_ptr_t default_tile);
+      Map& operator=(const Map& other);
 
       inline Coord top_left() const { return Coord{0, 0}; }
       Coord btm_right() const;

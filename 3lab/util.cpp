@@ -8,6 +8,17 @@ namespace lab3 {
     return os << "(" << coord.x << ", " << coord.y << ")";
   }
 
+  WorldCoord::WorldCoord(Identifiable::identifier_t map_id, coord_t x, coord_t y) :
+    Coord{x, y},
+    map_id(map_id) {}
+
+  WorldCoord& WorldCoord::operator=(const WorldCoord& other) {
+    map_id = other.map_id;
+    x = other.x;
+    y = other.y;
+    return *this;
+  }
+
   CoordRectangle::const_iterator CoordRectangle::begin() const {
     return const_iterator{*this};
   }
