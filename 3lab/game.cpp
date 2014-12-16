@@ -38,10 +38,19 @@ namespace lab3 {
   }
 
   void Game::run() {
-    tick();
-    tick();
-    tick();
-    tick();
+    running = true;
+
+    while(running) {
+      tick();
+      tick();
+      tick();
+      tick();
+      stop();
+    }
+  }
+
+  void Game::stop() {
+    running = false;
   }
 
 }

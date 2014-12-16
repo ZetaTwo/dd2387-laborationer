@@ -16,6 +16,8 @@ namespace lab3 {
   class Renderer;
 
   class Game {
+      bool running = false;
+
       World world;
       Player player;
       shared_ptr<Renderer> renderer_p;
@@ -30,6 +32,7 @@ namespace lab3 {
 
     public:
       void run();
+      void stop();
 
       inline const World& get_world() const { return world; }
       inline const Player& get_player() const { return player; }
