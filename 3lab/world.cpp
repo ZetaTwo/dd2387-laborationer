@@ -29,6 +29,10 @@ namespace lab3 {
     a->interact(*b);
   }
 
+  const Map& World::get_map(Identifiable::identifier_t id) const {
+    return maps.at(id);
+  }
+
   bool World::move_entity(Entity& entity, const WorldCoord& destination) {
     shared_ptr<Entity> entity_p = entity_ps.find(entity.get_id())->second;
 
