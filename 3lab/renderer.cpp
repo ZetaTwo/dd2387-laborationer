@@ -25,6 +25,13 @@ namespace lab3 {
 
     out << "Player map:" << endl;
     out << player_map << endl;
+
+    out << endl;
+
+    for(const string& message : game.get_messages()) {
+      out << message << endl;
+    }
+
   };
 
 }

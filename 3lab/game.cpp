@@ -27,7 +27,10 @@ namespace lab3 {
   }
 
   void Game::tick() {
+    clear_messages();
+
     world.tick();
+
     renderer_p->render(*this);
   }
 
