@@ -17,7 +17,7 @@ namespace lab3 {
 
       bool possess(Actor& new_actor);
 
-      inline const Actor& get_actor() const { return *actor; }
+      inline shared_ptr<Actor> get_actor() const { return actor; }
   };
 
 }

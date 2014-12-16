@@ -12,9 +12,9 @@ namespace lab3 {
 
   void Renderer::render(const Game& game) {
     const Player& player = game.get_player();
-    const Actor& player_actor = player.get_actor();
+    const shared_ptr<Actor> player_actor = player.get_actor();
 
-    const WorldCoord& player_position = player_actor.get_position();
+    const WorldCoord& player_position = player_actor->get_position();
 
     const Map& player_map = game.get_world().get_map(player_position.map_id);
 

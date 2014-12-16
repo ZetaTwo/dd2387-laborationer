@@ -14,7 +14,9 @@ namespace lab3 {
   Game::Game(shared_ptr<Renderer> renderer_p, shared_ptr<Inputer> inputer_p) :
     player(Player{make_shared<Human>(WorldCoord{world.get_maps().begin()->first, 0, 0}, "Ze Hero")}),
     renderer_p(renderer_p),
-    inputer_p(inputer_p) { }
+    inputer_p(inputer_p) {
+      world.add_entity(player.get_actor());
+    }
 
   void Game::tick() {
     world.tick();
