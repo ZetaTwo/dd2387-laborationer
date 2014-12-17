@@ -15,16 +15,19 @@ namespace lab3 {
       typedef std::map<Identifiable::identifier_t, Map> maps_t;
       typedef std::map<Identifiable::identifier_t, shared_ptr<PhysicalEntity>> physicals_t;
       typedef std::map<Identifiable::identifier_t, shared_ptr<Entity>> entities_t;
+      typedef unsigned int time_t;
 
     private:
       maps_t maps;
       entities_t entity_ps;
       physicals_t physical_ps;
+      time_t time = 0;
 
     public:
       World();
 
       void tick(Game& game);
+      inline time_t get_time() const { return time; }
 
       inline const maps_t& get_maps() const { return maps; }
       const Map& get_map(Identifiable::identifier_t id) const;

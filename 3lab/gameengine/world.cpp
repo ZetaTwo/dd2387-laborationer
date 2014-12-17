@@ -67,6 +67,8 @@ namespace lab3 {
     for(maps_t::value_type& map_pair : maps) {
       map_pair.second.tick(game);
     }
+
+    ++time;
   }
 
 }
