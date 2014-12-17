@@ -1,7 +1,7 @@
 CXX=clang++
 CPPFLAGS=-std=c++11 -Wall -Wextra -g
 
-default: run_test
+default: run
 
 clean:
 	rm -rf build
@@ -34,9 +34,9 @@ OBJECT_NAMES = $(patsubst %.cpp,%,$(wildcard *.cpp */*.cpp))
 
 $(foreach name,$(OBJECT_NAMES),$(eval $(call make-object-rule,$(name))))
 
-run_test: build/test
+run: build/main
 	./$<
 
-TEST_DEPENDS_ON_OBJECTS=actor entity game map player renderer tile util world actors/basic tiles/hazards
-build/test: build/test.o $(patsubst %,build/%.o,$(TEST_DEPENDS_ON_OBJECTS))
+MAIN_DEPENDS_ON_OBJECTS=actor entity game map player renderer tile util world actors/basic tiles/hazards
+build/main: build/main.o $(patsubst %,build/%.o,$(MAIN_DEPENDS_ON_OBJECTS))
 	$(make-executable)
