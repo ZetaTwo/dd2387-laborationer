@@ -15,6 +15,7 @@ using std::unique_ptr;
 namespace lab3 {
 
   class Game {
+  protected:
       bool initialized = false;
       bool running = false;
 
@@ -27,7 +28,7 @@ namespace lab3 {
 
       Game(Renderer* renderer_p, Inputer* inputer_p);
 
-      void initialize();
+      virtual void initialize() = 0;
       void tick();
 
     public:

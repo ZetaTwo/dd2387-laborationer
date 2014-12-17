@@ -11,14 +11,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{E96ACCAB-D819-4BBE-BC9F-F16E79603E3D}</ProjectGuid>
+    <ProjectGuid>{515DCDE8-8B4C-415B-9B95-307EB16592B1}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>game</RootNamespace>
-    <ProjectName>gameengine</ProjectName>
+    <RootNamespace>ourgame</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -42,7 +41,6 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>..\..;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -80,33 +78,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\actor.cpp" />
-    <ClCompile Include="..\..\actors\actor_basic.cpp" />
-    <ClCompile Include="..\..\entity.cpp" />
-    <ClCompile Include="..\..\game.cpp" />
-    <ClCompile Include="..\..\item.cpp" />
-    <ClCompile Include="..\..\map.cpp" />
-    <ClCompile Include="..\..\player.cpp" />
-    <ClCompile Include="..\..\renderer.cpp" />
-    <ClCompile Include="..\..\tile.cpp" />
-    <ClCompile Include="..\..\tiles\tile_basic.cpp" />
-    <ClCompile Include="..\..\util.cpp" />
-    <ClCompile Include="..\..\world.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\actor.h" />
-    <ClInclude Include="..\..\actors\actor_basic.h" />
-    <ClInclude Include="..\..\entity.h" />
-    <ClInclude Include="..\..\game.h" />
-    <ClInclude Include="..\..\inputer.h" />
-    <ClInclude Include="..\..\item.h" />
-    <ClInclude Include="..\..\map.h" />
-    <ClInclude Include="..\..\player.h" />
-    <ClInclude Include="..\..\renderer.h" />
-    <ClInclude Include="..\..\tile.h" />
-    <ClInclude Include="..\..\tiles\tile_basic.h" />
-    <ClInclude Include="..\..\util.h" />
-    <ClInclude Include="..\..\world.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

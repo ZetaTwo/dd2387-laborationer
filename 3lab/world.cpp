@@ -1,7 +1,5 @@
 #include<memory>
 
-#include "actors/actor_basic.h"
-#include "tiles/hazards.h"
 #include "world.h"
 
 using std::make_shared;

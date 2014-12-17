@@ -39,9 +39,6 @@
     <ClCompile Include="..\..\item.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\map.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -59,9 +56,6 @@
     </ClCompile>
     <ClCompile Include="..\..\world.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\tiles\hazards.cpp">
-      <Filter>Source Files\actors</Filter>
     </ClCompile>
     <ClCompile Include="..\..\actors\actor_basic.cpp">
       <Filter>Source Files\actors</Filter>
@@ -103,9 +97,6 @@
     </ClInclude>
     <ClInclude Include="..\..\world.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\tiles\hazards.h">
-      <Filter>Header Files\tiles</Filter>
     </ClInclude>
     <ClInclude Include="..\..\actors\actor_basic.h">
       <Filter>Header Files\actors</Filter>

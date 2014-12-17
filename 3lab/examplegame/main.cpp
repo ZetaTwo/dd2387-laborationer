@@ -1,8 +1,8 @@
-#include "game.h"
+#include "examplegame.h"
 
 using namespace lab3;
 
 int main() {
-  Game g;
+  ExampleGame g;
   g.run();
 }
