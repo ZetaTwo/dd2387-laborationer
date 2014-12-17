@@ -30,6 +30,10 @@ build/$1.o: $1.cpp $(call get-dependencies,$1)
 	$$(make-object)
 endef
 
+define expand-depencencies
+$(patsubst %,build/$2/%.o,$1)
+endef
+
 OBJECT_NAMES = $(patsubst %.cpp,%,$(wildcard *.cpp */*.cpp */*/*.cpp))
 
 $(foreach name,$(OBJECT_NAMES),$(eval $(call make-object-rule,$(name))))
@@ -37,9 +41,6 @@ $(foreach name,$(OBJECT_NAMES),$(eval $(call make-object-rule,$(name))))
 run: build/examplegame/main
 	./$<
 
-define expand-depencencies
-$(patsubst %,build/$2/%.o,$1)
-endef
 MAIN_DEPENDS_ON_EXAMPLE_OBJECTS=examplegame hazards
 MAIN_DEPENDS_ON_ENGINE_OBJECTS=actor entity inputer game map player renderer tile util world actors/actor_basic tiles/tile_basic
 build/examplegame/main: build/examplegame/main.o $(call expand-depencencies,$(MAIN_DEPENDS_ON_ENGINE_OBJECTS),gameengine) $(call expand-depencencies,$(MAIN_DEPENDS_ON_EXAMPLE_OBJECTS),examplegame)
