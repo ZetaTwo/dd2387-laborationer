@@ -20,11 +20,7 @@ namespace lab3 {
 
     out << endl << endl << endl << endl << endl;
 
-    out << "First map in world:" << endl;
-    out << game.get_world().get_maps().begin()->second << endl;
-
-    out << "Player map:" << endl;
-    out << player_map << endl;
+    render_map(out, game, player_map) << endl;
 
     out << endl;
 
@@ -33,5 +29,19 @@ namespace lab3 {
     }
 
   };
+
+  ostream& Renderer::render_map(ostream& os, const Game& game, const Map& map) {
+
+    size_t prev_row = 0;
+    for(const Coord& xy : map.range()) {
+      if(xy.y > prev_row) {
+        prev_row = xy.y;
+        os << endl;
+      }
+      os << ".";
+    }
+
+    return os;
+  }
 
 }
