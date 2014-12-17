@@ -24,12 +24,18 @@
     <ClCompile Include="..\..\examplegame\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\examplegame\player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\examplegame\examplegame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\examplegame\hazards.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\examplegame\player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
