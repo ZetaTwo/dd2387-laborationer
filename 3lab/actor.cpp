@@ -32,13 +32,13 @@ namespace lab3 {
 
   void Actor::interact(Actor& interactee) {}
 
-  void Actor::tick() {
+  void Actor::tick(Game& game) {
     if(!is_remote_controlled) {
-      do_tick();
+      do_tick(game);
     }
   }
 
-  void Actor::do_tick() {
+  void Actor::do_tick(Game& game) {
   }
 
 }

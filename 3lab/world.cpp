@@ -45,7 +45,7 @@ namespace lab3 {
 
   void World::tick(Game& game) {
     for(entities_t::value_type& entity_pair : entity_ps) {
-      entity_pair.second->tick();
+      entity_pair.second->tick(game);
     }
 
     for(maps_t::value_type& map_pair : maps) {

@@ -4,6 +4,8 @@
 
 namespace lab3 {
 
+  class Game;
+
   class Entity : public Identifiable {
     protected:
       WorldCoord position;
@@ -20,7 +22,7 @@ namespace lab3 {
       virtual bool move(direction_t direction, unsigned int distance = 1);
 
       virtual void activated_by(Entity& activator) = 0;
-      virtual void tick() = 0;
+      virtual void tick(Game& game) = 0;
   };
 
 }

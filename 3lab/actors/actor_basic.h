@@ -15,7 +15,7 @@ namespace lab3 {
     string name;
 
     protected:
-      virtual void do_tick() override;
+      virtual void do_tick(Game& game) override;
 
     public:
       Human(const WorldCoord& initial_position);

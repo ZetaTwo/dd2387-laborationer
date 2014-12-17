@@ -19,7 +19,7 @@ namespace lab3 {
       set<CarriedItem> inventory;
       bool is_remote_controlled = false;
 
-      virtual void do_tick();
+      virtual void do_tick(Game& game);
 
     public:
       Actor(const WorldCoord& initial_position) : Entity(initial_position) {};
@@ -34,7 +34,7 @@ namespace lab3 {
       virtual bool set_remote_controlled(bool is_remote_controlled);
       virtual void interact(Actor& interactee);
 
-      virtual void tick() override final;
+      virtual void tick(Game& game) override final;
   };
 
 }
