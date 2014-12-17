@@ -3,6 +3,6 @@
 using namespace lab3;
 
 int main() {
-  Game& g = *Game::get_instance();
+  Game g;
   g.run();
 }

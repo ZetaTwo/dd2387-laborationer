@@ -1,6 +1,6 @@
 #include<memory>
 
-#include "actors/basic.h"
+#include "actors/actor_basic.h"
 #include "game.h"
 #include "tiles/hazards.h"
 
@@ -9,14 +9,7 @@ using std::move;
 
 namespace lab3 {
 
-  shared_ptr<Game> Game::the_instance;
-
-  Game::Game() : Game(make_shared<Renderer>(), make_shared<Inputer>()) { }
-
-  Game::Game(shared_ptr<Renderer> renderer_p, shared_ptr<Inputer> inputer_p) :
-    renderer_p(renderer_p),
-    inputer_p(inputer_p) {
-  }
+  Game::Game() : renderer_p(make_shared<Renderer>()), inputer_p(make_shared<Inputer>()) {}
 
   void Game::initialize() {
     if(initialized) {
@@ -53,9 +46,9 @@ namespace lab3 {
     clear_messages();
 
     Entity& player = *get_player().get_actor();
-    world.move_entity(player, WorldCoord{world.get_maps().begin()->first, 3, 4});
+    world.move_entity(*this, player, WorldCoord{world.get_maps().begin()->first, 3, 4});
 
-    world.tick();
+    world.tick(*this);
 
     renderer_p->render(*this);
   }

@@ -1,7 +1,6 @@
 #pragma once
 #include <string>
 
-#include "actor.h"
 #include "entity.h"
 
 using std::string;

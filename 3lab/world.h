@@ -8,8 +8,13 @@
 
 using std::list;
 using std::map;
+using std::shared_ptr;
 
 namespace lab3 {
+
+  class Map;
+  class Entity;
+  class Identifiable;
 
   class World {
     public:
@@ -23,7 +28,7 @@ namespace lab3 {
     public:
       World();
 
-      void tick();
+      void tick(Game& game);
 
       inline const maps_t& get_maps() const { return maps; }
       const Map& get_map(Identifiable::identifier_t id) const;
@@ -32,7 +37,7 @@ namespace lab3 {
       inline const entities_t get_entities() const { return entity_ps; }
 
       bool add_entity(shared_ptr<Entity> entity_p);
-      bool move_entity(Entity& entity, const WorldCoord& destination);
+      bool move_entity(Game& game, Entity& entity, const WorldCoord& destination);
   };
 
 }

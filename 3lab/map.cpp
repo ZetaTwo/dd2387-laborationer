@@ -1,6 +1,7 @@
 #include <algorithm>
 
 #include "map.h"
+#include "tiles/tile_basic.h"
 
 using std::endl;
 using std::max_element;
@@ -73,9 +74,9 @@ namespace lab3 {
     return true;
   }
 
-  void Map::tick() {
+  void Map::tick(Game& game) {
     for(const Coord& coord : range()) {
-      get_tile(coord).tick();
+      get_tile(coord).tick(game);
     }
   }
 

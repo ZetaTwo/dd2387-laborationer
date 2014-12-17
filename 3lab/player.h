@@ -7,6 +7,8 @@ using std::shared_ptr;
 
 namespace lab3 {
 
+  class Actor;
+
   class Player : public ActorTicker {
       shared_ptr<Actor> actor;
 

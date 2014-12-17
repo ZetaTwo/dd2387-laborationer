@@ -1,7 +1,7 @@
 #include <random>
 #include <sstream>
 
-#include "basic.h"
+#include "actors/actor_basic.h"
 
 using std::random_device;
 using std::stringstream;

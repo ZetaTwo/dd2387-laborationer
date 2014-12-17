@@ -47,7 +47,7 @@ namespace lab3 {
       bool remove_tile_shift_north (const Coord& coord, shared_ptr<Tile> tile_p);
       bool remove_tile_shift_west  (const Coord& coord, shared_ptr<Tile> tile_p);
 
-      void tick();
+      void tick(Game& game);
 
       virtual inline string get_name() const override { return "CHANGEME"; }
       virtual inline string get_description() const override  { return "CHANGEME"; }

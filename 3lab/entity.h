@@ -1,11 +1,8 @@
 #pragma once
 
-#include "map.h"
 #include "util.h"
 
 namespace lab3 {
-
-  class Map;
 
   class Entity : public Identifiable {
     protected:

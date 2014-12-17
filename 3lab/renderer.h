@@ -3,21 +3,17 @@
 
 #include "game.h"
 
-using std::cout;
-
 namespace lab3 {
 
   class Game;
+  class Map;
 
   class Renderer {
-      ostream& out;
+    std::ostream& out;
+    std::ostream& render_map(std::ostream& os, const Game& game, const Map& map);
 
-      ostream& render_map(ostream& os, const Game& game, const Map& map);
-
-    public:
-      Renderer(ostream& out = cout);
-
-      void render(const Game& game);
+  public:
+    Renderer(std::ostream& out = std::cout);
+    void render(const Game& game);
   };
-
 }

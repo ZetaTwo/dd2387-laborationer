@@ -10,6 +10,7 @@
 
 using std::list;
 using std::string;
+using std::shared_ptr;
 
 namespace lab3 {
 
@@ -26,13 +27,15 @@ namespace lab3 {
 
       list<string> messages;
 
-      Game();
+      
       Game(shared_ptr<Renderer> renderer_p, shared_ptr<Inputer> inputer_p);
 
       void initialize();
       void tick();
 
     public:
+      Game();
+
       void run();
       void stop();
 
@@ -42,17 +45,6 @@ namespace lab3 {
       void push_message(const string& message);
       void clear_messages();
       inline const list<string>& get_messages() const { return messages; }
-
-    private:
-      static shared_ptr<Game> the_instance;
-
-    public:
-      static shared_ptr<Game> get_instance() {
-        if(the_instance.get() == nullptr) {
-          the_instance.reset(new Game());
-        }
-        return the_instance;
-      }
   };
 
 }

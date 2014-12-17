@@ -11,27 +11,27 @@ namespace lab3 {
 
   string FireTile::description = "Fire!";
 
-  void FireTile::enter(weak_ptr<Entity> enterer_p) {
-    Tile::enter(enterer_p);
+  void FireTile::enter(Game& game, weak_ptr<Entity> enterer_p) {
+    Tile::enter(game, enterer_p);
     if(!enterer_p.expired()) {
       ostringstream ss;
       ss << enterer_p.lock()->get_name() << " is on fire!";
-      Game::get_instance()->push_message(ss.str());
+      game.push_message(ss.str());
     }
   }
 
-  void FireTile::exit(Entity& exiter) {
-    Tile::exit(exiter);
+  void FireTile::exit(Game& game, Entity& exiter) {
+    Tile::exit(game, exiter);
     ostringstream ss;
     ss << exiter.get_name() << " isn't on fire anymore!";
-    Game::get_instance()->push_message(ss.str());
+    game.push_message(ss.str());
   }
 
-  void FireTile::stay(Entity& stayer) {
-    Tile::stay(stayer);
+  void FireTile::stay(Game& game, Entity& stayer) {
+    Tile::stay(game, stayer);
     ostringstream ss;
     ss << stayer.get_name() << " is still on fire!";
-    Game::get_instance()->push_message(ss.str());
+    game.push_message(ss.str());
   }
 
 }

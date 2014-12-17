@@ -80,7 +80,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\actor.cpp" />
-    <ClCompile Include="..\..\actors\basic.cpp" />
+    <ClCompile Include="..\..\actors\actor_basic.cpp" />
     <ClCompile Include="..\..\entity.cpp" />
     <ClCompile Include="..\..\game.cpp" />
     <ClCompile Include="..\..\item.cpp" />
@@ -89,13 +89,14 @@
     <ClCompile Include="..\..\player.cpp" />
     <ClCompile Include="..\..\renderer.cpp" />
     <ClCompile Include="..\..\tile.cpp" />
+    <ClCompile Include="..\..\tiles\tile_basic.cpp" />
     <ClCompile Include="..\..\tiles\hazards.cpp" />
     <ClCompile Include="..\..\util.cpp" />
     <ClCompile Include="..\..\world.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\actor.h" />
-    <ClInclude Include="..\..\actors\basic.h" />
+    <ClInclude Include="..\..\actors\actor_basic.h" />
     <ClInclude Include="..\..\entity.h" />
     <ClInclude Include="..\..\game.h" />
     <ClInclude Include="..\..\inputer.h" />
@@ -104,7 +105,7 @@
     <ClInclude Include="..\..\player.h" />
     <ClInclude Include="..\..\renderer.h" />
     <ClInclude Include="..\..\tile.h" />
-    <ClInclude Include="..\..\tiles\basic.h" />
+    <ClInclude Include="..\..\tiles\tile_basic.h" />
     <ClInclude Include="..\..\tiles\hazards.h" />
     <ClInclude Include="..\..\util.h" />
     <ClInclude Include="..\..\world.h" />

@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="actors">
-      <UniqueIdentifier>{f75768ab-22fc-4a5f-84c2-22fbfb5c277f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\actors">
       <UniqueIdentifier>{bf67f9ca-60e8-4879-9a06-2ac763ba26a3}</UniqueIdentifier>
     </Filter>
@@ -24,6 +21,9 @@
     </Filter>
     <Filter Include="Header Files\tiles">
       <UniqueIdentifier>{9b76a7c9-0cc1-46ee-b738-fc50d983a38d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\actors">
+      <UniqueIdentifier>{f75768ab-22fc-4a5f-84c2-22fbfb5c277f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -60,11 +60,14 @@
     <ClCompile Include="..\..\world.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\actors\basic.cpp">
-      <Filter>Source Files\actors</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\tiles\hazards.cpp">
       <Filter>Source Files\actors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\actors\actor_basic.cpp">
+      <Filter>Source Files\actors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\tiles\tile_basic.cpp">
+      <Filter>Source Files\tiles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -101,13 +104,13 @@
     <ClInclude Include="..\..\world.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\actors\basic.h">
-      <Filter>actors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\tiles\basic.h">
+    <ClInclude Include="..\..\tiles\hazards.h">
       <Filter>Header Files\tiles</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\tiles\hazards.h">
+    <ClInclude Include="..\..\actors\actor_basic.h">
+      <Filter>Header Files\actors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\tiles\tile_basic.h">
       <Filter>Header Files\tiles</Filter>
     </ClInclude>
   </ItemGroup>

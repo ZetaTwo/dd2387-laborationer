@@ -3,6 +3,7 @@
 #include <memory>
 #include <string>
 
+#include "game.h"
 #include "entity.h"
 
 using std::list;
@@ -12,18 +13,19 @@ using std::weak_ptr;
 
 namespace lab3 {
 
+  class Game;
   class Entity;
 
   class Tile {
     protected:
       list<weak_ptr<Entity>> entered_entities;
 
-      virtual void stay(Entity& stayer) = 0;
+      virtual void stay(Game& game, Entity& stayer) = 0;
 
     public:
-      virtual void enter(weak_ptr<Entity> enterer_p) = 0;
-      virtual void exit(Entity& exiter) = 0;
-      virtual void tick();
+      virtual void enter(Game& game, weak_ptr<Entity> enterer_p) = 0;
+      virtual void exit(Game& game, Entity& exiter) = 0;
+      virtual void tick(Game& game);
 
       virtual const string& get_description() const = 0;
   };
@@ -45,17 +47,7 @@ namespace lab3 {
         return the_instance.lock();
       }
   };
+
   template<class T>
   weak_ptr<T> SingletonTile<T>::the_instance;
-
-  class EmptyTile : public SingletonTile<EmptyTile> {
-      static string description;
-
-    public:
-      virtual inline void stay(Entity&) { }
-      virtual inline void enter(weak_ptr<Entity>) { }
-      virtual inline void exit(Entity&) { }
-
-      virtual inline const string& get_description() const { return description; }
-  };
 }

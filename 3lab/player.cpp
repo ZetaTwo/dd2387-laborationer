@@ -1,7 +1,7 @@
 #include <memory>
 
 #include "player.h"
-#include "actors/basic.h"
+#include "actors/actor_basic.h"
 
 using std::make_shared;
 
