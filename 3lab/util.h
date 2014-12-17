@@ -30,23 +30,17 @@ namespace lab3 {
       inline identifier_t get_id() const { return id; }
       inline bool operator==(const Identifiable& other) const { return id == other.id; }
       inline bool operator< (const Identifiable& other) const { return id < other.id; }
-  };
 
-  class Named {
-      string name;
-      string description;
-
-    public:
-      Named(string name) : name(name), description("") {}
-      Named(string name, string description) : name(name), description(description) {}
-      inline const string& get_name() const { return name; }
-      inline const string& get_description() const { return description; }
+      virtual string get_name() const = 0;
+      virtual string get_description() const = 0;
   };
 
   struct Coord {
     typedef size_t coord_t;
     coord_t x;
     coord_t y;
+
+    Coord(const coord_t& x, const coord_t& y) : x(x), y(y) {}
 
     inline bool operator==(const Coord& rhs) const { return x == rhs.x && y == rhs.y; }
     inline bool operator!=(const Coord& rhs) const { return !(*this == rhs); }

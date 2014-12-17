@@ -9,6 +9,9 @@ using std::string;
 namespace lab3 {
 
   class Human : public Actor {
+  private:
+    string name;
+
     protected:
       virtual void do_tick(Actor& tickee) const override;
 
@@ -25,6 +28,8 @@ namespace lab3 {
       static const vector<string> LAST_NAMES;
 
       static string new_name();
+      virtual inline string get_name() const override { return name; }
+      virtual inline string get_description() const override  { return ""; }
   };
 
 }

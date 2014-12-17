@@ -7,7 +7,7 @@ namespace lab3 {
 
   class Map;
 
-  class Entity : public Identifiable, public virtual Named {
+  class Entity : public Identifiable {
     protected:
       WorldCoord position;
 

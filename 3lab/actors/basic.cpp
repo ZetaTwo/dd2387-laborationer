@@ -9,9 +9,9 @@ using std::uniform_int_distribution;
 
 namespace lab3 {
 
-  Human::Human(const WorldCoord& initial_position) : Named(new_name()), Actor(initial_position) {}
+  Human::Human(const WorldCoord& initial_position) : Actor(initial_position) {}
 
-  Human::Human(const WorldCoord& initial_position, const string& name) : Named(name), Actor(initial_position) {}
+  Human::Human(const WorldCoord& initial_position, const string& name) : Actor(initial_position), name(name) {}
 
   void Human::do_tick(Actor& tickee) const {
   }

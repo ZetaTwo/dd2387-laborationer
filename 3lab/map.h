@@ -48,6 +48,9 @@ namespace lab3 {
       bool remove_tile_shift_west  (const Coord& coord, shared_ptr<Tile> tile_p);
 
       void tick();
+
+      virtual inline string get_name() const override { return "CHANGEME"; }
+      virtual inline string get_description() const override  { return "CHANGEME"; }
   };
 
   ostream& operator<<(ostream& os, const Map& map);

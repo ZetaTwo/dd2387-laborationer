@@ -9,7 +9,7 @@ namespace lab3 {
   }
 
   WorldCoord::WorldCoord(Identifiable::identifier_t map_id, coord_t x, coord_t y) :
-    Coord{x, y},
+    Coord{ x, y },
     map_id(map_id) {}
 
   WorldCoord& WorldCoord::operator=(const WorldCoord& other) {

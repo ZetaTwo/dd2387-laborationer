@@ -27,7 +27,8 @@ namespace lab3 {
       virtual void do_tick(Actor& tickee) const = 0;
 
     public:
-      using Entity::Entity;
+      //using Entity::Entity;
+      Actor(const WorldCoord& initial_position) : Entity(initial_position) {};
 
       virtual bool move(direction_t direction, unsigned int distance = 1) override;
 

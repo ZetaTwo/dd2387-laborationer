@@ -15,7 +15,7 @@ namespace lab3 {
       virtual bool pick_up(Actor& taker) = 0;
   };
 
-  class CarriedItem : public Identifiable, public virtual Named {
+  class CarriedItem : public Identifiable {
     protected:
       int value;
       int volume;
@@ -26,6 +26,9 @@ namespace lab3 {
       virtual inline int getVolume() const { return volume; }
       virtual inline int getWeight() const { return weight; }
       virtual inline void activate(Actor& activator) {}
+
+      virtual inline string get_name() const override { return "CHANGEME"; }
+      virtual inline string get_description() const override  { return "CHANGEME"; }
   };
 
 }
