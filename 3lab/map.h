@@ -6,13 +6,10 @@
 #include "tile.h"
 #include "util.h"
 
-using std::ostream;
 using std::shared_ptr;
 using std::vector;
 
 namespace lab3 {
-
-  class Tile;
 
   class Map : public virtual Identifiable {
     protected:
@@ -53,6 +50,6 @@ namespace lab3 {
       virtual inline string get_description() const override  { return "CHANGEME"; }
   };
 
-  ostream& operator<<(ostream& os, const Map& map);
+  std::ostream& operator<<(std::ostream& os, const Map& map);
 
 }

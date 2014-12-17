@@ -3,7 +3,6 @@
 #include <vector>
 
 #include "actor.h"
-#include "entity.h"
 
 using std::string;
 using std::vector;

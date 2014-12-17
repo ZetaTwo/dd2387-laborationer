@@ -3,18 +3,16 @@
 #include <list>
 #include <string>
 
-#include "inputer.h"
 #include "player.h"
-#include "renderer.h"
 #include "world.h"
+#include "inputer.h"
+#include "renderer.h"
 
 using std::list;
 using std::string;
 using std::unique_ptr;
 
 namespace lab3 {
-
-  class Renderer;
 
   class Game {
       bool initialized = false;

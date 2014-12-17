@@ -1,8 +1,6 @@
 #pragma once
 #include <iostream>
 
-#include "game.h"
-
 namespace lab3 {
 
   class Game;

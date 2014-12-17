@@ -3,7 +3,6 @@
 #include <memory>
 #include <string>
 
-#include "game.h"
 #include "entity.h"
 
 using std::list;
@@ -14,7 +13,6 @@ using std::weak_ptr;
 namespace lab3 {
 
   class Game;
-  class Entity;
 
   class Tile {
     protected:

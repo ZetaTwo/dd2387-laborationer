@@ -6,9 +6,6 @@
 using std::shared_ptr;
 
 namespace lab3 {
-
-  class Actor;
-
   class Player {
       shared_ptr<Actor> actor;
 
@@ -19,5 +16,4 @@ namespace lab3 {
 
       inline shared_ptr<Actor> get_actor() const { return actor; }
   };
-
 }

@@ -2,6 +2,7 @@
 #include <iostream>
 #include <list>
 
+#include "game.h"
 #include "renderer.h"
 #include "world.h"
 

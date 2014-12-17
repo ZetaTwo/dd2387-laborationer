@@ -6,8 +6,6 @@
 #include "map.h"
 #include "util.h"
 
-using std::list;
-using std::map;
 using std::shared_ptr;
 
 namespace lab3 {
@@ -18,8 +16,8 @@ namespace lab3 {
 
   class World {
     public:
-      typedef map<Identifiable::identifier_t, Map> maps_t;
-      typedef map<Identifiable::identifier_t, shared_ptr<Entity>> entities_t;
+      typedef std::map<Identifiable::identifier_t, Map> maps_t;
+      typedef std::map<Identifiable::identifier_t, shared_ptr<Entity>> entities_t;
 
     private:
       maps_t maps;
