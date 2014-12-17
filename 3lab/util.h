@@ -61,6 +61,7 @@ namespace lab3 {
     inline bool operator==(const WorldCoord& rhs) const { return map_id == rhs.map_id && x == rhs.x && y == rhs.y; }
     inline bool operator!=(const WorldCoord& rhs) const { return !(*this == rhs); }
   };
+  ostream& operator<<(ostream& os, const WorldCoord& coord);
 
   struct CoordRectangle {
       Coord top_left;

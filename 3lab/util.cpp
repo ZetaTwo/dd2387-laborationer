@@ -19,6 +19,10 @@ namespace lab3 {
     return *this;
   }
 
+  ostream& operator<<(ostream& os, const WorldCoord& coord) {
+    return os << "(" << coord.map_id << ": " << coord.x << ", " << coord.y << ")";
+  }
+
   CoordRectangle::const_iterator CoordRectangle::begin() const {
     return const_iterator{*this};
   }
