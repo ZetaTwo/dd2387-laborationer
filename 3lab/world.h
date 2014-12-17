@@ -12,10 +12,13 @@ using std::map;
 namespace lab3 {
 
   class World {
-    typedef map<Identifiable::identifier_t, Map> maps_t;
-    typedef map<Identifiable::identifier_t, shared_ptr<Entity>> entities_t;
-    maps_t maps;
-    entities_t entity_ps;
+    public:
+      typedef map<Identifiable::identifier_t, Map> maps_t;
+      typedef map<Identifiable::identifier_t, shared_ptr<Entity>> entities_t;
+
+    private:
+      maps_t maps;
+      entities_t entity_ps;
 
     public:
       World();
