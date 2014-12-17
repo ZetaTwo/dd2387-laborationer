@@ -15,6 +15,7 @@
     <ClCompile Include="..\..\gameengine\actors\actor_basic.cpp" />
     <ClCompile Include="..\..\gameengine\entity.cpp" />
     <ClCompile Include="..\..\gameengine\game.cpp" />
+    <ClCompile Include="..\..\gameengine\inputer.cpp" />
     <ClCompile Include="..\..\gameengine\item.cpp" />
     <ClCompile Include="..\..\gameengine\map.cpp" />
     <ClCompile Include="..\..\gameengine\player.cpp" />
