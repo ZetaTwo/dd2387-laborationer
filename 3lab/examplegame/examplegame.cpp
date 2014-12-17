@@ -25,8 +25,8 @@ namespace lab3 {
     shared_ptr<PhysicalEntity> player = make_shared<Player>(WorldCoord{ m.get_id(), 0, 0 });
     camera.set_followee(player);
  
-    world.add_entity(player);
-    world.add_entity(make_shared<Human>(WorldCoord{ m.get_id(), 0, 0 }));
-    world.add_entity(make_shared<Human>(WorldCoord{ m.get_id(), 1, 1 }));
+    world.add_physical(player);
+    world.add_physical(make_shared<Human>(WorldCoord{ m.get_id(), 0, 0 }));
+    world.add_physical(make_shared<Human>(WorldCoord{ m.get_id(), 1, 1 }));
   }
 }
