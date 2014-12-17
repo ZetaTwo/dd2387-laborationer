@@ -27,6 +27,7 @@ namespace lab3 {
       Map();
       Map(tile_ptr_t default_tile);
       Map(const Map& original);
+      Map(Map&& original);
       Map(rows_t rows);
       Map(rows_t rows, tile_ptr_t default_tile);
       Map& operator=(const Map& other);

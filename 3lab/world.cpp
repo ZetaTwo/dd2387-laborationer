@@ -5,6 +5,7 @@
 #include "world.h"
 
 using std::make_shared;
+using std::move;
 using std::pair;
 
 namespace lab3 {
@@ -17,11 +18,7 @@ namespace lab3 {
   }
 
   bool World::add_map(Map&& map) {
-    if(maps.count(map.get_id()) > 0) {
-      return false;
-    }
-    maps[map.get_id()] = map;
-    return true;
+    return maps.emplace(pair<Identifiable::identifier_t, Map>(map.get_id(), move(map))).second;
   }
 
   bool World::add_entity(shared_ptr<Entity> entity_p) {

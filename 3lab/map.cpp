@@ -4,6 +4,7 @@
 
 using std::endl;
 using std::max_element;
+using std::move;
 
 namespace lab3 {
 
@@ -20,6 +21,10 @@ namespace lab3 {
   Map::Map(rows_t rows, tile_ptr_t default_tile_p) :
     default_tile_p(default_tile_p),
     rows(rows) { }
+
+  Map::Map(Map&& original) : Identifiable(move(original)),
+    default_tile_p(move(original.default_tile_p)),
+    rows(move(original.rows)) { }
 
   Map& Map::operator=(const Map& other) {
     default_tile_p = other.default_tile_p;
