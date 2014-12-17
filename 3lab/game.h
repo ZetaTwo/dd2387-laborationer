@@ -16,6 +16,7 @@ namespace lab3 {
   class Renderer;
 
   class Game {
+      bool initialized = false;
       bool running = false;
 
       World world;
@@ -28,6 +29,7 @@ namespace lab3 {
       Game();
       Game(shared_ptr<Renderer> renderer_p, shared_ptr<Inputer> inputer_p);
 
+      void initialize();
       void tick();
 
     public:

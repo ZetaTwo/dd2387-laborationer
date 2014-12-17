@@ -2,8 +2,10 @@
 
 #include "actors/basic.h"
 #include "game.h"
+#include "tiles/hazards.h"
 
 using std::make_shared;
+using std::move;
 
 namespace lab3 {
 
@@ -12,11 +14,32 @@ namespace lab3 {
   Game::Game() : Game(make_shared<Renderer>(), make_shared<Inputer>()) { }
 
   Game::Game(shared_ptr<Renderer> renderer_p, shared_ptr<Inputer> inputer_p) :
-    player(Player{make_shared<Human>(WorldCoord{world.get_maps().begin()->first, 0, 0}, "Ze Hero")}),
     renderer_p(renderer_p),
     inputer_p(inputer_p) {
-      world.add_entity(player.get_actor());
+  }
+
+  void Game::initialize() {
+    if(initialized) {
+      throw std::runtime_error("Game has already been initialized!");
     }
+
+    initialized = true;
+
+    Map m;
+
+    m.set_tile(Coord{3, 4}, std::make_shared<FireTile>());
+    m.set_tile(Coord{2, 1}, std::make_shared<FireTile>());
+    m.set_tile(Coord{5, 3}, std::make_shared<FireTile>());
+
+    world.add_map(move(m));
+
+    shared_ptr<Actor> player_actor_p = make_shared<Human>(WorldCoord{m.get_id(), 0, 0}, "Ze Hero");
+    player.possess(player_actor_p);
+
+    world.add_entity(player_actor_p);
+    world.add_entity(make_shared<Human>(WorldCoord{m.get_id(), 0, 0}));
+    world.add_entity(make_shared<Human>(WorldCoord{m.get_id(), 1, 1}));
+  }
 
   void Game::push_message(const string& message) {
     messages.push_back(message);
@@ -38,6 +61,7 @@ namespace lab3 {
   }
 
   void Game::run() {
+    initialize();
     running = true;
 
     while(running) {

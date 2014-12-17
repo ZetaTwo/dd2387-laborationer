@@ -10,23 +10,18 @@ using std::pair;
 namespace lab3 {
 
   World::World() {
-    Map m;
-
-    m.set_tile(Coord{3, 4}, std::make_shared<FireTile>());
-    m.set_tile(Coord{2, 1}, std::make_shared<FireTile>());
-    m.set_tile(Coord{5, 3}, std::make_shared<FireTile>());
-
-    maps[m.get_id()] = m;
-
-    shared_ptr<Human> a = std::make_shared<Human>(WorldCoord{m.get_id(), 0, 0});
-    shared_ptr<Human> b = std::make_shared<Human>(WorldCoord{m.get_id(), 1, 1});
-
-    entity_ps[a->get_id()] = a;
-    entity_ps[b->get_id()] = b;
   }
 
   const Map& World::get_map(Identifiable::identifier_t id) const {
     return maps.at(id);
+  }
+
+  bool World::add_map(Map&& map) {
+    if(maps.count(map.get_id()) > 0) {
+      return false;
+    }
+    maps[map.get_id()] = map;
+    return true;
   }
 
   bool World::add_entity(shared_ptr<Entity> entity_p) {
