@@ -50,6 +50,8 @@ namespace lab3 {
   void Game::tick() {
     clear_messages();
 
+    inputer_p->evaluate_commands(*this);
+
     Entity& player = *get_player().get_actor();
     world.move_entity(*this, player, WorldCoord{world.get_maps().begin()->first, 3, 4});
 
@@ -63,16 +65,17 @@ namespace lab3 {
     running = true;
 
     while(running) {
+      get_input();
       tick();
-      tick();
-      tick();
-      tick();
-      stop();
     }
   }
 
   void Game::stop() {
     running = false;
+  }
+
+  void Game::get_input() {
+    inputer_p->get_input(*this);
   }
 
   void Game::render() const {

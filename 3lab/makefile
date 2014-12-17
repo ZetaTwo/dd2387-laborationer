@@ -37,6 +37,9 @@ $(foreach name,$(OBJECT_NAMES),$(eval $(call make-object-rule,$(name))))
 run: build/main
 	./$<
 
-MAIN_DEPENDS_ON_OBJECTS=actor entity game map player renderer tile util world actors/actor_basic tiles/tile_basic tiles/hazards
+MAIN_DEPENDS_ON_OBJECTS=actor entity inputer game map player renderer tile util world actors/actor_basic tiles/tile_basic tiles/hazards
 build/main: build/main.o $(patsubst %,build/%.o,$(MAIN_DEPENDS_ON_OBJECTS))
+	$(make-executable)
+
+build/inputer_test: inputer_test.cpp build/inputer.o
 	$(make-executable)

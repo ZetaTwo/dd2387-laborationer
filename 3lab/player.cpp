@@ -16,7 +16,7 @@ namespace lab3 {
     return true;
   }
 
-  void Player::do_tick(Actor& tickee) const {
+  void Player::tick(Inputer& inputer) const {
   }
 
 }

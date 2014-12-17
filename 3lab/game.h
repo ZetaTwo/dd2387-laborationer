@@ -35,6 +35,7 @@ namespace lab3 {
 
       void run();
       void stop();
+      void get_input();
       void render() const;
 
       inline const World& get_world() const { return world; }
@@ -43,6 +44,8 @@ namespace lab3 {
       void push_message(const string& message);
       void clear_messages();
       inline const list<string>& get_messages() const { return messages; }
+
+      inline Inputer& get_inputer() const { return *inputer_p; }
   };
 
 }
