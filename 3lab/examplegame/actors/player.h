@@ -1,6 +1,7 @@
 #pragma once
 
-#include "human.h"
+#include "actors/human.h"
+
 namespace lab3 {
 
   class Player : public Human {
