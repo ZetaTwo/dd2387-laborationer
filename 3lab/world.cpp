@@ -18,15 +18,11 @@ namespace lab3 {
   }
 
   bool World::add_map(Map&& map) {
-    return maps.emplace(pair<Identifiable::identifier_t, Map>(map.get_id(), move(map))).second;
+    return maps.emplace(maps_t::value_type{map.get_id(), move(map)}).second;
   }
 
   bool World::add_entity(shared_ptr<Entity> entity_p) {
-    if(entity_ps.count(entity_p->get_id()) > 0) {
-      return false;
-    }
-    entity_ps[entity_p->get_id()] = entity_p;
-    return true;
+    return entity_ps.emplace(entities_t::value_type{entity_p->get_id(), entity_p}).second;
   }
 
   bool World::move_entity(Entity& entity, const WorldCoord& destination) {
@@ -46,11 +42,11 @@ namespace lab3 {
   }
 
   void World::tick() {
-    for(pair<const Identifiable::identifier_t, shared_ptr<Entity>>& entity_pair : entity_ps) {
+    for(entities_t::value_type& entity_pair : entity_ps) {
       entity_pair.second->tick();
     }
 
-    for(pair<const Identifiable::identifier_t, Map>& map_pair : maps) {
+    for(maps_t::value_type& map_pair : maps) {
       map_pair.second.tick();
     }
   }
