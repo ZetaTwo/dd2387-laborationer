@@ -1,17 +1,20 @@
 #pragma once
 #include <iostream>
 
+using std::cout;
+using std::ostream;
+
 namespace lab3 {
 
   class Game;
   class Map;
 
   class Renderer {
-    std::ostream& out;
-    std::ostream& render_map(std::ostream& os, const Game& game, const Map& map);
+    ostream& out;
+    ostream& render_map(ostream& os, const Game& game, const Map& map);
 
   public:
-    Renderer(std::ostream& out = std::cout);
+    Renderer(ostream& out = cout);
     void render(const Game& game);
   };
 }
