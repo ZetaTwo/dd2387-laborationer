@@ -20,12 +20,15 @@ namespace lab3 {
     protected:
       list<weak_ptr<Entity>> entered_entities;
 
-      virtual void stay(Game& game, Entity& stayer) = 0;
+      void stay(Game& game, Entity& stayer);
+      virtual void do_stay(Game& game, Entity& stayer) = 0;
+      virtual void do_enter(Game& game, weak_ptr<Entity> enterer_p) = 0;
+      virtual void do_exit(Game& game, Entity& exiter) = 0;
 
     public:
-      virtual void enter(Game& game, weak_ptr<Entity> enterer_p) = 0;
-      virtual void exit(Game& game, Entity& exiter) = 0;
-      virtual void tick(Game& game);
+      void enter(Game& game, weak_ptr<Entity> enterer_p);
+      void exit(Game& game, Entity& exiter);
+      void tick(Game& game);
 
       virtual const string& get_description() const = 0;
   };
