@@ -16,8 +16,8 @@ namespace lab3 {
 
     private:
       const identifier_t id;
-      Identifiable(const Identifiable&);
-      Identifiable& operator=(const Identifiable&);
+      Identifiable(const Identifiable&) = delete;
+      Identifiable& operator=(const Identifiable&) = delete;
 
       static identifier_t next_id;
       inline static identifier_t get_new_identifier() { return next_id++; }
