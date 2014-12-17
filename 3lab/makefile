@@ -6,11 +6,11 @@ default: run
 clean:
 	rm -rf build
 
-INCLUDE_PREREQUISITE_HEADER_DIRECTORIES=$(foreach file,$(filter %.h %.hpp,$^),-I $(dir $(file)))
+INCLUDES=-I gameengine -I examplegame
 
 define compile
 	mkdir -p $(dir $@)
-	$(CXX) $(CPPFLAGS) $(INCLUDE_PREREQUISITE_HEADER_DIRECTORIES) -o $@ $< $(filter-out $<,$(filter %.o,$^))
+	$(CXX) $(CPPFLAGS) $(INCLUDES) -o $@ $< $(filter-out $<,$(filter %.o,$^))
 endef
 
 define make-executable
@@ -22,7 +22,7 @@ define make-object
 endef
 
 define get-dependencies
-$(wildcard $1.h) $(filter-out $(notdir $1.h),$(shell grep -E '^\#include ".*\.h"' $1.cpp $1.h 2>/dev/null | grep -oE '[^"]+\.h' | sort | uniq ))
+$(wildcard $1.h) $(filter-out $(notdir $1.h),$(shell grep -E '^\#include ".*\.h"' gameengine/$1.cpp gameengine/$1.h 2>/dev/null | grep -oE '[^"]+\.h' | sort | uniq ))
 endef
 
 define make-object-rule
@@ -30,15 +30,19 @@ build/$1.o: $1.cpp $(call get-dependencies,$1)
 	$$(make-object)
 endef
 
-OBJECT_NAMES = $(patsubst %.cpp,%,$(wildcard *.cpp */*.cpp))
+OBJECT_NAMES = $(patsubst %.cpp,%,$(wildcard *.cpp */*.cpp */*/*.cpp))
 
 $(foreach name,$(OBJECT_NAMES),$(eval $(call make-object-rule,$(name))))
 
-run: build/main
+run: build/examplegame/main
 	./$<
 
-MAIN_DEPENDS_ON_OBJECTS=actor entity inputer game map player renderer tile util world actors/actor_basic tiles/tile_basic tiles/hazards
-build/main: build/main.o $(patsubst %,build/%.o,$(MAIN_DEPENDS_ON_OBJECTS))
+define expand-depencencies
+$(patsubst %,build/$2/%.o,$1)
+endef
+MAIN_DEPENDS_ON_EXAMPLE_OBJECTS=examplegame hazards
+MAIN_DEPENDS_ON_ENGINE_OBJECTS=actor entity inputer game map player renderer tile util world actors/actor_basic tiles/tile_basic
+build/examplegame/main: build/examplegame/main.o $(call expand-depencencies,$(MAIN_DEPENDS_ON_ENGINE_OBJECTS),gameengine) $(call expand-depencencies,$(MAIN_DEPENDS_ON_EXAMPLE_OBJECTS),examplegame)
 	$(make-executable)
 
 build/inputer_test: inputer_test.cpp build/inputer.o
