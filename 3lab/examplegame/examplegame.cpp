@@ -21,7 +21,7 @@ namespace lab3 {
 
     world.add_map(std::move(m));
 
-    shared_ptr<PhysicalEntity> player = make_shared<Human>(WorldCoord{ m.get_id(), 0, 0 }, "Ze Hero");
+    shared_ptr<PhysicalEntity> player = make_shared<Player>(WorldCoord{ m.get_id(), 0, 0 });
     camera.set_followee(player);
  
     world.add_entity(player);
