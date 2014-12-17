@@ -29,7 +29,9 @@ namespace lab3 {
     this->do_exit(game, exiter);
   }
 
-  void Tile::stay(Game& game, Entity&) {
+  void Tile::stay(Game& game, Entity& stayer) {
+    //Call stay hook
+    this->do_stay(game, stayer);
   }
 
   
