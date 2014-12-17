@@ -55,7 +55,7 @@ namespace lab3 {
 
     world.tick(*this);
 
-    renderer_p->render(*this);
+    render();
   }
 
   void Game::run() {
@@ -73,6 +73,10 @@ namespace lab3 {
 
   void Game::stop() {
     running = false;
+  }
+
+  void Game::render() const {
+    renderer_p->render(*this);
   }
 
 }

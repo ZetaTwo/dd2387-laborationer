@@ -37,6 +37,7 @@ namespace lab3 {
 
       void run();
       void stop();
+      void render() const;
 
       inline const World& get_world() const { return world; }
       inline const Player& get_player() const { return player; }
