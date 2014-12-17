@@ -29,7 +29,6 @@ namespace lab3 {
     public:
       inline identifier_t get_id() const { return id; }
       inline bool operator==(const Identifiable& other) const { return id == other.id; }
-      inline bool operator< (const Identifiable& other) const { return id < other.id; }
 
       virtual string get_name() const = 0;
       virtual string get_description() const = 0;
