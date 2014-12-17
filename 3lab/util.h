@@ -22,10 +22,11 @@ namespace lab3 {
       static identifier_t next_id;
       inline static identifier_t get_new_identifier() { return next_id++; }
 
-    public:
+    protected:
       Identifiable() : id(get_new_identifier()) {}
       Identifiable(Identifiable&& other) : id(other.id) {}
 
+    public:
       inline identifier_t get_id() const { return id; }
       inline bool operator==(const Identifiable& other) const { return id == other.id; }
       inline bool operator< (const Identifiable& other) const { return id < other.id; }
