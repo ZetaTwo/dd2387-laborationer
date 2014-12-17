@@ -65,8 +65,4 @@ namespace lab3 {
     return name.str();
   }
 
-  void Human::input(Game &game) {
-    last_command = game.get_input();
-  }
-
 }

@@ -1,6 +1,7 @@
 #include "examplegame.h"
 #include "hazards.h"
 #include "actors/human.h"
+#include "actors/player.h"
 
 using std::make_shared;
 

@@ -13,7 +13,6 @@ namespace lab3 {
   class Human : public Actor {
   private:
     string name;
-    Inputer::command_t last_command;
 
     protected:
       virtual void do_tick(Game& game) override;
