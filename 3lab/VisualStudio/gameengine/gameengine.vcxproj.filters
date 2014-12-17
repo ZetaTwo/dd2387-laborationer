@@ -27,81 +27,81 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\actor.cpp">
+    <ClCompile Include="..\..\gameengine\actor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\entity.cpp">
+    <ClCompile Include="..\..\gameengine\entity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\game.cpp">
+    <ClCompile Include="..\..\gameengine\game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\item.cpp">
+    <ClCompile Include="..\..\gameengine\item.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\map.cpp">
+    <ClCompile Include="..\..\gameengine\map.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\player.cpp">
+    <ClCompile Include="..\..\gameengine\player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\renderer.cpp">
+    <ClCompile Include="..\..\gameengine\renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\tile.cpp">
+    <ClCompile Include="..\..\gameengine\tile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\util.cpp">
+    <ClCompile Include="..\..\gameengine\util.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\world.cpp">
+    <ClCompile Include="..\..\gameengine\world.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\actors\actor_basic.cpp">
+    <ClCompile Include="..\..\gameengine\actors\actor_basic.cpp">
       <Filter>Source Files\actors</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\tiles\tile_basic.cpp">
+    <ClCompile Include="..\..\gameengine\tiles\tile_basic.cpp">
       <Filter>Source Files\tiles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\actor.h">
+    <ClInclude Include="..\..\gameengine\actor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\entity.h">
+    <ClInclude Include="..\..\gameengine\entity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\game.h">
+    <ClInclude Include="..\..\gameengine\game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\inputer.h">
+    <ClInclude Include="..\..\gameengine\inputer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\item.h">
+    <ClInclude Include="..\..\gameengine\item.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\map.h">
+    <ClInclude Include="..\..\gameengine\map.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\player.h">
+    <ClInclude Include="..\..\gameengine\player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\renderer.h">
+    <ClInclude Include="..\..\gameengine\renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\tile.h">
+    <ClInclude Include="..\..\gameengine\tile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\util.h">
+    <ClInclude Include="..\..\gameengine\util.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\world.h">
+    <ClInclude Include="..\..\gameengine\world.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\actors\actor_basic.h">
+    <ClInclude Include="..\..\gameengine\actors\actor_basic.h">
       <Filter>Header Files\actors</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\tiles\tile_basic.h">
+    <ClInclude Include="..\..\gameengine\tiles\tile_basic.h">
       <Filter>Header Files\tiles</Filter>
     </ClInclude>
   </ItemGroup>

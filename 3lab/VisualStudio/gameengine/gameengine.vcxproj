@@ -10,6 +10,35 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\gameengine\actor.cpp" />
+    <ClCompile Include="..\..\gameengine\actors\actor_basic.cpp" />
+    <ClCompile Include="..\..\gameengine\entity.cpp" />
+    <ClCompile Include="..\..\gameengine\game.cpp" />
+    <ClCompile Include="..\..\gameengine\item.cpp" />
+    <ClCompile Include="..\..\gameengine\map.cpp" />
+    <ClCompile Include="..\..\gameengine\player.cpp" />
+    <ClCompile Include="..\..\gameengine\renderer.cpp" />
+    <ClCompile Include="..\..\gameengine\tile.cpp" />
+    <ClCompile Include="..\..\gameengine\tiles\tile_basic.cpp" />
+    <ClCompile Include="..\..\gameengine\util.cpp" />
+    <ClCompile Include="..\..\gameengine\world.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\gameengine\actor.h" />
+    <ClInclude Include="..\..\gameengine\actors\actor_basic.h" />
+    <ClInclude Include="..\..\gameengine\entity.h" />
+    <ClInclude Include="..\..\gameengine\game.h" />
+    <ClInclude Include="..\..\gameengine\inputer.h" />
+    <ClInclude Include="..\..\gameengine\item.h" />
+    <ClInclude Include="..\..\gameengine\map.h" />
+    <ClInclude Include="..\..\gameengine\player.h" />
+    <ClInclude Include="..\..\gameengine\renderer.h" />
+    <ClInclude Include="..\..\gameengine\tile.h" />
+    <ClInclude Include="..\..\gameengine\tiles\tile_basic.h" />
+    <ClInclude Include="..\..\gameengine\util.h" />
+    <ClInclude Include="..\..\gameengine\world.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{E96ACCAB-D819-4BBE-BC9F-F16E79603E3D}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -42,7 +71,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>..\..;$(IncludePath)</IncludePath>
+    <IncludePath>..\..\gameengine;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -79,35 +108,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\actor.cpp" />
-    <ClCompile Include="..\..\actors\actor_basic.cpp" />
-    <ClCompile Include="..\..\entity.cpp" />
-    <ClCompile Include="..\..\game.cpp" />
-    <ClCompile Include="..\..\item.cpp" />
-    <ClCompile Include="..\..\map.cpp" />
-    <ClCompile Include="..\..\player.cpp" />
-    <ClCompile Include="..\..\renderer.cpp" />
-    <ClCompile Include="..\..\tile.cpp" />
-    <ClCompile Include="..\..\tiles\tile_basic.cpp" />
-    <ClCompile Include="..\..\util.cpp" />
-    <ClCompile Include="..\..\world.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\actor.h" />
-    <ClInclude Include="..\..\actors\actor_basic.h" />
-    <ClInclude Include="..\..\entity.h" />
-    <ClInclude Include="..\..\game.h" />
-    <ClInclude Include="..\..\inputer.h" />
-    <ClInclude Include="..\..\item.h" />
-    <ClInclude Include="..\..\map.h" />
-    <ClInclude Include="..\..\player.h" />
-    <ClInclude Include="..\..\renderer.h" />
-    <ClInclude Include="..\..\tile.h" />
-    <ClInclude Include="..\..\tiles\tile_basic.h" />
-    <ClInclude Include="..\..\util.h" />
-    <ClInclude Include="..\..\world.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
