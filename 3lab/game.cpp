@@ -9,7 +9,12 @@ using std::move;
 
 namespace lab3 {
 
-  Game::Game() : renderer_p(make_shared<Renderer>()), inputer_p(make_shared<Inputer>()) {}
+  Game::Game() : Game(new Renderer(), new Inputer()) { }
+
+  Game::Game(Renderer* renderer_p, Inputer* inputer_p) :
+    renderer_p(renderer_p),
+    inputer_p(inputer_p) {
+  }
 
   void Game::initialize() {
     if(initialized) {

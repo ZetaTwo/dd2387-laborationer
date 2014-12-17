@@ -10,7 +10,7 @@
 
 using std::list;
 using std::string;
-using std::shared_ptr;
+using std::unique_ptr;
 
 namespace lab3 {
 
@@ -22,13 +22,12 @@ namespace lab3 {
 
       World world;
       Player player;
-      shared_ptr<Renderer> renderer_p;
-      shared_ptr<Inputer> inputer_p;
+      unique_ptr<Renderer> renderer_p;
+      unique_ptr<Inputer> inputer_p;
 
       list<string> messages;
 
-      
-      Game(shared_ptr<Renderer> renderer_p, shared_ptr<Inputer> inputer_p);
+      Game(Renderer* renderer_p, Inputer* inputer_p);
 
       void initialize();
       void tick();
