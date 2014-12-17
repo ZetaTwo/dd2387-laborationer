@@ -12,7 +12,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\gameengine\actor.cpp" />
-    <ClCompile Include="..\..\gameengine\actors\actor_basic.cpp" />
     <ClCompile Include="..\..\gameengine\camera.cpp" />
     <ClCompile Include="..\..\gameengine\entity.cpp" />
     <ClCompile Include="..\..\gameengine\game.cpp" />
@@ -28,7 +27,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\gameengine\actor.h" />
-    <ClInclude Include="..\..\gameengine\actors\actor_basic.h" />
     <ClInclude Include="..\..\gameengine\camera.h" />
     <ClInclude Include="..\..\gameengine\entity.h" />
     <ClInclude Include="..\..\gameengine\game.h" />

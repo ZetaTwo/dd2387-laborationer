@@ -54,9 +54,6 @@
     <ClCompile Include="..\..\gameengine\world.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\gameengine\actors\actor_basic.cpp">
-      <Filter>Source Files\actors</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\gameengine\tiles\tile_basic.cpp">
       <Filter>Source Files\tiles</Filter>
     </ClCompile>
@@ -100,9 +97,6 @@
     </ClInclude>
     <ClInclude Include="..\..\gameengine\world.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gameengine\actors\actor_basic.h">
-      <Filter>Header Files\actors</Filter>
     </ClInclude>
     <ClInclude Include="..\..\gameengine\tiles\tile_basic.h">
       <Filter>Header Files\tiles</Filter>

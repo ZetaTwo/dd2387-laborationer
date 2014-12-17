@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\actors">
+      <UniqueIdentifier>{033a1d2a-0196-43ca-9276-0783a785241d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\actors">
+      <UniqueIdentifier>{d86bd9ce-a700-4599-9aef-f3315bf8f2f8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\examplegame\examplegame.cpp">
@@ -24,8 +30,11 @@
     <ClCompile Include="..\..\examplegame\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\examplegame\player.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\..\examplegame\actors\player.cpp">
+      <Filter>Source Files\actors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\examplegame\actors\human.cpp">
+      <Filter>Source Files\actors</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -35,8 +44,11 @@
     <ClInclude Include="..\..\examplegame\hazards.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\examplegame\player.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\..\examplegame\actors\human.h">
+      <Filter>Header Files\actors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\examplegame\actors\player.h">
+      <Filter>Header Files\actors</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
