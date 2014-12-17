@@ -24,14 +24,7 @@ namespace lab3 {
 
   void Game::tick() {
     clear_messages();
-
-    inputer_p->evaluate_commands(*this);
-
-    Entity& player = *get_player().get_actor();
-    world.move_entity(*this, player, WorldCoord{world.get_maps().begin()->first, 3, 4});
-
     world.tick(*this);
-
     render();
   }
 
@@ -40,7 +33,6 @@ namespace lab3 {
     running = true;
 
     while(running) {
-      get_input();
       tick();
     }
   }
@@ -49,8 +41,8 @@ namespace lab3 {
     running = false;
   }
 
-  void Game::get_input() const {
-    inputer_p->get_input(*this);
+  Inputer::command_t Game::get_input() const {
+    return inputer_p->get_input(*this);
   }
 
   void Game::render() const {

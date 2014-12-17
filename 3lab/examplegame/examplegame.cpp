@@ -21,10 +21,10 @@ namespace lab3 {
 
     world.add_map(std::move(m));
 
-    shared_ptr<Actor> player_actor_p = make_shared<Human>(WorldCoord{ m.get_id(), 0, 0 }, "Ze Hero");
-    player.possess(player_actor_p);
-
-    world.add_entity(player_actor_p);
+    shared_ptr<PhysicalEntity> player = make_shared<Human>(WorldCoord{ m.get_id(), 0, 0 }, "Ze Hero");
+    camera.set_followee(player);
+ 
+    world.add_entity(player);
     world.add_entity(make_shared<Human>(WorldCoord{ m.get_id(), 0, 0 }));
     world.add_entity(make_shared<Human>(WorldCoord{ m.get_id(), 1, 1 }));
   }

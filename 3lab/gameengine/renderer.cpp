@@ -20,9 +20,7 @@ namespace lab3 {
     out(out) {}
 
   void Renderer::render(const Game& game) {
-    const Player& player = game.get_player();
-    const shared_ptr<Actor> player_actor = player.get_actor();
-    const WorldCoord& player_position = player_actor->get_position();
+    const WorldCoord& player_position = game.get_camera().get_position();
     const Map& player_map = game.get_world().get_map(player_position.map_id);
 
     out << endl << endl << endl << endl << endl;
@@ -37,13 +35,13 @@ namespace lab3 {
   };
 
   ostream& Renderer::render_map(ostream& os, const Game& game, const Map& map) {
-    list<World::entities_t::value_type> entities_on_map;
-    const World::entities_t& entities = game.get_world().get_entities();
+    list<World::physicals_t::value_type> entities_on_map;
+    const World::physicals_t& entities = game.get_world().get_physicals();
     copy_if(
       entities.begin(),
       entities.end(),
       back_inserter(entities_on_map),
-      [&map](const World::entities_t::value_type& p) -> bool {
+      [&map](const World::physicals_t::value_type& p) -> bool {
         return p.second->get_position().map_id == map.get_id();
       }
     );
@@ -58,7 +56,7 @@ namespace lab3 {
       auto entity_on_xy_it = find_if(
         entities_on_map.begin(),
         entities_on_map.end(),
-        [&xy](const World::entities_t::value_type& p) {
+        [&xy](const World::physicals_t::value_type& p) {
           return xy == p.second->get_position();
         }
       );

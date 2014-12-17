@@ -12,14 +12,8 @@ namespace lab3 {
   class Game;
 
   class Inputer {
-      typedef vector<string> command_t;
-
-      list<command_t> command_buffer;
-
-      bool validate_command(const command_t& command) const;
-
     public:
-      void get_input(const Game& game);
-      void evaluate_commands(Game& game);
+      typedef vector<string> command_t;
+      command_t get_input(const Game& game);
   };
 }

@@ -3,7 +3,7 @@
 #include <list>
 #include <string>
 
-#include "player.h"
+#include "camera.h"
 #include "world.h"
 #include "inputer.h"
 #include "renderer.h"
@@ -20,7 +20,7 @@ namespace lab3 {
       bool running = false;
 
       World world;
-      Player player;
+      Camera camera;
       unique_ptr<Renderer> renderer_p;
       unique_ptr<Inputer> inputer_p;
 
@@ -36,11 +36,11 @@ namespace lab3 {
 
       void run();
       void stop();
-      void get_input() const;
+      Inputer::command_t get_input() const;
       void render() const;
 
       inline const World& get_world() const { return world; }
-      inline const Player& get_player() const { return player; }
+      inline const Camera& get_camera() const { return camera; }
 
       void push_message(const string& message);
       void clear_messages();

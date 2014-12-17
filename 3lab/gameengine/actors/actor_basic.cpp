@@ -2,6 +2,7 @@
 #include <sstream>
 
 #include "actors/actor_basic.h"
+#include "game.h"
 
 using std::random_device;
 using std::stringstream;
@@ -62,6 +63,10 @@ namespace lab3 {
     name << LAST_NAMES[last_names_number_generator(random)];
 
     return name.str();
+  }
+
+  void Human::input(Game &game) {
+    last_command = game.get_input();
   }
 
 }

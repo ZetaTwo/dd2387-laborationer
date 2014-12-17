@@ -2,13 +2,13 @@
 #include <memory>
 #include <set>
 
-#include "entity.h"
+#include "physicalentity.h"
 #include "item.h"
 #include "util.h"
 
 namespace lab3 {
 
-  class Actor : public Entity {
+  class Actor : public PhysicalEntity {
     protected:
       std::set<CarriedItem> inventory;
       bool is_remote_controlled = false;
@@ -16,7 +16,7 @@ namespace lab3 {
       virtual void do_tick(Game& game);
 
     public:
-      Actor(const WorldCoord& initial_position) : Entity(initial_position) {};
+      Actor(const WorldCoord& initial_position) : PhysicalEntity(initial_position) {};
 
       virtual bool move(direction_t direction, unsigned int distance = 1) override;
 

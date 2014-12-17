@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "actor.h"
+#include "inputer.h"
 
 using std::string;
 using std::vector;
@@ -12,6 +13,7 @@ namespace lab3 {
   class Human : public Actor {
   private:
     string name;
+    Inputer::command_t last_command;
 
     protected:
       virtual void do_tick(Game& game) override;
@@ -27,6 +29,8 @@ namespace lab3 {
 
       static const vector<string> FIRST_NAMES;
       static const vector<string> LAST_NAMES;
+
+      virtual void input(Game& input) override;
 
       static string new_name();
       virtual inline string get_name() const override { return name; }

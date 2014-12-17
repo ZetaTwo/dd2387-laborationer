@@ -1,4 +1,4 @@
-#include "entity.h"
+#include "camera.h"
 
 namespace lab3 {
 

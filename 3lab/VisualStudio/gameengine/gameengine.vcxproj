@@ -13,12 +13,13 @@
   <ItemGroup>
     <ClCompile Include="..\..\gameengine\actor.cpp" />
     <ClCompile Include="..\..\gameengine\actors\actor_basic.cpp" />
+    <ClCompile Include="..\..\gameengine\camera.cpp" />
     <ClCompile Include="..\..\gameengine\entity.cpp" />
     <ClCompile Include="..\..\gameengine\game.cpp" />
     <ClCompile Include="..\..\gameengine\inputer.cpp" />
     <ClCompile Include="..\..\gameengine\item.cpp" />
     <ClCompile Include="..\..\gameengine\map.cpp" />
-    <ClCompile Include="..\..\gameengine\player.cpp" />
+    <ClCompile Include="..\..\gameengine\physicalentity.cpp" />
     <ClCompile Include="..\..\gameengine\renderer.cpp" />
     <ClCompile Include="..\..\gameengine\tile.cpp" />
     <ClCompile Include="..\..\gameengine\tiles\tile_basic.cpp" />
@@ -28,12 +29,13 @@
   <ItemGroup>
     <ClInclude Include="..\..\gameengine\actor.h" />
     <ClInclude Include="..\..\gameengine\actors\actor_basic.h" />
+    <ClInclude Include="..\..\gameengine\camera.h" />
     <ClInclude Include="..\..\gameengine\entity.h" />
     <ClInclude Include="..\..\gameengine\game.h" />
     <ClInclude Include="..\..\gameengine\inputer.h" />
     <ClInclude Include="..\..\gameengine\item.h" />
     <ClInclude Include="..\..\gameengine\map.h" />
-    <ClInclude Include="..\..\gameengine\player.h" />
+    <ClInclude Include="..\..\gameengine\physicalentity.h" />
     <ClInclude Include="..\..\gameengine\renderer.h" />
     <ClInclude Include="..\..\gameengine\tile.h" />
     <ClInclude Include="..\..\gameengine\tiles\tile_basic.h" />
