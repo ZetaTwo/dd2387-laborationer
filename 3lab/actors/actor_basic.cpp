@@ -13,7 +13,7 @@ namespace lab3 {
 
   Human::Human(const WorldCoord& initial_position, const string& name) : Actor(initial_position), name(name) {}
 
-  void Human::do_tick(Actor& tickee) const {
+  void Human::do_tick() {
   }
 
   void Human::activated_by(Entity& activator) {

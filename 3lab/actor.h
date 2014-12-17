@@ -14,17 +14,12 @@ namespace lab3 {
   class Actor;
   class CarriedItem;
 
-  class ActorTicker {
-    public:
-      virtual void do_tick(Actor& tickee) const = 0;
-  };
-
-  class Actor : public Entity, public ActorTicker {
+  class Actor : public Entity {
     protected:
       set<CarriedItem> inventory;
-      weak_ptr<ActorTicker> ticker_override_p;
+      bool is_remote_controlled = false;
 
-      virtual void do_tick(Actor& tickee) const = 0;
+      virtual void do_tick();
 
     public:
       Actor(const WorldCoord& initial_position) : Entity(initial_position) {};
@@ -36,10 +31,10 @@ namespace lab3 {
       virtual bool give_item(CarriedItem& item, Actor& recipient);
       virtual bool remove_item(CarriedItem& item);
 
-      virtual bool override_ticker(ActorTicker& ticker_override);
+      virtual bool set_remote_controlled(bool is_remote_controlled);
       virtual void interact(Actor& interactee);
 
-      virtual void tick() override;
+      virtual void tick() override final;
   };
 
 }

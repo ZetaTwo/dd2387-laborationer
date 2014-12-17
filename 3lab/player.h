@@ -9,7 +9,7 @@ namespace lab3 {
 
   class Actor;
 
-  class Player : public ActorTicker {
+  class Player {
       shared_ptr<Actor> actor;
 
       virtual void do_tick(Actor& tickee) const;

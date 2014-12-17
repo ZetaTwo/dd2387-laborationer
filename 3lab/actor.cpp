@@ -25,17 +25,20 @@ namespace lab3 {
     return false;
   }
 
-  bool Actor::override_ticker(ActorTicker& ticker_override) {
-    return false;
+  bool Actor::set_remote_controlled(bool is_remote_controlled) {
+    this->is_remote_controlled = is_remote_controlled;
+    return true;
   }
 
   void Actor::interact(Actor& interactee) {}
 
   void Actor::tick() {
-    if(!ticker_override_p.expired()) {
-      ticker_override_p.lock()->do_tick(*this);
+    if(!is_remote_controlled) {
+      do_tick();
     }
-    do_tick(*this);
+  }
+
+  void Actor::do_tick() {
   }
 
 }
