@@ -30,8 +30,6 @@ namespace lab3 {
       static const vector<string> FIRST_NAMES;
       static const vector<string> LAST_NAMES;
 
-      virtual void input(Game& input) override;
-
       static string new_name();
       virtual inline string get_name() const override { return name; }
       virtual inline string get_description() const override  { return ""; }
