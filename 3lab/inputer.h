@@ -19,7 +19,7 @@ namespace lab3 {
       bool validate_command(const command_t& command) const;
 
     public:
-      void get_input(Game& game);
+      void get_input(const Game& game);
       void evaluate_commands(Game& game);
   };
 }

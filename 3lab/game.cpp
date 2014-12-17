@@ -74,7 +74,7 @@ namespace lab3 {
     running = false;
   }
 
-  void Game::get_input() {
+  void Game::get_input() const {
     inputer_p->get_input(*this);
   }
 
