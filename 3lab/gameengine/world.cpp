@@ -21,16 +21,12 @@ namespace lab3 {
     return maps.emplace(maps_t::value_type{map.get_id(), move(map)}).second;
   }
 
-  bool World::add_entity(shared_ptr<Entity> entity_p) {
-    return entity_ps.emplace(entities_t::value_type{entity_p->get_id(), entity_p}).second;
+  void World::add_entity(shared_ptr<Entity> entity_p) {
+    created_entities.push(entity_p);
   }
-  bool World::add_physical(shared_ptr<PhysicalEntity> physical_p) {
-    if (add_entity(physical_p)) {
-      return physical_ps.emplace(physicals_t::value_type{ physical_p->get_id(), physical_p }).second;
-    }
-    else {
-      return false;
-    }
+  void World::add_physical(shared_ptr<PhysicalEntity> physical_p) {
+    add_entity(physical_p);
+    created_physicals.push(physical_p);
   }
 
   bool World::move_entity(Game& game, PhysicalEntity& entity, const WorldCoord& destination) {
@@ -53,22 +49,54 @@ namespace lab3 {
   }
 
   void World::tick(Game& game) {
+    tick_entities(game);
+    tick_tiles(game);
+    remove_destroyed();
+    add_created();
+  }
+
+  void World::tick_entities(Game& game) {
     //Perform input on all entities
     for (entities_t::value_type& entity_pair : entity_ps) {
       entity_pair.second->input(game);
     }
 
     //Perform tick on all entities
-    for(entities_t::value_type& entity_pair : entity_ps) {
+    for (entities_t::value_type& entity_pair : entity_ps) {
       entity_pair.second->tick(game);
     }
+  }
 
+  void World::tick_tiles(Game& game) {
     //Perform tick on all tiles
-    for(maps_t::value_type& map_pair : maps) {
+    for (maps_t::value_type& map_pair : maps) {
       map_pair.second.tick(game);
     }
 
     ++time;
+  }
+
+  void World::remove_destroyed() {
+    //Destroy all waiting to be destroyed
+    while (destroyed_entities.size() > 0) {
+      entity_ps.erase(destroyed_entities.front());
+      physical_ps.erase(destroyed_entities.front());
+      destroyed_entities.pop();
+    }
+  }
+
+  void World::add_created() {
+    //Create all waiting to be created
+    while (created_entities.size() > 0) {
+      shared_ptr<Entity>& create = created_entities.front();
+      entity_ps.emplace(entities_t::value_type{ create->get_id(), create });
+      created_entities.pop();
+    }
+    while (created_physicals.size() > 0) {
+      shared_ptr<PhysicalEntity>& create = created_physicals.front();
+      physical_ps.emplace(physicals_t::value_type{ create->get_id(), create });
+      created_physicals.pop();
+    }
   }
 
 }
