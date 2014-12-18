@@ -1,9 +1,10 @@
+#include <algorithm>
 #include <utility>
 
 #include "actor.h"
 #include "game.h"
 
-using std::set;
+using std::find;
 using std::weak_ptr;
 
 namespace lab3 {
@@ -13,14 +14,13 @@ namespace lab3 {
   }
 
   bool Actor::add_item(Game& game, unique_ptr<CarriedItem>&& item_p) {
-    pair<set<unique_ptr<CarriedItem>>::const_iterator, bool> inserted = inventory.emplace(std::move(item_p));
+    inventory.emplace_back(std::move(item_p));
 
-    if(inserted.second) {
-      stringstream ss;
-      ss << "Picked up " << (*inserted.first)->get_name();
-      game.push_message(ss.str());
-    }
-    return inserted.second;
+    stringstream ss;
+    ss << "Picked up " << inventory.back()->get_name();
+    game.push_message(ss.str());
+
+    return true;
   }
 
   bool Actor::drop_item(CarriedItem& item) {
@@ -28,9 +28,19 @@ namespace lab3 {
   }
 
   bool Actor::give_item(Game& game, unique_ptr<CarriedItem>&& item_p, Actor& recipient) {
-    inventory.erase(item_p);
-    recipient.add_item(game, std::move(item_p));
-    return true;
+    const CarriedItem& item = *item_p;
+    inventory_t::iterator erase_it = find(inventory.begin(), inventory.end(), item_p);
+    if(erase_it != inventory.end()) {
+      recipient.add_item(game, std::move(item_p));
+      inventory.erase(erase_it);
+
+      stringstream ss;
+      ss << get_name() << " gave " << item.get_name() << " to " << recipient.get_name();
+      game.push_message(ss.str());
+
+      return true;
+    }
+    return false;
   }
 
   bool Actor::remove_item(CarriedItem& item) {

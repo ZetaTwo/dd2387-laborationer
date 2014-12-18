@@ -1,19 +1,21 @@
 #pragma once
 #include <memory>
-#include <set>
+#include <vector>
 
 #include "physicalentity.h"
 #include "item.h"
 #include "util.h"
 
-using std::set;
+using std::vector;
 using std::unique_ptr;
 
 namespace lab3 {
 
   class Actor : public PhysicalEntity {
     protected:
-      set<unique_ptr<CarriedItem>> inventory;
+      typedef vector<unique_ptr<CarriedItem>> inventory_t;
+      inventory_t inventory;
+
       bool is_remote_controlled = false;
 
       virtual void do_tick(Game& game);

@@ -184,9 +184,7 @@ namespace lab3 {
       return;
     }
 
-    set<unique_ptr<CarriedItem>>::iterator targeted_item_it = inventory.begin();
-    for(int n = 1; n < stoi(last_command[2]); ++n, ++targeted_item_it);
-    unique_ptr<CarriedItem>& targeted_item_p = const_cast<unique_ptr<CarriedItem>&>(*targeted_item_it);
+    unique_ptr<CarriedItem>& targeted_item_p = inventory[stoi(last_command[2])-1];
 
     if(last_command[1] == "describe") {
       game.push_message(targeted_item_p->get_description());
