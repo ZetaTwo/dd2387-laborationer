@@ -7,12 +7,13 @@
 #include "util.h"
 
 using std::set;
+using std::unique_ptr;
 
 namespace lab3 {
 
   class Actor : public PhysicalEntity {
     protected:
-      set<CarriedItem> inventory;
+      set<unique_ptr<CarriedItem>> inventory;
       bool is_remote_controlled = false;
 
       virtual void do_tick(Game& game);
@@ -22,7 +23,7 @@ namespace lab3 {
 
       virtual bool move(Game& game, direction_t direction, unsigned int distance = 1) override;
 
-      virtual bool add_item(CarriedItem&& item);
+      virtual bool add_item(Game& game, unique_ptr<CarriedItem>&& item_p);
       virtual bool drop_item(CarriedItem& item);
       virtual bool give_item(CarriedItem& item, Actor& recipient);
       virtual bool remove_item(CarriedItem& item);

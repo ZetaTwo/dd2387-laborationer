@@ -12,8 +12,15 @@ namespace lab3 {
     return game.get_world().move_entity(game, *this, position.step(direction, distance));
   }
 
-  bool Actor::add_item(CarriedItem&& item) {
-    return inventory.emplace(std::move(item)).second;
+  bool Actor::add_item(Game& game, unique_ptr<CarriedItem>&& item_p) {
+    pair<set<unique_ptr<CarriedItem>>::const_iterator, bool> inserted = inventory.emplace(std::move(item_p));
+
+    if(inserted.second) {
+      stringstream ss;
+      ss << "Picked up " << (*inserted.first)->get_name();
+      game.push_message(ss.str());
+    }
+    return inserted.second;
   }
 
   bool Actor::drop_item(CarriedItem& item) {
