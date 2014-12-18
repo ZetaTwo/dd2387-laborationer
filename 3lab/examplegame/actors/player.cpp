@@ -86,9 +86,6 @@ namespace lab3 {
       return (this->*(validator_it->second))(command);
     }
 
-    if(command[0] == "g") {
-    }
-
     return { false, "Unrecognized command." };
   }
 
