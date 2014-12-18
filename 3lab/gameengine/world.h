@@ -50,6 +50,8 @@ namespace lab3 {
       void add_entity(shared_ptr<Entity> entity_p);
       void add_physical(shared_ptr<PhysicalEntity> physical_p);
       bool move_entity(Game& game, PhysicalEntity& entity, const WorldCoord& destination);
+
+      void destroy(Identifiable::identifier_t id);
   };
 
 }

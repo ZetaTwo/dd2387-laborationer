@@ -106,4 +106,8 @@ namespace lab3 {
     }
   }
 
+  void World::destroy(Identifiable::identifier_t id) {
+    destroyed_entities.push(id);
+  }
+
 }
