@@ -3,7 +3,9 @@
 #include <iterator>
 #include <string>
 
+using std::iterator;
 using std::ostream;
+using std::random_access_iterator_tag;
 using std::string;
 
 namespace lab3 {
@@ -78,7 +80,7 @@ namespace lab3 {
   };
   ostream& operator<<(ostream& os, const CoordRectangle& rect);
 
-  class CoordRectangle::const_iterator : public std::iterator<std::random_access_iterator_tag, const Coord> {
+  class CoordRectangle::const_iterator : public iterator<random_access_iterator_tag, const Coord> {
     const CoordRectangle& rectangle;
     Coord current_coord;
 

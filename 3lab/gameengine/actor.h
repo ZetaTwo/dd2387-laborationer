@@ -6,11 +6,13 @@
 #include "item.h"
 #include "util.h"
 
+using std::set;
+
 namespace lab3 {
 
   class Actor : public PhysicalEntity {
     protected:
-      std::set<CarriedItem> inventory;
+      set<CarriedItem> inventory;
       bool is_remote_controlled = false;
 
       virtual void do_tick(Game& game);

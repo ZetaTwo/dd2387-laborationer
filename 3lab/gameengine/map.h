@@ -6,6 +6,7 @@
 #include "tile.h"
 #include "util.h"
 
+using std::ostream;
 using std::shared_ptr;
 using std::vector;
 
@@ -47,6 +48,6 @@ namespace lab3 {
       virtual inline string get_description() const override  { return "CHANGEME"; }
   };
 
-  std::ostream& operator<<(std::ostream& os, const Map& map);
+  ostream& operator<<(ostream& os, const Map& map);
 
 }

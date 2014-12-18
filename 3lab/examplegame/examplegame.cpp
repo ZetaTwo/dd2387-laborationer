@@ -1,3 +1,6 @@
+#include <stdexcept>
+#include <utility>
+
 #include "examplegame.h"
 #include "actors/oldman.h"
 #include "actors/player.h"
@@ -5,12 +8,14 @@
 #include "tiles/rock.h"
 
 using std::make_shared;
+using std::move;
+using std::runtime_error;
 
 namespace lab3 {
 
   void ExampleGame::initialize() {
     if (initialized) {
-      throw std::runtime_error("Game has already been initialized!");
+      throw runtime_error("Game has already been initialized!");
     }
     initialized = true;
 
@@ -72,7 +77,7 @@ namespace lab3 {
     m.set_tile(Coord{ 7, 5 }, make_shared<RockTile>());
 
     Identifiable::identifier_t id = m.get_id();
-    world.add_map(std::move(m));
+    world.add_map(move(m));
 
     return id;
   }

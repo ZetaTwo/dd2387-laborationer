@@ -3,6 +3,8 @@
 
 #include "entity.h"
 
+using std::string;
+
 namespace lab3 {
 
   class Actor;
@@ -24,8 +26,8 @@ namespace lab3 {
       virtual inline int getWeight() const { return weight; }
       virtual void activate(Game& game, Actor&);
 
-      virtual inline std::string get_name() const override { return "CHANGEME"; }
-      virtual inline std::string get_description() const override  { return "CHANGEME"; }
+      virtual inline string get_name() const override { return "CHANGEME"; }
+      virtual inline string get_description() const override  { return "CHANGEME"; }
   };
 
 }
