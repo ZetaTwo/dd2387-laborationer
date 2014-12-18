@@ -6,7 +6,6 @@
 #include <utility>
 #include <vector>
 
-#include "game.h"
 #include "inputer.h"
 
 using std::cin;
@@ -21,10 +20,14 @@ using std::vector;
 
 namespace lab3 {
 
+  class Game;
+
   class Inputer {
     public:
       typedef vector<string> command_t;
       typedef pair<bool, string> validation_result_t;
+
+      void render_game(const Game& game) const;
 
       template<class T>
       command_t get_input(const Game& game, const T& command_validator);
@@ -36,7 +39,7 @@ namespace lab3 {
     list<string> messages;
 
     while(true) {
-      game.render();
+      render_game(game);
 
       for(string message : messages) {
         cout << message << endl;

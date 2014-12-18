@@ -4,6 +4,8 @@
 #include <string>
 
 #include "camera.h"
+#include "renderer.h"
+#include "inputer.h"
 #include "world.h"
 
 using std::list;
@@ -11,9 +13,6 @@ using std::string;
 using std::unique_ptr;
 
 namespace lab3 {
-
-  class Renderer;
-  class Inputer;
 
   class Game {
   protected:
