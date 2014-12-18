@@ -9,7 +9,7 @@ namespace lab3 {
 
   FireTile::FireTile() : damage(1) {}
 
-  string FireTile::description = "Fire!";
+  const string FireTile::description = "Fire!";
 
   void FireTile::do_enter(Game& game, weak_ptr<PhysicalEntity> enterer_p) {
     if(!enterer_p.expired()) {

@@ -7,7 +7,7 @@ namespace lab3 {
   class FireTile : public Tile {
     int damage;
 
-    static string description;
+    static const string description;
 
   protected:
     virtual void do_stay(Game& game, PhysicalEntity&) override;
