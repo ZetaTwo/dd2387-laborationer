@@ -3,7 +3,6 @@
 
 #include "util.h"
 #include "actor.h"
-#include "inputer.h"
 
 using std::shared_ptr;
 using std::string;

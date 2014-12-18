@@ -1,6 +1,8 @@
 #include<memory>
 
 #include "game.h"
+#include "inputer.h"
+#include "renderer.h"
 
 using std::make_shared;
 using std::move;
@@ -39,10 +41,6 @@ namespace lab3 {
 
   void Game::stop() {
     running = false;
-  }
-
-  Inputer::command_t Game::get_input() const {
-    return inputer_p->get_input(*this);
   }
 
   void Game::render() const {

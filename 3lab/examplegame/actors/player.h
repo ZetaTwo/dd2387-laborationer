@@ -8,6 +8,8 @@ namespace lab3 {
   public:
     Player(const WorldCoord& initial_position) : Human(initial_position, "You") {}
 
+    Inputer::validation_result_t validate_command(const Inputer::command_t& command) const;
+
   protected:
     virtual void input(Game& input) override;
 

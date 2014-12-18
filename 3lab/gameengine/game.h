@@ -5,14 +5,15 @@
 
 #include "camera.h"
 #include "world.h"
-#include "inputer.h"
-#include "renderer.h"
 
 using std::list;
 using std::string;
 using std::unique_ptr;
 
 namespace lab3 {
+
+  class Renderer;
+  class Inputer;
 
   class Game {
   protected:
@@ -36,7 +37,6 @@ namespace lab3 {
 
       void run();
       void stop();
-      Inputer::command_t get_input() const;
       void render() const;
 
       inline const World& get_world() const { return world; }
