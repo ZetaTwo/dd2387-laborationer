@@ -13,6 +13,15 @@ namespace lab3 {
       throw std::runtime_error("Game has already been initialized!");
     }
 
+    cout << "Welcome!" << endl;
+    cout << "There is an evil king ruling over the kingdom. " << endl;
+    cout << "Yada yada yada. <Generic fantasy RPG background here>." << endl;
+    cout << endl;
+    cout << "View available commands with \"help\"." << endl;
+    cout << "Press enter to start." << endl;
+
+    cin.get();
+
     initialized = true;
 
     Map m;
@@ -21,11 +30,11 @@ namespace lab3 {
     m.set_tile(Coord{ 2, 1 }, make_shared<FireTile>());
     m.set_tile(Coord{ 5, 3 }, make_shared<FireTile>());
 
-    for(int x = 0; x < 30; ++x) {
+    for (Coord::coord_t x = 0; x < 30; ++x) {
       m.set_tile(Coord{x, 0}, make_shared<RockTile>());
       m.set_tile(Coord{x, 15}, make_shared<RockTile>());
     }
-    for(int y = 1; y < 15; ++y) {
+    for(Coord::coord_t y = 1; y < 15; ++y) {
       m.set_tile(Coord{0, y}, make_shared<RockTile>());
       m.set_tile(Coord{30, y}, make_shared<RockTile>());
     }
