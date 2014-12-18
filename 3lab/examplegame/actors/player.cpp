@@ -1,9 +1,11 @@
 #include <map>
+#include <ostream>
 
 #include "player.h"
 #include "game.h"
 #include "util.h"
 
+using std::endl;
 using std::find;
 using std::map;
 
@@ -44,7 +46,13 @@ namespace lab3 {
         return { false, "Unrecognized subcommand." };
       }
     }
-    return { false, "Commands:\nmove" };
+
+    stringstream commands;
+    commands << "Commands:" << endl;
+    for(const pair<string, string>& help : COMMANDS_HELP) {
+      commands << endl << help.first;
+    }
+    return { false, commands.str() };
   }
 
   Inputer::validation_result_t Player::validate_command(const Inputer::command_t& command) const {
