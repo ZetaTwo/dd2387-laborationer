@@ -40,8 +40,15 @@ namespace lab3 {
     };
   }
 
-  shared_ptr<Tile> Map::get_tile(const Coord& coord) {
+  const shared_ptr<Tile> Map::get_tile(const Coord& coord) const {
     if(coord.y >= rows.size() || coord.x >= rows[coord.y].size()) {
+      return make_shared<EmptyTile>();
+    }
+    return (rows[coord.y][coord.x]);
+  }
+
+  shared_ptr<Tile> Map::get_tile(const Coord& coord) {
+    if (coord.y >= rows.size() || coord.x >= rows[coord.y].size()) {
       return make_shared<EmptyTile>();
     }
     return (rows[coord.y][coord.x]);
