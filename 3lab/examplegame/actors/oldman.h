@@ -12,6 +12,9 @@ namespace lab3 {
 
   class OldMan : public Human {
 
+    bool has_shiny_thing() const;
+    bool is_shiny_thing(const CarriedItem& item) const;
+
     public:
       OldMan(const WorldCoord& initial_position);
       OldMan(const WorldCoord& initial_position, const string& name);

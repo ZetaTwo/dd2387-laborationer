@@ -12,18 +12,32 @@ namespace lab3 {
 
   OldMan::OldMan(const WorldCoord& initial_position, const string& name) : Human(initial_position, name) {}
 
+  bool OldMan::is_shiny_thing(const CarriedItem& item) const {
+    try {
+      dynamic_cast<const CarriedShinyThing&>(item);
+      return true;
+    } catch(bad_cast e) {
+      return false;
+    }
+  }
+
+  bool OldMan::has_shiny_thing() const {
+    for(const unique_ptr<CarriedItem>& item_p : inventory) {
+      if(is_shiny_thing(*item_p)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   void OldMan::activated_by(Game& game, Actor& activator) {
     stringstream ss;
-
     ss << get_name() << " says:" << endl;
 
-    switch(inventory.size()) {
-      case 0:
-        ss << "Have you seen my favourite shiny thing?" << endl;
-        break;
-      case 1:
+    if(has_shiny_thing()) {
         ss << "Thank you for finding my favourite shiny thing!" << endl;
-        break;
+    } else {
+        ss << "Have you seen my favourite shiny thing?" << endl;
     }
 
     game.push_message(ss.str());
@@ -32,11 +46,10 @@ namespace lab3 {
   void OldMan::activated_by(Game& game, Actor& activator, CarriedItem& item) {
     stringstream ss;
     ss << get_name() << " says:" << endl;
-    try {
-      dynamic_cast<CarriedShinyThing&>(item);
 
+    if(is_shiny_thing(item)) {
       ss << "You found my shiny thing!" << endl;
-    } catch(bad_cast e) {
+    } else {
       ss << "This is not my favourite shiny thing." << endl;
     }
     game.push_message(ss.str());
