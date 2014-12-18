@@ -1,4 +1,8 @@
+#include <stdexcept>
+
 #include "util.h"
+
+using std::out_of_range;
 
 namespace lab3 {
 
@@ -8,8 +12,27 @@ namespace lab3 {
     return os << "(" << coord.x << ", " << coord.y << ")";
   }
 
+  Coord Coord::step(direction_t direction, unsigned int distance) const {
+    switch(direction) {
+      case DIR_NORTH:
+        return Coord{x, y - distance};
+      case DIR_EAST:
+        return Coord{x + distance, y};
+      case DIR_SOUTH:
+        return Coord{x, y + distance};
+      case DIR_WEST:
+        return Coord{x - distance, y};
+    }
+
+    throw out_of_range{"Unknown direction"};
+  }
+
   WorldCoord::WorldCoord(Identifiable::identifier_t map_id, coord_t x, coord_t y) :
     Coord{ x, y },
+    map_id(map_id) {}
+
+  WorldCoord::WorldCoord(Identifiable::identifier_t map_id, const Coord& original) :
+    Coord{ original },
     map_id(map_id) {}
 
   WorldCoord& WorldCoord::operator=(const WorldCoord& other) {
@@ -17,6 +40,10 @@ namespace lab3 {
     x = other.x;
     y = other.y;
     return *this;
+  }
+
+  WorldCoord WorldCoord::step(direction_t direction, unsigned int distance) const {
+    return WorldCoord{map_id, static_cast<const Coord*>(this)->step(direction, distance)};
   }
 
   ostream& operator<<(ostream& os, const WorldCoord& coord) {

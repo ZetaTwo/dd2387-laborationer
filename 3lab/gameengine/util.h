@@ -44,6 +44,8 @@ namespace lab3 {
 
     inline bool operator==(const Coord& rhs) const { return x == rhs.x && y == rhs.y; }
     inline bool operator!=(const Coord& rhs) const { return !(*this == rhs); }
+
+    Coord step(direction_t direction, unsigned int distance = 1) const;
   };
   ostream& operator<<(ostream& os, const Coord& coord);
 
@@ -51,10 +53,13 @@ namespace lab3 {
     Identifiable::identifier_t map_id;
 
     WorldCoord(Identifiable::identifier_t map_id, coord_t x, coord_t y);
+    WorldCoord(Identifiable::identifier_t map_id, const Coord& original);
     WorldCoord& operator=(const WorldCoord& other);
 
     inline bool operator==(const WorldCoord& rhs) const { return map_id == rhs.map_id && x == rhs.x && y == rhs.y; }
     inline bool operator!=(const WorldCoord& rhs) const { return !(*this == rhs); }
+
+    WorldCoord step(direction_t direction, unsigned int distance = 1) const;
   };
   ostream& operator<<(ostream& os, const WorldCoord& coord);
 
