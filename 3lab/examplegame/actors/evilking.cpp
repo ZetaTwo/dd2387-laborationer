@@ -3,9 +3,9 @@
 
 namespace lab3 {
 
-  EvilKing::EvilKing(const WorldCoord& initial_position) : Actor(initial_position) {}
+  EvilKing::EvilKing(const WorldCoord& initial_position) : EvilKing(initial_position, "Evil King") {}
 
-  EvilKing::EvilKing(const WorldCoord& initial_position, const string& name) : Actor(initial_position) {}
+  EvilKing::EvilKing(const WorldCoord& initial_position, const string& name) : Human(initial_position, name) {}
 
   void EvilKing::do_tick(Game& game) {
   }
