@@ -29,6 +29,8 @@ namespace lab3 {
     { "activate", &Player::validate_command_directional },
     { "g", &Player::validate_command_directional },
     { "go", &Player::validate_command_directional },
+    { "i", &Player::validate_command_inventory },
+    { "inventory", &Player::validate_command_inventory },
     { "m", &Player::validate_command_directional },
     { "move", &Player::validate_command_directional },
     { "help", &Player::commands_help }
@@ -39,12 +41,15 @@ namespace lab3 {
     { "activate", &Player::evaluate_command_activate },
     { "g", &Player::evaluate_command_move },
     { "go", &Player::evaluate_command_move },
+    { "i", &Player::evaluate_command_inventory },
+    { "inventory", &Player::evaluate_command_inventory },
     { "m", &Player::evaluate_command_move },
     { "move", &Player::evaluate_command_move }
   };
 
   const map<string, string> COMMANDS_HELP = {
     { "activate", "activate (w | a | s | d)\n  Activate something above, left, below, right respectively\n  Aliases: a" },
+    { "inventory", "inventory [describe <N> | use <N> (w | a | s | d)]\n  Inspect/use items in inventory\n  Aliases: i" },
     { "move", "move (w | a | s | d)\n  Move up, left, down, right respectively\n  Aliases: g, go, m" }
   };
 
@@ -110,6 +115,35 @@ namespace lab3 {
     return { false, "No direction specified." };
   }
 
+  Inputer::validation_result_t Player::validate_command_inventory(const Inputer::command_t& command) const {
+    if(command.size() == 1) {
+      return { true, "" };
+    }
+    if(command.size() < 3) {
+      return { false, "No item specified." };
+    }
+
+    int item_number;
+    try {
+      item_number = stoi(command[2]);
+      if(item_number < 1 || item_number > inventory.size()) {
+        return { false, "Invalid item number." };
+      }
+    } catch(invalid_argument e) {
+      return { false, "Invalid distance." };
+    } catch(out_of_range e) {
+      return { false, "Distance too large." };
+    }
+
+    if(command[1] == "use" && command.size() > 3) {
+      if(DIRECTION_COMMANDS.count(command[3]) > 0) {
+        return { true, "" };
+      }
+      return { false, "Invalid direction." };
+    }
+    return { true, "" };
+  }
+
   void Player::evaluate_command_activate(Game& game, const Inputer::command_t& last_command) {
     const vector<shared_ptr<PhysicalEntity>> entities_on_target_tile = game
       .get_world()
@@ -124,6 +158,36 @@ namespace lab3 {
       return;
     }
     adjacent_entity->activated_by(game, *this);
+  }
+
+  void Player::evaluate_command_inventory(Game& game, const Inputer::command_t& last_command) {
+    if(last_command.size() == 1) {
+      game.push_message("Inventory:");
+
+      unsigned int n = 1;
+      for(const unique_ptr<CarriedItem>& item_p : inventory) {
+        stringstream ss;
+        ss << "  " << n << ": " << item_p->get_name();
+        game.push_message(ss.str());
+      }
+      return;
+    }
+
+    auto targeted_item_it = inventory.begin();
+    for(int n = 1; n < stoi(last_command[2]); ++n, ++targeted_item_it);
+    const unique_ptr<CarriedItem>& targeted_item_p = *targeted_item_it;
+
+    if(last_command[1] == "describe") {
+      game.push_message(targeted_item_p->get_description());
+      return;
+    }
+
+    if(last_command[1] == "use") {
+      if(last_command.size() == 3) {
+        targeted_item_p->activate(game, *this);
+        return;
+      }
+    }
   }
 
   void Player::evaluate_command_move(Game& game, const Inputer::command_t& last_command) {
