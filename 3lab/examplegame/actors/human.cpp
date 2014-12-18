@@ -17,9 +17,6 @@ namespace lab3 {
   void Human::do_tick(Game& game) {
   }
 
-  void Human::activated_by(Entity& activator) {
-  }
-
   const vector<string> Human::FIRST_NAMES = {
     "Alexander"
    ,"Amanda"

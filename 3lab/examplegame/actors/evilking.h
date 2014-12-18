@@ -19,7 +19,7 @@ namespace lab3 {
       EvilKing(const WorldCoord& initial_position);
       EvilKing(const WorldCoord& initial_position, const string& name);
 
-      virtual void activated_by(Entity& activator) override;
+      virtual void activated_by(Game& game, Actor& activator) override;
 
       virtual char to_char() const override { return 'K'; };
   };

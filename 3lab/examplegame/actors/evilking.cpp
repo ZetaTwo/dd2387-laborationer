@@ -10,7 +10,7 @@ namespace lab3 {
   void EvilKing::do_tick(Game& game) {
   }
 
-  void EvilKing::activated_by(Entity& activator) {
+  void EvilKing::activated_by(Game& game, Actor& activator) {
   }
 
 }

@@ -21,7 +21,7 @@ namespace lab3 {
       virtual inline bool is_solid() const { return true; }
       virtual inline bool is_visible() const { return true; }
 
-      virtual void activated_by(Entity& activator) override;
+      virtual void activated_by(Game& game, Actor& activator) override;
 
       virtual char to_char() const override { return 'G'; };
       virtual inline string get_name() const override { return "Goblin"; }

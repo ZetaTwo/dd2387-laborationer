@@ -16,7 +16,8 @@ namespace lab3 {
 
       virtual bool is_solid()   const { return true; }
       virtual bool is_visible() const { return true; }
-      virtual void activated_by(Entity& activator) { }
+
+      virtual inline void activated_by(Game& game, Actor& activator) override { }
   };
 
   class QuestCarriedItem : public CarriedItem {

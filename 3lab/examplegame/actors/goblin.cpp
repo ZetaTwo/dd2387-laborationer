@@ -10,7 +10,7 @@ namespace lab3 {
   void Goblin::do_tick(Game& game) {
   }
 
-  void Goblin::activated_by(Entity& activator) {
+  void Goblin::activated_by(Game& game, Actor& activator) {
   }
 
 }

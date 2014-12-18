@@ -7,7 +7,7 @@ namespace lab3 {
 
   OldMan::OldMan(const WorldCoord& initial_position, const string& name) : Human(initial_position, name) {}
 
-  void OldMan::activated_by(Entity& activator) {
+  void OldMan::activated_by(Game& game, Actor& activator) {
   }
 
 

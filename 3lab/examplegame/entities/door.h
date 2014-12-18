@@ -18,9 +18,6 @@ namespace lab3 {
       return 'X';
     }
 
-    virtual void activated_by(Entity& activator) override {
-
-    }
   };
 
 }

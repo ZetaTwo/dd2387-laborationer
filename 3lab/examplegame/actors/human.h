@@ -25,8 +25,6 @@ namespace lab3 {
       virtual inline bool is_visible() const { return true; }
       virtual char to_char() const override { return 'H'; };
 
-      virtual void activated_by(Entity& activator) override;
-
       static const vector<string> FIRST_NAMES;
       static const vector<string> LAST_NAMES;
 
