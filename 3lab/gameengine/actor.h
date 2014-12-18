@@ -22,7 +22,7 @@ namespace lab3 {
 
       virtual bool move(Game& game, direction_t direction, unsigned int distance = 1) override;
 
-      virtual bool add_item(CarriedItem& item);
+      virtual bool add_item(CarriedItem&& item);
       virtual bool drop_item(CarriedItem& item);
       virtual bool give_item(CarriedItem& item, Actor& recipient);
       virtual bool remove_item(CarriedItem& item);

@@ -1,3 +1,5 @@
+#include <utility>
+
 #include "actor.h"
 #include "game.h"
 
@@ -10,8 +12,8 @@ namespace lab3 {
     return game.get_world().move_entity(game, *this, position.step(direction, distance));
   }
 
-  bool Actor::add_item(CarriedItem& item) {
-    return false;
+  bool Actor::add_item(CarriedItem&& item) {
+    return inventory.emplace(std::move(item)).second;
   }
 
   bool Actor::drop_item(CarriedItem& item) {

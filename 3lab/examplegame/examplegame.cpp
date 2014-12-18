@@ -5,6 +5,7 @@
 #include "actors/oldman.h"
 #include "actors/player.h"
 #include "entities/kingquest.h"
+#include "items/questitem.h"
 #include "tiles/rock.h"
 #include "entities/door.h"
 
@@ -77,6 +78,9 @@ namespace lab3 {
 
     Identifiable::identifier_t id = m.get_id();
     world.add_map(move(m));
+
+    // Test item
+    world.add_physical(make_shared<QuestItem>(WorldCoord{m.get_id(), 10, 10}));
 
     return id;
   }
