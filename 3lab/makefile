@@ -42,7 +42,7 @@ run: build/examplegame/main
 	./$<
 
 MAIN_DEPENDS_ON_EXAMPLE_OBJECTS=examplegame actors/player actors/human tiles/fire
-MAIN_DEPENDS_ON_ENGINE_OBJECTS=actor entity inputer game map physicalentity renderer tile util world tiles/tile_basic
+MAIN_DEPENDS_ON_ENGINE_OBJECTS=actor inputer game map physicalentity renderer tile util world tiles/tile_basic
 build/examplegame/main: build/examplegame/main.o $(call expand-depencencies,$(MAIN_DEPENDS_ON_ENGINE_OBJECTS),gameengine) $(call expand-depencencies,$(MAIN_DEPENDS_ON_EXAMPLE_OBJECTS),examplegame)
 	$(make-executable)
 
