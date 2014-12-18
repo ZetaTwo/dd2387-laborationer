@@ -41,9 +41,7 @@ $(foreach name,$(OBJECT_NAMES),$(eval $(call make-object-rule,$(name))))
 run: build/examplegame/main
 	./$<
 
-MAIN_DEPENDS_ON_EXAMPLE_OBJECTS=examplegame actors/player actors/human tiles/fire tiles/rock
-MAIN_DEPENDS_ON_ENGINE_OBJECTS=actor inputer game map physicalentity renderer tile util world tiles/tile_basic
-build/examplegame/main: build/examplegame/main.o $(call expand-depencencies,$(MAIN_DEPENDS_ON_ENGINE_OBJECTS),gameengine) $(call expand-depencencies,$(MAIN_DEPENDS_ON_EXAMPLE_OBJECTS),examplegame)
+build/examplegame/main: build/examplegame/main.o $(patsubst %.cpp,build/%.o,$(wildcard */*.cpp */*/*.cpp))
 	$(make-executable)
 
 build/inputer_test: inputer_test.cpp build/inputer.o
