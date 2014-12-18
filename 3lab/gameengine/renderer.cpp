@@ -35,17 +35,6 @@ namespace lab3 {
   };
 
   ostream& Renderer::render_map(ostream& os, const Game& game, const Map& map) {
-    list<World::physicals_t::value_type> entities_on_map;
-    const World::physicals_t& entities = game.get_world().get_physicals();
-    copy_if(
-      entities.begin(),
-      entities.end(),
-      back_inserter(entities_on_map),
-      [&map](const World::physicals_t::value_type& p) -> bool {
-        return p.second->get_position().map_id == map.get_id();
-      }
-    );
-
     size_t prev_row = 0;
     for(const Coord& xy : map.range()) {
       if(xy.y > prev_row) {
@@ -53,19 +42,17 @@ namespace lab3 {
         os << endl;
       }
 
-      auto entity_on_xy_it = find_if(
-        entities_on_map.begin(),
-        entities_on_map.end(),
-        [&xy](const World::physicals_t::value_type& p) {
-          return xy == p.second->get_position();
-        }
-      );
+      const shared_ptr<Tile> tile = map.get_tile(xy);
+      const shared_ptr<PhysicalEntity> ent = tile->get_entity();
 
-      if(entity_on_xy_it != entities_on_map.end()) {
-        os << entity_on_xy_it->second->get_id();
-      } else {
-        os << ".";
+      if (ent == nullptr) {
+        cout << tile->to_char();
       }
+      else {
+        cout << ent->to_char();
+      }
+
+      
     }
 
     return os;

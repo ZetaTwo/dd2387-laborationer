@@ -44,6 +44,9 @@ namespace lab3 {
         result.push_back(p.lock());
       }
     }
+
+    sort(result.begin(), result.end(), PhysicalEntityRenderOrderSorter());
+
     return result;
   }
 
@@ -51,7 +54,7 @@ namespace lab3 {
     for (const weak_ptr<PhysicalEntity> p : entered_entities) {
       if (!p.expired()) {
         shared_ptr<PhysicalEntity> res = p.lock();
-        if (res->is_solid()) {
+        if (res->is_visible()) {
           return res;
         }
       }

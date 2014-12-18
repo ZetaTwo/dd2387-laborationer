@@ -22,6 +22,7 @@ namespace lab3 {
 
       virtual bool is_solid()   const = 0;
       virtual bool is_visible() const = 0;
+      virtual char to_char()    const = 0;
 
       inline const WorldCoord& get_position() const { return position; }
       bool set_position(const WorldCoord& pos);
@@ -33,6 +34,21 @@ namespace lab3 {
       list<shared_ptr<PhysicalEntity>> get_adjacent_entities(Game& game, direction_t dir) const;
       shared_ptr<PhysicalEntity> get_adjacent_entity(Game& game, direction_t dir) const;
       shared_ptr<Tile> get_adjacent_tile(Game& game, direction_t dir) const;
+  };
+
+  class PhysicalEntityRenderOrderSorter {
+  public:
+    bool operator()(const PhysicalEntity& a, const PhysicalEntity& b) {
+      if (a.is_visible() != b.is_visible()) {
+        return a.is_visible();
+      }
+      
+      if (a.is_solid() != b.is_solid()) {
+        return a.is_solid();
+      }
+
+      return true;
+    }
   };
 
 }
