@@ -1,7 +1,7 @@
 #include <sstream>
 
 #include "game.h"
-#include "hazards.h"
+#include "tiles/fire.h"
 
 using std::ostringstream;
 
