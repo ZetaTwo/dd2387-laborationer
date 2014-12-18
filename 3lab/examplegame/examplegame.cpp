@@ -41,7 +41,7 @@ namespace lab3 {
     Map m;
 
     //Walls
-    for (Coord::coord_t x = 0; x < 30; ++x) {
+    for (Coord::coord_t x = 0; x <= 30; ++x) {
       m.set_tile(Coord{ x, 0 }, make_shared<RockTile>());
       m.set_tile(Coord{ x, 15 }, make_shared<RockTile>());
     }
