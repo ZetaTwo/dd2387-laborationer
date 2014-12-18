@@ -21,19 +21,32 @@ namespace lab3 {
     { "go", &Player::validate_subcommand_move },
     { "m", &Player::validate_subcommand_move },
     { "move", &Player::validate_subcommand_move },
+    { "help", &Player::commands_help }
+  };
+
+  const map<string, string> COMMANDS_HELP = {
+    { "move", "g (u | d | l | r)\nMove up, down, left, right respectively\nAliases: go, m, move" }
   };
 
   void Player::input(Game& game) {
     last_command = game.get_inputer().get_input(game, *this);
   }
 
+  Inputer::validation_result_t Player::commands_help(const Inputer::command_t& command) const {
+    if(command.size() > 1) {
+      auto help_it = COMMANDS_HELP.find(command[1]);
+      if(help_it != COMMANDS_HELP.end()) {
+        return { false, help_it->second };
+      } else {
+        return { false, "Unrecognized subcommand." };
+      }
+    }
+    return { false, "Commands:\nmove" };
+  }
+
   Inputer::validation_result_t Player::validate_command(const Inputer::command_t& command) const {
     if(command.size() == 0) {
       return { false, "Empty command" };
-    }
-
-    if(command[0] == "help") {
-      return { false, "Commands:\ng (u | d | l | r) : Move up, down, left, right respectively" };
     }
 
     auto validator_it = TOP_COMMANDS.find(command[0]);
