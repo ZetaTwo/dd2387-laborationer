@@ -32,6 +32,10 @@ namespace lab3 {
     world.add_physical(make_shared<OldMan>(WorldCoord{ map_id, 5, 4 }));
     world.add_physical(make_shared<Door>(WorldCoord{ map_id, 20, 8 }));
     world.add_entity(make_shared<KingQuest>(*this, map_id));
+
+    // Test item
+    world.add_physical(make_shared<QuestItem>(WorldCoord{map_id, 10, 10}));
+
   }
 
   void ExampleGame::start_message() const {
@@ -78,9 +82,6 @@ namespace lab3 {
 
     Identifiable::identifier_t id = m.get_id();
     world.add_map(move(m));
-
-    // Test item
-    world.add_physical(make_shared<QuestItem>(WorldCoord{m.get_id(), 10, 10}));
 
     return id;
   }
