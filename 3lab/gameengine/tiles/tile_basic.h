@@ -4,7 +4,7 @@
 
 namespace lab3 {
   class EmptyTile : public Tile {
-    static string description;
+    static const string description;
 
   public:
     virtual inline const string& get_description() const { return description; }
