@@ -8,7 +8,10 @@ namespace lab3 {
   }
 
   Inputer::validation_result_t Player::validate_command(const Inputer::command_t& command) const {
-    return Inputer::validation_result_t{false, "Not implemented"};
+    if(command.size() == 0) {
+      return { false, "Empty command" };
+    }
+    return { false, "Not implemented" };
   }
 
 }
