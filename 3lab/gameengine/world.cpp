@@ -89,12 +89,12 @@ namespace lab3 {
     //Create all waiting to be created
     while (created_entities.size() > 0) {
       shared_ptr<Entity>& create = created_entities.front();
-      entity_ps.emplace(entities_t::value_type{ create->get_id(), create });
+      entity_ps.emplace(entities_t::value_type{ create->get_id(), move(create) });
       created_entities.pop();
     }
     while (created_physicals.size() > 0) {
       shared_ptr<PhysicalEntity>& create = created_physicals.front();
-      physical_ps.emplace(physicals_t::value_type{ create->get_id(), create });
+      physical_ps.emplace(physicals_t::value_type{ create->get_id(), move(create) });
       created_physicals.pop();
     }
   }
