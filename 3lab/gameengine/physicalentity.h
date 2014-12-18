@@ -27,7 +27,7 @@ namespace lab3 {
       inline const WorldCoord& get_position() const { return position; }
       bool set_position(const WorldCoord& pos);
 
-      virtual bool move(direction_t direction, unsigned int distance = 1);
+      virtual bool move(Game& game, direction_t direction, unsigned int distance = 1);
 
       virtual void activated_by(Entity& activator) = 0;
 

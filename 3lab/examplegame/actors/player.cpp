@@ -101,7 +101,7 @@ namespace lab3 {
   }
 
   void Player::evaluate_command_move(Game& game, const Inputer::command_t& last_command) {
-    move(DIRECTION_COMMANDS.at(last_command[1]));
+    move(game, DIRECTION_COMMANDS.at(last_command[1]));
   }
 
 }

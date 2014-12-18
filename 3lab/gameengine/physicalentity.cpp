@@ -12,7 +12,7 @@ namespace lab3 {
   PhysicalEntity::PhysicalEntity(const WorldCoord& initial_position) :
     position(initial_position) {}
 
-  bool PhysicalEntity::move(direction_t, unsigned int) {
+  bool PhysicalEntity::move(Game&, direction_t, unsigned int) {
     return false;
   }
 

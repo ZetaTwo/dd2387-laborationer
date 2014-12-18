@@ -5,7 +5,7 @@ using std::weak_ptr;
 
 namespace lab3 {
 
-  bool Actor::move(direction_t direction, unsigned int distance) {
+  bool Actor::move(Game& game, direction_t direction, unsigned int distance) {
     return false;
   }
 

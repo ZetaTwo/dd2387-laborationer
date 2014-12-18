@@ -18,7 +18,7 @@ namespace lab3 {
     public:
       Actor(const WorldCoord& initial_position) : PhysicalEntity(initial_position) {};
 
-      virtual bool move(direction_t direction, unsigned int distance = 1) override;
+      virtual bool move(Game& game, direction_t direction, unsigned int distance = 1) override;
 
       virtual bool add_item(CarriedItem& item);
       virtual bool drop_item(CarriedItem& item);
