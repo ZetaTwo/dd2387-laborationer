@@ -29,8 +29,8 @@ namespace lab3 {
 
   void ExampleGame::start_message() const {
     cout << "Welcome!" << endl;
-    cout << "There is an evil king ruling over the kingdom. " << endl;
-    cout << "Yada yada yada. <Generic fantasy RPG background here>." << endl;
+    cout << "There is an evil ruler ruling evilly over the kingdom. " << endl;
+    cout << "Yada yada yada, you know what to do." << endl;
     cout << endl;
     cout << "View available commands with \"help\"." << endl;
     cout << "Press enter to start." << endl;
