@@ -51,6 +51,9 @@
     <ClCompile Include="..\..\examplegame\actors\oldman.cpp">
       <Filter>Source Files\actors</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\examplegame\tiles\rock.cpp">
+      <Filter>Source Files\tiles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\examplegame\examplegame.h">
@@ -73,6 +76,9 @@
     </ClInclude>
     <ClInclude Include="..\..\examplegame\actors\oldman.h">
       <Filter>Header Files\actors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\examplegame\tiles\rock.h">
+      <Filter>Header Files\tiles</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
