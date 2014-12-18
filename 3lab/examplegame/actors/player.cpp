@@ -164,10 +164,10 @@ namespace lab3 {
     if(last_command.size() == 1) {
       game.push_message("Inventory:");
 
-      unsigned int n = 1;
+      unsigned int n = 0;
       for(const unique_ptr<CarriedItem>& item_p : inventory) {
         stringstream ss;
-        ss << "  " << n << ": " << item_p->get_name();
+        ss << "  " << ++n << ": " << item_p->get_name();
         game.push_message(ss.str());
       }
       return;
