@@ -114,7 +114,19 @@ namespace lab3 {
   }
 
   void Player::evaluate_command_activate(Game& game, const Inputer::command_t& last_command) {
-    throw runtime_error{"Not implemented"};
+    const vector<shared_ptr<PhysicalEntity>> entities_on_target_tile = game
+      .get_world()
+      .get_map(position.map_id)
+      .get_tile(position.step(DIRECTION_COMMANDS.at(last_command[1])))
+      ->get_entities();
+
+
+    const shared_ptr<PhysicalEntity> adjacent_entity = get_adjacent_entity(game, DIRECTION_COMMANDS.at(last_command[1]));
+    if(adjacent_entity.get() == nullptr) {
+      game.push_message("There's nothing there.");
+      return;
+    }
+    adjacent_entity->activated_by(game, *this);
   }
 
   void Player::evaluate_command_move(Game& game, const Inputer::command_t& last_command) {
