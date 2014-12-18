@@ -17,6 +17,8 @@ namespace lab3 {
   };
 
   const map<string, Inputer::validation_result_t (Player::*) (const Inputer::command_t& subcommand) const> TOP_COMMANDS = {
+    { "a", &Player::validate_subcommand_directional },
+    { "activate", &Player::validate_subcommand_directional },
     { "g", &Player::validate_subcommand_directional },
     { "go", &Player::validate_subcommand_directional },
     { "m", &Player::validate_subcommand_directional },
@@ -25,7 +27,8 @@ namespace lab3 {
   };
 
   const map<string, string> COMMANDS_HELP = {
-    { "move", "g (u | d | l | r)\nMove up, down, left, right respectively\nAliases: go, m, move" }
+    { "move", "move (u | d | l | r)\nMove up, down, left, right respectively\nAliases: g, go, m" },
+    { "activate", "activate (u | d | l | r)\nActivate something above, below, left, right respectively\nAliases: a" }
   };
 
   void Player::input(Game& game) {
