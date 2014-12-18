@@ -18,13 +18,13 @@ namespace lab3 {
     { "l", DIR_WEST }
   };
 
-  const map<string, Inputer::validation_result_t (Player::*) (const Inputer::command_t& subcommand) const> TOP_COMMANDS = {
-    { "a", &Player::validate_subcommand_directional },
-    { "activate", &Player::validate_subcommand_directional },
-    { "g", &Player::validate_subcommand_directional },
-    { "go", &Player::validate_subcommand_directional },
-    { "m", &Player::validate_subcommand_directional },
-    { "move", &Player::validate_subcommand_directional },
+  const map<string, Inputer::validation_result_t (Player::*) (const Inputer::command_t& command) const> TOP_COMMAND_VALIDATORS = {
+    { "a", &Player::validate_command_directional },
+    { "activate", &Player::validate_command_directional },
+    { "g", &Player::validate_command_directional },
+    { "go", &Player::validate_command_directional },
+    { "m", &Player::validate_command_directional },
+    { "move", &Player::validate_command_directional },
     { "help", &Player::commands_help }
   };
 
@@ -60,8 +60,8 @@ namespace lab3 {
       return { false, "Empty command" };
     }
 
-    auto validator_it = TOP_COMMANDS.find(command[0]);
-    if(validator_it != TOP_COMMANDS.end()) {
+    auto validator_it = TOP_COMMAND_VALIDATORS.find(command[0]);
+    if(validator_it != TOP_COMMAND_VALIDATORS.end()) {
       return (this->*(validator_it->second))(command);
     }
 
@@ -71,7 +71,7 @@ namespace lab3 {
     return { false, "Unrecognized command." };
   }
 
-  Inputer::validation_result_t Player::validate_subcommand_directional(const Inputer::command_t& command) const {
+  Inputer::validation_result_t Player::validate_command_directional(const Inputer::command_t& command) const {
     if(command.size() > 1) {
       if(DIRECTION_COMMANDS.count(command[1]) > 0) {
         return { true, "" };

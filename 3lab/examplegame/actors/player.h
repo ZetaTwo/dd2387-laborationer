@@ -10,7 +10,7 @@ namespace lab3 {
 
     Inputer::validation_result_t commands_help(const Inputer::command_t& command) const;
     Inputer::validation_result_t validate_command(const Inputer::command_t& command) const;
-    Inputer::validation_result_t validate_subcommand_directional(const Inputer::command_t& command) const;
+    Inputer::validation_result_t validate_command_directional(const Inputer::command_t& command) const;
 
   protected:
     virtual void input(Game& input) override;
