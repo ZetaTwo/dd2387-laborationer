@@ -29,7 +29,9 @@ namespace lab3 {
       void exit(Game& game, PhysicalEntity& exiter);
       void tick(Game& game);
 
+      virtual bool can_enter(PhysicalEntity& enterer) const;
       virtual char to_char() const = 0;
+
       virtual const string& get_description() const = 0;
       vector<shared_ptr<PhysicalEntity>> get_entities() const;
       shared_ptr<PhysicalEntity> get_entity() const;

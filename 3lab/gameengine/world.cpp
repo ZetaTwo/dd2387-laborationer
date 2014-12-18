@@ -30,6 +30,11 @@ namespace lab3 {
   }
 
   bool World::move_entity(Game& game, PhysicalEntity& entity, const WorldCoord& destination) {
+    //Check if destination is enterable
+    if(!maps.at(destination.map_id).get_tile(destination)->can_enter(entity)) {
+      return false;
+    }
+
     //Find the entity
     shared_ptr<PhysicalEntity> entity_p = physical_ps.find(entity.get_id())->second;
 

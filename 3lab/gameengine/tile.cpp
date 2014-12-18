@@ -1,8 +1,10 @@
 #include <algorithm>
+#include <vector>
 
 #include "tile.h"
 #include "physicalentity.h"
 
+using std::find_if;
 using std::vector;
 
 namespace lab3 {
@@ -37,6 +39,24 @@ namespace lab3 {
   void Tile::stay(Game& game, PhysicalEntity& stayer) {
     //Call stay hook
     this->do_stay(game, stayer);
+  }
+
+  bool Tile::can_enter(PhysicalEntity& enterer) const {
+    if(!enterer.is_solid()) {
+      return true;
+    }
+
+    if(find_if(
+        entered_entities.begin(),
+        entered_entities.end(),
+        [](const weak_ptr<PhysicalEntity>& entity_p) {
+          return !entity_p.expired() && entity_p.lock()->is_solid();
+        }
+      ) != entered_entities.end()) {
+      return false;
+    }
+
+    return true;
   }
 
   vector<shared_ptr<PhysicalEntity>> Tile::get_entities() const {
