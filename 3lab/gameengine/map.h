@@ -17,24 +17,21 @@ namespace lab3 {
       typedef vector<tile_ptr_t> row_t;
       typedef vector<row_t> rows_t;
 
-      tile_ptr_t default_tile_p;
       rows_t rows;
 
     public:
       Map();
-      Map(tile_ptr_t default_tile);
       Map(const Map& original);
       Map(Map&& original);
       Map(rows_t rows);
-      Map(rows_t rows, tile_ptr_t default_tile);
       Map& operator=(const Map& other);
 
       inline Coord top_left() const { return Coord{0, 0}; }
       Coord btm_right() const;
       inline CoordRectangle range() const { return CoordRectangle{top_left(), btm_right()}; }
 
-      const Tile& get_tile(const Coord& coord) const;
-      Tile& get_tile(const Coord& coord);
+      const shared_ptr<Tile> get_tile(const Coord& coord) const;
+      shared_ptr<Tile> get_tile(const Coord& coord);
 
       bool set_tile                (const Coord& coord, shared_ptr<Tile> tile_p);
       bool insert_tile_north_of    (const Coord& coord, shared_ptr<Tile> tile_p);

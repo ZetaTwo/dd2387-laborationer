@@ -41,8 +41,8 @@ namespace lab3 {
 
     //Update position and trigger exit/enter hooks
     if(entity_p->set_position(destination)) {
-      maps[prev_position.map_id].get_tile(prev_position).exit(game, entity);
-      maps[destination.map_id].get_tile(destination).enter(game, entity_p);
+      maps[prev_position.map_id].get_tile(prev_position)->exit(game, entity);
+      maps[destination.map_id].get_tile(destination)->enter(game, entity_p);
     }
 
     return true;

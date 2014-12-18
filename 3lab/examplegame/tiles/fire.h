@@ -10,9 +10,9 @@ namespace lab3 {
     static string description;
 
   protected:
-    virtual void do_stay(Game& game, Entity&) override;
-    virtual void do_enter(Game& game, weak_ptr<Entity>) override;
-    virtual void do_exit(Game& game, Entity&) override;
+    virtual void do_stay(Game& game, PhysicalEntity&) override;
+    virtual void do_enter(Game& game, weak_ptr<PhysicalEntity>) override;
+    virtual void do_exit(Game& game, PhysicalEntity&) override;
 
   public:
       FireTile();

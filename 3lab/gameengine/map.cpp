@@ -6,29 +6,19 @@
 using std::endl;
 using std::max_element;
 using std::move;
+using std::make_shared;
 
 namespace lab3 {
 
-  Map::Map() :
-    default_tile_p(EmptyTile::get_instance()) { }
-
-  Map::Map(tile_ptr_t default_tile_p) :
-    default_tile_p(default_tile_p) { }
+  Map::Map() { }
 
   Map::Map(rows_t rows) :
-    default_tile_p(EmptyTile::get_instance()),
-    rows(rows) { }
-
-  Map::Map(rows_t rows, tile_ptr_t default_tile_p) :
-    default_tile_p(default_tile_p),
     rows(rows) { }
 
   Map::Map(Map&& original) : Identifiable(move(original)),
-    default_tile_p(move(original.default_tile_p)),
     rows(move(original.rows)) { }
 
   Map& Map::operator=(const Map& other) {
-    default_tile_p = other.default_tile_p;
     rows = other.rows;
     return *this;
   }
@@ -50,11 +40,11 @@ namespace lab3 {
     };
   }
 
-  Tile& Map::get_tile(const Coord& coord) {
+  shared_ptr<Tile> Map::get_tile(const Coord& coord) {
     if(coord.y >= rows.size() || coord.x >= rows[coord.y].size()) {
-      return *default_tile_p;
+      return make_shared<EmptyTile>();
     }
-    return *(rows[coord.y][coord.x]);
+    return (rows[coord.y][coord.x]);
   }
 
   bool Map::set_tile(const Coord& coord, tile_ptr_t tile_p) {
@@ -62,7 +52,7 @@ namespace lab3 {
       rows.push_back(row_t{});
     }
     while(rows[coord.y].size() < coord.x) {
-      rows[coord.y].push_back(default_tile_p);
+      rows[coord.y].push_back(make_shared<EmptyTile>());
     }
 
     if(rows[coord.y].size() == coord.x) {
@@ -76,7 +66,7 @@ namespace lab3 {
 
   void Map::tick(Game& game) {
     for(const Coord& coord : range()) {
-      get_tile(coord).tick(game);
+      get_tile(coord)->tick(game);
     }
   }
 
