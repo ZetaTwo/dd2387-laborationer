@@ -1,4 +1,5 @@
 #include "actor.h"
+#include "game.h"
 
 using std::set;
 using std::weak_ptr;
@@ -6,7 +7,7 @@ using std::weak_ptr;
 namespace lab3 {
 
   bool Actor::move(Game& game, direction_t direction, unsigned int distance) {
-    return false;
+    return game.get_world().move_entity(game, *this, position.step(direction, distance));
   }
 
   bool Actor::add_item(CarriedItem& item) {

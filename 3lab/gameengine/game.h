@@ -39,6 +39,7 @@ namespace lab3 {
       void render() const;
 
       inline const World& get_world() const { return world; }
+      inline World& get_world() { return world; }
       inline const Camera& get_camera() const { return camera; }
 
       void push_message(const string& message);
