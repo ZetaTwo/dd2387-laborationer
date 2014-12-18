@@ -14,9 +14,7 @@ namespace lab3 {
     public:
       explicit Camera() {};
 
-      void set_followee(shared_ptr<PhysicalEntity> follow) {
-        followee = follow;
-      }
+      void set_followee(shared_ptr<PhysicalEntity> follow) { followee = follow; }
 
       virtual void tick(Game& game) override {};
       virtual string get_name() const override { return "Camera"; };
