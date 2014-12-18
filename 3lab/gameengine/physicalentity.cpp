@@ -25,20 +25,7 @@ namespace lab3 {
     const Map& map = game.get_world().get_map(get_position().map_id);
     const Coord& pos = get_position();
 
-    switch (dir) {
-    case DIR_NORTH:
-      return map.get_tile({ pos.x, pos.y + 1 });
-      break;
-    case DIR_SOUTH:
-      return map.get_tile({ pos.x, pos.y - 1 });
-      break;
-    case DIR_WEST:
-      return map.get_tile({ pos.x - 1, pos.y });
-      break;
-    case DIR_EAST:
-      return map.get_tile({ pos.x + 1, pos.y });
-      break;
-    }
+    return map.get_tile(pos.step(dir));
   }
 
   vector<shared_ptr<PhysicalEntity>> PhysicalEntity::get_adjacent_entities(Game& game, direction_t dir) const {
