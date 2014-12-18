@@ -44,8 +44,8 @@ namespace lab3 {
   };
 
   const map<string, string> COMMANDS_HELP = {
-    { "move", "move (w | a | s | d)\n  Move up, left, down, right respectively\n  Aliases: g, go, m" },
-    { "activate", "activate (w | a | s | d)\n  Activate something above, left, below, right respectively\n  Aliases: a" }
+    { "activate", "activate (w | a | s | d)\n  Activate something above, left, below, right respectively\n  Aliases: a" },
+    { "move", "move (w | a | s | d)\n  Move up, left, down, right respectively\n  Aliases: g, go, m" }
   };
 
   void Player::input(Game& game) {
