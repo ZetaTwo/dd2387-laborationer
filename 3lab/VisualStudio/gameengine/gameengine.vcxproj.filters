@@ -30,13 +30,7 @@
     <ClCompile Include="..\..\gameengine\actor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\gameengine\entity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\gameengine\game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gameengine\item.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\gameengine\map.cpp">
@@ -58,9 +52,6 @@
       <Filter>Source Files\tiles</Filter>
     </ClCompile>
     <ClCompile Include="..\..\gameengine\inputer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gameengine\camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\gameengine\physicalentity.cpp">
