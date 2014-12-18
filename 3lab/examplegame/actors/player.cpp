@@ -17,10 +17,10 @@ namespace lab3 {
   };
 
   const map<string, Inputer::validation_result_t (Player::*) (const Inputer::command_t& subcommand) const> TOP_COMMANDS = {
-    { "g", &Player::validate_subcommand_move },
-    { "go", &Player::validate_subcommand_move },
-    { "m", &Player::validate_subcommand_move },
-    { "move", &Player::validate_subcommand_move },
+    { "g", &Player::validate_subcommand_directional },
+    { "go", &Player::validate_subcommand_directional },
+    { "m", &Player::validate_subcommand_directional },
+    { "move", &Player::validate_subcommand_directional },
     { "help", &Player::commands_help }
   };
 
@@ -60,7 +60,7 @@ namespace lab3 {
     return { false, "Unrecognized command." };
   }
 
-  Inputer::validation_result_t Player::validate_subcommand_move(const Inputer::command_t& command) const {
+  Inputer::validation_result_t Player::validate_subcommand_directional(const Inputer::command_t& command) const {
     if(command.size() > 1) {
       if(DIRECTION_COMMANDS.count(command[1]) > 0) {
         return { true, "" };
