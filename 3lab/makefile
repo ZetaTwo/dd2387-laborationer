@@ -34,7 +34,7 @@ define expand-depencencies
 $(patsubst %,build/$2/%.o,$1)
 endef
 
-OBJECT_NAMES = $(patsubst %.cpp,%,$(wildcard *.cpp */*.cpp */*/*.cpp))
+OBJECT_NAMES = $(patsubst %.cpp,%,$(wildcard */*.cpp */*/*.cpp))
 
 $(foreach name,$(OBJECT_NAMES),$(eval $(call make-object-rule,$(name))))
 
