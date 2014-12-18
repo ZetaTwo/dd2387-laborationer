@@ -84,14 +84,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\examplegame\actors\evilking.cpp" />
+    <ClCompile Include="..\..\examplegame\actors\goblin.cpp" />
     <ClCompile Include="..\..\examplegame\actors\human.cpp" />
+    <ClCompile Include="..\..\examplegame\actors\oldman.cpp" />
     <ClCompile Include="..\..\examplegame\actors\player.cpp" />
     <ClCompile Include="..\..\examplegame\examplegame.cpp" />
     <ClCompile Include="..\..\examplegame\main.cpp" />
     <ClCompile Include="..\..\examplegame\tiles\fire.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\examplegame\actors\evilking.h" />
+    <ClInclude Include="..\..\examplegame\actors\goblin.h" />
     <ClInclude Include="..\..\examplegame\actors\human.h" />
+    <ClInclude Include="..\..\examplegame\actors\oldman.h" />
     <ClInclude Include="..\..\examplegame\actors\player.h" />
     <ClInclude Include="..\..\examplegame\examplegame.h" />
     <ClInclude Include="..\..\examplegame\tiles\fire.h" />

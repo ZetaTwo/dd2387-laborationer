@@ -42,6 +42,15 @@
     <ClCompile Include="..\..\examplegame\tiles\fire.cpp">
       <Filter>Source Files\tiles</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\examplegame\actors\evilking.cpp">
+      <Filter>Source Files\actors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\examplegame\actors\goblin.cpp">
+      <Filter>Source Files\actors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\examplegame\actors\oldman.cpp">
+      <Filter>Source Files\actors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\examplegame\examplegame.h">
@@ -55,6 +64,15 @@
     </ClInclude>
     <ClInclude Include="..\..\examplegame\tiles\fire.h">
       <Filter>Header Files\tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\examplegame\actors\evilking.h">
+      <Filter>Header Files\actors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\examplegame\actors\goblin.h">
+      <Filter>Header Files\actors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\examplegame\actors\oldman.h">
+      <Filter>Header Files\actors</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
