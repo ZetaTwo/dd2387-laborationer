@@ -5,7 +5,7 @@
 #include "tile.h"
 
 using std::shared_ptr;
-using std::list;
+using std::vector;
 
 namespace lab3 {
 
@@ -41,7 +41,7 @@ namespace lab3 {
     }
   }
 
-  list<shared_ptr<PhysicalEntity>> PhysicalEntity::get_adjacent_entities(Game& game, direction_t dir) const {
+  vector<shared_ptr<PhysicalEntity>> PhysicalEntity::get_adjacent_entities(Game& game, direction_t dir) const {
     const shared_ptr<Tile> tile = get_adjacent_tile(game, dir);
     return tile->get_entities();
   }

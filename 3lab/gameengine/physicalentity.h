@@ -1,12 +1,12 @@
 #pragma once
 #include <memory>
-#include <list>
+#include <vector>
 
 #include "entity.h"
 #include "util.h"
 
 using std::shared_ptr;
-using std::list;
+using std::vector;
 
 namespace lab3 {
 
@@ -31,20 +31,20 @@ namespace lab3 {
 
       virtual void activated_by(Entity& activator) = 0;
 
-      list<shared_ptr<PhysicalEntity>> get_adjacent_entities(Game& game, direction_t dir) const;
+      vector<shared_ptr<PhysicalEntity>> get_adjacent_entities(Game& game, direction_t dir) const;
       shared_ptr<PhysicalEntity> get_adjacent_entity(Game& game, direction_t dir) const;
       shared_ptr<Tile> get_adjacent_tile(Game& game, direction_t dir) const;
   };
 
   class PhysicalEntityRenderOrderSorter {
   public:
-    bool operator()(const PhysicalEntity& a, const PhysicalEntity& b) {
-      if (a.is_visible() != b.is_visible()) {
-        return a.is_visible();
+    bool operator()(const shared_ptr<PhysicalEntity>& a, const shared_ptr<PhysicalEntity>& b) {
+      if (a->is_visible() != b->is_visible()) {
+        return a->is_visible();
       }
       
-      if (a.is_solid() != b.is_solid()) {
-        return a.is_solid();
+      if (a->is_solid() != b->is_solid()) {
+        return a->is_solid();
       }
 
       return true;

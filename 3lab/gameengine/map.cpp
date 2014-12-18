@@ -58,8 +58,10 @@ namespace lab3 {
     while(rows.size() <= coord.y) {
       rows.push_back(row_t{});
     }
-    while(rows[coord.y].size() < coord.x) {
-      rows[coord.y].push_back(make_shared<EmptyTile>());
+    for (row_t& r : rows) {
+      while (r.size() < coord.x) {
+        r.push_back(make_shared<EmptyTile>());
+      }
     }
 
     if(rows[coord.y].size() == coord.x) {

@@ -32,7 +32,7 @@ namespace lab3 {
       void tick_entities(Game& game);
       void tick_tiles(Game& game);
       void remove_destroyed();
-      void add_created();
+      void add_created(Game& game);
 
     public:
       World();

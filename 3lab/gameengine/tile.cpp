@@ -3,6 +3,8 @@
 #include "tile.h"
 #include "physicalentity.h"
 
+using std::vector;
+
 namespace lab3 {
 
   void Tile::tick(Game& game) {
@@ -37,8 +39,8 @@ namespace lab3 {
     this->do_stay(game, stayer);
   }
 
-  list<shared_ptr<PhysicalEntity>> Tile::get_entities() const {
-    list<shared_ptr<PhysicalEntity>> result;
+  vector<shared_ptr<PhysicalEntity>> Tile::get_entities() const {
+    vector<shared_ptr<PhysicalEntity>> result;
     for (const weak_ptr<PhysicalEntity> p : entered_entities) {
       if (!p.expired()) {
         result.push_back(p.lock());

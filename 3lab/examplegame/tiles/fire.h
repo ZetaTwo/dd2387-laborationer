@@ -18,6 +18,7 @@ namespace lab3 {
       FireTile();
       FireTile(int damage);
 
+      virtual char to_char() const override { return 'F'; };
       virtual inline const string& get_description() const { return description; }
   };
 }

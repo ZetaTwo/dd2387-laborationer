@@ -52,7 +52,7 @@ namespace lab3 {
     tick_entities(game);
     tick_tiles(game);
     remove_destroyed();
-    add_created();
+    add_created(game);
   }
 
   void World::tick_entities(Game& game) {
@@ -85,15 +85,17 @@ namespace lab3 {
     }
   }
 
-  void World::add_created() {
+  void World::add_created(Game& game) {
     //Create all waiting to be created
     while (created_entities.size() > 0) {
       shared_ptr<Entity>& create = created_entities.front();
       entity_ps.emplace(entities_t::value_type{ create->get_id(), move(create) });
       created_entities.pop();
     }
+    //For physical, also add to tile
     while (created_physicals.size() > 0) {
       shared_ptr<PhysicalEntity>& create = created_physicals.front();
+      maps[create->get_position().map_id].get_tile(create->get_position())->enter(game, create);
       physical_ps.emplace(physicals_t::value_type{ create->get_id(), move(create) });
       created_physicals.pop();
     }

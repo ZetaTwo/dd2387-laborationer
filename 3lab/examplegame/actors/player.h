@@ -21,6 +21,7 @@ namespace lab3 {
   protected:
     virtual void input(Game& input) override;
     virtual void do_tick(Game& game) override;
+    virtual char to_char() const override { return 'P'; };
 
   private:
     Inputer::validation_result_t commands_help(const Inputer::command_t& command) const;

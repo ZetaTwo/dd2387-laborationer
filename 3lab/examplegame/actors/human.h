@@ -23,6 +23,7 @@ namespace lab3 {
 
       virtual inline bool is_solid() const { return true; }
       virtual inline bool is_visible() const { return true; }
+      virtual char to_char() const override { return 'H'; };
 
       virtual void activated_by(Entity& activator) override;
 
