@@ -11,6 +11,7 @@ using std::vector;
 namespace lab3 {
 
   class Actor;
+  class CarriedItem;
   class Game;
   class Tile;
 
@@ -31,6 +32,7 @@ namespace lab3 {
       virtual bool move(Game& game, direction_t direction, unsigned int distance = 1);
 
       virtual void activated_by(Game&, Actor&) {}
+      virtual void activated_by(Game&, Actor&, CarriedItem&) {}
       virtual void tick(Game& game) override {};
 
       vector<shared_ptr<PhysicalEntity>> get_adjacent_entities(Game& game, direction_t dir) const;

@@ -13,4 +13,7 @@ namespace lab3 {
   void Goblin::activated_by(Game& game, Actor& activator) {
   }
 
+  void Goblin::activated_by(Game& game, Actor& activator, CarriedItem& item) {
+  }
+
 }

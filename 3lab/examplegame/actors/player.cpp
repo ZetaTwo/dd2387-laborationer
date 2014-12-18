@@ -187,6 +187,13 @@ namespace lab3 {
         targeted_item_p->activate(game, *this);
         return;
       }
+      shared_ptr<PhysicalEntity> adjacent_entity = get_adjacent_entity(game, DIRECTION_COMMANDS.at(last_command[3]));
+      if(adjacent_entity.get() == nullptr) {
+        game.push_message("There's nothing there.");
+        return;
+      }
+      adjacent_entity->activated_by(game, *this, *targeted_item_p);
+      return;
     }
   }
 
