@@ -56,13 +56,13 @@ namespace lab3 {
       string word;
       while (ss >> word) {
         command.push_back(word);
-
-        const validation_result_t validation_result = command_validator.validate_command(command);
-        if(validation_result.first) {
-          return command;
-        }
-        messages.push_back(validation_result.second);
       }
+
+      const validation_result_t validation_result = command_validator.validate_command(command);
+      if(validation_result.first) {
+        return command;
+      }
+      messages.push_back(validation_result.second);
     }
   }
 }
