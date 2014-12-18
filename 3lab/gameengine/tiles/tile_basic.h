@@ -8,7 +8,7 @@ namespace lab3 {
 
   public:
     virtual inline const string& get_description() const { return description; }
-    virtual char to_char() const override { return '.'; };
+    virtual char to_char() const override { return ' '; };
 
   protected:
     virtual inline void do_stay(Game& game, PhysicalEntity&) override { }
