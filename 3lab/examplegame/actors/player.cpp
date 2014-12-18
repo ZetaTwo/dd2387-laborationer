@@ -1,5 +1,6 @@
 #include <map>
 #include <ostream>
+#include <stdexcept>
 
 #include "player.h"
 #include "game.h"
@@ -8,6 +9,7 @@
 using std::endl;
 using std::find;
 using std::map;
+using std::runtime_error;
 
 namespace lab3 {
 
@@ -28,6 +30,15 @@ namespace lab3 {
     { "help", &Player::commands_help }
   };
 
+  const map<string, void (Player::*) (Game& game, const Inputer::command_t& command)> Player::TOP_COMMAND_EVALUATORS = {
+    { "a", &Player::evaluate_command_activate },
+    { "activate", &Player::evaluate_command_activate },
+    { "g", &Player::evaluate_command_move },
+    { "go", &Player::evaluate_command_move },
+    { "m", &Player::evaluate_command_move },
+    { "move", &Player::evaluate_command_move }
+  };
+
   const map<string, string> COMMANDS_HELP = {
     { "move", "move (u | d | l | r)\nMove up, down, left, right respectively\nAliases: g, go, m" },
     { "activate", "activate (u | d | l | r)\nActivate something above, below, left, right respectively\nAliases: a" }
@@ -35,6 +46,10 @@ namespace lab3 {
 
   void Player::input(Game& game) {
     last_command = game.get_inputer().get_input(game, *this);
+  }
+
+  void Player::do_tick(Game& game) {
+    (this->*(TOP_COMMAND_EVALUATORS.at(last_command[0])))(game, last_command);
   }
 
   Inputer::validation_result_t Player::commands_help(const Inputer::command_t& command) const {
@@ -79,6 +94,14 @@ namespace lab3 {
       return { false, "Invalid direction." };
     }
     return { false, "No direction specified." };
+  }
+
+  void Player::evaluate_command_activate(Game& game, const Inputer::command_t& last_command) {
+    throw runtime_error{"Not implemented"};
+  }
+
+  void Player::evaluate_command_move(Game& game, const Inputer::command_t& last_command) {
+    move(DIRECTION_COMMANDS.at(last_command[1]));
   }
 
 }
