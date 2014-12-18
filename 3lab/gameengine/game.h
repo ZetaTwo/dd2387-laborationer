@@ -1,5 +1,4 @@
 #pragma once
-#include <memory>
 #include <list>
 #include <string>
 
@@ -10,7 +9,6 @@
 
 using std::list;
 using std::string;
-using std::unique_ptr;
 
 namespace lab3 {
 
@@ -21,12 +19,13 @@ namespace lab3 {
 
       World world;
       Camera camera;
-      unique_ptr<Renderer> renderer_p;
-      unique_ptr<Inputer> inputer_p;
+      Renderer* renderer_p;
+      Inputer* inputer_p;
 
       list<string> messages;
 
       Game(Renderer* renderer_p, Inputer* inputer_p);
+      ~Game();
 
       virtual void initialize() = 0;
       void tick();

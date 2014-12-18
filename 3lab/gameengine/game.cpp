@@ -1,11 +1,6 @@
-#include<memory>
-
 #include "game.h"
 #include "inputer.h"
 #include "renderer.h"
-
-using std::make_shared;
-using std::move;
 
 namespace lab3 {
 
@@ -14,6 +9,11 @@ namespace lab3 {
   Game::Game(Renderer* renderer_p, Inputer* inputer_p) :
     renderer_p(renderer_p),
     inputer_p(inputer_p) {
+  }
+
+  Game::~Game() {
+    delete renderer_p;
+    delete inputer_p;
   }
 
   void Game::push_message(const string& message) {
