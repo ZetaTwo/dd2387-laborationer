@@ -1,5 +1,10 @@
+#include <stdexcept>
+
 #include "actors/oldman.h"
+#include "items/questitem.h"
 #include "game.h"
+
+using std::bad_cast;
 
 namespace lab3 {
 
@@ -24,5 +29,17 @@ namespace lab3 {
     game.push_message(ss.str());
   }
 
+  void OldMan::activated_by(Game& game, Actor& activator, CarriedItem& item) {
+    stringstream ss;
+    ss << get_name() << " says:" << endl;
+    try {
+      dynamic_cast<CarriedShinyThing&>(item);
+
+      ss << "You found my shiny thing!" << endl;
+    } catch(bad_cast e) {
+      ss << "This is not my favourite shiny thing." << endl;
+    }
+    game.push_message(ss.str());
+  }
 
 }
