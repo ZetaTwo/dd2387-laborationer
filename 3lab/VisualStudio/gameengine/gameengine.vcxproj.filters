@@ -51,9 +51,6 @@
     <ClCompile Include="..\..\gameengine\tiles\tile_basic.cpp">
       <Filter>Source Files\tiles</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\gameengine\inputer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\gameengine\physicalentity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
