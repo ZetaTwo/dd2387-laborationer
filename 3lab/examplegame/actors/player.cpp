@@ -18,7 +18,7 @@ namespace lab3 {
     { "l", DIR_WEST }
   };
 
-  const map<string, Inputer::validation_result_t (Player::*) (const Inputer::command_t& command) const> TOP_COMMAND_VALIDATORS = {
+  const map<string, Inputer::validation_result_t (Player::*) (const Inputer::command_t& command) const> Player::TOP_COMMAND_VALIDATORS = {
     { "a", &Player::validate_command_directional },
     { "activate", &Player::validate_command_directional },
     { "g", &Player::validate_command_directional },

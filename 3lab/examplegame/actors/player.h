@@ -1,11 +1,16 @@
 #pragma once
+#include <map>
 
 #include "actors/human.h"
+
+using std::map;
 
 namespace lab3 {
 
   class Player : public Human {
     Inputer::command_t last_command;
+
+    static const map<string, Inputer::validation_result_t (Player::*) (const Inputer::command_t& command) const> TOP_COMMAND_VALIDATORS;
 
   public:
     Player(const WorldCoord& initial_position) : Human(initial_position, "You") {}
