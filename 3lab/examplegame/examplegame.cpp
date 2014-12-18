@@ -6,6 +6,7 @@
 #include "actors/player.h"
 #include "entities/kingquest.h"
 #include "tiles/rock.h"
+#include "entities/door.h"
 
 using std::make_shared;
 using std::move;
@@ -28,6 +29,7 @@ namespace lab3 {
  
     world.add_physical(player);
     world.add_physical(make_shared<OldMan>(WorldCoord{ map_id, 5, 4 }));
+    world.add_physical(make_shared<Door>(WorldCoord{ map_id, 20, 8 }));
     world.add_entity(make_shared<KingQuest>(*this, map_id));
   }
 
@@ -55,9 +57,6 @@ namespace lab3 {
 
       if (y != 8) {
         m.set_tile(Coord{ 20, y }, make_shared<RockTile>());
-      }
-      else {
-        //m.set_tile(Coord{ 20, y }, make_shared<MagicDoorTile>());
       }
     }
 

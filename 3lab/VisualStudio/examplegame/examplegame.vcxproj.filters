@@ -66,6 +66,9 @@
     <ClCompile Include="..\..\examplegame\entities\kingquest.cpp">
       <Filter>Source Files\entities</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\examplegame\entities\door.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\examplegame\examplegame.h">
@@ -96,6 +99,9 @@
       <Filter>Header Files\entities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\examplegame\entities\kingquest.h">
+      <Filter>Header Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\examplegame\entities\door.h">
       <Filter>Header Files\entities</Filter>
     </ClInclude>
   </ItemGroup>

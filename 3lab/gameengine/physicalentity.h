@@ -30,6 +30,7 @@ namespace lab3 {
       virtual bool move(Game& game, direction_t direction, unsigned int distance = 1);
 
       virtual void activated_by(Entity& activator) = 0;
+      virtual void tick(Game& game) override {};
 
       vector<shared_ptr<PhysicalEntity>> get_adjacent_entities(Game& game, direction_t dir) const;
       shared_ptr<PhysicalEntity> get_adjacent_entity(Game& game, direction_t dir) const;
