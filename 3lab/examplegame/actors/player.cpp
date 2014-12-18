@@ -25,6 +25,10 @@ namespace lab3 {
       return { false, "Empty command" };
     }
 
+    if(command[0] == "help") {
+      return { false, "Commands:\ng (u | d | l | r) : Move up, down, left, right respectively" };
+    }
+
     if(command[0] == "g") {
       if(command.size() > 1) {
         if(DIRECTION_COMMANDS.count(command[1]) > 0) {
