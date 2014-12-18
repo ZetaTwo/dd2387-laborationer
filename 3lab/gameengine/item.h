@@ -15,6 +15,8 @@ namespace lab3 {
     public:
       Item(const WorldCoord& position) : PhysicalEntity(position) {}
       virtual bool pick_up(Game& game, Actor& taker) = 0;
+
+      virtual void activated_by(Game& game, Actor& activator) override { pick_up(game, activator); }
   };
 
   class CarriedItem : public Identifiable {
