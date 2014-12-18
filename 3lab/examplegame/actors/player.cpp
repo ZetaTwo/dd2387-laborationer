@@ -14,10 +14,10 @@ using std::runtime_error;
 namespace lab3 {
 
   const map<string, direction_t> DIRECTION_COMMANDS = {
-    { "u", DIR_NORTH },
-    { "r", DIR_EAST },
-    { "d", DIR_SOUTH },
-    { "l", DIR_WEST }
+    { "w", DIR_NORTH },
+    { "a", DIR_WEST },
+    { "s", DIR_SOUTH },
+    { "d", DIR_EAST }
   };
 
   const map<string, Inputer::validation_result_t (Player::*) (const Inputer::command_t& command) const> Player::TOP_COMMAND_VALIDATORS = {
@@ -40,8 +40,8 @@ namespace lab3 {
   };
 
   const map<string, string> COMMANDS_HELP = {
-    { "move", "move (u | d | l | r)\nMove up, down, left, right respectively\nAliases: g, go, m" },
-    { "activate", "activate (u | d | l | r)\nActivate something above, below, left, right respectively\nAliases: a" }
+    { "move", "move (w | a | s | d)\nMove up, left, down, right respectively\nAliases: g, go, m" },
+    { "activate", "activate (w | a | s | d)\nActivate something above, left, below, right respectively\nAliases: a" }
   };
 
   void Player::input(Game& game) {
