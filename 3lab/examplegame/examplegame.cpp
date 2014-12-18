@@ -1,8 +1,7 @@
 #include "examplegame.h"
 #include "actors/oldman.h"
-#include "actors/evilking.h"
 #include "actors/player.h"
-#include "tiles/fire.h"
+#include "entities/kingquest.h"
 #include "tiles/rock.h"
 
 using std::make_shared;
@@ -24,7 +23,7 @@ namespace lab3 {
  
     world.add_physical(player);
     world.add_physical(make_shared<OldMan>(WorldCoord{ map_id, 5, 4 }));
-    world.add_physical(make_shared<EvilKing>(WorldCoord{ map_id, 28, 10 }));
+    world.add_entity(make_shared<KingQuest>(*this, map_id));
   }
 
   void ExampleGame::start_message() const {

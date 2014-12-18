@@ -89,6 +89,8 @@
     <ClCompile Include="..\..\examplegame\actors\human.cpp" />
     <ClCompile Include="..\..\examplegame\actors\oldman.cpp" />
     <ClCompile Include="..\..\examplegame\actors\player.cpp" />
+    <ClCompile Include="..\..\examplegame\entities\goblinquest.cpp" />
+    <ClCompile Include="..\..\examplegame\entities\kingquest.cpp" />
     <ClCompile Include="..\..\examplegame\examplegame.cpp" />
     <ClCompile Include="..\..\examplegame\main.cpp" />
     <ClCompile Include="..\..\examplegame\tiles\fire.cpp" />
@@ -100,6 +102,8 @@
     <ClInclude Include="..\..\examplegame\actors\human.h" />
     <ClInclude Include="..\..\examplegame\actors\oldman.h" />
     <ClInclude Include="..\..\examplegame\actors\player.h" />
+    <ClInclude Include="..\..\examplegame\entities\goblinquest.h" />
+    <ClInclude Include="..\..\examplegame\entities\kingquest.h" />
     <ClInclude Include="..\..\examplegame\examplegame.h" />
     <ClInclude Include="..\..\examplegame\tiles\fire.h" />
     <ClInclude Include="..\..\examplegame\tiles\rock.h" />

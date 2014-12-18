@@ -25,6 +25,12 @@
     <Filter Include="Header Files\tiles">
       <UniqueIdentifier>{7bc1a0b4-9409-468d-8876-720fdfb3d081}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\entities">
+      <UniqueIdentifier>{cd63b11f-d13d-4315-a658-b369201e0fe5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\entities">
+      <UniqueIdentifier>{125f02fa-2058-4452-8d29-d82adae0c8cf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\examplegame\examplegame.cpp">
@@ -54,6 +60,12 @@
     <ClCompile Include="..\..\examplegame\tiles\rock.cpp">
       <Filter>Source Files\tiles</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\examplegame\entities\goblinquest.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\examplegame\entities\kingquest.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\examplegame\examplegame.h">
@@ -79,6 +91,12 @@
     </ClInclude>
     <ClInclude Include="..\..\examplegame\tiles\rock.h">
       <Filter>Header Files\tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\examplegame\entities\goblinquest.h">
+      <Filter>Header Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\examplegame\entities\kingquest.h">
+      <Filter>Header Files\entities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
