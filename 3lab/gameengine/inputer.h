@@ -39,8 +39,6 @@ namespace lab3 {
     list<string> messages;
 
     while(true) {
-      render_game(game);
-
       for(string message : messages) {
         cout << message << endl;
       }
@@ -63,6 +61,8 @@ namespace lab3 {
         return command;
       }
       messages.push_back(validation_result.second);
+
+      render_game(game);
     }
   }
 }
