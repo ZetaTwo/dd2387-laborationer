@@ -19,12 +19,15 @@
     <Filter Include="Source Files\actors">
       <UniqueIdentifier>{d86bd9ce-a700-4599-9aef-f3315bf8f2f8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\tiles">
+      <UniqueIdentifier>{efa340e8-72cb-4071-85f8-057361f66634}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\tiles">
+      <UniqueIdentifier>{7bc1a0b4-9409-468d-8876-720fdfb3d081}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\examplegame\examplegame.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\examplegame\hazards.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\examplegame\main.cpp">
@@ -36,12 +39,12 @@
     <ClCompile Include="..\..\examplegame\actors\human.cpp">
       <Filter>Source Files\actors</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\examplegame\tiles\fire.cpp">
+      <Filter>Source Files\tiles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\examplegame\examplegame.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\examplegame\hazards.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\examplegame\actors\human.h">
@@ -49,6 +52,9 @@
     </ClInclude>
     <ClInclude Include="..\..\examplegame\actors\player.h">
       <Filter>Header Files\actors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\examplegame\tiles\fire.h">
+      <Filter>Header Files\tiles</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

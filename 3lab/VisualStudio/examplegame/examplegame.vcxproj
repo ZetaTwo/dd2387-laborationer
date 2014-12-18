@@ -87,14 +87,14 @@
     <ClCompile Include="..\..\examplegame\actors\human.cpp" />
     <ClCompile Include="..\..\examplegame\actors\player.cpp" />
     <ClCompile Include="..\..\examplegame\examplegame.cpp" />
-    <ClCompile Include="..\..\examplegame\hazards.cpp" />
     <ClCompile Include="..\..\examplegame\main.cpp" />
+    <ClCompile Include="..\..\examplegame\tiles\fire.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\examplegame\actors\human.h" />
     <ClInclude Include="..\..\examplegame\actors\player.h" />
     <ClInclude Include="..\..\examplegame\examplegame.h" />
-    <ClInclude Include="..\..\examplegame\hazards.h" />
+    <ClInclude Include="..\..\examplegame\tiles\fire.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -54,6 +54,9 @@
     <ClCompile Include="..\..\gameengine\physicalentity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\gameengine\inputer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\gameengine\actor.h">

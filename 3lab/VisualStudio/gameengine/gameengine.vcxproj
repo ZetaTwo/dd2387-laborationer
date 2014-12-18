@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\gameengine\actor.cpp" />
     <ClCompile Include="..\..\gameengine\game.cpp" />
+    <ClCompile Include="..\..\gameengine\inputer.cpp" />
     <ClCompile Include="..\..\gameengine\map.cpp" />
     <ClCompile Include="..\..\gameengine\physicalentity.cpp" />
     <ClCompile Include="..\..\gameengine\renderer.cpp" />
