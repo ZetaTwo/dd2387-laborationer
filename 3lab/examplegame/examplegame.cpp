@@ -36,7 +36,7 @@ namespace lab3 {
     camera.set_followee(player);
  
     world.add_physical(player);
-    world.add_physical(make_shared<Human>(WorldCoord{ m.get_id(), 0, 0 }));
-    world.add_physical(make_shared<Human>(WorldCoord{ m.get_id(), 1, 1 }));
+    world.add_physical(make_shared<Human>(WorldCoord{ m.get_id(), 10, 7 }));
+    world.add_physical(make_shared<Human>(WorldCoord{ m.get_id(), 20, 3 }));
   }
 }
