@@ -30,9 +30,6 @@ namespace lab3 {
       virtual inline int getVolume() const { return volume; }
       virtual inline int getWeight() const { return weight; }
       virtual void activate(Game& game, Actor&);
-
-      virtual inline string get_name() const override { return "CHANGEME"; }
-      virtual inline string get_description() const override  { return "CHANGEME"; }
   };
 
 }
