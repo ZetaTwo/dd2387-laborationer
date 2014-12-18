@@ -1,6 +1,7 @@
 #include <map>
 #include <ostream>
 #include <stdexcept>
+#include <string>
 
 #include "player.h"
 #include "game.h"
@@ -8,8 +9,11 @@
 
 using std::endl;
 using std::find;
+using std::invalid_argument;
 using std::map;
+using std::out_of_range;
 using std::runtime_error;
+using std::stoi;
 
 namespace lab3 {
 
@@ -45,7 +49,9 @@ namespace lab3 {
   };
 
   void Player::input(Game& game) {
-    last_command = game.get_inputer().get_input(game, *this);
+    if(repeat_command_times == 0 || --repeat_command_times == 0) {
+      last_command = game.get_inputer().get_input(game, *this);
+    }
   }
 
   void Player::do_tick(Game& game) {
@@ -89,6 +95,17 @@ namespace lab3 {
   Inputer::validation_result_t Player::validate_command_directional(const Inputer::command_t& command) const {
     if(command.size() > 1) {
       if(DIRECTION_COMMANDS.count(command[1]) > 0) {
+        if(command.size() > 2) {
+          try {
+            if(stoi(command[2]) < 1) {
+              return { false, "Invalid distance." };
+            }
+          } catch(invalid_argument e) {
+            return { false, "Invalid distance." };
+          } catch(out_of_range e) {
+            return { false, "Distance too large." };
+          }
+        }
         return { true, "" };
       }
       return { false, "Invalid direction." };
@@ -101,6 +118,10 @@ namespace lab3 {
   }
 
   void Player::evaluate_command_move(Game& game, const Inputer::command_t& last_command) {
+    if(repeat_command_times == 0 && last_command.size() > 2) {
+      repeat_command_times = stoi(last_command[2]);
+    }
+
     move(game, DIRECTION_COMMANDS.at(last_command[1]));
   }
 

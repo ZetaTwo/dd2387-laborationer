@@ -13,8 +13,10 @@ namespace lab3 {
     static const map<string, Inputer::validation_result_t (Player::*) (const Inputer::command_t& command) const> TOP_COMMAND_VALIDATORS;
     static const map<string, void (Player::*) (Game& game, const Inputer::command_t& command)> TOP_COMMAND_EVALUATORS;
 
+    unsigned int repeat_command_times;
+
   public:
-    Player(const WorldCoord& initial_position) : Human(initial_position, "You") {}
+    Player(const WorldCoord& initial_position) : Human(initial_position, "You"), repeat_command_times(0) {}
 
     Inputer::validation_result_t validate_command(const Inputer::command_t& command) const;
 
