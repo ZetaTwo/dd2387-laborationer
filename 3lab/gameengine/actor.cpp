@@ -27,8 +27,10 @@ namespace lab3 {
     return false;
   }
 
-  bool Actor::give_item(CarriedItem& item, Actor& recipient) {
-    return false;
+  bool Actor::give_item(Game& game, unique_ptr<CarriedItem>&& item_p, Actor& recipient) {
+    inventory.erase(item_p);
+    recipient.add_item(game, std::move(item_p));
+    return true;
   }
 
   bool Actor::remove_item(CarriedItem& item) {

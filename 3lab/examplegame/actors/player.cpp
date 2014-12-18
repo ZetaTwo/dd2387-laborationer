@@ -7,6 +7,7 @@
 #include "game.h"
 #include "util.h"
 
+using std::bad_cast;
 using std::endl;
 using std::find;
 using std::invalid_argument;
@@ -49,7 +50,7 @@ namespace lab3 {
 
   const map<string, string> COMMANDS_HELP = {
     { "activate", "activate (w | a | s | d)\n  Activate something above, left, below, right respectively\n  Aliases: a" },
-    { "inventory", "inventory [describe <N> | use <N> (w | a | s | d)]\n  Inspect/use items in inventory\n  Aliases: i" },
+    { "inventory", "inventory [describe <N> | (use | give) <N> (w | a | s | d)]\n  Inspect/use items in inventory\n  Aliases: i" },
     { "move", "move (w | a | s | d)\n  Move up, left, down, right respectively\n  Aliases: g, go, m" }
   };
 
@@ -141,6 +142,16 @@ namespace lab3 {
       }
       return { false, "Invalid direction." };
     }
+
+    if(command[1] == "give") {
+      if(command.size() < 4) {
+        return { false, "No direction specified." };
+      }
+      if(DIRECTION_COMMANDS.count(command[3]) > 0) {
+        return { true, "" };
+      }
+      return { false, "Invalid direction." };
+    }
     return { true, "" };
   }
 
@@ -173,9 +184,9 @@ namespace lab3 {
       return;
     }
 
-    auto targeted_item_it = inventory.begin();
+    set<unique_ptr<CarriedItem>>::iterator targeted_item_it = inventory.begin();
     for(int n = 1; n < stoi(last_command[2]); ++n, ++targeted_item_it);
-    const unique_ptr<CarriedItem>& targeted_item_p = *targeted_item_it;
+    unique_ptr<CarriedItem>& targeted_item_p = const_cast<unique_ptr<CarriedItem>&>(*targeted_item_it);
 
     if(last_command[1] == "describe") {
       game.push_message(targeted_item_p->get_description());
@@ -193,6 +204,20 @@ namespace lab3 {
         return;
       }
       adjacent_entity->activated_by(game, *this, *targeted_item_p);
+      return;
+    }
+
+    if(last_command[1] == "give") {
+      shared_ptr<PhysicalEntity> adjacent_entity = get_adjacent_entity(game, DIRECTION_COMMANDS.at(last_command[3]));
+      if(adjacent_entity.get() == nullptr) {
+        game.push_message("There's nothing there.");
+        return;
+      }
+      try {
+        give_item(game, std::move(targeted_item_p), dynamic_cast<Actor&>(*adjacent_entity));
+      } catch(bad_cast e) {
+        game.push_message("Can't give items to that.");
+      }
       return;
     }
   }

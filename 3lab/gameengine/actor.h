@@ -25,7 +25,7 @@ namespace lab3 {
 
       virtual bool add_item(Game& game, unique_ptr<CarriedItem>&& item_p);
       virtual bool drop_item(CarriedItem& item);
-      virtual bool give_item(CarriedItem& item, Actor& recipient);
+      virtual bool give_item(Game& game, unique_ptr<CarriedItem>&& item_p, Actor& recipient);
       virtual bool remove_item(CarriedItem& item);
 
       virtual bool set_remote_controlled(bool is_remote_controlled);
