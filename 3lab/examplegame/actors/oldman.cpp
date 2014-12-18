@@ -36,6 +36,17 @@ namespace lab3 {
 
     if(has_shiny_thing()) {
         ss << "Thank you for finding my favourite shiny thing!" << endl;
+
+        for(unique_ptr<CarriedItem>& item_p : inventory) {
+          try {
+            dynamic_cast<Sword&>(*item_p);
+
+            ss << "Here, take this." << endl;
+            give_item(game, std::move(item_p), activator);
+            break;
+          } catch(bad_cast e) {
+          }
+        }
     } else {
         ss << "Have you seen my favourite shiny thing?" << endl;
     }

@@ -46,4 +46,10 @@ namespace lab3 {
       virtual inline string get_description() const override  { return "It's a bit shiny."; }
   };
 
+  class Sword : public CarriedItem {
+    public:
+      virtual inline string get_name() const override { return "Blunt sword"; }
+      virtual inline string get_description() const override  { return "It's blunt, and pretty heavy. Sure to do more bludgeoning than slicing damage."; }
+  };
+
 }
