@@ -960,6 +960,102 @@ TEST_P(AlternatingVectorsTest, ItrRCBeginEnd) {
   }
 }
 
+TEST_P(SizeTest, ItrOperatorPlusAdvancesThatManySteps) {
+  const size_t true_index = GetParam();
+  const size_t size = true_index + 17;
+
+  if(true_index < size) {
+    const Vec vc = [size, true_index]() { Vec v(size, false); v[true_index] = true; return v; }();
+    Vec v = vc;
+
+    const Vec::const_iterator bc = vc.begin();
+    const Vec::const_iterator ec = vc.end();
+    const Vec::iterator b = v.begin(); // Make sure we call the non-const begin() method
+    const Vec::iterator e = v.end(); // Make sure we call the non-const end() method
+
+    EXPECT_TRUE(*(b + true_index));
+    EXPECT_TRUE(*(e + (true_index - v.size())));
+    EXPECT_TRUE(*(bc + true_index));
+    EXPECT_TRUE(*(ec + (true_index - vc.size())));
+
+    EXPECT_TRUE(*(true_index + b));
+    EXPECT_TRUE(*((true_index - v.size()) + e));
+    EXPECT_TRUE(*(true_index + bc));
+    EXPECT_TRUE(*((true_index - vc.size()) + ec));
+  }
+}
+
+TEST_P(SizeTest, ItrOperatorMinusBacksThatManySteps) {
+  const size_t true_index = GetParam();
+  const size_t size = true_index + 17;
+
+  if(true_index < size) {
+    const Vec vc = [size, true_index]() { Vec v(size, false); v[true_index] = true; return v; }();
+    Vec v = vc;
+
+    const int backward_index = vc.size() - true_index;
+
+    const Vec::const_iterator bc = vc.begin();
+    const Vec::const_iterator ec = vc.end();
+    const Vec::iterator b = v.begin(); // Make sure we call the non-const begin() method
+    const Vec::iterator e = v.end(); // Make sure we call the non-const end() method
+
+    EXPECT_TRUE(*(e - backward_index));
+    EXPECT_TRUE(*(b - (backward_index - v.size())));
+    EXPECT_TRUE(*(ec - backward_index));
+    EXPECT_TRUE(*(bc - (backward_index - vc.size())));
+  }
+}
+
+TEST_P(SizeTest, ItrROperatorPlusAdvancesThatManySteps) {
+  const size_t true_index = GetParam();
+  const size_t size = true_index + 17;
+
+  if(true_index < size) {
+    const Vec vc = [size, true_index]() { Vec v(size, false); v[true_index] = true; return v; }();
+    Vec v = vc;
+
+    const int backward_index = vc.size() - true_index;
+
+    const Vec::const_reverse_iterator rbc = vc.rbegin();
+    const Vec::const_reverse_iterator rec = vc.rend();
+    const Vec::reverse_iterator rb = v.rbegin(); // Make sure we call the non-const rbegin() method
+    const Vec::reverse_iterator re = v.rend(); // Make sure we call the non-const rend() method
+
+    EXPECT_TRUE(*(rb + (backward_index - 1)));
+    EXPECT_TRUE(*(re + (-true_index - 1)));
+    EXPECT_TRUE(*(rbc + (backward_index - 1)));
+    EXPECT_TRUE(*(rec + (-true_index - 1)));
+
+    EXPECT_TRUE(*((backward_index - 1) + rb));
+    EXPECT_TRUE(*((-true_index - 1) + re));
+    EXPECT_TRUE(*((backward_index - 1) + rbc));
+    EXPECT_TRUE(*((-true_index - 1) + rec));
+  }
+}
+
+TEST_P(SizeTest, ItrROperatorMinusBacksThatManySteps) {
+  const size_t true_index = GetParam();
+  const size_t size = true_index + 17;
+
+  if(true_index < size) {
+    const Vec vc = [size, true_index]() { Vec v(size, false); v[true_index] = true; return v; }();
+    Vec v = vc;
+
+    const int backward_index = vc.size() - true_index;
+
+    const Vec::const_reverse_iterator rbc = vc.rbegin();
+    const Vec::const_reverse_iterator rec = vc.rend();
+    const Vec::reverse_iterator rb = v.rbegin(); // Make sure we call the non-const rbegin() method
+    const Vec::reverse_iterator re = v.rend(); // Make sure we call the non-const rend() method
+
+    EXPECT_TRUE(*(re - (true_index + 1)));
+    EXPECT_TRUE(*(rb - (-backward_index + 1)));
+    EXPECT_TRUE(*(rec - (true_index + 1)));
+    EXPECT_TRUE(*(rbc - (-backward_index + 1)));
+  }
+}
+
 TEST_P(AlternatingVectorsTest, OperatorNot) {
   const Vec& vector = GetParam();
   const Vec neg_vector = ~vector;
