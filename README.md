@@ -7,17 +7,19 @@ KTH - DD2387 - Laborationer
 Status
 ------
 
-Current score: (1 + 10 + (5) + 4) + (1 + 6) = **26p**
+Current score: (2 + 10 + (5) + 4) + (2 + 6) + (4 + (6)) = **39p**
 
-Currently in pipeline: (10 + 4 + 3) + (6) + (2) = 25p
+Completed but not yet passed: (6) = 6p
 
-Uncompleted required extra assignments: (6 + 5) = 11p
+Working on: (10) = 10p
 
-Current prospective score: **62p**
+Uncompleted required extra assignments: (5) = 5p
+
+Current prospective score: **60p**
 
 ---
 
-Lab 1 mandatory assignments **PASSED (bonus)** (bonus 1p)
+Lab 1 mandatory assignments **PASSED (bonus)** (bonus 2p)
 
  1. ~~Make It Happen~~ [~~#13~~](https://github.com/ZetaTwo/dd2387-laborationer/issues/13)
  2. ~~Hello World~~ [~~#14~~](https://github.com/ZetaTwo/dd2387-laborationer/issues/14)
@@ -33,14 +35,14 @@ Lab 1 extra assignments
  2. *(nothing)*
  3. ~~Concurrency Is The New Black~~ (5p) **PASSED (Calle)** [~~#27~~](https://github.com/ZetaTwo/dd2387-laborationer/issues/27)
  4. ~~The Hypercube~~ (4p) **PASSED** [~~#22~~](https://github.com/ZetaTwo/dd2387-laborationer/issues/22)
- 5. Space Is Not Infinite (10p, A) [~~#23~~](https://github.com/ZetaTwo/dd2387-laborationer/issues/23) [#38](https://github.com/ZetaTwo/dd2387-laborationer/issues/38) [#39](https://github.com/ZetaTwo/dd2387-laborationer/issues/39) [#40](https://github.com/ZetaTwo/dd2387-laborationer/issues/40)
+ 5. Space Is Not Infinite (10p, A) [~~#23~~](https://github.com/ZetaTwo/dd2387-laborationer/issues/23) [~~#38~~](https://github.com/ZetaTwo/dd2387-laborationer/issues/38) [#39](https://github.com/ZetaTwo/dd2387-laborationer/issues/39) [#40](https://github.com/ZetaTwo/dd2387-laborationer/issues/40)
  6. *(nothing)*
  7. The Master of Life & Death (4p) [#26](https://github.com/ZetaTwo/dd2387-laborationer/issues/26)
  8. Better Safe Than Sorry (3p, A) [#28](https://github.com/ZetaTwo/dd2387-laborationer/issues/28)
 
 ---
 
-Lab 2 mandatory assignments **PASSED (bonus)** (bonus 1p)
+Lab 2 mandatory assignments **PASSED (bonus)** (bonus 2p)
 
  1. ~~Abstract base class~~ [~~#29~~](https://github.com/ZetaTwo/dd2387-laborationer/issues/29)
  2. ~~Abstract inheritance~~ [~~#30~~](https://github.com/ZetaTwo/dd2387-laborationer/issues/30) [~~#34~~](https://github.com/ZetaTwo/dd2387-laborationer/issues/34) [~~#35~~](https://github.com/ZetaTwo/dd2387-laborationer/issues/35)
@@ -53,11 +55,11 @@ Lab 2 extra assignments
 
 ---
 
-Lab 3 base assignment (bonus 2p)
+Lab 3 base assignment **PASSED (bonus)** (bonus 4p)
 
 Lab 3 extra assignments
 
- 1. Pointers to member functions and lambdas (6p, D)
+ 1. ~~Pointers to member functions and lambdas~~ **PASSED (Emil)** (6p, D)
  2. Save/load game state (4p)
  3. Read game resources from file (5p)
  4. Dynamic object lifetimes (5p, B)
