@@ -23,7 +23,7 @@ public:
 
   //Operators
   bool_proxy operator[](size_t index);
-  const bool operator[](size_t index) const;
+  bool operator[](size_t index) const;
   Vector<bool>& operator=(const Vector<bool>& other);
   Vector<bool>& operator=(const std::initializer_list<bool>& list);
   Vector<bool>& operator=(Vector<bool>&& other); //Move

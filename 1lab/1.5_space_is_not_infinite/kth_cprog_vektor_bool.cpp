@@ -63,7 +63,7 @@ Vector<bool>::bool_proxy Vector<bool>::operator[](size_t index) {
   return bool_proxy(data.get() + (index / STORAGE_BLOCK_SIZE), index % STORAGE_BLOCK_SIZE);
 }
 
-const bool Vector<bool>::operator[](size_t index) const {
+bool Vector<bool>::operator[](size_t index) const {
   if(index >= count) {
     std::stringstream msg;
     msg << "Index out of range: " << index << ", expected range [0 - " << count << ")";
