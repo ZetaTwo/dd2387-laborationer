@@ -80,10 +80,7 @@ Vector<bool>::const_iterator Vector<bool>::const_iterator::operator+(difference_
 }
 
 Vector<bool>::const_iterator Vector<bool>::const_iterator::operator-(difference_type offset) const {
-  const_iterator tmp(*this);
-  tmp.index -= (offset % MAX_SUBINDEX);
-  tmp.element -= (offset / MAX_SUBINDEX);
-  return tmp;
+  return *this + (-offset);
 }
 
 Vector<bool>::const_iterator::difference_type Vector<bool>::const_iterator::operator-(const const_iterator& other) const {
@@ -188,10 +185,7 @@ Vector<bool>::iterator Vector<bool>::iterator::operator+(difference_type offset)
 }
 
 Vector<bool>::iterator Vector<bool>::iterator::operator-(difference_type offset) const {
-  iterator tmp(*this);
-  tmp.index -= (offset % MAX_SUBINDEX);
-  tmp.element -= (offset / MAX_SUBINDEX);
-  return tmp;
+  return *this + (-offset);
 }
 
 Vector<bool>::iterator::difference_type Vector<bool>::iterator::operator-(const iterator& other) const {
