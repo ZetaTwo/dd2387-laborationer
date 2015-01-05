@@ -1,4 +1,7 @@
+#include <cmath>
 #include "kth_cprog_vektor_bool.h"
+
+using std::floor;
 
 Vector<bool>::bool_proxy::bool_proxy(storage_type* element, subindex_type index) :
   element(element),
@@ -42,16 +45,9 @@ Vector<bool>::const_iterator Vector<bool>::const_iterator::operator++(int) {
   return tmp;
 }
 
-Vector<bool>::const_iterator& Vector<bool>::const_iterator::operator+=(difference_type distance) {
-  if(distance > 0) {
-    for(difference_type d = distance; d > 0; --d) {
-      ++*this;
-    }
-  } else if(distance < 0) {
-    for(difference_type d = distance; d < 0; ++d) {
-      --*this;
-    }
-  }
+Vector<bool>::const_iterator& Vector<bool>::const_iterator::operator+=(const difference_type distance) {
+  element += static_cast<difference_type>(floor(static_cast<double>(index + distance) / STORAGE_BLOCK_SIZE));
+  index = ((index + distance) % STORAGE_BLOCK_SIZE + STORAGE_BLOCK_SIZE) % STORAGE_BLOCK_SIZE;
   return *this;
 }
 
@@ -148,15 +144,8 @@ Vector<bool>::iterator Vector<bool>::iterator::operator++(int) {
 }
 
 Vector<bool>::iterator& Vector<bool>::iterator::operator+=(difference_type distance) {
-  if(distance > 0) {
-    for(difference_type d = distance; d > 0; --d) {
-      ++*this;
-    }
-  } else if(distance < 0) {
-    for(difference_type d = distance; d < 0; ++d) {
-      --*this;
-    }
-  }
+  element += static_cast<difference_type>(floor(static_cast<double>(index + distance) / STORAGE_BLOCK_SIZE));
+  index = ((index + distance) % STORAGE_BLOCK_SIZE + STORAGE_BLOCK_SIZE) % STORAGE_BLOCK_SIZE;
   return *this;
 }
 
