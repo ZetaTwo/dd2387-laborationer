@@ -2,14 +2,19 @@
 #include "kth_cprog_template_container.hpp"
 #include <climits> // CHAR_BIT
 
+class VectorBoolConstIterator;
+class VectorBoolIterator;
+class VectorBoolProxy;
+
 template <>
 class Vector<bool> {
   typedef unsigned int storage_type; static const unsigned int STORAGE_BLOCK_ALL_TRUE = -1;
   typedef unsigned char subindex_type;
+
   static const size_t STORAGE_BLOCK_SIZE = sizeof(storage_type) * CHAR_BIT;
   static const subindex_type MAX_SUBINDEX = STORAGE_BLOCK_SIZE - 1;
 
-  class bool_proxy;
+  typedef VectorBoolProxy bool_proxy; friend class VectorBoolProxy;
 
 public:
   //Constructors & destructors
@@ -52,9 +57,8 @@ public:
 
   //Iterators
 public:
-  class const_iterator;
-  class iterator;
-
+  typedef VectorBoolConstIterator const_iterator; friend class VectorBoolConstIterator;
+  typedef VectorBoolIterator iterator; friend class VectorBoolIterator;
   typedef std::reverse_iterator<iterator> reverse_iterator;
   typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
 
@@ -87,67 +91,76 @@ private:
 };
 
 //Iterator classes
-class Vector<bool>::bool_proxy {
+class VectorBoolProxy {
 private:
+  typedef Vector<bool>::storage_type storage_type;
+  typedef Vector<bool>::subindex_type subindex_type;
+
   storage_type* element;
   subindex_type index;
 public:
-  bool_proxy(storage_type* element, subindex_type index);
-  bool_proxy& operator=(const bool value);
+  VectorBoolProxy(storage_type* element, subindex_type index);
+  VectorBoolProxy& operator=(const bool value);
   operator const bool () const;
 };
 
-class Vector<bool>::const_iterator : public std::iterator<std::random_access_iterator_tag, const bool> {
+class VectorBoolConstIterator : public std::iterator<std::random_access_iterator_tag, const bool> {
 private:
+  typedef Vector<bool>::storage_type storage_type;
+  typedef Vector<bool>::subindex_type subindex_type;
+
   storage_type* element;
   subindex_type index;
   
 public:
-  const_iterator();
-  const_iterator(storage_type* element, subindex_type index);
-  const_iterator(const const_iterator& mit);
-  const_iterator& operator++();
-  const_iterator operator++(int);
-  const_iterator& operator+=(difference_type);
-  const_iterator& operator--();
-  const_iterator operator--(int);
-  const_iterator& operator-=(difference_type);
-  const_iterator operator+(difference_type) const;
-  const_iterator operator-(difference_type offset) const;
-  difference_type operator-(const const_iterator& other) const;
-  bool operator==(const const_iterator& rhs) const;
-  bool operator!=(const const_iterator& rhs) const;
-  bool operator<(const const_iterator& rhs) const;
-  bool operator>(const const_iterator& rhs) const;
-  bool operator>=(const const_iterator& rhs) const;
-  bool operator<=(const const_iterator& rhs) const;
-  bool_proxy operator[](difference_type index);
+  VectorBoolConstIterator();
+  VectorBoolConstIterator(storage_type* element, subindex_type index);
+  VectorBoolConstIterator(const VectorBoolConstIterator& mit);
+  VectorBoolConstIterator& operator++();
+  VectorBoolConstIterator operator++(int);
+  VectorBoolConstIterator& operator+=(difference_type);
+  VectorBoolConstIterator& operator--();
+  VectorBoolConstIterator operator--(int);
+  VectorBoolConstIterator& operator-=(difference_type);
+  VectorBoolConstIterator operator+(difference_type) const;
+  VectorBoolConstIterator operator-(difference_type offset) const;
+  difference_type operator-(const VectorBoolConstIterator& other) const;
+  bool operator==(const VectorBoolConstIterator& rhs) const;
+  bool operator!=(const VectorBoolConstIterator& rhs) const;
+  bool operator<(const VectorBoolConstIterator& rhs) const;
+  bool operator>(const VectorBoolConstIterator& rhs) const;
+  bool operator>=(const VectorBoolConstIterator& rhs) const;
+  bool operator<=(const VectorBoolConstIterator& rhs) const;
+  VectorBoolProxy operator[](difference_type index);
   bool operator*();
 };
 
-Vector<bool>::const_iterator operator+(const Vector<bool>::const_iterator::difference_type&, const Vector<bool>::const_iterator& it);
+VectorBoolConstIterator operator+(const VectorBoolConstIterator::difference_type&, const VectorBoolConstIterator& it);
 
-class Vector<bool>::iterator : public Vector<bool>::const_iterator {
+class VectorBoolIterator : public VectorBoolConstIterator {
+  typedef Vector<bool>::storage_type storage_type;
+  typedef Vector<bool>::subindex_type subindex_type;
+
   storage_type const* element;
   subindex_type index;
 
 public:
-  iterator();
-  iterator(storage_type* element, subindex_type index);
-  iterator(const iterator& mit);
-  iterator& operator++();
-  iterator operator++(int);
-  iterator& operator+=(difference_type);
-  iterator& operator--();
-  iterator operator--(int);
-  iterator& operator-=(difference_type);
-  iterator operator+(difference_type offset) const;
-  iterator operator-(difference_type offset) const;
-  difference_type operator-(const iterator& other) const;
-  bool operator==(const iterator& rhs) const;
-  bool operator!=(const iterator& rhs) const;
+  VectorBoolIterator();
+  VectorBoolIterator(storage_type* element, subindex_type index);
+  VectorBoolIterator(const VectorBoolIterator& mit);
+  VectorBoolIterator& operator++();
+  VectorBoolIterator operator++(int);
+  VectorBoolIterator& operator+=(difference_type);
+  VectorBoolIterator& operator--();
+  VectorBoolIterator operator--(int);
+  VectorBoolIterator& operator-=(difference_type);
+  VectorBoolIterator operator+(difference_type offset) const;
+  VectorBoolIterator operator-(difference_type offset) const;
+  difference_type operator-(const VectorBoolIterator& other) const;
+  bool operator==(const VectorBoolIterator& rhs) const;
+  bool operator!=(const VectorBoolIterator& rhs) const;
   bool operator[](difference_type index);
   bool operator*();
 };
 
-Vector<bool>::iterator operator+(const Vector<bool>::iterator::difference_type&, const Vector<bool>::iterator& it);
+VectorBoolIterator operator+(const VectorBoolIterator::difference_type&, const VectorBoolIterator& it);

@@ -54,7 +54,7 @@ Vector<bool>::Vector(size_t size, bool element) : count(size), max_size(initial_
 Vector<bool>::~Vector() {
 }
 
-Vector<bool>::bool_proxy Vector<bool>::operator[](size_t index) {
+VectorBoolProxy Vector<bool>::operator[](size_t index) {
   if(index >= count) {
     std::stringstream msg;
     msg << "Index out of range: " << index << ", expected range [0 - " << count << ")";

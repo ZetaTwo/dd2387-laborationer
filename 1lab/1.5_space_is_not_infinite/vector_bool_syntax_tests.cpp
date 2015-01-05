@@ -13,7 +13,7 @@ typedef iterator_traits<It>::difference_type difference;
 typedef iterator_traits<It>::reference reference;
 typedef iterator_traits<It>::value_type value_type;
 
-struct VectorBoolIterator : Test {
+struct VectorBoolIteratorFixture : Test {
     Vec v;
     Vec::iterator b;
     Vec::iterator e;
@@ -24,7 +24,7 @@ struct VectorBoolIterator : Test {
       e = v.begin();
     }
 };
-struct VectorBoolConstIterator : Test {
+struct VectorBoolConstIteratorFixture : Test {
     const Vec v;
     Vec::const_iterator it;
 
@@ -36,85 +36,85 @@ struct VectorBoolConstIterator : Test {
 
 // RandomAccessIterator
 
-TEST_F(VectorBoolIterator, IsAdditionAssignable) {
+TEST_F(VectorBoolIteratorFixture, IsAdditionAssignable) {
   It& it = b += 0;
 }
 
-TEST_F(VectorBoolIterator, IsRightAdditionable) {
+TEST_F(VectorBoolIteratorFixture, IsRightAdditionable) {
   It it = b + 0;
 }
 
-TEST_F(VectorBoolIterator, IsLeftAdditionable) {
+TEST_F(VectorBoolIteratorFixture, IsLeftAdditionable) {
   It it = 0 + b;
 }
 
-TEST_F(VectorBoolIterator, IsSubtractionAssignable) {
+TEST_F(VectorBoolIteratorFixture, IsSubtractionAssignable) {
   It& it = b -= 0;
 }
 
-TEST_F(VectorBoolIterator, IsRightSubtractible) {
+TEST_F(VectorBoolIteratorFixture, IsRightSubtractible) {
   It it = b - 0;
 }
 
-TEST_F(VectorBoolIterator, IsLeftSubtractible) {
+TEST_F(VectorBoolIteratorFixture, IsLeftSubtractible) {
   difference it = e - b;
 }
 
-TEST_F(VectorBoolIterator, IsIndexable) {
+TEST_F(VectorBoolIteratorFixture, IsIndexable) {
   reference it = b[0];
 }
 
-TEST_F(VectorBoolIterator, IsLessComparable) {
+TEST_F(VectorBoolIteratorFixture, IsLessComparable) {
   bool a = b < e;
 }
 
-TEST_F(VectorBoolIterator, IsGreaterComparable) {
+TEST_F(VectorBoolIteratorFixture, IsGreaterComparable) {
   bool a = b > e;
 }
 
-TEST_F(VectorBoolIterator, IsGreaterEqualComparable) {
+TEST_F(VectorBoolIteratorFixture, IsGreaterEqualComparable) {
   bool a = b >= e;
 }
 
-TEST_F(VectorBoolIterator, IsLessEqualComparable) {
+TEST_F(VectorBoolIteratorFixture, IsLessEqualComparable) {
   bool a = b <= e;
 }
 
 // BidirectionalIterator
 
-TEST_F(VectorBoolIterator, IsPrefixDecrementable) {
+TEST_F(VectorBoolIteratorFixture, IsPrefixDecrementable) {
   It& it = --b;
 }
 
-TEST_F(VectorBoolIterator, IsPostfixDecrementable) {
+TEST_F(VectorBoolIteratorFixture, IsPostfixDecrementable) {
   const It& it = b--;
 }
 
-TEST_F(VectorBoolIterator, IsPostfixDecrementDefererencible) {
+TEST_F(VectorBoolIteratorFixture, IsPostfixDecrementDefererencible) {
   reference r = *b--;
 }
 
 // ForwardIterator
 
-TEST_F(VectorBoolIterator, IsPrefixIncrementable) {
+TEST_F(VectorBoolIteratorFixture, IsPrefixIncrementable) {
   It& it = ++b;
 }
 
-TEST_F(VectorBoolIterator, IsPostfixIncrementable) {
+TEST_F(VectorBoolIteratorFixture, IsPostfixIncrementable) {
   It it = b++;
 }
 
-TEST_F(VectorBoolIterator, IsPostfixIncrementDereferenceable) {
+TEST_F(VectorBoolIteratorFixture, IsPostfixIncrementDereferenceable) {
   reference it = *b++;
 }
 
 // InputIterator
 
-TEST_F(VectorBoolIterator, IsNotEqualComparable) {
+TEST_F(VectorBoolIteratorFixture, IsNotEqualComparable) {
   bool a = b != e;
 }
 
-TEST_F(VectorBoolIterator, IsAsteriskDereferenceable) {
+TEST_F(VectorBoolIteratorFixture, IsAsteriskDereferenceable) {
   value_type v = *b;
 }
 
@@ -122,22 +122,22 @@ TEST_F(VectorBoolIterator, IsAsteriskDereferenceable) {
 
 // DefaultConstructible
 
-TEST_F(VectorBoolIterator, IsDefaultInitializable) {
+TEST_F(VectorBoolIteratorFixture, IsDefaultInitializable) {
   It it;
 }
 
-TEST_F(VectorBoolIterator, IsDefaultValueInitializable) {
+TEST_F(VectorBoolIteratorFixture, IsDefaultValueInitializable) {
   It it{};
 }
 
-TEST_F(VectorBoolIterator, IsDefaultTemporaryValueInitializable) {
+TEST_F(VectorBoolIteratorFixture, IsDefaultTemporaryValueInitializable) {
   It();
   It{};
 }
 
 // CopyConstructible
 
-TEST_F(VectorBoolIterator, IsCopyConstructible) {
+TEST_F(VectorBoolIteratorFixture, IsCopyConstructible) {
   It it1 = b;
   It it2(b);
   It it3{b};
@@ -145,7 +145,7 @@ TEST_F(VectorBoolIterator, IsCopyConstructible) {
 
 // MoveConstructible
 
-TEST_F(VectorBoolIterator, IsMoveConstructible) {
+TEST_F(VectorBoolIteratorFixture, IsMoveConstructible) {
   It it1 = move(It{});
   It it2(move(It{}));
   It it3{move(It{})};
@@ -153,32 +153,32 @@ TEST_F(VectorBoolIterator, IsMoveConstructible) {
 
 // CopyAssignable
 
-TEST_F(VectorBoolIterator, IsCopyAssignable) {
+TEST_F(VectorBoolIteratorFixture, IsCopyAssignable) {
   It it;
   it = b;
 }
 
 // MoveAssignable
 
-TEST_F(VectorBoolIterator, IsMoveAssignable) {
+TEST_F(VectorBoolIteratorFixture, IsMoveAssignable) {
   It it;
   it = std::move(It{});
 }
 
 // Destructible
 
-TEST_F(VectorBoolIterator, IsDestructible) {
+TEST_F(VectorBoolIteratorFixture, IsDestructible) {
   b.~It();
 }
 
 // Swappable
 
-TEST_F(VectorBoolIterator, IsSwappable) {
+TEST_F(VectorBoolIteratorFixture, IsSwappable) {
   swap(b, e);
 }
 
 // EqualityComparable
 
-TEST_F(VectorBoolIterator, IsEqualityComparable) {
+TEST_F(VectorBoolIteratorFixture, IsEqualityComparable) {
   bool a = b == e;
 }
