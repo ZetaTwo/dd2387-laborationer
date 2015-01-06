@@ -84,13 +84,21 @@ SafeVector<T>::SafeVector(const std::initializer_list<T>& list) : Vector<vector_
   size_t i;
   typename std::initializer_list<T>::iterator item;
   for (i = 0, item = list.begin(); item != list.end(); ++i, ++item) {
+#ifdef LOCK_GLOBAL
+    (*this)[i] = *item;
+#else
     (*this)[i].value = *item;
+#endif
   }
 }
 
 template<typename T>
 SafeVector<T>::SafeVector(size_t size, const T& element) : Vector<vector_datatype>(size) {
   for (size_t i = 0; i < this->size(); ++i) {
+#ifdef LOCK_GLOBAL
+    (*this)[i] = element;
+#else
     (*this)[i].value = element;
+#endif
   }
 }
