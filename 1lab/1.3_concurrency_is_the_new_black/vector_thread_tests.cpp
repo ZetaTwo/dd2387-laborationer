@@ -32,18 +32,18 @@ TEST(SafeVector, ThreadSwapTest) {
   const int n = 10000;
 
   std::thread thread1(swapn<int>, std::ref(safe1), 0, 1, n);
-  std::thread thread2(swapn<int>, std::ref(safe1), 1, 0, n);
+  std::thread thread2(swapn<int>, std::ref(safe1), 1, 0, n + 1);
   std::thread thread3(swapn<int>, std::ref(safe1), 2, 3, n);
-  std::thread thread4(swapn<int>, std::ref(safe1), 3, 2, n);
+  std::thread thread4(swapn<int>, std::ref(safe1), 3, 2, n - 1);
 
   thread1.join();
   thread2.join();
   thread3.join();
   thread4.join();
 
-  EXPECT_EQ(1, safe1[0]);
-  EXPECT_EQ(2, safe1[1]);
-  EXPECT_EQ(3, safe1[2]);
-  EXPECT_EQ(4, safe1[3]);
+  EXPECT_EQ(2, safe1[0]);
+  EXPECT_EQ(1, safe1[1]);
+  EXPECT_EQ(4, safe1[2]);
+  EXPECT_EQ(3, safe1[3]);
 }
 
