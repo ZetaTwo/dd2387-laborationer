@@ -9,7 +9,7 @@ template<typename T>
 void swapn(SafeVector<T>& vec, size_t i1, size_t i2, int n)
 {
   for (int i = 0; i < 2*n; i++) {
-    vec.safeswap(0, 1);
+    vec.safeswap(i1, i2);
   }
 }
 
