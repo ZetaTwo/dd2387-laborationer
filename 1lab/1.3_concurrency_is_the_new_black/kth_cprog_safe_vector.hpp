@@ -31,11 +31,11 @@ struct LockValuePair {
     return value == other.value;
   }
 
-  operator T&() const {
+  operator T&() {
     return value;
   }
 
-  operator T() const {
+  operator const T&() const {
     return value;
   }
 };
