@@ -64,20 +64,19 @@ public:
 template<typename T>
 void SafeVector<T>::safeswap(size_t index1, size_t index2) {
 #ifdef LOCK_GLOBAL
-  lock.lock();
-  std::swap((*this)[index1], (*this)[index2]);
-  lock.unlock();
+  std::lock_guard<std::mutex> global_lock(lock);
 #else
   if (index1 > index2) {
     std::swap(index1, index2);
   }
-  (*this)[index1].lock.lock();
-  (*this)[index2].lock.lock();
-  std::swap((*this)[index1], (*this)[index2]);
-  (*this)[index2].lock.unlock();
-  (*this)[index1].lock.unlock();
+
+  std::lock_guard<std::mutex>
+    index1_lock((*this)[index1].lock),
+    index2_lock((*this)[index2].lock)
+  ;
 #endif
-  }
+
+  std::swap((*this)[index1], (*this)[index2]);
 };
 
 template<typename T>
