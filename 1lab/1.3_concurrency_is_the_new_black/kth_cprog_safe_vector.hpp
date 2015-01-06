@@ -58,20 +58,24 @@ public:
   explicit SafeVector(size_t size) : Vector<vector_datatype>(size) {};
   SafeVector(size_t size, const T& element);
 
-  void safeswap(size_t index1, size_t index2) {
+  void safeswap(size_t index1, size_t index2);
+};
+
+template<typename T>
+void SafeVector<T>::safeswap(size_t index1, size_t index2) {
 #ifdef LOCK_GLOBAL
-    lock.lock();
-    std::swap((*this)[index1], (*this)[index2]);
-    lock.unlock();
+  lock.lock();
+  std::swap((*this)[index1], (*this)[index2]);
+  lock.unlock();
 #else
-    if (index1 > index2) {
-      std::swap(index1, index2);
-    }
-    (*this)[index1].lock.lock();
-    (*this)[index2].lock.lock();
-    std::swap((*this)[index1], (*this)[index2]);
-    (*this)[index2].lock.unlock();
-    (*this)[index1].lock.unlock();
+  if (index1 > index2) {
+    std::swap(index1, index2);
+  }
+  (*this)[index1].lock.lock();
+  (*this)[index2].lock.lock();
+  std::swap((*this)[index1], (*this)[index2]);
+  (*this)[index2].lock.unlock();
+  (*this)[index1].lock.unlock();
 #endif
   }
 };
