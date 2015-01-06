@@ -53,7 +53,11 @@ class SafeVector : public Vector<LockValuePair<T> > {
 public:
   SafeVector() {};
   //SafeVector(const Vector<T>& other) : Vector(other) {};
+#ifdef LOCK_GLOBAL
+  SafeVector(const std::initializer_list<T>& list) : Vector<vector_datatype>(list) {}
+#else
   SafeVector(const std::initializer_list<T>& list);
+#endif
   SafeVector(Vector<T>&& other) : Vector<vector_datatype>(other) {}; //Move
   explicit SafeVector(size_t size) : Vector<vector_datatype>(size) {};
   SafeVector(size_t size, const T& element) : Vector<vector_datatype>(size, element) {}
@@ -79,14 +83,12 @@ void SafeVector<T>::safeswap(size_t index1, size_t index2) {
   std::swap((*this)[index1], (*this)[index2]);
 };
 
+#ifndef LOCK_GLOBAL
 template<typename T>
 SafeVector<T>::SafeVector(const std::initializer_list<T>& list) : Vector<vector_datatype>(list.size()) {
   size_t i = -1;
   for (const T& item : list) {
-#ifdef LOCK_GLOBAL
-    (*this)[++i] = item;
-#else
     (*this)[++i].value = item;
-#endif
   }
 }
+#endif
