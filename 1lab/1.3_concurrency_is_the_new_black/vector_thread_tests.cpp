@@ -21,6 +21,9 @@ struct LargeType<0> {
   inline bool operator==(const LargeType& other) const { return a == other.a; }
 };
 
+template<size_t n>
+bool operator==(const long long int a, const LargeType<n>& lt) { return lt.a == a; }
+
 typedef LargeType<7> Kibibyte;
 typedef LargeType<17> Mebibyte;
 typedef LargeType<27> Gibibyte;
