@@ -56,7 +56,7 @@ public:
   SafeVector(const std::initializer_list<T>& list);
   SafeVector(Vector<T>&& other) : Vector<vector_datatype>(other) {}; //Move
   explicit SafeVector(size_t size) : Vector<vector_datatype>(size) {};
-  SafeVector(size_t size, const T& element);
+  SafeVector(size_t size, const T& element) : Vector<vector_datatype>(size, element) {}
 
   void safeswap(size_t index1, size_t index2);
 };
@@ -88,17 +88,6 @@ SafeVector<T>::SafeVector(const std::initializer_list<T>& list) : Vector<vector_
     (*this)[i] = *item;
 #else
     (*this)[i].value = *item;
-#endif
-  }
-}
-
-template<typename T>
-SafeVector<T>::SafeVector(size_t size, const T& element) : Vector<vector_datatype>(size) {
-  for (size_t i = 0; i < this->size(); ++i) {
-#ifdef LOCK_GLOBAL
-    (*this)[i] = element;
-#else
-    (*this)[i].value = element;
 #endif
   }
 }
