@@ -81,13 +81,12 @@ void SafeVector<T>::safeswap(size_t index1, size_t index2) {
 
 template<typename T>
 SafeVector<T>::SafeVector(const std::initializer_list<T>& list) : Vector<vector_datatype>(list.size()) {
-  size_t i;
-  typename std::initializer_list<T>::iterator item;
-  for (i = 0, item = list.begin(); item != list.end(); ++i, ++item) {
+  size_t i = -1;
+  for (const T& item : list) {
 #ifdef LOCK_GLOBAL
-    (*this)[i] = *item;
+    (*this)[++i] = item;
 #else
-    (*this)[i].value = *item;
+    (*this)[++i].value = item;
 #endif
   }
 }
