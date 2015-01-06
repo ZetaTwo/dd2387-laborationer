@@ -43,17 +43,19 @@ struct LockValuePair {
 template<typename T>
 #ifdef LOCK_GLOBAL
 class SafeVector : public Vector < T > {
+  typedef T vector_datatype;
   std::mutex lock;
 #else
 class SafeVector : public Vector<LockValuePair<T> > {
+  typedef LockValuePair<T> vector_datatype;
 #endif
 
 public:
   SafeVector() {};
   //SafeVector(const Vector<T>& other) : Vector(other) {};
   SafeVector(const std::initializer_list<T>& list);
-  SafeVector(Vector<T>&& other) : Vector(other) {}; //Move
-  explicit SafeVector(size_t size) : Vector(size) {};
+  SafeVector(Vector<T>&& other) : Vector<vector_datatype>(other) {}; //Move
+  explicit SafeVector(size_t size) : Vector<vector_datatype>(size) {};
   SafeVector(size_t size, const T& element);
 
   void safeswap(size_t index1, size_t index2) {
@@ -75,7 +77,7 @@ public:
 };
 
 template<typename T>
-SafeVector<T>::SafeVector(const std::initializer_list<T>& list) : Vector(list.size()) {
+SafeVector<T>::SafeVector(const std::initializer_list<T>& list) : Vector<vector_datatype>(list.size()) {
   size_t i;
   typename std::initializer_list<T>::iterator item;
   for (i = 0, item = list.begin(); item != list.end(); ++i, ++item) {
@@ -84,7 +86,7 @@ SafeVector<T>::SafeVector(const std::initializer_list<T>& list) : Vector(list.si
 }
 
 template<typename T>
-SafeVector<T>::SafeVector(size_t size, const T& element) : Vector(size) {
+SafeVector<T>::SafeVector(size_t size, const T& element) : Vector<vector_datatype>(size) {
   for (size_t i = 0; i < count; ++i) {
     (*this)[i].value = element;
   }
