@@ -41,23 +41,13 @@ struct LockValuePair {
 };
 
 template<typename T>
-#ifdef LOCK_GLOBAL
-class SafeVector : public Vector < T > {
-  typedef T vector_datatype;
-  std::mutex lock;
-#else
 class SafeVector : public Vector<LockValuePair<T> > {
   typedef LockValuePair<T> vector_datatype;
-#endif
 
 public:
   SafeVector() {};
   //SafeVector(const Vector<T>& other) : Vector(other) {};
-#ifdef LOCK_GLOBAL
-  SafeVector(const std::initializer_list<T>& list) : Vector<vector_datatype>(list) {}
-#else
   SafeVector(const std::initializer_list<T>& list);
-#endif
   SafeVector(Vector<T>&& other) : Vector<vector_datatype>(other) {}; //Move
   explicit SafeVector(size_t size) : Vector<vector_datatype>(size) {};
   SafeVector(size_t size, const T& element) : Vector<vector_datatype>(size, element) {}
@@ -67,9 +57,6 @@ public:
 
 template<typename T>
 void SafeVector<T>::safeswap(size_t index1, size_t index2) {
-#ifdef LOCK_GLOBAL
-  std::lock_guard<std::mutex> global_lock(lock);
-#else
   if (index1 > index2) {
     std::swap(index1, index2);
   }
@@ -78,12 +65,10 @@ void SafeVector<T>::safeswap(size_t index1, size_t index2) {
     index1_lock((*this)[index1].lock),
     index2_lock((*this)[index2].lock)
   ;
-#endif
 
   std::swap((*this)[index1], (*this)[index2]);
 };
 
-#ifndef LOCK_GLOBAL
 template<typename T>
 SafeVector<T>::SafeVector(const std::initializer_list<T>& list) : Vector<vector_datatype>(list.size()) {
   size_t i = -1;
@@ -91,4 +76,25 @@ SafeVector<T>::SafeVector(const std::initializer_list<T>& list) : Vector<vector_
     (*this)[++i].value = item;
   }
 }
-#endif
+
+template<typename T>
+class SuperSafeVector : public Vector < T > {
+  typedef T vector_datatype;
+  std::mutex lock;
+
+public:
+  SuperSafeVector() {};
+  //SuperSafeVector(const Vector<T>& other) : Vector(other) {};
+  SuperSafeVector(const std::initializer_list<T>& list) : Vector<vector_datatype>(list) {}
+  SuperSafeVector(Vector<T>&& other) : Vector<vector_datatype>(other) {}; //Move
+  explicit SuperSafeVector(size_t size) : Vector<vector_datatype>(size) {};
+  SuperSafeVector(size_t size, const T& element) : Vector<vector_datatype>(size, element) {}
+
+  void safeswap(size_t index1, size_t index2);
+};
+
+template<typename T>
+void SuperSafeVector<T>::safeswap(size_t index1, size_t index2) {
+  std::lock_guard<std::mutex> global_lock(lock);
+  std::swap((*this)[index1], (*this)[index2]);
+};
