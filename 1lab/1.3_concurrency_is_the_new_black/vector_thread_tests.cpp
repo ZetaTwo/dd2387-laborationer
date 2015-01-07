@@ -28,8 +28,8 @@ typedef LargeType<7> Kibibyte;
 typedef LargeType<17> Mebibyte;
 typedef LargeType<27> Gibibyte;
 
-template<typename T>
-void swapn(SafeVector<T>& vec, size_t i1, size_t i2, int n)
+template<typename SafeVector>
+void swapn(SafeVector& vec, size_t i1, size_t i2, int n)
 {
   for (int i = 0; i < n; i++) {
     vec.safeswap(i1, i2);
@@ -50,44 +50,39 @@ TEST(SafeVector, BasicSwapTest) {
 }
 
 TEST(SafeVector, ThreadSwapTest) {
-  SafeVector<int> safe1{ 1, 2, 3, 4 };
-  
+  typedef SafeVector<int> Vec;
+  Vec safe1{ 0, 1, 2, 3 };
   const int n = 10000;
 
-  std::thread thread1(swapn<int>, std::ref(safe1), 0, 1, n);
-  std::thread thread2(swapn<int>, std::ref(safe1), 1, 0, n + 1);
-  std::thread thread3(swapn<int>, std::ref(safe1), 2, 3, n);
-  std::thread thread4(swapn<int>, std::ref(safe1), 3, 2, n - 1);
+  std::vector<std::thread> threads;
 
-  thread1.join();
-  thread2.join();
-  thread3.join();
-  thread4.join();
-
-  EXPECT_EQ(2, safe1[0]);
-  EXPECT_EQ(1, safe1[1]);
-  EXPECT_EQ(4, safe1[2]);
-  EXPECT_EQ(3, safe1[3]);
+  for(size_t i = 0; i < safe1.size(); i += 2) {
+    threads.emplace_back(swapn<Vec>, std::ref(safe1), i, i + 1, n);
+    threads.emplace_back(swapn<Vec>, std::ref(safe1), i + 1,  i, n + (i % 4 == 0 ? 1 : -1));
+  }
+  for(std::thread& thread : threads) {
+    thread.join();
+  }
+  for(size_t i = 0; i < safe1.size(); ++i) {
+    EXPECT_EQ(static_cast<int>(i + (i % 2 == 0 ? 1 : -1)), safe1[i]);
+  }
 }
 
 TEST(SafeVector, ThreadSwapTestWithHugeType) {
-  typedef LargeType<14> HugeType;
-  SafeVector<HugeType> safe1{ 1, 2, 3, 4 };
-
+  typedef SafeVector<LargeType<14>> Vec;
+  Vec safe1{ 0, 1, 2, 3 };
   const int n = 10000;
 
-  std::thread thread1(swapn<HugeType>, std::ref(safe1), 0, 1, n);
-  std::thread thread2(swapn<HugeType>, std::ref(safe1), 1, 0, n + 1);
-  std::thread thread3(swapn<HugeType>, std::ref(safe1), 2, 3, n);
-  std::thread thread4(swapn<HugeType>, std::ref(safe1), 3, 2, n - 1);
+  std::vector<std::thread> threads;
 
-  thread1.join();
-  thread2.join();
-  thread3.join();
-  thread4.join();
-
-  EXPECT_EQ(2, safe1[0]);
-  EXPECT_EQ(1, safe1[1]);
-  EXPECT_EQ(4, safe1[2]);
-  EXPECT_EQ(3, safe1[3]);
+  for(size_t i = 0; i < safe1.size(); i += 2) {
+    threads.emplace_back(swapn<Vec>, std::ref(safe1), i, i + 1, n);
+    threads.emplace_back(swapn<Vec>, std::ref(safe1), i + 1,  i, n + (i % 4 == 0 ? 1 : -1));
+  }
+  for(std::thread& thread : threads) {
+    thread.join();
+  }
+  for(size_t i = 0; i < safe1.size(); ++i) {
+    EXPECT_EQ(static_cast<int>(i + (i % 2 == 0 ? 1 : -1)), safe1[i]);
+  }
 }
