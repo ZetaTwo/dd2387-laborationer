@@ -2,6 +2,7 @@
 
 #include <kth_cprog_template_container.hpp>
 #include <mutex>
+#include <algorithm>
 
 //#define LOCK_GLOBAL
 
@@ -20,6 +21,11 @@ struct LockValuePair {
       value = other.value;
     }
 
+    return *this;
+  }
+
+  LockValuePair& operator=(const T& other) {
+    value = other;
     return *this;
   }
 
@@ -71,10 +77,7 @@ void SafeVector<T>::safeswap(size_t index1, size_t index2) {
 
 template<typename T>
 SafeVector<T>::SafeVector(const std::initializer_list<T>& list) : Vector<vector_datatype>(list.size()) {
-  size_t i = -1;
-  for (const T& item : list) {
-    (*this)[++i].value = item;
-  }
+  std::copy(list.begin(), list.end(), this->begin());
 }
 
 template<typename T>
