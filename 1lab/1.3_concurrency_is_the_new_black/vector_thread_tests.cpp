@@ -86,3 +86,54 @@ TEST(SafeVector, ThreadSwapTestWithHugeType) {
     EXPECT_EQ(static_cast<int>(i + (i % 2 == 0 ? 1 : -1)), safe1[i]);
   }
 }
+
+TEST(SuperSafeVector, BasicSwapTest) {
+  SuperSafeVector<int> safe1{ 1, 2, 3, 4 };
+  safe1.safeswap(0, 1);
+
+  EXPECT_EQ(2, safe1[0]);
+  EXPECT_EQ(1, safe1[1]);
+
+  safe1.safeswap(1, 0);
+
+  EXPECT_EQ(1, safe1[0]);
+  EXPECT_EQ(2, safe1[1]);
+}
+
+TEST(SuperSafeVector, ThreadSwapTest) {
+  typedef SuperSafeVector<int> Vec;
+  Vec safe1{ 0, 1, 2, 3, 4 };
+  const int n = 10000;
+
+  std::vector<std::thread> threads;
+
+  for(size_t i = 0; i < safe1.size(); i += 2) {
+    threads.emplace_back(swapn<Vec>, std::ref(safe1), i, i + 1, n);
+    threads.emplace_back(swapn<Vec>, std::ref(safe1), i + 1,  i, n + (i % 4 == 0 ? 1 : -1));
+  }
+  for(std::thread& thread : threads) {
+    thread.join();
+  }
+  for(size_t i = 0; i < safe1.size(); ++i) {
+    EXPECT_EQ(static_cast<int>(i + (i % 2 == 0 ? 1 : -1)), safe1[i]);
+  }
+}
+
+TEST(SuperSafeVector, ThreadSwapTestWithHugeType) {
+  typedef SuperSafeVector<LargeType<14>> Vec;
+  Vec safe1{ 0, 1, 2, 3, 4 };
+  const int n = 10000;
+
+  std::vector<std::thread> threads;
+
+  for(size_t i = 0; i < safe1.size(); i += 2) {
+    threads.emplace_back(swapn<Vec>, std::ref(safe1), i, i + 1, n);
+    threads.emplace_back(swapn<Vec>, std::ref(safe1), i + 1,  i, n + (i % 4 == 0 ? 1 : -1));
+  }
+  for(std::thread& thread : threads) {
+    thread.join();
+  }
+  for(size_t i = 0; i < safe1.size(); ++i) {
+    EXPECT_EQ(static_cast<int>(i + (i % 2 == 0 ? 1 : -1)), safe1[i]);
+  }
+}
