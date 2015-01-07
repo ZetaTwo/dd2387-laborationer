@@ -36,8 +36,28 @@ void swapn(SafeVector& vec, size_t i1, size_t i2, int n)
   }
 }
 
-TEST(SafeVector, BasicSwapTest) {
-  SafeVector<int> safe1{ 1, 2, 3, 4 };
+template<class SafeVector>
+void run_thread_swap_test(SafeVector& vec, const int n) {
+  std::vector<std::thread> threads;
+
+  for(size_t i = 0; i < vec.size(); i += 2) {
+    threads.emplace_back(swapn<SafeVector>, std::ref(vec), i, i + 1, n);
+    threads.emplace_back(swapn<SafeVector>, std::ref(vec), i + 1,  i, n + (i % 4 == 0 ? 1 : -1));
+  }
+  for(std::thread& thread : threads) {
+    thread.join();
+  }
+  for(size_t i = 0; i < vec.size(); ++i) {
+    EXPECT_EQ(static_cast<int>(i + (i % 2 == 0 ? 1 : -1)), vec[i]);
+  }
+}
+
+template<typename T>
+class SafeVectorTest : public ::testing::Test {};
+TYPED_TEST_CASE_P(SafeVectorTest);
+
+TYPED_TEST_P(SafeVectorTest, BasicSwapTest) {
+  TypeParam safe1{ 1, 2, 3, 4 };
   safe1.safeswap(0, 1);
 
   EXPECT_EQ(2, safe1[0]);
@@ -49,91 +69,19 @@ TEST(SafeVector, BasicSwapTest) {
   EXPECT_EQ(2, safe1[1]);
 }
 
-TEST(SafeVector, ThreadSwapTest) {
-  typedef SafeVector<int> Vec;
-  Vec safe1{ 0, 1, 2, 3 };
-  const int n = 10000;
-
-  std::vector<std::thread> threads;
-
-  for(size_t i = 0; i < safe1.size(); i += 2) {
-    threads.emplace_back(swapn<Vec>, std::ref(safe1), i, i + 1, n);
-    threads.emplace_back(swapn<Vec>, std::ref(safe1), i + 1,  i, n + (i % 4 == 0 ? 1 : -1));
-  }
-  for(std::thread& thread : threads) {
-    thread.join();
-  }
-  for(size_t i = 0; i < safe1.size(); ++i) {
-    EXPECT_EQ(static_cast<int>(i + (i % 2 == 0 ? 1 : -1)), safe1[i]);
-  }
+TYPED_TEST_P(SafeVectorTest, ThreadSwapTest) {
+  TypeParam safe1{ 0, 1, 2, 3 };
+  run_thread_swap_test(safe1, 10000);
 }
 
-TEST(SafeVector, ThreadSwapTestWithHugeType) {
-  typedef SafeVector<LargeType<14>> Vec;
-  Vec safe1{ 0, 1, 2, 3 };
-  const int n = 10000;
+REGISTER_TYPED_TEST_CASE_P(SafeVectorTest,
+  BasicSwapTest,
+  ThreadSwapTest
+);
 
-  std::vector<std::thread> threads;
+INSTANTIATE_TYPED_TEST_CASE_P(IndividuallyLockedInt, SafeVectorTest, SafeVector<int>);
+INSTANTIATE_TYPED_TEST_CASE_P(GloballyLockedInt, SafeVectorTest, SuperSafeVector<int>);
 
-  for(size_t i = 0; i < safe1.size(); i += 2) {
-    threads.emplace_back(swapn<Vec>, std::ref(safe1), i, i + 1, n);
-    threads.emplace_back(swapn<Vec>, std::ref(safe1), i + 1,  i, n + (i % 4 == 0 ? 1 : -1));
-  }
-  for(std::thread& thread : threads) {
-    thread.join();
-  }
-  for(size_t i = 0; i < safe1.size(); ++i) {
-    EXPECT_EQ(static_cast<int>(i + (i % 2 == 0 ? 1 : -1)), safe1[i]);
-  }
-}
-
-TEST(SuperSafeVector, BasicSwapTest) {
-  SuperSafeVector<int> safe1{ 1, 2, 3, 4 };
-  safe1.safeswap(0, 1);
-
-  EXPECT_EQ(2, safe1[0]);
-  EXPECT_EQ(1, safe1[1]);
-
-  safe1.safeswap(1, 0);
-
-  EXPECT_EQ(1, safe1[0]);
-  EXPECT_EQ(2, safe1[1]);
-}
-
-TEST(SuperSafeVector, ThreadSwapTest) {
-  typedef SuperSafeVector<int> Vec;
-  Vec safe1{ 0, 1, 2, 3, 4 };
-  const int n = 10000;
-
-  std::vector<std::thread> threads;
-
-  for(size_t i = 0; i < safe1.size(); i += 2) {
-    threads.emplace_back(swapn<Vec>, std::ref(safe1), i, i + 1, n);
-    threads.emplace_back(swapn<Vec>, std::ref(safe1), i + 1,  i, n + (i % 4 == 0 ? 1 : -1));
-  }
-  for(std::thread& thread : threads) {
-    thread.join();
-  }
-  for(size_t i = 0; i < safe1.size(); ++i) {
-    EXPECT_EQ(static_cast<int>(i + (i % 2 == 0 ? 1 : -1)), safe1[i]);
-  }
-}
-
-TEST(SuperSafeVector, ThreadSwapTestWithHugeType) {
-  typedef SuperSafeVector<LargeType<14>> Vec;
-  Vec safe1{ 0, 1, 2, 3, 4 };
-  const int n = 10000;
-
-  std::vector<std::thread> threads;
-
-  for(size_t i = 0; i < safe1.size(); i += 2) {
-    threads.emplace_back(swapn<Vec>, std::ref(safe1), i, i + 1, n);
-    threads.emplace_back(swapn<Vec>, std::ref(safe1), i + 1,  i, n + (i % 4 == 0 ? 1 : -1));
-  }
-  for(std::thread& thread : threads) {
-    thread.join();
-  }
-  for(size_t i = 0; i < safe1.size(); ++i) {
-    EXPECT_EQ(static_cast<int>(i + (i % 2 == 0 ? 1 : -1)), safe1[i]);
-  }
-}
+typedef Kibibyte HugeType;
+INSTANTIATE_TYPED_TEST_CASE_P(IndividuallyLockedHuge, SafeVectorTest, SafeVector<HugeType>);
+INSTANTIATE_TYPED_TEST_CASE_P(GloballyLockedHuge, SafeVectorTest, SuperSafeVector<HugeType>);
