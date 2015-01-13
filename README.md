@@ -7,9 +7,7 @@ KTH - DD2387 - Laborationer
 Status
 ------
 
-Current score: (2 + 10 + (5) + 4) + (2 + 6) + (4 + (6)) = **39p**
-
-Completed but not yet passed: (6) = 6p
+Current score: (2 + 10 + 5 + 4) + (2 + (6) + 6) + (4 + (6)) = **45p**
 
 Working on: (10) = 10p
 
@@ -33,9 +31,9 @@ Lab 1 extra assignments
 
  1. ~~The Matrix~~ (10p, C) **PASSED** [~~#20~~](https://github.com/ZetaTwo/dd2387-laborationer/issues/20)
  2. *(nothing)*
- 3. ~~Concurrency Is The New Black~~ (5p) **PASSED (Calle)** [~~#27~~](https://github.com/ZetaTwo/dd2387-laborationer/issues/27)
+ 3. ~~Concurrency Is The New Black~~ (5p) **PASSED** [~~#27~~](https://github.com/ZetaTwo/dd2387-laborationer/issues/27)
  4. ~~The Hypercube~~ (4p) **PASSED** [~~#22~~](https://github.com/ZetaTwo/dd2387-laborationer/issues/22)
- 5. Space Is Not Infinite (10p, A) [~~#23~~](https://github.com/ZetaTwo/dd2387-laborationer/issues/23) [~~#38~~](https://github.com/ZetaTwo/dd2387-laborationer/issues/38) [#39](https://github.com/ZetaTwo/dd2387-laborationer/issues/39) [#40](https://github.com/ZetaTwo/dd2387-laborationer/issues/40)
+ 5. Space Is Not Infinite (10p, A) [~~#23~~](https://github.com/ZetaTwo/dd2387-laborationer/issues/23) [~~#38~~](https://github.com/ZetaTwo/dd2387-laborationer/issues/38) [~~#39~~](https://github.com/ZetaTwo/dd2387-laborationer/issues/39) [#40](https://github.com/ZetaTwo/dd2387-laborationer/issues/40)
  6. *(nothing)*
  7. The Master of Life & Death (4p) [#26](https://github.com/ZetaTwo/dd2387-laborationer/issues/26)
  8. Better Safe Than Sorry (3p, A) [#28](https://github.com/ZetaTwo/dd2387-laborationer/issues/28)
@@ -50,7 +48,7 @@ Lab 2 mandatory assignments **PASSED (bonus)** (bonus 2p)
 
 Lab 2 extra assignments
 
- 1. ~~Fancy features~~ (6p) [~~#32~~](https://github.com/ZetaTwo/dd2387-laborationer/issues/32)
+ 1. ~~Fancy features~~ **PASSED (Emil)** (6p) [~~#32~~](https://github.com/ZetaTwo/dd2387-laborationer/issues/32)
  2. ~~Fancy output~~ **PASSED** (6p) [~~#33~~](https://github.com/ZetaTwo/dd2387-laborationer/issues/33)
 
 ---
