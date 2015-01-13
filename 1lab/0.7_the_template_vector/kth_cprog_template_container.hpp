@@ -67,11 +67,14 @@ private:
 
   size_t count; //Actual number of elements in the vector
   size_t max_size; //Allocated memory for elements. Will be 2^n for some n
-  std::unique_ptr<T[]> data; //A pointer to the vector data
+
+  static void deleter(T*) {};
+  typedef std::unique_ptr<T[], void(*)(T*)> data_ptr;
+  data_ptr data; //A pointer to the vector data
   std::allocator<T> allocator;
 
   void increase_memory(size_t num_elements, bool copy = true); //Increases memory to fit at least num_elements number of elements
-  void release(std::unique_ptr<T[]>& data, size_t count, size_t max_size);
+  void release(data_ptr& data, size_t count, size_t max_size);
 };
 
 template<typename T>
@@ -79,18 +82,18 @@ std::ostream& operator<<(std::ostream& os, const Vector<T>& vector);
 
 //Member implementations
 template<typename T>
-Vector<T>::Vector() : count(0), max_size(DEFAULT_SIZE), data(allocator.allocate(max_size)) {
+Vector<T>::Vector() : count(0), max_size(DEFAULT_SIZE), data(allocator.allocate(max_size), deleter) {
 }
 
 template<typename T>
-Vector<T>::Vector(const Vector<T>& other) : count(other.count), max_size(other.max_size), data(allocator.allocate(max_size)) {
+Vector<T>::Vector(const Vector<T>& other) : count(other.count), max_size(other.max_size), data(allocator.allocate(max_size), deleter) {
   for(size_t i = 0; i < count; ++i) {
     allocator.construct(&data[i], other.data[i]);
   }
 }
 
 template<typename T>
-Vector<T>::Vector(const std::initializer_list<T>& list) : count(list.size()), max_size(1 << static_cast<int>(ceil(log2(count)))), data(allocator.allocate(max_size)) {
+Vector<T>::Vector(const std::initializer_list<T>& list) : count(list.size()), max_size(1 << static_cast<int>(ceil(log2(count)))), data(allocator.allocate(max_size), deleter) {
   size_t i;
   typename std::initializer_list<T>::iterator item;
   for(i = 0, item = list.begin(); item != list.end(); ++i, ++item) {
@@ -100,23 +103,19 @@ Vector<T>::Vector(const std::initializer_list<T>& list) : count(list.size()), ma
 
 template<typename T>
 Vector<T>::Vector(Vector<T>&& other) : data(std::move(other.data)), count(other.count), max_size(other.max_size) {
-  /*for (size_t i = 0; i < count; ++i) {
-    allocator.destroy(&other.data[i]);
-  }*/
-
   other.count = 0;
   other.max_size = 0;
 }
 
 template<typename T>
-Vector<T>::Vector(size_t size) : count(size), max_size(1 << static_cast<int>(ceil(log2(count)))), data(allocator.allocate(max_size)) {
+Vector<T>::Vector(size_t size) : count(size), max_size(1 << static_cast<int>(ceil(log2(count)))), data(allocator.allocate(max_size), deleter) {
   for(size_t i = 0; i < count; ++i) {
     allocator.construct(&data[i], T{});
   }
 }
 
 template<typename T>
-Vector<T>::Vector(size_t size, const T& element) : count(size), max_size(1 << static_cast<int>(ceil(log2(count)))), data(allocator.allocate(max_size)) {
+Vector<T>::Vector(size_t size, const T& element) : count(size), max_size(1 << static_cast<int>(ceil(log2(count)))), data(allocator.allocate(max_size), deleter) {
   for(size_t i = 0; i < count; ++i) {
     allocator.construct(&data[i], element);
   }
@@ -130,7 +129,7 @@ Vector<T>::~Vector() {
 }
 
 template<typename T>
-void Vector<T>::release(std::unique_ptr<T[]>& data, size_t count, size_t max_size) {
+void Vector<T>::release(data_ptr& data, size_t count, size_t max_size) {
   for (size_t i = 0; i < count; ++i) {
     allocator.destroy(&data[i]);
   }
@@ -162,12 +161,17 @@ Vector<T>& Vector<T>::operator=(const Vector<T>& other) {
     return  *this;
   }
 
+  //Make sure we have enough room
   if(other.count > max_size) {
     increase_memory(other.count, false);
   }
+  else {
+    clear();
+  }
 
+  //Create new copies
   count = other.size();
-  for(size_t i = 0; i < other.count; ++i) {
+  for (size_t i = 0; i < count; ++i) {
     allocator.construct(&data[i], other[i]);
   }
 
@@ -177,6 +181,7 @@ Vector<T>& Vector<T>::operator=(const Vector<T>& other) {
 template<typename T>
 Vector<T>& Vector<T>::operator=(Vector<T>&& other) {
   if (this != &other) {
+    release(data, count, max_size);
     data = std::move(other.data);
     count = other.count;
     max_size = other.max_size;
@@ -191,10 +196,15 @@ Vector<T>& Vector<T>::operator=(Vector<T>&& other) {
 
 template<typename T>
 Vector<T>& Vector<T>::operator=(const std::initializer_list<T>& list) {
+  //Make sure we have enough room
   if(list.size() > max_size) {
     increase_memory(list.size(), false);
   }
+  else {
+    clear();
+  }
 
+  //Construct new copies
   count = list.size();
   size_t i;
   typename std::initializer_list<T>::iterator item;
@@ -221,10 +231,12 @@ Vector<T>& Vector<T>::insert(size_t index, const T& element) {
     increase_memory(count + 1);
   }
 
+  allocator.construct(&data[count]);
+
   size_t i;
   try {
     for (i = count; i > index; i--) {
-      allocator.construct(&data[i], std::move_if_noexcept(data[i - 1]));
+      data[i] = std::move_if_noexcept(data[i - 1]);
     }
   }
   catch (...) {
@@ -232,12 +244,7 @@ Vector<T>& Vector<T>::insert(size_t index, const T& element) {
     throw;
   }
 
-  if (index == count) {
-    allocator.construct(&data[index], element);
-  }
-  else {
-    data[index] = element;
-  }
+  data[index] = element;
   ++count;
 
   return *this;
@@ -333,7 +340,7 @@ void Vector<T>::increase_memory(size_t num_elements, bool copy) {
     throw std::invalid_argument("Vector already large enough");
   }
 
-  std::unique_ptr<T[]> new_data(allocator.allocate(new_max_size));
+  data_ptr new_data(allocator.allocate(new_max_size), deleter);
 
   if(copy) {
     for(size_t i = 0; i < count; i++) {

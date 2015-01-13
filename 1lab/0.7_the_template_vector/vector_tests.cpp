@@ -456,3 +456,48 @@ TEST(Vector, Kattis3) {
   a.erase(0);
   EXPECT_EQ(9, CounterClass::object_count);
 }
+
+TEST(Vector, Kattis4) {
+  Vector<CounterClass> a;
+  a.insert(0, 42);
+  a.insert(0, -43);
+  a.insert(1, 44);
+  a.insert(3, 45);
+  a.insert(0, 42);
+  EXPECT_EQ(5, CounterClass::object_count);
+}
+
+TEST(Vector, Kattis5) {
+  Vector<CounterClass> a{ 1, 2, 3, 4, 5 };
+  Vector<CounterClass> b(10);
+  //EXPECT_EQ(10, a.size());
+  Vector<CounterClass> c(0);
+
+  c = a;
+  a = b;
+  Vector<CounterClass> d(c);
+  
+  /*EXPECT_EQ(10, a.size());
+  EXPECT_EQ(10, b.size());
+  EXPECT_EQ(10, c.size());*/
+
+  a[1] = 10;
+  b[2] = 11;
+  b.erase(0);
+  c[3] = 12;
+  c.erase(1);
+
+  /*EXPECT_EQ(10, a[1]);
+  EXPECT_NE(11, b[2]);
+  EXPECT_NE(12, c[3]);*/
+
+  //a.clear();
+  a.reset();
+  //EXPECT_EQ(0, a.size());
+  c = std::move(a);
+  
+  a.clear();
+  c[3] = 25;
+  a = std::move(c);
+  b = a;
+}
