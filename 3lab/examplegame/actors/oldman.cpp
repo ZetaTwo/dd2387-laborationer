@@ -1,10 +1,6 @@
-#include <stdexcept>
-
 #include "actors/oldman.h"
 #include "items/questitem.h"
 #include "game.h"
-
-using std::bad_cast;
 
 namespace lab3 {
 
@@ -13,12 +9,7 @@ namespace lab3 {
   OldMan::OldMan(const WorldCoord& initial_position, const string& name) : Human(initial_position, name) {}
 
   bool OldMan::is_shiny_thing(const CarriedItem& item) const {
-    try {
-      dynamic_cast<const CarriedShinyThing&>(item);
-      return true;
-    } catch(bad_cast e) {
-      return false;
-    }
+    return is_type<CarriedShinyThing, CarriedItem>(item);
   }
 
   bool OldMan::has_shiny_thing() const {
@@ -35,13 +26,10 @@ namespace lab3 {
         say(game, {"Thank you for finding my favourite shiny thing!"});
 
         for(unique_ptr<CarriedItem>& item_p : inventory) {
-          try {
-            dynamic_cast<Sword&>(*item_p);
-
+          if(is_type<Sword, CarriedItem>(*item_p)) {
             say(game, {"Those goblins are scary! Here, take this."});
             give_item(game, std::move(item_p), activator);
             break;
-          } catch(bad_cast e) {
           }
         }
     } else {

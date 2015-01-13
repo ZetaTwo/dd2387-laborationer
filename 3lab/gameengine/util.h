@@ -2,7 +2,9 @@
 #include <iostream>
 #include <iterator>
 #include <string>
+#include <typeinfo>
 
+using std::bad_cast;
 using std::iterator;
 using std::ostream;
 using std::random_access_iterator_tag;
@@ -109,5 +111,25 @@ namespace lab3 {
       const Coord& operator[](difference_type index) const;
       const Coord& operator*();
   };
+
+  template<class T, class U>
+  bool is_type(const U& object) {
+    try {
+      dynamic_cast<const T&>(object);
+      return true;
+    } catch(bad_cast e) {
+      return false;
+    }
+  }
+
+  template<class T, class U>
+  bool points_to_type(const U& object) {
+    try {
+      dynamic_cast<const T&>(*object);
+      return true;
+    } catch(bad_cast e) {
+      return false;
+    }
+  }
 
 }

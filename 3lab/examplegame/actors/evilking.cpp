@@ -1,12 +1,10 @@
 #include <sstream>
-#include <stdexcept>
 
 #include "actors/evilking.h"
 #include "game.h"
 #include "item.h"
 #include "items/questitem.h"
 
-using std::bad_cast;
 using std::stringstream;
 
 namespace lab3 {
@@ -24,9 +22,7 @@ namespace lab3 {
 
   void EvilKing::activated_by(Game& game, Actor& activator, CarriedItem& item) {
     stringstream ss;
-    try {
-      dynamic_cast<Sword&>(item);
-
+    if(is_type<Sword, CarriedItem>(item)) {
       if(hitpoints == 3) {
         say(game, {"O rly?"});
       }
@@ -41,7 +37,7 @@ namespace lab3 {
 
         game.get_world().destroy(get_id());
       }
-    } catch(bad_cast e) {
+    } else {
       say(game, {"Hohoho! What haveth thou there, o loyal minion?"});
     }
 
