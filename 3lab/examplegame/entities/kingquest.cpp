@@ -13,7 +13,7 @@ namespace lab3 {
   void KingQuest::tick(Game& game) {
     if (king.expired()) {
 
-      cout << "You won! Hurray!" << endl;
+      game.push_message("You won! Hurray!");
 
       game.stop();
     }
