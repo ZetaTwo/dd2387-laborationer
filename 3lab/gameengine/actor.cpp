@@ -42,7 +42,7 @@ namespace lab3 {
     inventory.emplace_back(std::move(item_p));
 
     stringstream ss;
-    ss << "Picked up " << inventory.back()->get_name();
+    ss << get_name() << " picked up " << inventory.back()->get_name();
     game.push_message(ss.str());
 
     return true;
