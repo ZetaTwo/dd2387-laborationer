@@ -34,6 +34,8 @@ namespace lab3 {
     { "inventory", &Player::validate_command_inventory },
     { "m", &Player::validate_command_directional },
     { "move", &Player::validate_command_directional },
+    { "w", &Player::validate_command_wait },
+    { "wait", &Player::validate_command_wait },
     { "help", &Player::commands_help }
   };
 
@@ -45,13 +47,16 @@ namespace lab3 {
     { "i", &Player::evaluate_command_inventory },
     { "inventory", &Player::evaluate_command_inventory },
     { "m", &Player::evaluate_command_move },
-    { "move", &Player::evaluate_command_move }
+    { "move", &Player::evaluate_command_move },
+    { "w", &Player::evaluate_command_wait },
+    { "wait", &Player::evaluate_command_wait }
   };
 
   const map<string, string> COMMANDS_HELP = {
     { "activate", "activate (w | a | s | d)\n  Activate something above, left, below, right respectively\n  Aliases: a" },
     { "inventory", "inventory [describe <N> | (use | give) <N> (w | a | s | d)]\n  Inspect/use items in inventory\n  Aliases: i" },
-    { "move", "move (w | a | s | d)\n  Move up, left, down, right respectively\n  Aliases: g, go, m" }
+    { "move", "move (w | a | s | d)\n  Move up, left, down, right respectively\n  Aliases: g, go, m" },
+    { "wait", "wait\n  Do nothing.\n  Aliases: w" },
   };
 
   void Player::input(Game& game) {
@@ -155,6 +160,13 @@ namespace lab3 {
     return { true, "" };
   }
 
+  Inputer::validation_result_t Player::validate_command_wait(const Inputer::command_t& command) const {
+    if(command.size() == 1) {
+      return { true, "" };
+    }
+    return { false, "Invalid wait command." };
+  }
+
   void Player::evaluate_command_activate(Game& game, const Inputer::command_t& last_command) {
     const vector<shared_ptr<PhysicalEntity>> entities_on_target_tile = game
       .get_world()
@@ -227,5 +239,7 @@ namespace lab3 {
 
     move(game, DIRECTION_COMMANDS.at(last_command[1]));
   }
+
+  void Player::evaluate_command_wait(Game&, const Inputer::command_t&) {}
 
 }
