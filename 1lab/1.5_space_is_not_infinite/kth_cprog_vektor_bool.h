@@ -132,8 +132,8 @@ public:
   bool operator>(const VectorBoolConstIterator& rhs) const;
   bool operator>=(const VectorBoolConstIterator& rhs) const;
   bool operator<=(const VectorBoolConstIterator& rhs) const;
-  value_type operator[](difference_type index);
-  value_type operator*();
+  value_type operator[](difference_type index) const;
+  value_type operator*() const;
 };
 
 VectorBoolConstIterator operator+(const VectorBoolConstIterator::difference_type&, const VectorBoolConstIterator& it);
@@ -164,8 +164,8 @@ public:
   difference_type operator-(const VectorBoolIterator& other) const;
   bool operator==(const VectorBoolIterator& rhs) const;
   bool operator!=(const VectorBoolIterator& rhs) const;
-  reference operator[](difference_type index);
-  reference operator*();
+  reference operator[](difference_type index) const;
+  reference operator*() const;
 };
 
 VectorBoolIterator operator+(const VectorBoolIterator::difference_type&, const VectorBoolIterator& it);
