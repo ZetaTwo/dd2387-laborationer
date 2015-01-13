@@ -1,16 +1,41 @@
 #include <algorithm>
+#include <sstream>
 #include <utility>
 
 #include "actor.h"
 #include "game.h"
 
+using std::endl;
 using std::find;
+using std::stringstream;
 using std::weak_ptr;
 
 namespace lab3 {
 
   bool Actor::move(Game& game, direction_t direction, unsigned int distance) {
     return game.get_world().move_entity(game, *this, position.step(direction, distance));
+  }
+
+  void Actor::emote(Game& game, initializer_list<string> utterance) const {
+    stringstream ss;
+    ss << get_name() << " ";
+
+    for(const string s : utterance) {
+      ss << s;
+    }
+
+    game.push_message(ss.str());
+  }
+
+  void Actor::say(Game& game, string say_type, initializer_list<string> utterance) const {
+    stringstream ss;
+    ss << get_name() << " " << say_type << ": ";
+
+    for(const string s : utterance) {
+      ss << s;
+    }
+
+    game.push_message(ss.str());
   }
 
   bool Actor::add_item(Game& game, unique_ptr<CarriedItem>&& item_p) {

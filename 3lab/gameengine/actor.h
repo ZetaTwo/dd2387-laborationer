@@ -1,11 +1,14 @@
 #pragma once
 #include <memory>
+#include <string>
 #include <vector>
 
 #include "physicalentity.h"
 #include "item.h"
 #include "util.h"
 
+using std::initializer_list;
+using std::string;
 using std::vector;
 using std::unique_ptr;
 
@@ -19,6 +22,10 @@ namespace lab3 {
       bool is_remote_controlled = false;
 
       virtual void do_tick(Game& game);
+
+      void emote(Game& game, initializer_list<string> message) const;
+      void say(Game& game, string say_type, initializer_list<string> utterance) const;
+      inline void say(Game& game, initializer_list<string> utterance) const { say(game, "says", utterance); }
 
     public:
       Actor(const WorldCoord& initial_position) : PhysicalEntity(initial_position) {};
