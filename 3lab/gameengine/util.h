@@ -16,6 +16,8 @@ namespace lab3 {
 
   enum direction_t { DIR_NORTH, DIR_EAST, DIR_SOUTH, DIR_WEST };
 
+  direction_t random_direction();
+
   class Identifiable {
     public:
       typedef unsigned int identifier_t;

@@ -1,10 +1,24 @@
+#include <random>
 #include <stdexcept>
+#include <vector>
 
 #include "util.h"
 
+using std::random_device;
 using std::out_of_range;
+using std::uniform_int_distribution;
+using std::vector;
 
 namespace lab3 {
+
+  random_device game_random;
+
+  uniform_int_distribution<size_t> direction_generator{0, 4};
+  const vector<direction_t> DIRECTIONS{DIR_NORTH, DIR_EAST, DIR_SOUTH, DIR_WEST};
+
+  direction_t random_direction() {
+    return DIRECTIONS[direction_generator(game_random)];
+  }
 
   Identifiable::identifier_t Identifiable::next_id = 0;
 
