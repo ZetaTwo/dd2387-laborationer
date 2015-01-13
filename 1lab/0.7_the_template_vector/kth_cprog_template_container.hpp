@@ -59,6 +59,8 @@ public:
   const_reverse_iterator rbegin() const;
   const_reverse_iterator rend() const;
 
+  typedef T value_type;
+
 private:
 
   static const size_t DEFAULT_SIZE = 16;

@@ -3,6 +3,7 @@
 #include "kth_cprog_template_container.hpp"
 #include <mutex>
 #include <algorithm>
+#include <iterator>
 
 //#define LOCK_GLOBAL
 
@@ -76,8 +77,8 @@ void SafeVector<T>::safeswap(size_t index1, size_t index2) {
 };
 
 template<typename T>
-SafeVector<T>::SafeVector(const std::initializer_list<T>& list) : Vector<vector_datatype>(list.size()) {
-  std::copy(list.begin(), list.end(), this->begin());
+SafeVector<T>::SafeVector(const std::initializer_list<T>& list) {
+   std::copy(list.begin(), list.end(), std::back_insert_iterator<SafeVector<T>>(*this));
 }
 
 template<typename T>
