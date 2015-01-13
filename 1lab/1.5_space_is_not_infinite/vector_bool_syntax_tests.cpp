@@ -118,7 +118,7 @@ TEST_F(VectorBoolIteratorFixture, IsAsteriskDereferenceable) {
   value_type v = *b;
 }
 
-// operator-> is not applicable: bool a; a->foo is nonsensical
+// operator-> is not applicable: bool a; a.foo is nonsensical
 
 // DefaultConstructible
 
