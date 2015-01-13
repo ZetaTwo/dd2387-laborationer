@@ -30,6 +30,9 @@
     <ClCompile Include="..\..\1.3_concurrency_is_the_new_black\vector_thread_tests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\1.5_space_is_not_infinite\vector_bool_syntax_tests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\0.7_the_template_vector\counter_class.hpp">

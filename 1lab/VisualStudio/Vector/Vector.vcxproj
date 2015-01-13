@@ -13,7 +13,11 @@
   <ItemGroup>
     <ClInclude Include="..\..\0.7_the_template_vector\kth_cprog_template_container.hpp" />
     <ClInclude Include="..\..\1.3_concurrency_is_the_new_black\kth_cprog_safe_vector.hpp" />
-    <ClInclude Include="..\..\1.5_space_is_not_infinite\kth_cprog_vektor_bool.hpp" />
+    <ClInclude Include="..\..\1.5_space_is_not_infinite\kth_cprog_vektor_bool.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\1.5_space_is_not_infinite\kth_cprog_vektor_bool.cpp" />
+    <ClCompile Include="..\..\1.5_space_is_not_infinite\kth_cprog_vektor_bool_iterator.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{8935F8AE-17CB-412F-824C-E64F8E5AB08D}</ProjectGuid>
@@ -44,7 +48,9 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>../../0.7_the_template_vector;$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>
@@ -53,6 +59,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -69,6 +76,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
