@@ -14,6 +14,7 @@ EX07DIR=0.7_the_template_vector
 EX11DIR=1.1_the_matrix
 EX11BUGSDIR=1.1_the_matrix/buggies
 EX11BUGSPREFIX=
+EX13DIR=1.3_concurrency_is_the_new_black
 EX14DIR=1.4_the_hypercube
 EX15DIR=1.5_space_is_not_infinite
 
@@ -31,7 +32,7 @@ MATRIX_HEADER=$(EX11DIR)/Matrix.h $(TEMPLATE_VECTOR_HEADER)
 TEST_RUNNER_CODE=../test_runner.cpp
 TEST_RUNNER_OBJECT=build/test_runner.o
 
-lab1: ex01 ex02 ex03 ex04 ex05 ex06 ex07 ex11 ex14 ex15
+lab1: ex01 ex02 ex03 ex04 ex05 ex06 ex07 ex11 ex13 ex14 ex15
 
 clean:
 	rm -rf build
@@ -80,6 +81,7 @@ ex07_tests: run/$(EX07DIR)/vector_tests
 
 ex11: run/$(EX11DIR)/matrix_tests ex11_compiler_tests
 ex11buggy: $(patsubst $(EX11BUGSDIR)/Matrix0%.o,run/$(EX11BUGSDIR)/test0%,$(wildcard $(EX11BUGSDIR)/Matrix0*.o))
+ex13: run/$(EX13DIR)/vector_thread_tests
 ex14: run/$(EX14DIR)/hypercube_tests
 ex15: run/$(EX15DIR)/vector_bool_tests
 
@@ -122,6 +124,12 @@ build/$(EX11BUGSDIR)/test.o: $(EX11BUGSDIR)/matrix_tests.cpp $(EX11BUGSDIR)/Matr
 	$(MAKE_OBJECT)
 
 build/$(EX11BUGSDIR)/test0%.exe: $(TEST_RUNNER_OBJECT) build/$(EX11BUGSDIR)/test.o $(EX11BUGSDIR)/$(EX11BUGSPREFIX)Matrix0%.o $(EX11BUGSDIR)/Matrix.h
+	$(MAKE_EXECUTABLE)
+
+build/$(EX13DIR)/vector_thread_tests.o: $(EX13DIR)/vector_thread_tests.cpp $(EX13DIR)/kth_cprog_safe_vector.hpp $(TEMPLATE_VECTOR_HEADER)
+	$(MAKE_OBJECT)
+
+build/$(EX13DIR)/vector_thread_tests.exe: $(TEST_RUNNER_OBJECT) build/$(EX13DIR)/vector_thread_tests.o
 	$(MAKE_EXECUTABLE)
 
 build/$(EX14DIR)/hypercube_tests.o: $(EX14DIR)/hypercube_tests.cpp $(EX14DIR)/hypercube.hpp $(TEMPLATE_VECTOR_HEADER)
