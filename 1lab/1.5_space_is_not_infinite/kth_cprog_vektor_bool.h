@@ -110,7 +110,7 @@ private:
   typedef Vector<bool>::storage_type storage_type;
   typedef Vector<bool>::subindex_type subindex_type;
 
-  storage_type* element;
+  storage_type const* element;
   subindex_type index;
   
 public:
@@ -132,8 +132,8 @@ public:
   bool operator>(const VectorBoolConstIterator& rhs) const;
   bool operator>=(const VectorBoolConstIterator& rhs) const;
   bool operator<=(const VectorBoolConstIterator& rhs) const;
-  VectorBoolProxy operator[](difference_type index);
-  bool operator*();
+  value_type operator[](difference_type index);
+  value_type operator*();
 };
 
 VectorBoolConstIterator operator+(const VectorBoolConstIterator::difference_type&, const VectorBoolConstIterator& it);
@@ -142,10 +142,14 @@ class VectorBoolIterator : public VectorBoolConstIterator {
   typedef Vector<bool>::storage_type storage_type;
   typedef Vector<bool>::subindex_type subindex_type;
 
-  storage_type const* element;
+  storage_type * element;
   subindex_type index;
 
 public:
+  typedef bool value_type;
+  typedef void pointer;
+  typedef VectorBoolProxy reference;
+
   VectorBoolIterator();
   VectorBoolIterator(storage_type* element, subindex_type index);
   VectorBoolIterator(const VectorBoolIterator& mit);
@@ -160,8 +164,8 @@ public:
   difference_type operator-(const VectorBoolIterator& other) const;
   bool operator==(const VectorBoolIterator& rhs) const;
   bool operator!=(const VectorBoolIterator& rhs) const;
-  bool operator[](difference_type index);
-  bool operator*();
+  reference operator[](difference_type index);
+  reference operator*();
 };
 
 VectorBoolIterator operator+(const VectorBoolIterator::difference_type&, const VectorBoolIterator& it);

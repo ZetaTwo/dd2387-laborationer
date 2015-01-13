@@ -107,12 +107,12 @@ bool VectorBoolConstIterator::operator<=(const VectorBoolConstIterator& rhs) con
   return element < rhs.element || (element == rhs.element && index <= rhs.index);
 }
 
-VectorBoolProxy VectorBoolConstIterator::operator[](difference_type index) {
-  return VectorBoolProxy(element, index);
+VectorBoolConstIterator::value_type VectorBoolConstIterator::operator[](difference_type index) {
+  return ((*element) & (1 << index)) != 0;
 }
 
-bool VectorBoolConstIterator::operator*() {
-  return VectorBoolProxy(element, index);
+VectorBoolConstIterator::value_type VectorBoolConstIterator::operator*() {
+  return ((*element) & (1 << index)) != 0;
 }
 
 VectorBoolConstIterator operator+(const VectorBoolConstIterator::difference_type& distance, const VectorBoolConstIterator& it) {
@@ -189,12 +189,12 @@ bool VectorBoolIterator::operator!=(const VectorBoolIterator& rhs) const {
   return !(*this == rhs);
 }
 
-bool VectorBoolIterator::operator[](difference_type index) {
-  return ((*element) & (1 << index)) != 0;
+VectorBoolIterator::reference VectorBoolIterator::operator[](difference_type index) {
+  return reference(element, index);
 }
 
-bool VectorBoolIterator::operator*() {
-  return ((*element) & (1 << index)) != 0;
+VectorBoolIterator::reference VectorBoolIterator::operator*() {
+  return reference(element, index);
 }
 
 VectorBoolIterator operator+(const VectorBoolIterator::difference_type& distance, const VectorBoolIterator& it) {
