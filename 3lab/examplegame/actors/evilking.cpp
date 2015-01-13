@@ -19,10 +19,7 @@ namespace lab3 {
   }
 
   void EvilKing::activated_by(Game& game, Actor& activator) {
-    stringstream ss;
-    ss << get_name() << " says:" << endl;
-    ss << "Hohoho! Right thplendid day today, ith it not, o loyal minion?" << endl;
-    game.push_message(ss.str());
+    say(game, {"Hohoho! Right thplendid day today, ith it not, o loyal minion?"});
   }
 
   void EvilKing::activated_by(Game& game, Actor& activator, CarriedItem& item) {
@@ -31,26 +28,21 @@ namespace lab3 {
       dynamic_cast<Sword&>(item);
 
       if(hitpoints == 3) {
-        ss << "O rly?" << endl;
+        say(game, {"O rly?"});
       }
-      ss << "IMMA CHARGIN' MAH LEEYZAAAH!!!" << endl;
+      say(game, {"IMMA CHARGIN' MAH LEEYZAAAH!!!"});
 
       if(--hitpoints < 1) {
-        ss << "*gurgel*" << endl;
+        say(game, {"*gurgel*"});
       }
-      game.push_message(ss.str());
 
       if(hitpoints < 1) {
-        stringstream collapse_ss;
-        collapse_ss.clear();
-        collapse_ss << get_name() << " collapses.";
-        game.push_message(collapse_ss.str());
+        emote(game, {"collapses."});
 
         game.get_world().destroy(get_id());
       }
     } catch(bad_cast e) {
-      ss << "Hohoho! What haveth thou there, o loyal minion?" << endl;
-      game.push_message(ss.str());
+      say(game, {"Hohoho! What haveth thou there, o loyal minion?"});
     }
 
   }
