@@ -27,9 +27,7 @@ namespace lab3 {
   void Game::tick() {
     clear_messages();
     world.tick(*this);
-    if(running) {
-      render();
-    }
+    render();
   }
 
   void Game::run() {
