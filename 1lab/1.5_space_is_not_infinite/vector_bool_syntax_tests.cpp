@@ -108,6 +108,10 @@ TEST_F(VectorBoolIteratorFixture, IsPostfixIncrementDereferenceable) {
   reference it = *b++;
 }
 
+TEST_F(VectorBoolIteratorFixture, IsPostfixVoidIncrementable) {
+  (void)b++;
+}
+
 // InputIterator
 
 TEST_F(VectorBoolIteratorFixture, IsNotEqualComparable) {
