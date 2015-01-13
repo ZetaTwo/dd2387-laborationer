@@ -11,9 +11,9 @@ Current score: (2 + 10 + 5 + 4) + (2 + (6) + 6) + (4 + (6)) = **45p**
 
 Working on: (10) = 10p
 
-Uncompleted required extra assignments: (5) = 5p
+Uncompleted required extra assignments: 3 + 5 = 8p
 
-Current prospective score: **60p**
+Current prospective score: **63p**
 
 ---
 
