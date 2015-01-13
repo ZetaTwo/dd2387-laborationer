@@ -1222,6 +1222,19 @@ TEST_P(AlternatingVectorsTest, ConvertToUnsignedInteger) {
   }
 }
 
+class IntegerInputTest : public TestWithParam<unsigned int> {};
+INSTANTIATE_TEST_CASE_P(VectorBool, IntegerInputTest, Values(0, 1, 2, 3, 4, 5, 6, 7, 8,
+  0b1111, 0b10000, 0b10001, (1<<31)-1, 1<<31, (1<<31)+1, (1<<31) + ((1<<31)-1)
+));
+TEST_P(IntegerInputTest, ConvertFromUnsignedInteger) {
+  const unsigned int vec_i = GetParam();
+  const Vec vector = Vector<bool>::from_integer(vec_i);
+
+  for(size_t i = 0; i < vector.size() && i < sizeof(unsigned int)*CHAR_BIT; ++i) {
+    EXPECT_EQ((vec_i & (1<<i)) != 0, vector[i]);
+  }
+}
+
 TEST(VectorBool, StreamInput) {
   std::cout << Vec({true, false, true, false, false, true, true, false}) << std::endl;
 }

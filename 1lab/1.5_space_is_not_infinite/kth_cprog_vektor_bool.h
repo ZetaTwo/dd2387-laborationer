@@ -76,6 +76,7 @@ public:
 
   // Type conversions
   operator unsigned int() const;
+  static Vector<bool> from_integer(unsigned int numeric);
 
 private:
 
