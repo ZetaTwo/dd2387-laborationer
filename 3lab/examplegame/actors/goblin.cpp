@@ -16,9 +16,11 @@ namespace lab3 {
           target.damage(game, ATTACK_DAMAGE);
 
           game.push_message(easyss() << get_name() << " pokes " << target.get_name() << " with a stick!");
+          return;
         }
       }
     }
+    move(game, random_direction());
   }
 
   void Goblin::activated_by(Game& game, Actor& activator) {
