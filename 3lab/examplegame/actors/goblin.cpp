@@ -1,4 +1,5 @@
 #include "actors/goblin.h"
+#include "items/questitem.h"
 #include "game.h"
 #include "util.h"
 
@@ -27,6 +28,9 @@ namespace lab3 {
   }
 
   void Goblin::activated_by(Game& game, Actor& activator, CarriedItem& item) {
+    if(is_type<Sword, CarriedItem>(item)) {
+      damage(game, 5);
+    }
   }
 
 }
