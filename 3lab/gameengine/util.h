@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <iterator>
+#include <sstream>
 #include <string>
 #include <typeinfo>
 
@@ -9,6 +10,7 @@ using std::iterator;
 using std::ostream;
 using std::random_access_iterator_tag;
 using std::string;
+using std::stringstream;
 
 namespace lab3 {
 
@@ -131,5 +133,19 @@ namespace lab3 {
       return false;
     }
   }
+
+  class EasyStringStream {
+      stringstream ss;
+
+    public:
+      EasyStringStream() {}
+      EasyStringStream(const EasyStringStream& ess) { ss << static_cast<string>(ess); }
+
+      template<class T>
+      EasyStringStream& operator<<(const T& arg) { ss << arg; return *this; }
+      inline operator string() const { return ss.str(); }
+  };
+
+  EasyStringStream easyss();
 
 }

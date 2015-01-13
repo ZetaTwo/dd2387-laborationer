@@ -110,4 +110,9 @@ namespace lab3 {
   ostream& operator<<(ostream& os, const CoordRectangle& rect) {
     return os << "CoordRectangle(" << rect.top_left << " - " << rect.btm_right << ")";
   }
+
+
+  EasyStringStream easyss() {
+    return EasyStringStream();
+  }
 }
