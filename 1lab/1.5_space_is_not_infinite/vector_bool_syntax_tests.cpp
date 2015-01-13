@@ -6,17 +6,16 @@ using std::move;
 using std::swap;
 using ::testing::Test;
 
-typedef Vector<bool> Vec;
-typedef Vec::iterator It;
-typedef Vec::const_iterator CIt;
-typedef iterator_traits<It>::difference_type difference;
-typedef iterator_traits<It>::reference reference;
-typedef iterator_traits<It>::value_type value_type;
-
 struct VectorBoolIteratorFixture : Test {
+    typedef Vector<bool> Vec;
+    typedef Vec::iterator It;
+    typedef iterator_traits<It>::difference_type difference;
+    typedef iterator_traits<It>::reference reference;
+    typedef iterator_traits<It>::value_type value_type;
+
     Vec v;
-    Vec::iterator b;
-    Vec::iterator e;
+    It b;
+    It e;
 
   public:
     void SetUp() {
@@ -25,8 +24,11 @@ struct VectorBoolIteratorFixture : Test {
     }
 };
 struct VectorBoolConstIteratorFixture : Test {
-    const Vec v;
-    Vec::const_iterator it;
+    typedef const Vector<bool> Vec;
+    typedef Vec::const_iterator It;
+
+    Vec v;
+    It it;
 
   public:
     void SetUp() {
