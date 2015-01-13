@@ -1235,6 +1235,23 @@ TEST_P(IntegerInputTest, ConvertFromUnsignedInteger) {
   }
 }
 
+TEST_P(AlternatingVectorsTest, ConvertToUnsignedIntegerAndBackAgain) {
+  if(GetParam().size() <= sizeof(unsigned int) * CHAR_BIT) {
+    const Vec vector = [](Vector<bool> v) -> Vector<bool> {
+      while(v.size() < sizeof(unsigned int) * CHAR_BIT) {
+        v.push_back(false);
+      }
+      return v;
+    }(GetParam());
+    EXPECT_EQ(vector, Vector<bool>::from_integer(vector));
+  }
+}
+
+TEST_P(IntegerInputTest, ConvertFromUnsignedIntegerAndBackAgain) {
+  const unsigned int vec_i = GetParam();
+  EXPECT_EQ(vec_i, static_cast<unsigned int>(Vector<bool>::from_integer(vec_i)));
+}
+
 TEST(VectorBool, StreamInput) {
   std::cout << Vec({true, false, true, false, false, true, true, false}) << std::endl;
 }
