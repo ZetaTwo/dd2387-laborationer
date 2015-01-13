@@ -1,4 +1,8 @@
+#include <algorithm>
+
 #include "goblinquest.h"
+
+using std::all_of;
 
 namespace lab3 {
 
@@ -11,13 +15,9 @@ namespace lab3 {
   }
 
   void GoblinQuest::tick(Game& game) {
-    bool alldead = true;
-    for (const auto& p : goblins) {
-      if (!p.expired()) {
-        alldead = false;
-      }
-    }
-    finished = alldead;
+    finished = all_of(goblins.begin(), goblins.end(), [](const weak_ptr<PhysicalEntity>& goblin_p) {
+      return goblin_p.expired();
+    });
   }
 
 }
