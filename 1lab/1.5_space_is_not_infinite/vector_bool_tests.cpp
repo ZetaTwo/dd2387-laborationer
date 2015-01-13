@@ -958,6 +958,26 @@ TEST_P(AlternatingVectorsTest, ItrRCBeginEnd) {
   }
 }
 
+TEST_P(SizeTest, ItrCopyAssign) {
+  Vec vector(GetParam());
+
+  Vec::iterator it = vector.begin();
+  for(Vec::iterator i = vector.begin(); i < vector.end(); ++i) {
+    it = i;
+    EXPECT_EQ(it, i);
+  }
+}
+
+TEST_P(SizeTest, ItrCCopyAssign) {
+  const Vec vector(GetParam());
+
+  Vec::const_iterator it = vector.begin();
+  for(Vec::const_iterator i = vector.begin(); i < vector.end(); ++i) {
+    it = i;
+    EXPECT_EQ(it, i);
+  }
+}
+
 TEST_P(SizeTest, ItrOperatorPlusAdvancesThatManySteps) {
   const size_t true_index = GetParam();
   const size_t size = true_index + 17;

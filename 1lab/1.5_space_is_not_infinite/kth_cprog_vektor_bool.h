@@ -117,6 +117,7 @@ public:
   VectorBoolConstIterator();
   VectorBoolConstIterator(storage_type* element, subindex_type index);
   VectorBoolConstIterator(const VectorBoolConstIterator& mit);
+  VectorBoolConstIterator& operator=(const VectorBoolConstIterator& mit);
   VectorBoolConstIterator& operator++();
   VectorBoolConstIterator operator++(int);
   VectorBoolConstIterator& operator+=(difference_type);
@@ -153,6 +154,7 @@ public:
   VectorBoolIterator();
   VectorBoolIterator(storage_type* element, subindex_type index);
   VectorBoolIterator(const VectorBoolIterator& mit);
+  VectorBoolIterator& operator=(const VectorBoolIterator& mit);
   VectorBoolIterator& operator++();
   VectorBoolIterator operator++(int);
   VectorBoolIterator& operator+=(difference_type);

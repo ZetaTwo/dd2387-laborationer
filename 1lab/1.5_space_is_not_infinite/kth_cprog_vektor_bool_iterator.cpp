@@ -31,6 +31,12 @@ VectorBoolConstIterator::VectorBoolConstIterator(const VectorBoolConstIterator& 
   element(mit.element),
   index(mit.index) {}
 
+VectorBoolConstIterator& VectorBoolConstIterator::operator=(const VectorBoolConstIterator& mit) {
+  element = mit.element;
+  index = mit.index;
+  return *this;
+}
+
 VectorBoolConstIterator& VectorBoolConstIterator::operator++() {
   if(++index > Vector<bool>::MAX_SUBINDEX) {
     ++element;
@@ -128,6 +134,12 @@ VectorBoolIterator::VectorBoolIterator(storage_type* element, subindex_type inde
 VectorBoolIterator::VectorBoolIterator(const VectorBoolIterator& mit) :
   element(mit.element),
   index(mit.index) {}
+
+VectorBoolIterator& VectorBoolIterator::operator=(const VectorBoolIterator& mit) {
+  element = mit.element;
+  index = mit.index;
+  return *this;
+}
 
 VectorBoolIterator& VectorBoolIterator::operator++() {
   if(++index > Vector<bool>::MAX_SUBINDEX) {
