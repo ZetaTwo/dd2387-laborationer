@@ -466,3 +466,14 @@ Vector<bool>::operator unsigned int() const {
 
   return result;
 }
+
+Vector<bool> Vector<bool>::from_integer(const unsigned int vec_i) {
+  const size_t UNSIGNED_INT_SIZE = sizeof(unsigned int) * CHAR_BIT;
+  Vector<bool> result(UNSIGNED_INT_SIZE);
+
+  for(size_t i = 0; i < UNSIGNED_INT_SIZE; ++i) {
+    result[i] = ((vec_i >> i) & 0b1) == 0b1;
+  }
+
+  return result;
+}

@@ -31,6 +31,12 @@ VectorBoolConstIterator::VectorBoolConstIterator(const VectorBoolConstIterator& 
   element(mit.element),
   index(mit.index) {}
 
+VectorBoolConstIterator& VectorBoolConstIterator::operator=(const VectorBoolConstIterator& mit) {
+  element = mit.element;
+  index = mit.index;
+  return *this;
+}
+
 VectorBoolConstIterator& VectorBoolConstIterator::operator++() {
   if(++index > Vector<bool>::MAX_SUBINDEX) {
     ++element;
@@ -107,12 +113,12 @@ bool VectorBoolConstIterator::operator<=(const VectorBoolConstIterator& rhs) con
   return element < rhs.element || (element == rhs.element && index <= rhs.index);
 }
 
-VectorBoolProxy VectorBoolConstIterator::operator[](difference_type index) {
-  return VectorBoolProxy(element, index);
+VectorBoolConstIterator::value_type VectorBoolConstIterator::operator[](difference_type index) const {
+  return ((*element) & (1 << index)) != 0;
 }
 
-bool VectorBoolConstIterator::operator*() {
-  return VectorBoolProxy(element, index);
+VectorBoolConstIterator::value_type VectorBoolConstIterator::operator*() const {
+  return ((*element) & (1 << index)) != 0;
 }
 
 VectorBoolConstIterator operator+(const VectorBoolConstIterator::difference_type& distance, const VectorBoolConstIterator& it) {
@@ -128,6 +134,12 @@ VectorBoolIterator::VectorBoolIterator(storage_type* element, subindex_type inde
 VectorBoolIterator::VectorBoolIterator(const VectorBoolIterator& mit) :
   element(mit.element),
   index(mit.index) {}
+
+VectorBoolIterator& VectorBoolIterator::operator=(const VectorBoolIterator& mit) {
+  element = mit.element;
+  index = mit.index;
+  return *this;
+}
 
 VectorBoolIterator& VectorBoolIterator::operator++() {
   if(++index > Vector<bool>::MAX_SUBINDEX) {
@@ -189,12 +201,12 @@ bool VectorBoolIterator::operator!=(const VectorBoolIterator& rhs) const {
   return !(*this == rhs);
 }
 
-bool VectorBoolIterator::operator[](difference_type index) {
-  return ((*element) & (1 << index)) != 0;
+VectorBoolIterator::reference VectorBoolIterator::operator[](difference_type index) const {
+  return reference(element, index);
 }
 
-bool VectorBoolIterator::operator*() {
-  return ((*element) & (1 << index)) != 0;
+VectorBoolIterator::reference VectorBoolIterator::operator*() const {
+  return reference(element, index);
 }
 
 VectorBoolIterator operator+(const VectorBoolIterator::difference_type& distance, const VectorBoolIterator& it) {

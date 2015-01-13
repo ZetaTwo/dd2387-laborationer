@@ -958,6 +958,26 @@ TEST_P(AlternatingVectorsTest, ItrRCBeginEnd) {
   }
 }
 
+TEST_P(SizeTest, ItrCopyAssign) {
+  Vec vector(GetParam());
+
+  Vec::iterator it = vector.begin();
+  for(Vec::iterator i = vector.begin(); i < vector.end(); ++i) {
+    it = i;
+    EXPECT_EQ(it, i);
+  }
+}
+
+TEST_P(SizeTest, ItrCCopyAssign) {
+  const Vec vector(GetParam());
+
+  Vec::const_iterator it = vector.begin();
+  for(Vec::const_iterator i = vector.begin(); i < vector.end(); ++i) {
+    it = i;
+    EXPECT_EQ(it, i);
+  }
+}
+
 TEST_P(SizeTest, ItrOperatorPlusAdvancesThatManySteps) {
   const size_t true_index = GetParam();
   const size_t size = true_index + 17;
@@ -1220,6 +1240,36 @@ TEST_P(AlternatingVectorsTest, ConvertToUnsignedInteger) {
       EXPECT_EQ(vec_i >> vector.size(), 0);
     }
   }
+}
+
+class IntegerInputTest : public TestWithParam<unsigned int> {};
+INSTANTIATE_TEST_CASE_P(VectorBool, IntegerInputTest, Values(0, 1, 2, 3, 4, 5, 6, 7, 8,
+  0b1111, 0b10000, 0b10001, (1<<31)-1, 1<<31, (1<<31)+1, (1<<31) + ((1<<31)-1)
+));
+TEST_P(IntegerInputTest, ConvertFromUnsignedInteger) {
+  const unsigned int vec_i = GetParam();
+  const Vec vector = Vector<bool>::from_integer(vec_i);
+
+  for(size_t i = 0; i < vector.size() && i < sizeof(unsigned int)*CHAR_BIT; ++i) {
+    EXPECT_EQ((vec_i & (1<<i)) != 0, vector[i]);
+  }
+}
+
+TEST_P(AlternatingVectorsTest, ConvertToUnsignedIntegerAndBackAgain) {
+  if(GetParam().size() <= sizeof(unsigned int) * CHAR_BIT) {
+    const Vec vector = [](Vector<bool> v) -> Vector<bool> {
+      while(v.size() < sizeof(unsigned int) * CHAR_BIT) {
+        v.push_back(false);
+      }
+      return v;
+    }(GetParam());
+    EXPECT_EQ(vector, Vector<bool>::from_integer(vector));
+  }
+}
+
+TEST_P(IntegerInputTest, ConvertFromUnsignedIntegerAndBackAgain) {
+  const unsigned int vec_i = GetParam();
+  EXPECT_EQ(vec_i, static_cast<unsigned int>(Vector<bool>::from_integer(vec_i)));
 }
 
 TEST(VectorBool, StreamInput) {
