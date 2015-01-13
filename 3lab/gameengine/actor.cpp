@@ -82,4 +82,14 @@ namespace lab3 {
   void Actor::do_tick(Game& game) {
   }
 
+  void Actor::damage(Game& game, const int damage) {
+    health -= damage;
+    game.push_message(easyss() << get_name() << " takes " << damage << " damage (" << health << " hp)!");
+
+    if(health <= 0) {
+      game.get_world().destroy(get_id());
+
+      game.push_message(easyss() << get_name() << " dies from damage!");
+    }
+  }
 }

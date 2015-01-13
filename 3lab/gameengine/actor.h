@@ -19,6 +19,7 @@ namespace lab3 {
       typedef vector<unique_ptr<CarriedItem>> inventory_t;
       inventory_t inventory;
 
+      int health;
       bool is_remote_controlled = false;
 
       virtual void do_tick(Game& game);
@@ -28,7 +29,9 @@ namespace lab3 {
       inline void say(Game& game, initializer_list<string> utterance) const { say(game, "says", utterance); }
 
     public:
-      Actor(const WorldCoord& initial_position) : PhysicalEntity(initial_position) {};
+      Actor(const WorldCoord& initial_position) : Actor(initial_position, 100) {};
+      Actor(const WorldCoord& initial_position, const int health) : PhysicalEntity(initial_position),
+        health(health) {};
 
       virtual bool move(Game& game, direction_t direction, unsigned int distance = 1) override;
 
@@ -36,6 +39,9 @@ namespace lab3 {
       virtual bool drop_item(CarriedItem& item);
       virtual bool give_item(Game& game, unique_ptr<CarriedItem>&& item_p, Actor& recipient);
       virtual bool remove_item(CarriedItem& item);
+
+      inline int get_health() { return health; }
+      virtual void damage(Game& game, int amount);
 
       virtual bool set_remote_controlled(bool is_remote_controlled);
       virtual void interact(Actor& interactee);

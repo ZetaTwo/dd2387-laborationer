@@ -4,6 +4,7 @@
 #include "examplegame.h"
 #include "actors/oldman.h"
 #include "actors/player.h"
+#include "entities/deathquest.h"
 #include "entities/kingquest.h"
 #include "items/questitem.h"
 #include "tiles/rock.h"
@@ -25,8 +26,9 @@ namespace lab3 {
 
     Identifiable::identifier_t map_id = create_map();
 
-    shared_ptr<PhysicalEntity> player = make_shared<Player>(WorldCoord{ map_id, 3, 10 });
+    shared_ptr<Actor> player = make_shared<Player>(WorldCoord{ map_id, 3, 10 });
     camera.set_followee(player);
+    world.add_entity(make_shared<DeathQuest>(player));
  
     world.add_physical(player);
 
