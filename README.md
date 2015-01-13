@@ -9,7 +9,7 @@ Status
 
 Current score: (2 + 10 + 5 + 4) + (2 + (6) + 6) + (4 + (6)) = **45p**
 
-Working on: (10) = 10p
+Completed but not presented: 10 = 10p
 
 Uncompleted required extra assignments: 3 + 5 = 8p
 
@@ -33,7 +33,7 @@ Lab 1 extra assignments
  2. *(nothing)*
  3. ~~Concurrency Is The New Black~~ (5p) **PASSED** [~~#27~~](https://github.com/ZetaTwo/dd2387-laborationer/issues/27)
  4. ~~The Hypercube~~ (4p) **PASSED** [~~#22~~](https://github.com/ZetaTwo/dd2387-laborationer/issues/22)
- 5. Space Is Not Infinite (10p, A) [~~#23~~](https://github.com/ZetaTwo/dd2387-laborationer/issues/23) [~~#38~~](https://github.com/ZetaTwo/dd2387-laborationer/issues/38) [~~#39~~](https://github.com/ZetaTwo/dd2387-laborationer/issues/39) [#40](https://github.com/ZetaTwo/dd2387-laborationer/issues/40)
+ 5. ~~Space Is Not Infinite~~ (10p, A) [~~#23~~](https://github.com/ZetaTwo/dd2387-laborationer/issues/23) [~~#38~~](https://github.com/ZetaTwo/dd2387-laborationer/issues/38) [~~#39~~](https://github.com/ZetaTwo/dd2387-laborationer/issues/39) [~~#40~~](https://github.com/ZetaTwo/dd2387-laborationer/issues/40)
  6. *(nothing)*
  7. The Master of Life & Death (4p) [#26](https://github.com/ZetaTwo/dd2387-laborationer/issues/26)
  8. Better Safe Than Sorry (3p, A) [#28](https://github.com/ZetaTwo/dd2387-laborationer/issues/28)
