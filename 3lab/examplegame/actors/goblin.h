@@ -14,6 +14,8 @@ namespace lab3 {
     protected:
       virtual void do_tick(Game& game) override;
 
+      static const int ATTACK_DAMAGE = 3;
+
     public:
       Goblin(const WorldCoord& initial_position);
       Goblin(const WorldCoord& initial_position, const string& name);
