@@ -189,9 +189,7 @@ namespace lab3 {
 
       unsigned int n = 0;
       for(const unique_ptr<CarriedItem>& item_p : inventory) {
-        stringstream ss;
-        ss << "  " << ++n << ": " << item_p->get_name();
-        game.push_message(ss.str());
+        game.push_message(easyss() << "  " << ++n << ": " << item_p->get_name());
       }
       return;
     }

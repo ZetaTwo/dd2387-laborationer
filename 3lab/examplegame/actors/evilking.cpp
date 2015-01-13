@@ -1,11 +1,7 @@
-#include <sstream>
-
 #include "actors/evilking.h"
 #include "game.h"
 #include "item.h"
 #include "items/questitem.h"
-
-using std::stringstream;
 
 namespace lab3 {
 
@@ -21,7 +17,6 @@ namespace lab3 {
   }
 
   void EvilKing::activated_by(Game& game, Actor& activator, CarriedItem& item) {
-    stringstream ss;
     if(is_type<Sword, CarriedItem>(item)) {
       if(hitpoints == 3) {
         say(game, {"O rly?"});

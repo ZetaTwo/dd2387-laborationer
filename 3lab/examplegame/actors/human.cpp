@@ -1,11 +1,9 @@
 #include <random>
-#include <sstream>
 
 #include "actors/human.h"
 #include "game.h"
 
 using std::random_device;
-using std::stringstream;
 using std::uniform_int_distribution;
 
 namespace lab3 {
@@ -53,13 +51,11 @@ namespace lab3 {
   uniform_int_distribution<size_t> last_names_number_generator{0, Human::LAST_NAMES.size() - 1};
 
   string Human::new_name() {
-    stringstream name;
-
-    name << FIRST_NAMES[first_names_number_generator(random)];
-    name << " ";
-    name << LAST_NAMES[last_names_number_generator(random)];
-
-    return name.str();
+    return easyss()
+      << FIRST_NAMES[first_names_number_generator(random)]
+      << " "
+      << LAST_NAMES[last_names_number_generator(random)]
+    ;
   }
 
 }

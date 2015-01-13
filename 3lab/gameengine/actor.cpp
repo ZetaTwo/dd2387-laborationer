@@ -1,5 +1,4 @@
 #include <algorithm>
-#include <sstream>
 #include <utility>
 
 #include "actor.h"
@@ -7,7 +6,6 @@
 
 using std::endl;
 using std::find;
-using std::stringstream;
 using std::weak_ptr;
 
 namespace lab3 {
@@ -17,33 +15,31 @@ namespace lab3 {
   }
 
   void Actor::emote(Game& game, initializer_list<string> utterance) const {
-    stringstream ss;
+    EasyStringStream ss;
     ss << get_name() << " ";
 
     for(const string s : utterance) {
       ss << s;
     }
 
-    game.push_message(ss.str());
+    game.push_message(ss);
   }
 
   void Actor::say(Game& game, string say_type, initializer_list<string> utterance) const {
-    stringstream ss;
+    EasyStringStream ss;
     ss << get_name() << " " << say_type << ": ";
 
     for(const string s : utterance) {
       ss << s;
     }
 
-    game.push_message(ss.str());
+    game.push_message(ss);
   }
 
   bool Actor::add_item(Game& game, unique_ptr<CarriedItem>&& item_p) {
     inventory.emplace_back(std::move(item_p));
 
-    stringstream ss;
-    ss << get_name() << " picked up " << inventory.back()->get_name();
-    game.push_message(ss.str());
+    game.push_message(easyss() << get_name() << " picked up " << inventory.back()->get_name());
 
     return true;
   }
@@ -59,9 +55,7 @@ namespace lab3 {
       recipient.add_item(game, std::move(item_p));
       inventory.erase(erase_it);
 
-      stringstream ss;
-      ss << get_name() << " gave " << item.get_name() << " to " << recipient.get_name();
-      game.push_message(ss.str());
+      game.push_message(easyss() << get_name() << " gave " << item.get_name() << " to " << recipient.get_name());
 
       return true;
     }

@@ -1,9 +1,5 @@
-#include <sstream>
-
 #include "game.h"
 #include "tiles/fire.h"
-
-using std::ostringstream;
 
 namespace lab3 {
 
@@ -13,22 +9,16 @@ namespace lab3 {
 
   void FireTile::do_enter(Game& game, weak_ptr<PhysicalEntity> enterer_p) {
     if(!enterer_p.expired()) {
-      ostringstream ss;
-      ss << enterer_p.lock()->get_name() << " is on fire!";
-      game.push_message(ss.str());
+      game.push_message(easyss() << enterer_p.lock()->get_name() << " is on fire!");
     }
   }
 
   void FireTile::do_exit(Game& game, PhysicalEntity& exiter) {
-    ostringstream ss;
-    ss << exiter.get_name() << " isn't on fire anymore!";
-    game.push_message(ss.str());
+    game.push_message(easyss() << exiter.get_name() << " isn't on fire anymore!");
   }
 
   void FireTile::do_stay(Game& game, PhysicalEntity& stayer) {
-    ostringstream ss;
-    ss << stayer.get_name() << " is still on fire!";
-    game.push_message(ss.str());
+    game.push_message(easyss() << stayer.get_name() << " is still on fire!");
   }
 
 }
