@@ -16,6 +16,7 @@ namespace lab3 {
           Actor& target = dynamic_cast<Actor&>(*entity_p);
           target.damage(game, ATTACK_DAMAGE);
 
+          say(game, {"eeeEEEEHeeehheeEEE!!!"});
           game.push_message(easyss() << get_name() << " pokes " << target.get_name() << " with a stick!");
           return;
         }
@@ -25,10 +26,12 @@ namespace lab3 {
   }
 
   void Goblin::activated_by(Game& game, Actor& activator) {
+    say(game, {"AAAAAHAHAHAAAAaaaaaaAAAAAA!!! *snarl*"});
   }
 
   void Goblin::activated_by(Game& game, Actor& activator, CarriedItem& item) {
     if(is_type<Sword, CarriedItem>(item)) {
+      say(game, {"AIIEEEE!!!"});
       damage(game, 5);
     }
   }
