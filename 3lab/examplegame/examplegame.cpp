@@ -33,6 +33,7 @@ namespace lab3 {
     shared_ptr<Actor> old_man = make_shared<OldMan>(WorldCoord{ map_id, 5, 4 });
     old_man->add_item(*this, unique_ptr<Sword>(new Sword()));
     world.add_physical(old_man);
+    world.add_physical(make_shared<Door>(WorldCoord{ map_id, 5, 6 }));
 
     world.add_physical(make_shared<Door>(WorldCoord{ map_id, 20, 8 }));
     world.add_entity(make_shared<KingQuest>(*this, map_id));
