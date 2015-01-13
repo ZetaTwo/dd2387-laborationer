@@ -885,9 +885,8 @@ TEST_P(SizeTest, Size) {
 TEST_P(AlternatingVectorsTest, ForwardIteratorAgreesWithIndexOperator) {
   Vec v = GetParam();
 
-  int i = 0;
   Vec::iterator it = v.begin();
-  for(; i < v.size() && it != v.end(); ++i, ++it) {
+  for (size_t i = 0; i < v.size() && it != v.end(); ++i, ++it) {
     EXPECT_EQ(v[i], *it);
   }
   EXPECT_EQ(v.end(), it);
@@ -896,9 +895,8 @@ TEST_P(AlternatingVectorsTest, ForwardIteratorAgreesWithIndexOperator) {
 TEST_P(AlternatingVectorsTest, ForwardConstIteratorAgreesWithIndexOperator) {
   const Vec v = GetParam();
 
-  int i = 0;
   Vec::const_iterator it = v.begin();
-  for(; i < v.size() && it != v.end(); ++i, ++it) {
+  for (size_t i = 0; i < v.size() && it != v.end(); ++i, ++it) {
     EXPECT_EQ(v[i], *it);
   }
   EXPECT_EQ(v.end(), it);
@@ -1023,14 +1021,14 @@ TEST_P(SizeTest, ItrROperatorPlusAdvancesThatManySteps) {
     const Vec::reverse_iterator re = v.rend(); // Make sure we call the non-const rend() method
 
     EXPECT_TRUE(*(rb + (backward_index - 1)));
-    EXPECT_TRUE(*(re + (-true_index - 1)));
+    EXPECT_TRUE(*(re + (-1 - true_index)));
     EXPECT_TRUE(*(rbc + (backward_index - 1)));
-    EXPECT_TRUE(*(rec + (-true_index - 1)));
+    EXPECT_TRUE(*(rec + (-1 - true_index)));
 
     EXPECT_TRUE(*((backward_index - 1) + rb));
-    EXPECT_TRUE(*((-true_index - 1) + re));
+    EXPECT_TRUE(*((-1 - true_index) + re));
     EXPECT_TRUE(*((backward_index - 1) + rbc));
-    EXPECT_TRUE(*((-true_index - 1) + rec));
+    EXPECT_TRUE(*((-1 - true_index) + rec));
   }
 }
 
