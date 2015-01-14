@@ -472,7 +472,7 @@ Vector<bool> Vector<bool>::from_integer(const unsigned int vec_i) {
   Vector<bool> result(UNSIGNED_INT_SIZE);
 
   for(size_t i = 0; i < UNSIGNED_INT_SIZE; ++i) {
-    result[i] = ((vec_i >> i) & 0b1) == 0b1;
+    result[i] = ((vec_i >> i) & 1) == 1;
   }
 
   return result;

@@ -1244,7 +1244,7 @@ TEST_P(AlternatingVectorsTest, ConvertToUnsignedInteger) {
 
 class IntegerInputTest : public TestWithParam<unsigned int> {};
 INSTANTIATE_TEST_CASE_P(VectorBool, IntegerInputTest, Values(0, 1, 2, 3, 4, 5, 6, 7, 8,
-  0b1111, 0b10000, 0b10001, (1<<31)-1, 1<<31, (1<<31)+1, (1<<31) + ((1<<31)-1)
+  15 /*0b1111*/, 16 /*0b10000*/, 17 /*0b10001*/, (1<<31)-1, 1<<31, (1<<31)+1, (1<<31) + ((1<<31)-1)
 ));
 TEST_P(IntegerInputTest, ConvertFromUnsignedInteger) {
   const unsigned int vec_i = GetParam();

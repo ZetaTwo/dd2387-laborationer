@@ -35,6 +35,8 @@ struct VectorBoolConstIteratorFixture : Test {
     It e;
 
   public:
+    VectorBoolConstIteratorFixture() {}
+
     void SetUp() {
       b = v.begin();
       e = v.begin();
