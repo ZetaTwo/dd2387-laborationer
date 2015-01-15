@@ -106,12 +106,12 @@ public:
 };
 
 class VectorBoolConstIterator : public std::iterator<std::random_access_iterator_tag, const bool> {
-private:
+protected:
   typedef Vector<bool>::storage_type storage_type;
   typedef Vector<bool>::subindex_type subindex_type;
 
-  storage_type const* element;
   subindex_type index;
+  storage_type * element;
   
 public:
   VectorBoolConstIterator();
@@ -140,12 +140,6 @@ public:
 VectorBoolConstIterator operator+(const VectorBoolConstIterator::difference_type&, const VectorBoolConstIterator& it);
 
 class VectorBoolIterator : public VectorBoolConstIterator {
-  typedef Vector<bool>::storage_type storage_type;
-  typedef Vector<bool>::subindex_type subindex_type;
-
-  storage_type * element;
-  subindex_type index;
-
 public:
   typedef bool value_type;
   typedef void pointer;

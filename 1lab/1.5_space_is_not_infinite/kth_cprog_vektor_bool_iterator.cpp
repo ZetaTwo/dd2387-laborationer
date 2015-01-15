@@ -128,12 +128,10 @@ VectorBoolConstIterator operator+(const VectorBoolConstIterator::difference_type
 VectorBoolIterator::VectorBoolIterator() {}
 
 VectorBoolIterator::VectorBoolIterator(storage_type* element, subindex_type index) :
-  element(element),
-  index(index) {}
+  VectorBoolConstIterator(element, index) {}
 
 VectorBoolIterator::VectorBoolIterator(const VectorBoolIterator& mit) :
-  element(mit.element),
-  index(mit.index) {}
+  VectorBoolConstIterator(mit.element, mit.index) {}
 
 VectorBoolIterator& VectorBoolIterator::operator=(const VectorBoolIterator& mit) {
   element = mit.element;
