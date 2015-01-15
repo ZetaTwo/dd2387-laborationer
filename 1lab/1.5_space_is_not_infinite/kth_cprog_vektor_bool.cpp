@@ -46,10 +46,7 @@ Vector<bool>::Vector(size_t size) : count(size), max_size(initial_size(count)), 
 }
 
 Vector<bool>::Vector(size_t size, bool element) : count(size), max_size(initial_size(count)), data(new storage_type[storage_size()]) {
-  const storage_type value = element ? STORAGE_BLOCK_ALL_TRUE : 0;
-  for(size_t i = 0; i < storage_size(); ++i) {
-    data[i] = value;
-  }
+  fill_n(data.get(), storage_size(), element ? STORAGE_BLOCK_ALL_TRUE : 0);
 }
 
 Vector<bool>::~Vector() {
