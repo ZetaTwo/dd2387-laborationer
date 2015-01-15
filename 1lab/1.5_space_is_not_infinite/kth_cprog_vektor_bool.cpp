@@ -41,8 +41,7 @@ Vector<bool>::Vector(Vector<bool>&& other) : count(other.count), max_size(other.
   other.max_size = 0;
 }
 
-Vector<bool>::Vector(size_t size) : count(size), max_size(initial_size(count)), data(new storage_type[storage_size()]) {
-  fill_n(data.get(), storage_size(), 0);
+Vector<bool>::Vector(size_t size) : Vector<bool>(size, false) {
 }
 
 Vector<bool>::Vector(size_t size, bool element) : count(size), max_size(initial_size(count)), data(new storage_type[storage_size()]) {
