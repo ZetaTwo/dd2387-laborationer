@@ -295,6 +295,11 @@ Vector<bool>& Vector<bool>::sort(const bool ascending) {
   const storage_type front_block = ascending ? 0 : STORAGE_BLOCK_ALL_TRUE;
   const storage_type rear_block = ascending ? STORAGE_BLOCK_ALL_TRUE : 0;
   const size_t num_front = ascending ? count - weight() : weight();
+
+  if(num_front >= size()) {
+    return *this;
+  }
+
   const size_t flip_block_index = num_front / STORAGE_BLOCK_SIZE;
 
   for(size_t i = 0; i < flip_block_index; ++i) {
