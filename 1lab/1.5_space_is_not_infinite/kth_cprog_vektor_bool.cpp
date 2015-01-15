@@ -270,7 +270,7 @@ Vector<bool>& Vector<bool>::erase(const size_t index) {
   const storage_type lowerBits = erase_subindex == 0 ? 0 : data[erase_storage_index] % (1 << erase_subindex);
   const storage_type upperBits = erase_storage_index == storage_size() ? 0 : (data[erase_storage_index] >> (erase_subindex + 1)) << erase_subindex;
   data[erase_storage_index] = lowerBits | upperBits;
-  if(erase_storage_index < storage_size()) {
+  if(erase_storage_index + 1 < storage_size()) {
     data[erase_storage_index] |= (data[erase_storage_index+1] & 1) << MAX_SUBINDEX;
   }
 
