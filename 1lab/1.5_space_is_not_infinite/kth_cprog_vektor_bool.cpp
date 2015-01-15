@@ -332,9 +332,11 @@ bool Vector<bool>::exists(const bool element) const {
       return true;
     }
   }
-  const storage_type d = data[count / STORAGE_BLOCK_SIZE];
-  if((element ? d : ~d) % (1 << count % STORAGE_BLOCK_SIZE) != 0) {
-    return true;
+  if(size() % STORAGE_BLOCK_SIZE != 0) {
+    const storage_type d = data[count / STORAGE_BLOCK_SIZE];
+    if((element ? d : ~d) % (1 << count % STORAGE_BLOCK_SIZE) != 0) {
+      return true;
+    }
   }
   return false;
 }
