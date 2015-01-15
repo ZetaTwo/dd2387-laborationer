@@ -3,6 +3,7 @@
 #include "kth_cprog_vektor_bool.h"
 
 using std::copy_n;
+using std::fill_n;
 
 Vector<bool>::Vector() : count(0), max_size(DEFAULT_SIZE), data(new storage_type[storage_size()]) {
 }
@@ -41,9 +42,7 @@ Vector<bool>::Vector(Vector<bool>&& other) : count(other.count), max_size(other.
 }
 
 Vector<bool>::Vector(size_t size) : count(size), max_size(initial_size(count)), data(new storage_type[storage_size()]) {
-  for(size_t i = 0; i < storage_size(); ++i) {
-    data[i] = 0;
-  }
+  fill_n(data.get(), storage_size(), 0);
 }
 
 Vector<bool>::Vector(size_t size, bool element) : count(size), max_size(initial_size(count)), data(new storage_type[storage_size()]) {
