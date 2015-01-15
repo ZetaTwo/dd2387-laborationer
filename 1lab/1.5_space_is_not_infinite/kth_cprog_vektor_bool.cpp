@@ -79,9 +79,8 @@ Vector<bool>& Vector<bool>::operator=(const Vector<bool>& other) {
   }
 
   count = other.size();
-  for(size_t i = 0; i < other.storage_size(); ++i) {
-    data[i] = other.data[i];
-  }
+
+  copy_n(other.data.get(), other.storage_size(), data.get());
 
   return *this;
 }
