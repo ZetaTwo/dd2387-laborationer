@@ -175,7 +175,7 @@ Vector<T>& Vector<T>::operator=(const Vector<T>& other) {
 
   //Make sure we have enough room
   if(other.count > max_size) {
-    increase_memory(other.count, false);
+    increase_memory(*this, other.count, false);
   }
   else {
     clear();
@@ -224,7 +224,7 @@ Vector<T>& Vector<T>::operator=(const std::initializer_list<T>& list) {
 
   //Make sure we have enough room
   if(list.size() > max_size) {
-    increase_memory(list.size(), false);
+    increase_memory(*this, list.size(), false);
   }
   else {
     clear();
