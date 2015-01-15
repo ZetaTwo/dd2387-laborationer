@@ -8,6 +8,8 @@
 #include <algorithm> //sort
 #include <functional>
 
+#define EXCEPTION_SAFE
+
 template<typename T> 
 class Vector {
 public:
@@ -73,8 +75,8 @@ private:
   data_ptr data; //A pointer to the vector data
   std::allocator<T> allocator;
 
-  void increase_memory(size_t num_elements, bool copy = true); //Increases memory to fit at least num_elements number of elements
-  void release(data_ptr& data, size_t count, size_t max_size);
+  static void increase_memory(Vector<T>& vector, size_t num_elements, bool copy = true); //Increases memory to fit at least num_elements number of elements
+  static void release(Vector<T>& vector, data_ptr& data, size_t count, size_t max_size);
 };
 
 template<typename T>
@@ -123,18 +125,18 @@ Vector<T>::Vector(size_t size, const T& element) : count(size), max_size(1 << st
 
 template<typename T>
 Vector<T>::~Vector() {
-  release(data, count, max_size);
+  release(*this, data, count, max_size);
   count = 0;
   max_size = 0;
 }
 
 template<typename T>
-void Vector<T>::release(data_ptr& data, size_t count, size_t max_size) {
-  for (size_t i = 0; i < count; ++i) {
-    allocator.destroy(&data[i]);
+void Vector<T>::release(Vector<T>& vector, data_ptr& data, size_t count, size_t max_size) {
+  for (size_t i = 0; i < vector.count; ++i) {
+    vector.allocator.destroy(&vector.data[i]);
   }
-  allocator.deallocate(data.get(), max_size);
-  data.release();
+  vector.allocator.deallocate(vector.data.get(), vector.max_size);
+  vector.data.release();
 }
 
 template<typename T>
@@ -161,6 +163,16 @@ Vector<T>& Vector<T>::operator=(const Vector<T>& other) {
     return  *this;
   }
 
+#ifdef EXCEPTION_SAFE
+  try {
+    Vector<T> copy(other);
+    std::swap(*this, copy);
+  }
+  catch(...) {
+    throw;
+  }
+#else
+
   //Make sure we have enough room
   if(other.count > max_size) {
     increase_memory(other.count, false);
@@ -174,28 +186,42 @@ Vector<T>& Vector<T>::operator=(const Vector<T>& other) {
   for (size_t i = 0; i < count; ++i) {
     allocator.construct(&data[i], other[i]);
   }
+#endif
 
   return *this;
 }
 
 template<typename T>
 Vector<T>& Vector<T>::operator=(Vector<T>&& other) {
-  if (this != &other) {
-    release(data, count, max_size);
-    data = std::move(other.data);
-    count = other.count;
-    max_size = other.max_size;
-
-    //Reset movee
-    other.count = 0;
-    other.max_size = 0;
+  if (this == &other) {
+    return *this;
   }
+
+  release(*this, data, count, max_size);
+  data = std::move(other.data);
+  count = other.count;
+  max_size = other.max_size;
+
+  //Reset movee
+  other.count = 0;
+  other.max_size = 0;
 
   return *this;
 }
 
 template<typename T>
 Vector<T>& Vector<T>::operator=(const std::initializer_list<T>& list) {
+
+#ifdef EXCEPTION_SAFE
+  try {
+    Vector<T> copy(list);
+    std::swap(*this, copy);
+  }
+  catch (...) {
+    throw;
+  }
+#else
+
   //Make sure we have enough room
   if(list.size() > max_size) {
     increase_memory(list.size(), false);
@@ -212,6 +238,8 @@ Vector<T>& Vector<T>::operator=(const std::initializer_list<T>& list) {
     allocator.construct(&data[i], *item);
   }
 
+#endif
+
   return *this;
 }
 
@@ -222,98 +250,211 @@ Vector<T>& Vector<T>::push_back(const T& element) {
 
 template<typename T>
 Vector<T>& Vector<T>::insert(size_t index, const T& element) {
-  if(index > count) {
+
+#ifdef EXCEPTION_SAFE
+  try {
+    Vector<T> copy(*this);
+    Vector<T>& that = copy;
+#else
+  Vector<T>& that = *this;
+#endif
+
+  if (index > that.count) {
     std::stringstream msg;
-    msg << "Attempted to insert at index " << index << ", expected <= " << count;
+    msg << "Attempted to insert at index " << index << ", expected <= " << that.count;
     throw std::out_of_range(msg.str());
   }
-  if(max_size < count + 1) {
-    increase_memory(count + 1);
+  if (that.max_size < that.count + 1) {
+    increase_memory(that, that.count + 1);
   }
 
-  allocator.construct(&data[count]);
+  that.allocator.construct(&that.data[that.count]);
 
   size_t i;
   try {
-    for (i = count; i > index; i--) {
-      data[i] = std::move_if_noexcept(data[i - 1]);
+    for (i = that.count; i > index; i--) {
+      that.data[i] = std::move_if_noexcept(that.data[i - 1]);
     }
   }
   catch (...) {
-    count = i;
+    that.count = i;
     throw;
   }
 
-  data[index] = element;
-  ++count;
+  that.data[index] = element;
+  ++that.count;
+
+#ifdef EXCEPTION_SAFE
+  std::swap(*this, copy);
+  }
+catch (...) {
+  throw;
+}
+#endif
 
   return *this;
 }
 
 template<typename T>
 Vector<T>& Vector<T>::erase(size_t index) {
-  if(index >= count) {
+
+
+#ifdef EXCEPTION_SAFE
+  try {
+    Vector<T> copy(*this);
+    Vector<T>& that = copy;
+#else
+  Vector<T>& that = *this;
+#endif
+
+  if (index >= that.count) {
     std::stringstream msg;
-    msg << "Attempted to insert at index " << index << ", expected < " << count;
+    msg << "Attempted to insert at index " << index << ", expected < " << that.count;
     throw std::out_of_range(msg.str());
   }
 
   size_t i;
-  allocator.destroy(&data[index]);
+  that.allocator.destroy(&that.data[index]);
   try {
-    for (i = index; i < count - 1; i++) {
-      data[i] = std::move_if_noexcept(data[i + 1]);
+    for (i = index; i < that.count - 1; i++) {
+      that.data[i] = std::move_if_noexcept(that.data[i + 1]);
     }
   }
   catch (...) {
-    count = i;
+    that.count = i;
     throw;
   }
   
-  --count;
+  --that.count;
+
+
+#ifdef EXCEPTION_SAFE
+  std::swap(*this, copy);
+  }
+catch (...) {
+  throw;
+}
+#endif
+
   return *this;
 }
 
 template<typename T>
 Vector<T>& Vector<T>::clear() {
-  for (size_t i = 0; i < count; ++i) {
-    allocator.destroy(&data[i]);
-  }
 
-  count = 0;
+#ifdef EXCEPTION_SAFE
+  try {
+    Vector<T> copy(*this);
+    Vector<T>& that = copy;
+#else
+  Vector<T>& that = *this;
+#endif
+
+  for (size_t i = 0; i < that.count; ++i) {
+    that.allocator.destroy(&that.data[i]);
+  }
+  that.count = 0;
+
+#ifdef EXCEPTION_SAFE
+  std::swap(*this, copy);
+  }
+catch (...) {
+  throw;
+}
+#endif
+
   return *this;
 }
 
 template<typename T>
 Vector<T>& Vector<T>::reset() {
-  for (size_t i = 0; i < count; i++) {
-    data[i] = T{};
+
+
+#ifdef EXCEPTION_SAFE
+  try {
+    Vector<T> copy(*this);
+    Vector<T>& that = copy;
+#else
+  Vector<T>& that = *this;
+#endif
+
+  for (size_t i = 0; i < that.count; i++) {
+    that.data[i] = T{};
   }
+
+#ifdef EXCEPTION_SAFE
+  std::swap(*this, copy);
+  }
+catch (...) {
+  throw;
+}
+#endif
 
   return *this;
 }
 
 template<typename T>
 Vector<T>& Vector<T>::sort(bool ascending) {
-  T* begin = data.get();
-  T* end = data.get() + count;
+
+#ifdef EXCEPTION_SAFE
+  try {
+    Vector<T> copy(*this);
+    Vector<T>& that = copy;
+#else
+  Vector<T>& that = *this;
+#endif
+
+  T* begin = that.data.get();
+  T* end = that.data.get() + that.count;
   if(ascending) {
     std::sort(begin, end);
   } else {
     std::sort(begin, end, std::greater<T>());
   }
+
+
+#ifdef EXCEPTION_SAFE
+  std::swap(*this, copy);
+  }
+catch (...) {
+  throw;
+}
+#endif
+
   return *this;
 }
 
 template<typename T>
 Vector<T>& Vector<T>::unique_sort(bool ascending) {
-  sort(ascending);
 
-  T* begin = data.get();
-  T* end = data.get() + count;
+#ifdef EXCEPTION_SAFE
+  try {
+    Vector<T> copy(*this);
+    Vector<T>& that = copy;
+#else
+  Vector<T>& that = *this;
+#endif
+
+  T* begin = that.data.get();
+  T* end = that.data.get() + that.count;
+  if (ascending) {
+    std::sort(begin, end);
+  }
+  else {
+    std::sort(begin, end, std::greater<T>());
+  }
   T* new_end = std::unique(begin, end);
 
-  count = new_end - begin;
+  that.count = new_end - begin;
+
+#ifdef EXCEPTION_SAFE
+  std::swap(*this, copy);
+  }
+catch (...) {
+  throw;
+}
+#endif
+
   return *this;
 }
 
@@ -334,23 +475,23 @@ size_t Vector<T>::capacity() const {
 }
 
 template<typename T>
-void Vector<T>::increase_memory(size_t num_elements, bool copy) {
+void Vector<T>::increase_memory(Vector<T>& vector, size_t num_elements, bool copy) {
   size_t new_max_size = (1 << static_cast<int>(ceil(log2(num_elements))));
-  if(new_max_size < max_size) {
+  if (new_max_size < vector.max_size) {
     throw std::invalid_argument("Vector already large enough");
   }
 
-  data_ptr new_data(allocator.allocate(new_max_size), deleter);
+  data_ptr new_data(vector.allocator.allocate(new_max_size), deleter);
 
   if(copy) {
-    for(size_t i = 0; i < count; i++) {
-      allocator.construct(&new_data[i], std::move_if_noexcept(data[i]));
+    for (size_t i = 0; i < vector.count; i++) {
+      vector.allocator.construct(&new_data[i], std::move_if_noexcept(vector.data[i]));
     }
   }
 
-  release(data, count, max_size);
-  data = std::move(new_data);
-  max_size = new_max_size;
+  release(vector, vector.data, vector.count, vector.max_size);
+  vector.data = std::move(new_data);
+  vector.max_size = new_max_size;
 }
 
 template<typename T>
