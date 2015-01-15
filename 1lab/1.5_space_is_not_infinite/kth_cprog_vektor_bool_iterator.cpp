@@ -28,8 +28,7 @@ VectorBoolConstIterator::VectorBoolConstIterator(storage_type* element, subindex
   index(index) {}
 
 VectorBoolConstIterator::VectorBoolConstIterator(const VectorBoolConstIterator& mit) :
-  element(mit.element),
-  index(mit.index) {}
+  VectorBoolConstIterator(mit.element, mit.index) {}
 
 VectorBoolConstIterator& VectorBoolConstIterator::operator=(const VectorBoolConstIterator& mit) {
   element = mit.element;
