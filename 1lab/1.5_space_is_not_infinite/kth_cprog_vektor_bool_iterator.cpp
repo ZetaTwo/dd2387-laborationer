@@ -24,8 +24,8 @@ VectorBoolProxy::operator const bool () const {
 VectorBoolConstIterator::VectorBoolConstIterator() {}
 
 VectorBoolConstIterator::VectorBoolConstIterator(storage_type* element, subindex_type index) :
-  element(element),
-  index(index) {}
+  index(index),
+  element(element) {}
 
 VectorBoolConstIterator::VectorBoolConstIterator(const VectorBoolConstIterator& mit) :
   VectorBoolConstIterator(mit.element, mit.index) {}
