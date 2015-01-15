@@ -1,12 +1,14 @@
+#include <algorithm>
+
 #include "kth_cprog_vektor_bool.h"
+
+using std::copy_n;
 
 Vector<bool>::Vector() : count(0), max_size(DEFAULT_SIZE), data(new storage_type[storage_size()]) {
 }
 
 Vector<bool>::Vector(const Vector<bool>& other) : count(other.count), max_size(other.max_size), data(new storage_type[storage_size()]) {
-  for(size_t i = 0; i <= storage_size(); ++i) {
-    data[i] = other.data[i];
-  }
+  copy_n(other.data.get(), other.storage_size(), data.get());
 }
 
 Vector<bool>::Vector(const std::initializer_list<bool>& list) : count(list.size()), max_size(initial_size(count)), data(new storage_type[storage_size()]) {
