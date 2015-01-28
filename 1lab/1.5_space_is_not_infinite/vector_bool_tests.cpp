@@ -1032,8 +1032,8 @@ TEST_P(SizeTest, ItrOperatorIndexExtractsTheRightBit) {
   const Vec::iterator e = v.end(); // Make sure we call the non-const end() method
 
   for(size_t i = 0; i < size; ++i) {
-    EXPECT_EQ(i == true_index, bc[i]);
-    EXPECT_EQ(i == true_index, b[i]);
+    EXPECT_EQ(i == true_index, bc[i]) << "Failed for i=" << i;
+    EXPECT_EQ(i == true_index, b[i]) << "Failed for i=" << i;
     EXPECT_EQ(i == true_index, ec[i - size]) << "Failed for i=" << i << ", size=" << size;
     EXPECT_EQ(i == true_index, e[i - size]) << "Failed for i=" << i << ", size=" << size;
   }
