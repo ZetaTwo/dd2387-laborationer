@@ -1003,6 +1003,42 @@ TEST_P(SizeTest, ItrOperatorPlusAdvancesThatManySteps) {
   }
 }
 
+TEST_P(SizeTest, ItrOperatorDereferenceExtractsTheRightBit) {
+  const size_t true_index = GetParam();
+  const size_t size = true_index + 17;
+
+  const Vec vc = [size, true_index]() { Vec v(size, false); v[true_index] = true; return v; }();
+  Vec v = vc;
+
+  const Vec::const_iterator bc = vc.begin();
+  const Vec::iterator b = v.begin(); // Make sure we call the non-const begin() method
+
+  for(size_t i = 0; i < size; ++i) {
+    EXPECT_EQ(i == true_index, *(bc + i));
+    EXPECT_EQ(i == true_index, *(b + i));
+  }
+}
+
+TEST_P(SizeTest, ItrOperatorIndexExtractsTheRightBit) {
+  const size_t true_index = GetParam();
+  const size_t size = true_index + 17;
+
+  const Vec vc = [size, true_index]() { Vec v(size, false); v[true_index] = true; return v; }();
+  Vec v = vc;
+
+  const Vec::const_iterator bc = vc.begin();
+  const Vec::const_iterator ec = vc.end();
+  const Vec::iterator b = v.begin(); // Make sure we call the non-const begin() method
+  const Vec::iterator e = v.end(); // Make sure we call the non-const end() method
+
+  for(size_t i = 0; i < size; ++i) {
+    EXPECT_EQ(i == true_index, bc[i]);
+    EXPECT_EQ(i == true_index, b[i]);
+    EXPECT_EQ(i == true_index, ec[i - size]) << "Failed for i=" << i << ", size=" << size;
+    EXPECT_EQ(i == true_index, e[i - size]) << "Failed for i=" << i << ", size=" << size;
+  }
+}
+
 TEST_P(SizeTest, ItrOperatorMinusBacksThatManySteps) {
   const size_t true_index = GetParam();
   const size_t size = true_index + 17;
