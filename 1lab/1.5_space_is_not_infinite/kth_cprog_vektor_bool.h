@@ -158,8 +158,6 @@ public:
   VectorBoolIterator operator+(difference_type offset) const;
   VectorBoolIterator operator-(difference_type offset) const;
   difference_type operator-(const VectorBoolIterator& other) const;
-  bool operator==(const VectorBoolIterator& rhs) const;
-  bool operator!=(const VectorBoolIterator& rhs) const;
   reference operator[](difference_type offset) const;
   reference operator*() const;
 };

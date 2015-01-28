@@ -172,14 +172,6 @@ VectorBoolIterator::difference_type VectorBoolIterator::operator-(const VectorBo
   return Vector<bool>::STORAGE_BLOCK_SIZE * (element - other.element) + (index - other.index);
 }
 
-bool VectorBoolIterator::operator==(const VectorBoolIterator& rhs) const {
-  return element == rhs.element && index == rhs.index;
-}
-
-bool VectorBoolIterator::operator!=(const VectorBoolIterator& rhs) const {
-  return !(*this == rhs);
-}
-
 VectorBoolIterator::reference VectorBoolIterator::operator[](const difference_type offset) const {
   return *(*this + offset);
 }
