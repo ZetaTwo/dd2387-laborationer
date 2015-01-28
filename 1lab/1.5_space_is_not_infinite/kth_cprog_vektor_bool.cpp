@@ -480,3 +480,21 @@ Vector<bool> Vector<bool>::from_integer(const unsigned int vec_i) {
 
   return result;
 }
+
+VectorBoolProxy::VectorBoolProxy(storage_type* element, subindex_type index) :
+  element(element),
+  index(index) {}
+
+VectorBoolProxy& VectorBoolProxy::operator=(const bool value) {
+  if(value) {
+    *element |= 1 << index;
+  } else {
+    *element &= ~(1 << index);
+  }
+
+  return *this;
+}
+
+VectorBoolProxy::operator const bool () const {
+  return ((*element) & (1 << index)) != 0;
+}
