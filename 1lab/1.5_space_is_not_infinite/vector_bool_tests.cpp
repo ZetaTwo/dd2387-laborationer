@@ -1309,5 +1309,7 @@ TEST_P(IntegerInputTest, ConvertFromUnsignedIntegerAndBackAgain) {
 }
 
 TEST(VectorBool, StreamInput) {
-  std::cout << Vec({true, false, true, false, false, true, true, false}) << std::endl;
+  std::stringstream ss;
+  ss << Vec({true, false, true, false, false, true, true, false});
+  EXPECT_EQ("[1, 0, 1, 0, 0, 1, 1, 0]", ss.str());
 }
