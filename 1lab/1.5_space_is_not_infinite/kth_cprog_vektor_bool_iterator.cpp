@@ -54,15 +54,15 @@ VectorBoolConstIterator VectorBoolConstIterator::operator--(int) {
   return tmp;
 }
 
-VectorBoolConstIterator& VectorBoolConstIterator::operator-=(difference_type distance) {
+VectorBoolConstIterator& VectorBoolConstIterator::operator-=(const difference_type distance) {
   return *this += (-distance);
 }
 
-VectorBoolConstIterator VectorBoolConstIterator::operator+(difference_type offset) const {
+VectorBoolConstIterator VectorBoolConstIterator::operator+(const difference_type offset) const {
   return VectorBoolConstIterator{*this} += offset;
 }
 
-VectorBoolConstIterator VectorBoolConstIterator::operator-(difference_type offset) const {
+VectorBoolConstIterator VectorBoolConstIterator::operator-(const difference_type offset) const {
   return *this + (-offset);
 }
 
@@ -94,7 +94,7 @@ bool VectorBoolConstIterator::operator<=(const VectorBoolConstIterator& rhs) con
   return element < rhs.element || (element == rhs.element && index <= rhs.index);
 }
 
-VectorBoolConstIterator::value_type VectorBoolConstIterator::operator[](difference_type index) const {
+VectorBoolConstIterator::value_type VectorBoolConstIterator::operator[](const difference_type index) const {
   return *(*this + index);
 }
 
@@ -108,7 +108,7 @@ VectorBoolConstIterator operator+(const VectorBoolConstIterator::difference_type
 
 VectorBoolIterator::VectorBoolIterator() {}
 
-VectorBoolIterator::VectorBoolIterator(storage_type* element, subindex_type index) :
+VectorBoolIterator::VectorBoolIterator(storage_type* const element, const subindex_type index) :
   VectorBoolConstIterator(element, index) {}
 
 VectorBoolIterator::VectorBoolIterator(const VectorBoolIterator& mit) :
@@ -134,7 +134,7 @@ VectorBoolIterator VectorBoolIterator::operator++(int) {
   return tmp;
 }
 
-VectorBoolIterator& VectorBoolIterator::operator+=(difference_type distance) {
+VectorBoolIterator& VectorBoolIterator::operator+=(const difference_type distance) {
   element += static_cast<difference_type>(floor(static_cast<double>(index + distance) / Vector<bool>::STORAGE_BLOCK_SIZE));
   index = ((index + distance) % Vector<bool>::STORAGE_BLOCK_SIZE + Vector<bool>::STORAGE_BLOCK_SIZE) % Vector<bool>::STORAGE_BLOCK_SIZE;
   return *this;
@@ -156,15 +156,15 @@ VectorBoolIterator VectorBoolIterator::operator--(int) {
   return tmp;
 }
 
-VectorBoolIterator& VectorBoolIterator::operator-=(difference_type distance) {
+VectorBoolIterator& VectorBoolIterator::operator-=(const difference_type distance) {
   return *this += (-distance);
 }
 
-VectorBoolIterator VectorBoolIterator::operator+(difference_type offset) const {
+VectorBoolIterator VectorBoolIterator::operator+(const difference_type offset) const {
   return VectorBoolIterator{*this} += offset;
 }
 
-VectorBoolIterator VectorBoolIterator::operator-(difference_type offset) const {
+VectorBoolIterator VectorBoolIterator::operator-(const difference_type offset) const {
   return *this + (-offset);
 }
 
@@ -180,7 +180,7 @@ bool VectorBoolIterator::operator!=(const VectorBoolIterator& rhs) const {
   return !(*this == rhs);
 }
 
-VectorBoolIterator::reference VectorBoolIterator::operator[](difference_type index) const {
+VectorBoolIterator::reference VectorBoolIterator::operator[](const difference_type index) const {
   return *(*this + index);
 }
 
