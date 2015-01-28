@@ -485,7 +485,7 @@ VectorBoolProxy::VectorBoolProxy(storage_type* element, subindex_type index) :
   element(element),
   index(index) {}
 
-VectorBoolProxy& VectorBoolProxy::operator=(const bool value) {
+const VectorBoolProxy& VectorBoolProxy::operator=(const bool value) const {
   if(value) {
     *element |= 1 << index;
   } else {
@@ -497,4 +497,9 @@ VectorBoolProxy& VectorBoolProxy::operator=(const bool value) {
 
 VectorBoolProxy::operator const bool () const {
   return ((*element) & (1 << index)) != 0;
+}
+
+void swap(const VectorBoolProxy& p1, const VectorBoolProxy& p2) {
+  const bool v1 = p1, v2 = p2;
+  p1 = v2, p2 = v1;
 }
