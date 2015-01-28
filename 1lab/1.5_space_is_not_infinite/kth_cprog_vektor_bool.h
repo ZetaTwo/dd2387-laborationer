@@ -120,11 +120,11 @@ public:
   VectorBoolConstIterator& operator=(const VectorBoolConstIterator& mit);
   VectorBoolConstIterator& operator++();
   VectorBoolConstIterator operator++(int);
-  VectorBoolConstIterator& operator+=(difference_type);
+  VectorBoolConstIterator& operator+=(difference_type distance);
   VectorBoolConstIterator& operator--();
   VectorBoolConstIterator operator--(int);
-  VectorBoolConstIterator& operator-=(difference_type);
-  VectorBoolConstIterator operator+(difference_type) const;
+  VectorBoolConstIterator& operator-=(difference_type distance);
+  VectorBoolConstIterator operator+(difference_type offset) const;
   VectorBoolConstIterator operator-(difference_type offset) const;
   difference_type operator-(const VectorBoolConstIterator& other) const;
   bool operator==(const VectorBoolConstIterator& rhs) const;
@@ -133,7 +133,7 @@ public:
   bool operator>(const VectorBoolConstIterator& rhs) const;
   bool operator>=(const VectorBoolConstIterator& rhs) const;
   bool operator<=(const VectorBoolConstIterator& rhs) const;
-  value_type operator[](difference_type index) const;
+  value_type operator[](difference_type offset) const;
   value_type operator*() const;
 };
 
@@ -151,16 +151,16 @@ public:
   VectorBoolIterator& operator=(const VectorBoolIterator& mit);
   VectorBoolIterator& operator++();
   VectorBoolIterator operator++(int);
-  VectorBoolIterator& operator+=(difference_type);
+  VectorBoolIterator& operator+=(difference_type distance);
   VectorBoolIterator& operator--();
   VectorBoolIterator operator--(int);
-  VectorBoolIterator& operator-=(difference_type);
+  VectorBoolIterator& operator-=(difference_type distance);
   VectorBoolIterator operator+(difference_type offset) const;
   VectorBoolIterator operator-(difference_type offset) const;
   difference_type operator-(const VectorBoolIterator& other) const;
   bool operator==(const VectorBoolIterator& rhs) const;
   bool operator!=(const VectorBoolIterator& rhs) const;
-  reference operator[](difference_type index) const;
+  reference operator[](difference_type offset) const;
   reference operator*() const;
 };
 

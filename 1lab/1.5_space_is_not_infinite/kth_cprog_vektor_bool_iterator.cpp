@@ -94,8 +94,8 @@ bool VectorBoolConstIterator::operator<=(const VectorBoolConstIterator& rhs) con
   return element < rhs.element || (element == rhs.element && index <= rhs.index);
 }
 
-VectorBoolConstIterator::value_type VectorBoolConstIterator::operator[](const difference_type index) const {
-  return *(*this + index);
+VectorBoolConstIterator::value_type VectorBoolConstIterator::operator[](const difference_type offset) const {
+  return *(*this + offset);
 }
 
 VectorBoolConstIterator::value_type VectorBoolConstIterator::operator*() const {
@@ -180,8 +180,8 @@ bool VectorBoolIterator::operator!=(const VectorBoolIterator& rhs) const {
   return !(*this == rhs);
 }
 
-VectorBoolIterator::reference VectorBoolIterator::operator[](const difference_type index) const {
-  return *(*this + index);
+VectorBoolIterator::reference VectorBoolIterator::operator[](const difference_type offset) const {
+  return *(*this + offset);
 }
 
 VectorBoolIterator::reference VectorBoolIterator::operator*() const {
