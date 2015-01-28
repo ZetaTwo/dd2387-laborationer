@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <gtest/gtest.h>
 #include "kth_cprog_vektor_bool.h"
 
@@ -832,6 +833,33 @@ TEST_P(SizeSizeBoolTest, Sort) {
     }
     for(size_t i = flip_index; i < size; ++i) {
       EXPECT_EQ(ascending, vector[i]);
+    }
+  }
+}
+
+TEST_P(SizeSizeTest, StdSort) {
+  const size_t size = std::get<0>(GetParam());
+  const size_t weight = std::get<1>(GetParam());
+
+  if(weight <= size) {
+    Vec vector(size, false);
+    for(size_t i = 0; i < weight; ++i) {
+      vector[i] = 1;
+    }
+
+    ASSERT_EQ(weight, vector.weight()) << "Test setup failed.";
+
+    std::sort(vector.begin(), vector.end());
+
+    EXPECT_EQ(size, vector.size());
+    EXPECT_EQ(weight, vector.weight());
+
+    const size_t flip_index = size - weight;
+    for(size_t i = 0; i < flip_index; ++i) {
+      EXPECT_FALSE(static_cast<bool>(vector[i])) << "Expected index " << i << " to be " << false << ", but vector was " << vector;
+    }
+    for(size_t i = flip_index; i < size; ++i) {
+      EXPECT_TRUE(static_cast<bool>(vector[i])) << "Expected index " << i << " to be " << true << ", but vector was " << vector;
     }
   }
 }
