@@ -40,10 +40,8 @@ namespace lab3 {
     world.add_physical(make_shared<Door>(WorldCoord{ map_id, 20, 8 }));
     world.add_entity(make_shared<KingQuest>(*this, map_id));
 
-    // Test item
-    world.add_physical(make_shared<ShinyThing>(WorldCoord{map_id, 10, 10}));
-    // Test item
-    world.add_physical(make_shared<DullThing>(WorldCoord{map_id, 1, 1}));
+    world.add_physical(make_shared<ShinyThing>(WorldCoord{map_id, 1, 1}));
+    world.add_physical(make_shared<DullThing>(WorldCoord{map_id, 10, 10}));
 
   }
 
