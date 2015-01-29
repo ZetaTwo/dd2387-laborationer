@@ -24,7 +24,7 @@ namespace lab3 {
       }
       say(game, {"IMMA CHARGIN' MAH LEEYZAAAH!!!"});
       game.push_message(easyss() << get_name() << " zaps you with a LAZR!");
-      activator.damage(game, 40);
+      activator.damage(game, 50);
 
       if(--hitpoints < 1) {
         say(game, {"*gurgel*"});

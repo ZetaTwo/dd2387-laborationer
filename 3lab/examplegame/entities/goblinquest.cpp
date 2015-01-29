@@ -5,10 +5,14 @@
 #include "items/questitem.h"
 
 using std::all_of;
+using std::find_if_not;
 
 namespace lab3 {
 
-  GoblinQuest::GoblinQuest(Game& game, Identifiable::identifier_t map_id) : finished(false), brains_arr(new GoblinBrain[2]) {
+  GoblinQuest::GoblinQuest(Game& game, Identifiable::identifier_t map_id) :
+    finished(false),
+    brains_arr(new GoblinBrain[2]),
+    last_known_goblin_position(WorldCoord(0, 0, 0)){
 
     brains_arr[0] = {
       [](Goblin& self, Game& game) -> void {
@@ -34,10 +38,6 @@ namespace lab3 {
         if(is_type<Sword, CarriedItem>(item)) {
           self.say(game, {"AIIEEEE!!!"});
           self.damage(game, 5);
-
-          if(self.get_health() <= 0) {
-            game.get_world().add_physical(make_shared<Potion>(self.get_position()));
-          }
         }
       }
     };
@@ -51,12 +51,18 @@ namespace lab3 {
   }
 
   void GoblinQuest::tick(Game& game) {
-    finished = all_of(goblins.begin(), goblins.end(), [](const weak_ptr<PhysicalEntity>& goblin_p) {
+    const auto expired = [](const weak_ptr<PhysicalEntity>& goblin_p) {
       return goblin_p.expired();
-    });
+    };
+
+    finished = all_of(goblins.begin(), goblins.end(), expired);
 
     if(finished) {
+      game.get_world().add_physical(make_shared<Potion>(last_known_goblin_position));
       game.get_world().destroy(get_id());
+    } else {
+      // This will always be valid since we won't enter this block if all are expired
+      last_known_goblin_position = find_if_not(goblins.begin(), goblins.end(), expired)->lock()->get_position();
     }
   }
 

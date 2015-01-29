@@ -19,6 +19,7 @@ namespace lab3 {
     bool finished;
     vector<weak_ptr<PhysicalEntity>> goblins;
     GoblinBrain* brains_arr;
+    WorldCoord last_known_goblin_position;
 
   public: 
     virtual inline string get_name() const override { return "Goblin Quest"; }
