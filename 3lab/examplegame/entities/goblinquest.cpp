@@ -1,6 +1,7 @@
 #include <algorithm>
 
 #include "goblinquest.h"
+#include "items/consumable.h"
 #include "items/questitem.h"
 
 using std::all_of;
@@ -33,6 +34,10 @@ namespace lab3 {
         if(is_type<Sword, CarriedItem>(item)) {
           self.say(game, {"AIIEEEE!!!"});
           self.damage(game, 5);
+
+          if(self.get_health() <= 0) {
+            game.get_world().add_physical(make_shared<Potion>(self.get_position()));
+          }
         }
       }
     };
