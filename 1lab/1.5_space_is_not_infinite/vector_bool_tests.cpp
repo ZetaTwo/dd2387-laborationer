@@ -9,6 +9,7 @@ using ::testing::Combine;
 using ::testing::Range;
 using ::testing::Values;
 
+using std::iter_swap;
 using std::max;
 
 #define BLOCK_SIZE sizeof(unsigned int) * CHAR_BIT
@@ -1425,6 +1426,46 @@ TEST_P(SizeSizeTest, SwapSwapsTheRightBitsBetweenTwoVectors) {
   Vec v_f(size, false);
 
   swap(v_t[swap_index_1], v_f[swap_index_2]);
+
+  for(size_t i = 0; i < size; ++i) {
+    EXPECT_EQ(i != swap_index_1, v_t[i]);
+    EXPECT_EQ(i == swap_index_2, v_f[i]);
+  }
+}
+
+TEST_P(SizeSizeTest, IterSwapSwapsTheRightBitsWithinVector) {
+  const size_t index_start = std::get<0>(GetParam());
+  const size_t index_end = std::get<1>(GetParam());
+  const size_t index_inbetween = (index_start + index_end) / 2;
+  const size_t size = max(index_start, index_end) + 1;
+
+  Vec v(size, false);
+  v[index_start] = true;
+  const Vec::iterator b = v.begin();
+
+  iter_swap(b + index_start, b + index_inbetween);
+  EXPECT_EQ(index_start == index_inbetween, v[index_start]);
+  EXPECT_TRUE(v[index_inbetween]);
+
+  iter_swap(b + index_inbetween, b + index_end);
+  EXPECT_EQ(index_inbetween == index_end, v[index_inbetween]);
+  EXPECT_TRUE(v[index_end]);
+
+  v[index_start] = true;
+  iter_swap(b + index_start, b + index_end);
+  EXPECT_TRUE(v[index_start]);
+  EXPECT_TRUE(v[index_end]);
+}
+
+TEST_P(SizeSizeTest, IterSwapSwapsTheRightBitsBetweenTwoVectors) {
+  const size_t swap_index_1 = std::get<0>(GetParam());
+  const size_t swap_index_2 = std::get<1>(GetParam());
+  const size_t size = max(swap_index_1, swap_index_2) + 1;
+
+  Vec v_t(size, true);
+  Vec v_f(size, false);
+
+  iter_swap(v_t.begin() + swap_index_1, v_f.begin() + swap_index_2);
 
   for(size_t i = 0; i < size; ++i) {
     EXPECT_EQ(i != swap_index_1, v_t[i]);
