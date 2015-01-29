@@ -18,12 +18,14 @@ namespace lab3 {
   private:
     bool finished;
     vector<weak_ptr<PhysicalEntity>> goblins;
+    GoblinBrain* brains_arr;
 
   public: 
     virtual inline string get_name() const override { return "Goblin Quest"; }
     virtual inline string get_description() const override  { return ""; }
     virtual void tick(Game& game) override;
     GoblinQuest(Game& game, Identifiable::identifier_t map_id);
+    virtual ~GoblinQuest();
   };
 
 }

@@ -10,8 +10,15 @@ using std::vector;
 
 namespace lab3 {
 
+  struct GoblinBrain;
+
   class Goblin : public Actor {
+      friend struct GoblinBrain;
+      friend class GoblinQuest;
+
     protected:
+      GoblinBrain* brain_p;
+
       virtual void do_tick(Game& game) override;
 
       static const int ATTACK_DAMAGE = 3;
@@ -29,6 +36,14 @@ namespace lab3 {
       virtual char to_char() const override { return 'G'; };
       virtual inline string get_name() const override { return "Goblin"; }
       virtual inline string get_description() const override  { return ""; }
+
+      void set_brain(GoblinBrain* brain_p);
+  };
+
+  struct GoblinBrain {
+      std::function<void(Goblin& goblin, Game& game)> do_tick;
+      std::function<void(Goblin& goblin, Game& game, Actor& activator)> activated_by;
+      std::function<void(Goblin& goblin, Game& game, Actor& activator, CarriedItem& item)> activated_with_item;
   };
 
 }
