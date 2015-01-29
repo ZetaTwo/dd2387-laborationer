@@ -368,3 +368,21 @@ TEST_F(VectorBoolConstIteratorFixture, IsSwappable) {
 TEST_F(VectorBoolConstIteratorFixture, IsEqualityComparable) {
   bool a = b == e;
 }
+
+// VectorBoolProxy
+
+TEST(VectorBoolProxySyntax, IsCopyConstructible) {
+  EXPECT_TRUE(std::is_move_constructible<VectorBoolProxy>::value);
+}
+
+TEST(VectorBoolProxySyntax, IsCopyAssignable) {
+  EXPECT_TRUE(std::is_move_assignable<VectorBoolProxy>::value);
+}
+
+TEST(VectorBoolProxySyntax, IsMoveConstructible) {
+  EXPECT_TRUE(std::is_move_constructible<VectorBoolProxy>::value);
+}
+
+TEST(VectorBoolProxySyntax, IsMoveAssignable) {
+  EXPECT_TRUE(std::is_move_assignable<VectorBoolProxy>::value);
+}
