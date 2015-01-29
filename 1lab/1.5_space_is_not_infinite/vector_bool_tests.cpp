@@ -14,6 +14,12 @@ using std::max;
 #define BLOCK_SIZE sizeof(unsigned int) * CHAR_BIT
 #define SIZES Values(0, 1, BLOCK_SIZE-1, BLOCK_SIZE, BLOCK_SIZE+1, 100)
 
+typedef Vector<bool> Vec;
+
+const auto make_singly_true_vec = [](const size_t size, const size_t true_index) {
+  Vec v(size, false); v[true_index] = true; return v;
+};
+
 class SizeTest : public TestWithParam<int> {};
 INSTANTIATE_TEST_CASE_P(VectorBool, SizeTest, SIZES);
 
@@ -28,8 +34,6 @@ INSTANTIATE_TEST_CASE_P(VectorBool, SizeBoolBoolTest, Combine(SIZES, Bool(), Boo
 
 class SizeSizeBoolTest : public TestWithParam<std::tuple<int, int, bool> > {};
 INSTANTIATE_TEST_CASE_P(VectorBool, SizeSizeBoolTest, Combine(SIZES, SIZES, Bool()));
-
-typedef Vector<bool> Vec;
 
 class AlternatingVectorsTest : public TestWithParam<Vec> {};
 INSTANTIATE_TEST_CASE_P(VectorBool, AlternatingVectorsTest, Values(
@@ -840,30 +844,74 @@ TEST_P(SizeSizeBoolTest, Sort) {
   }
 }
 
-TEST_P(SizeSizeTest, StdSort) {
-  const size_t size = std::get<0>(GetParam());
-  const size_t weight = std::get<1>(GetParam());
+class StdSortTest : public TestWithParam<Vec> {};
+INSTANTIATE_TEST_CASE_P(VectorBool, StdSortTest, Values(
+  Vec(0)
+  ,Vec{ true }
+  ,Vec{ false }
+  ,Vec{ true, false }
+  ,Vec{ false, true }
+  ,Vec{ true, false, true }
+  ,Vec{ false, true, false }
+  ,Vec( 31, false )
+  ,Vec( 31, true )
+  ,Vec( 32, false )
+  ,Vec( 32, true )
+  ,Vec( 33, false )
+  ,Vec( 33, true )
+  ,make_singly_true_vec(31, 0)
+  ,make_singly_true_vec(32, 0)
+  ,make_singly_true_vec(33, 0)
+  ,make_singly_true_vec(31, 1)
+  ,make_singly_true_vec(32, 1)
+  ,make_singly_true_vec(33, 1)
+  ,make_singly_true_vec(64, 31)
+  ,make_singly_true_vec(64, 32)
+  ,make_singly_true_vec(64, 33)
+  ,make_singly_true_vec(65, 62)
+  ,make_singly_true_vec(65, 63)
+  ,make_singly_true_vec(65, 64)
+  ,Vec({ // 31
+    true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false, true, false, true, false, true, false, true
+  })
+  ,Vec({ // 31
+    true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
+    true, false, true, false, true, false, true, false, true, false, true, false, true, false, true
+  })
+  ,Vec({ // 32
+    true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false
+  })
+  ,Vec({ // 32
+    true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
+    true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false
+  })
+  ,Vec({ // 33
+    true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true
+  })
+  ,Vec({ // 33
+    true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
+    true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true
+  })
+));
+TEST_P(StdSortTest, StdSort) {
+  Vec vector = GetParam();
+  const size_t size = vector.size();
+  const size_t weight = vector.weight();
 
-  if(weight <= size) {
-    Vec vector(size, false);
-    for(size_t i = 0; i < weight; ++i) {
-      vector[i] = 1;
-    }
+  std::sort(vector.begin(), vector.end());
 
-    ASSERT_EQ(weight, vector.weight()) << "Test setup failed.";
+  EXPECT_EQ(size, vector.size());
+  EXPECT_EQ(weight, vector.weight());
 
-    std::sort(vector.begin(), vector.end());
-
-    EXPECT_EQ(size, vector.size());
-    EXPECT_EQ(weight, vector.weight());
-
-    const size_t flip_index = size - weight;
-    for(size_t i = 0; i < flip_index; ++i) {
-      EXPECT_FALSE(static_cast<bool>(vector[i])) << "Expected index " << i << " to be " << false << ", but vector was " << vector;
-    }
-    for(size_t i = flip_index; i < size; ++i) {
-      EXPECT_TRUE(static_cast<bool>(vector[i])) << "Expected index " << i << " to be " << true << ", but vector was " << vector;
-    }
+  const size_t flip_index = size - weight;
+  for(size_t i = 0; i < flip_index; ++i) {
+    EXPECT_FALSE(vector[i]) << "Expected index " << i << " to be " << false << ", but vector was " << vector;
+  }
+  for(size_t i = flip_index; i < size; ++i) {
+    EXPECT_TRUE(vector[i]) << "Expected index " << i << " to be " << true << ", but vector was " << vector;
   }
 }
 
