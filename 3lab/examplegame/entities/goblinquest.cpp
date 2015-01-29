@@ -50,6 +50,9 @@ namespace lab3 {
       return goblin_p.expired();
     });
 
+    if(finished) {
+      game.get_world().destroy(get_id());
+    }
   }
 
   GoblinQuest::~GoblinQuest() {
