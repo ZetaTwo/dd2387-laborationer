@@ -41,6 +41,9 @@ $(foreach name,$(OBJECT_NAMES),$(eval $(call make-object-rule,$(name))))
 run: build/examplegame/main
 	./$<
 
+valgrind: build/examplegame/main
+	valgrind ./$<
+
 build/examplegame/main: build/examplegame/main.o $(patsubst %.cpp,build/%.o,$(wildcard */*.cpp */*/*.cpp))
 	$(make-executable)
 
