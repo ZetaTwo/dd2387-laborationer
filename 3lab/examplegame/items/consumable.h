@@ -26,7 +26,7 @@ namespace lab3 {
 
       virtual inline void activate(Game& game, Actor& activator) override {
         game.push_message("It tastes awful, but you do feel slightly revitalized.");
-        activator.damage(game, -20);
+        activator.damage(game, -100);
         activator.drop_item(*this);
       }
   };
