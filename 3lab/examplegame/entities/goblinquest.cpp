@@ -6,6 +6,7 @@
 
 using std::all_of;
 using std::find_if_not;
+using std::make_shared;
 
 namespace lab3 {
 
