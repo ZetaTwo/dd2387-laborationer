@@ -13,7 +13,7 @@ namespace lab3 {
 
   random_device game_random;
 
-  uniform_int_distribution<size_t> direction_generator{0, 4};
+  uniform_int_distribution<size_t> direction_generator{0, 3};
   const vector<direction_t> DIRECTIONS{DIR_NORTH, DIR_EAST, DIR_SOUTH, DIR_WEST};
 
   direction_t random_direction() {
