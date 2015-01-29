@@ -20,8 +20,11 @@ namespace lab3 {
     if(is_type<Sword, CarriedItem>(item)) {
       if(hitpoints == 3) {
         say(game, {"O rly?"});
+        say(game, {"TREASON! DIE, INFIDEL!"});
       }
       say(game, {"IMMA CHARGIN' MAH LEEYZAAAH!!!"});
+      game.push_message(easyss() << get_name() << " zaps you with a LAZR!");
+      activator.damage(game, 40);
 
       if(--hitpoints < 1) {
         say(game, {"*gurgel*"});
