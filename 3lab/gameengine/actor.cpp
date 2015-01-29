@@ -6,6 +6,7 @@
 
 using std::endl;
 using std::find;
+using std::find_if;
 using std::weak_ptr;
 
 namespace lab3 {
@@ -63,6 +64,15 @@ namespace lab3 {
   }
 
   bool Actor::remove_item(CarriedItem& item) {
+    const inventory_t::iterator found_it = find_if(inventory.begin(), inventory.end(),
+      [&item](const unique_ptr<CarriedItem>& item_p) {
+        return item_p->get_id() == item.get_id();
+      }
+    );
+    if(found_it != inventory.end()) {
+      inventory.erase(found_it);
+      return true;
+    }
     return false;
   }
 
