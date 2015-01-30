@@ -1038,6 +1038,206 @@ TEST_P(AlternatingVectorsTest, ItrRCBeginEnd) {
   }
 }
 
+TEST_P(SizeTest, ItrCompareLess) {
+  const size_t size = GetParam();
+  Vec v(size);
+  const Vec::iterator b = v.begin();
+
+  for(size_t i = 0; i <= size; ++i) {
+    for(size_t j = 0; j <= size; ++j) {
+      if(i < j) {
+        EXPECT_TRUE(b + i < b + j);
+        EXPECT_FALSE(b + j < b + i);
+      } else if (j < i) {
+        EXPECT_TRUE(b + j < b + i);
+        EXPECT_FALSE(b + i < b + j);
+      }
+    }
+  }
+}
+
+TEST_P(SizeTest, ItrCompareLessEqual) {
+  const size_t size = GetParam();
+  Vec v(size);
+  const Vec::iterator b = v.begin();
+
+  for(size_t i = 0; i <= size; ++i) {
+    for(size_t j = 0; j <= size; ++j) {
+      if(i <= j) {
+        EXPECT_TRUE(b + i <= b + j);
+      } else if (j <= i) {
+        EXPECT_TRUE(b + j <= b + i);
+      }
+    }
+  }
+}
+
+TEST_P(SizeTest, ItrCompareGreater) {
+  const size_t size = GetParam();
+  Vec v(size);
+  const Vec::iterator b = v.begin();
+
+  for(size_t i = 0; i <= size; ++i) {
+    for(size_t j = 0; j <= size; ++j) {
+      if(i > j) {
+        EXPECT_TRUE(b + i > b + j);
+        EXPECT_FALSE(b + j > b + i);
+      } else if (j > i) {
+        EXPECT_TRUE(b + j > b + i);
+        EXPECT_FALSE(b + i > b + j);
+      }
+    }
+  }
+}
+
+TEST_P(SizeTest, ItrCompareGreaterEqual) {
+  const size_t size = GetParam();
+  Vec v(size);
+  const Vec::iterator b = v.begin();
+
+  for(size_t i = 0; i <= size; ++i) {
+    for(size_t j = 0; j <= size; ++j) {
+      if(i >= j) {
+        EXPECT_TRUE(b + i >= b + j);
+      } else if (j >= i) {
+        EXPECT_TRUE(b + j >= b + i);
+      }
+    }
+  }
+}
+
+TEST_P(SizeTest, ItrCompareEqual) {
+  const size_t size = GetParam();
+  Vec v(size);
+  const Vec::iterator b = v.begin();
+
+  for(size_t i = 0; i <= size; ++i) {
+    for(size_t j = 0; j <= size; ++j) {
+      if(i == j) {
+        EXPECT_TRUE(b + i == b + j);
+      } else {
+        EXPECT_FALSE(b + i == b + j);
+      }
+    }
+  }
+}
+
+TEST_P(SizeTest, ItrCompareNotEqual) {
+  const size_t size = GetParam();
+  Vec v(size);
+  const Vec::iterator b = v.begin();
+
+  for(size_t i = 0; i <= size; ++i) {
+    for(size_t j = 0; j <= size; ++j) {
+      if(i == j) {
+        EXPECT_FALSE(b + i != b + j);
+      } else {
+        EXPECT_TRUE(b + i != b + j);
+      }
+    }
+  }
+}
+
+TEST_P(SizeTest, ItrCCompareLess) {
+  const size_t size = GetParam();
+  const Vec v(size);
+  const Vec::const_iterator b = v.begin();
+
+  for(size_t i = 0; i <= size; ++i) {
+    for(size_t j = 0; j <= size; ++j) {
+      if(i < j) {
+        EXPECT_TRUE(b + i < b + j);
+        EXPECT_FALSE(b + j < b + i);
+      } else if (j < i) {
+        EXPECT_TRUE(b + j < b + i);
+        EXPECT_FALSE(b + i < b + j);
+      }
+    }
+  }
+}
+
+TEST_P(SizeTest, ItrCCompareLessEqual) {
+  const size_t size = GetParam();
+  const Vec v(size);
+  const Vec::const_iterator b = v.begin();
+
+  for(size_t i = 0; i <= size; ++i) {
+    for(size_t j = 0; j <= size; ++j) {
+      if(i <= j) {
+        EXPECT_TRUE(b + i <= b + j);
+      } else if (j <= i) {
+        EXPECT_TRUE(b + j <= b + i);
+      }
+    }
+  }
+}
+
+TEST_P(SizeTest, ItrCCompareGreater) {
+  const size_t size = GetParam();
+  const Vec v(size);
+  const Vec::const_iterator b = v.begin();
+
+  for(size_t i = 0; i <= size; ++i) {
+    for(size_t j = 0; j <= size; ++j) {
+      if(i > j) {
+        EXPECT_TRUE(b + i > b + j);
+        EXPECT_FALSE(b + j > b + i);
+      } else if (j > i) {
+        EXPECT_TRUE(b + j > b + i);
+        EXPECT_FALSE(b + i > b + j);
+      }
+    }
+  }
+}
+
+TEST_P(SizeTest, ItrCCompareGreaterEqual) {
+  const size_t size = GetParam();
+  const Vec v(size);
+  const Vec::const_iterator b = v.begin();
+
+  for(size_t i = 0; i <= size; ++i) {
+    for(size_t j = 0; j <= size; ++j) {
+      if(i >= j) {
+        EXPECT_TRUE(b + i >= b + j);
+      } else if (j >= i) {
+        EXPECT_TRUE(b + j >= b + i);
+      }
+    }
+  }
+}
+
+TEST_P(SizeTest, ItrCCompareEqual) {
+  const size_t size = GetParam();
+  const Vec v(size);
+  const Vec::const_iterator b = v.begin();
+
+  for(size_t i = 0; i <= size; ++i) {
+    for(size_t j = 0; j <= size; ++j) {
+      if(i == j) {
+        EXPECT_TRUE(b + i == b + j);
+      } else {
+        EXPECT_FALSE(b + i == b + j);
+      }
+    }
+  }
+}
+
+TEST_P(SizeTest, ItrCCompareNotEqual) {
+  const size_t size = GetParam();
+  const Vec v(size);
+  const Vec::const_iterator b = v.begin();
+
+  for(size_t i = 0; i <= size; ++i) {
+    for(size_t j = 0; j <= size; ++j) {
+      if(i == j) {
+        EXPECT_FALSE(b + i != b + j);
+      } else {
+        EXPECT_TRUE(b + i != b + j);
+      }
+    }
+  }
+}
+
 TEST_P(SizeTest, ItrCopyAssign) {
   Vec vector(GetParam());
 
