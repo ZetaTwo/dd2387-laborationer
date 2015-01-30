@@ -24,12 +24,11 @@ VectorBoolProxy::operator const bool () const {
 VectorBoolConstIterator::VectorBoolConstIterator() {}
 
 VectorBoolConstIterator::VectorBoolConstIterator(storage_type* element, subindex_type index) :
-  element(element),
-  index(index) {}
+  index(index),
+  element(element) {}
 
 VectorBoolConstIterator::VectorBoolConstIterator(const VectorBoolConstIterator& mit) :
-  element(mit.element),
-  index(mit.index) {}
+  VectorBoolConstIterator(mit.element, mit.index) {}
 
 VectorBoolConstIterator& VectorBoolConstIterator::operator=(const VectorBoolConstIterator& mit) {
   element = mit.element;

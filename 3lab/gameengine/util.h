@@ -35,6 +35,7 @@ namespace lab3 {
       Identifiable(Identifiable&& other) : id(other.id) {}
 
     public:
+      virtual ~Identifiable() {}
       inline identifier_t get_id() const { return id; }
       inline bool operator==(const Identifiable& other) const { return id == other.id; }
       inline bool operator!=(const Identifiable& other) const { return !(*this == other); }

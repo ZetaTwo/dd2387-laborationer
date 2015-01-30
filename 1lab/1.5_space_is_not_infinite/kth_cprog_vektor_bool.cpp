@@ -1,12 +1,15 @@
+#include <algorithm>
+
 #include "kth_cprog_vektor_bool.h"
+
+using std::copy_n;
+using std::fill_n;
 
 Vector<bool>::Vector() : count(0), max_size(DEFAULT_SIZE), data(new storage_type[storage_size()]) {
 }
 
 Vector<bool>::Vector(const Vector<bool>& other) : count(other.count), max_size(other.max_size), data(new storage_type[storage_size()]) {
-  for(size_t i = 0; i <= storage_size(); ++i) {
-    data[i] = other.data[i];
-  }
+  copy_n(other.data.get(), other.storage_size(), data.get());
 }
 
 Vector<bool>::Vector(const std::initializer_list<bool>& list) : count(list.size()), max_size(initial_size(count)), data(new storage_type[storage_size()]) {
@@ -38,17 +41,11 @@ Vector<bool>::Vector(Vector<bool>&& other) : count(other.count), max_size(other.
   other.max_size = 0;
 }
 
-Vector<bool>::Vector(size_t size) : count(size), max_size(initial_size(count)), data(new storage_type[storage_size()]) {
-  for(size_t i = 0; i < storage_size(); ++i) {
-    data[i] = 0;
-  }
+Vector<bool>::Vector(size_t size) : Vector<bool>(size, false) {
 }
 
 Vector<bool>::Vector(size_t size, bool element) : count(size), max_size(initial_size(count)), data(new storage_type[storage_size()]) {
-  const storage_type value = element ? STORAGE_BLOCK_ALL_TRUE : 0;
-  for(size_t i = 0; i < storage_size(); ++i) {
-    data[i] = value;
-  }
+  fill_n(data.get(), storage_size(), element ? STORAGE_BLOCK_ALL_TRUE : 0);
 }
 
 Vector<bool>::~Vector() {
@@ -82,9 +79,8 @@ Vector<bool>& Vector<bool>::operator=(const Vector<bool>& other) {
   }
 
   count = other.size();
-  for(size_t i = 0; i < other.storage_size(); ++i) {
-    data[i] = other.data[i];
-  }
+
+  copy_n(other.data.get(), other.storage_size(), data.get());
 
   return *this;
 }
@@ -274,7 +270,7 @@ Vector<bool>& Vector<bool>::erase(const size_t index) {
   const storage_type lowerBits = erase_subindex == 0 ? 0 : data[erase_storage_index] % (1 << erase_subindex);
   const storage_type upperBits = erase_storage_index == storage_size() ? 0 : (data[erase_storage_index] >> (erase_subindex + 1)) << erase_subindex;
   data[erase_storage_index] = lowerBits | upperBits;
-  if(erase_storage_index < storage_size()) {
+  if(erase_storage_index + 1 < storage_size()) {
     data[erase_storage_index] |= (data[erase_storage_index+1] & 1) << MAX_SUBINDEX;
   }
 
@@ -299,6 +295,11 @@ Vector<bool>& Vector<bool>::sort(const bool ascending) {
   const storage_type front_block = ascending ? 0 : STORAGE_BLOCK_ALL_TRUE;
   const storage_type rear_block = ascending ? STORAGE_BLOCK_ALL_TRUE : 0;
   const size_t num_front = ascending ? count - weight() : weight();
+
+  if(num_front >= size()) {
+    return *this;
+  }
+
   const size_t flip_block_index = num_front / STORAGE_BLOCK_SIZE;
 
   for(size_t i = 0; i < flip_block_index; ++i) {
@@ -331,9 +332,11 @@ bool Vector<bool>::exists(const bool element) const {
       return true;
     }
   }
-  const storage_type d = data[count / STORAGE_BLOCK_SIZE];
-  if((element ? d : ~d) % (1 << count % STORAGE_BLOCK_SIZE) != 0) {
-    return true;
+  if(size() % STORAGE_BLOCK_SIZE != 0) {
+    const storage_type d = data[count / STORAGE_BLOCK_SIZE];
+    if((element ? d : ~d) % (1 << count % STORAGE_BLOCK_SIZE) != 0) {
+      return true;
+    }
   }
   return false;
 }
