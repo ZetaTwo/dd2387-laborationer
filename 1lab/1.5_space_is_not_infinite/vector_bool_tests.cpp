@@ -993,6 +993,22 @@ TEST_P(AlternatingVectorsTest, RandomAccessIteratorAgreesWithIndexOperator) {
   }
 }
 
+TEST_P(AlternatingVectorsTest, RandomAccessIteratorAgreesWithIndexOperatorAfterTraversingEntireVector) {
+  Vec v = GetParam();
+
+  Vec::iterator it = v.begin();
+
+  while(it < v.end()) { ++it; }
+  while(it > v.begin()) { --it; }
+
+  for(size_t i = 0; i < v.size(); ++i) {
+    EXPECT_EQ(v[i], *(it++));
+  }
+  for(size_t i = 0; i < v.size(); ++i) {
+    EXPECT_EQ(v[v.size() - i - 1], *(--it));
+  }
+}
+
 TEST_P(AlternatingVectorsTest, ForwardConstIteratorAgreesWithIndexOperator) {
   const Vec v = GetParam();
 
@@ -1021,6 +1037,22 @@ TEST_P(AlternatingVectorsTest, RandomAccessConstIteratorAgreesWithIndexOperator)
   for (size_t i = 0; i < v.size(); ++i) {
     EXPECT_EQ(v[i], *(b + i));
     EXPECT_EQ(v[v.size() - i - 1], *(e - i - 1));
+  }
+}
+
+TEST_P(AlternatingVectorsTest, RandomAccessConstIteratorAgreesWithIndexOperatorAfterTraversingEntireVector) {
+  const Vec v = GetParam();
+
+  Vec::const_iterator it = v.begin();
+
+  while(it < v.end()) { ++it; }
+  while(it > v.begin()) { --it; }
+
+  for(size_t i = 0; i < v.size(); ++i) {
+    EXPECT_EQ(v[i], *(it++));
+  }
+  for(size_t i = 0; i < v.size(); ++i) {
+    EXPECT_EQ(v[v.size() - i - 1], *(--it));
   }
 }
 
