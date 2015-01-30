@@ -1672,3 +1672,43 @@ TEST_P(SizeSizeTest, IterSwapSwapsTheRightBitsBetweenTwoVectors) {
     EXPECT_EQ(i == swap_index_2, v_f[i]);
   }
 }
+
+TEST(VectorBool, ProxyCompare) {
+  Vec v{true, false, true, false};
+  const VectorBoolProxy
+    p_t1 = v[0],
+    p_f1 = v[1],
+    p_t2 = v[2],
+    p_f2 = v[3]
+  ;
+
+  EXPECT_TRUE (p_t1 >  p_f1);
+  EXPECT_FALSE(p_t1 <  p_f1);
+  EXPECT_TRUE (p_t1 >= p_f1);
+  EXPECT_FALSE(p_t1 <= p_f1);
+
+  EXPECT_TRUE (p_f1 <  p_t1);
+  EXPECT_TRUE (p_f1 <= p_t1);
+  EXPECT_FALSE(p_f1 >  p_t1);
+  EXPECT_FALSE(p_f1 >= p_t1);
+
+  EXPECT_TRUE (p_t1 == p_t2);
+  EXPECT_TRUE (p_f1 == p_f2);
+  EXPECT_TRUE (p_t2 == p_t1);
+  EXPECT_TRUE (p_f2 == p_f1);
+
+  EXPECT_FALSE(p_t1 == p_f1);
+  EXPECT_FALSE(p_f1 == p_t1);
+  EXPECT_FALSE(p_t2 == p_f2);
+  EXPECT_FALSE(p_f2 == p_t2);
+
+  EXPECT_FALSE(p_t1 != p_t2);
+  EXPECT_FALSE(p_f1 != p_f2);
+  EXPECT_FALSE(p_t2 != p_t1);
+  EXPECT_FALSE(p_f2 != p_f1);
+
+  EXPECT_TRUE (p_t1 != p_f1);
+  EXPECT_TRUE (p_f1 != p_t1);
+  EXPECT_TRUE (p_t2 != p_f2);
+  EXPECT_TRUE (p_f2 != p_t2);
+}
