@@ -982,6 +982,17 @@ TEST_P(AlternatingVectorsTest, BackwardIteratorAgreesWithIndexOperator) {
   EXPECT_EQ(v.begin(), it);
 }
 
+TEST_P(AlternatingVectorsTest, RandomAccessIteratorAgreesWithIndexOperator) {
+  Vec v = GetParam();
+  const Vec::iterator b = v.begin();
+  const Vec::iterator e = v.end();
+
+  for (size_t i = 0; i < v.size(); ++i) {
+    EXPECT_EQ(v[i], *(b + i));
+    EXPECT_EQ(v[v.size() - i - 1], *(e - i - 1));
+  }
+}
+
 TEST_P(AlternatingVectorsTest, ForwardConstIteratorAgreesWithIndexOperator) {
   const Vec v = GetParam();
 
@@ -1000,6 +1011,17 @@ TEST_P(AlternatingVectorsTest, BackwardConstIteratorAgreesWithIndexOperator) {
     EXPECT_EQ(v[v.size() - i - 1], *(--it));
   }
   EXPECT_EQ(v.begin(), it);
+}
+
+TEST_P(AlternatingVectorsTest, RandomAccessConstIteratorAgreesWithIndexOperator) {
+  const Vec v = GetParam();
+  const Vec::const_iterator b = v.begin();
+  const Vec::const_iterator e = v.end();
+
+  for (size_t i = 0; i < v.size(); ++i) {
+    EXPECT_EQ(v[i], *(b + i));
+    EXPECT_EQ(v[v.size() - i - 1], *(e - i - 1));
+  }
 }
 
 TEST_P(AlternatingVectorsTest, ItrBeginEnd) {
