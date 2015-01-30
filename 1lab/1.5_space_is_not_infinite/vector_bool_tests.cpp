@@ -966,7 +966,7 @@ TEST_P(AlternatingVectorsTest, ForwardIteratorAgreesWithIndexOperator) {
   Vec v = GetParam();
 
   Vec::iterator it = v.begin();
-  for (size_t i = 0; i < v.size() && it != v.end(); ++i, ++it) {
+  for (size_t i = 0; i < v.size(); ++i, ++it) {
     EXPECT_EQ(v[i], *it);
   }
   EXPECT_EQ(v.end(), it);
@@ -976,7 +976,7 @@ TEST_P(AlternatingVectorsTest, ForwardConstIteratorAgreesWithIndexOperator) {
   const Vec v = GetParam();
 
   Vec::const_iterator it = v.begin();
-  for (size_t i = 0; i < v.size() && it != v.end(); ++i, ++it) {
+  for (size_t i = 0; i < v.size(); ++i, ++it) {
     EXPECT_EQ(v[i], *it);
   }
   EXPECT_EQ(v.end(), it);
