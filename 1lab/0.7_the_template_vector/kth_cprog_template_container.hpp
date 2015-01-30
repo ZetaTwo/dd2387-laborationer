@@ -72,6 +72,8 @@ private:
 
   static void deleter(T*) {};
   typedef std::unique_ptr<T[], void(*)(T*)> data_ptr;
+
+  //TODO: Better release management in deleter
   data_ptr data; //A pointer to the vector data
   std::allocator<T> allocator;
 
@@ -130,6 +132,7 @@ Vector<T>::~Vector() {
   max_size = 0;
 }
 
+//TODO: Work into unique_ptr deleter and remove
 template<typename T>
 void Vector<T>::release(Vector<T>& vector, data_ptr& data, size_t count, size_t max_size) {
   for (size_t i = 0; i < vector.count; ++i) {
@@ -481,7 +484,8 @@ void Vector<T>::increase_memory(Vector<T>& vector, size_t num_elements, bool cop
     throw std::invalid_argument("Vector already large enough");
   }
 
-  data_ptr new_data(vector.allocator.allocate(new_max_size), deleter);
+  //TODO: Fix leak
+  std::unique_ptr<T> new_data(vector.allocator.allocate(new_max_size), deleter);
 
   if(copy) {
     for (size_t i = 0; i < vector.count; i++) {
@@ -490,7 +494,7 @@ void Vector<T>::increase_memory(Vector<T>& vector, size_t num_elements, bool cop
   }
 
   release(vector, vector.data, vector.count, vector.max_size);
-  vector.data = std::move(new_data);
+  vector.data.reset(new_data.release());
   vector.max_size = new_max_size;
 }
 
