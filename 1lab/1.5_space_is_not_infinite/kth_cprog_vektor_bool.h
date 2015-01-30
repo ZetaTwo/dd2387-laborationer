@@ -104,9 +104,8 @@ public:
   VectorBoolProxy(storage_type* element, subindex_type index);
   VectorBoolProxy& operator=(const bool value);
   operator const bool () const;
-
-  friend void swap(VectorBoolProxy p1, VectorBoolProxy p2);
 };
+void swap(VectorBoolProxy p1, VectorBoolProxy p2);
 
 class VectorBoolConstIterator : public std::iterator<std::random_access_iterator_tag, const bool> {
 protected:
