@@ -372,11 +372,11 @@ TEST_F(VectorBoolConstIteratorFixture, IsEqualityComparable) {
 // VectorBoolProxy
 
 TEST(VectorBoolProxySyntax, IsCopyConstructible) {
-  EXPECT_TRUE(std::is_move_constructible<VectorBoolProxy>::value);
+  EXPECT_TRUE(std::is_copy_constructible<VectorBoolProxy>::value);
 }
 
 TEST(VectorBoolProxySyntax, IsCopyAssignable) {
-  EXPECT_TRUE(std::is_move_assignable<VectorBoolProxy>::value);
+  EXPECT_TRUE(std::is_copy_assignable<VectorBoolProxy>::value);
 }
 
 TEST(VectorBoolProxySyntax, IsMoveConstructible) {
