@@ -1,3 +1,5 @@
+#include <algorithm>
+#include <cmath>
 #include <gtest/gtest.h>
 #include "kth_cprog_vektor_bool.h"
 
@@ -7,8 +9,17 @@ using ::testing::Combine;
 using ::testing::Range;
 using ::testing::Values;
 
+using std::iter_swap;
+using std::max;
+
 #define BLOCK_SIZE sizeof(unsigned int) * CHAR_BIT
 #define SIZES Values(0, 1, BLOCK_SIZE-1, BLOCK_SIZE, BLOCK_SIZE+1, 100)
+
+typedef Vector<bool> Vec;
+
+const auto make_singly_true_vec = [](const size_t size, const size_t true_index) {
+  Vec v(size, false); v[true_index] = true; return v;
+};
 
 class SizeTest : public TestWithParam<int> {};
 INSTANTIATE_TEST_CASE_P(VectorBool, SizeTest, SIZES);
@@ -24,8 +35,6 @@ INSTANTIATE_TEST_CASE_P(VectorBool, SizeBoolBoolTest, Combine(SIZES, Bool(), Boo
 
 class SizeSizeBoolTest : public TestWithParam<std::tuple<int, int, bool> > {};
 INSTANTIATE_TEST_CASE_P(VectorBool, SizeSizeBoolTest, Combine(SIZES, SIZES, Bool()));
-
-typedef Vector<bool> Vec;
 
 class AlternatingVectorsTest : public TestWithParam<Vec> {};
 INSTANTIATE_TEST_CASE_P(VectorBool, AlternatingVectorsTest, Values(
@@ -836,6 +845,77 @@ TEST_P(SizeSizeBoolTest, Sort) {
   }
 }
 
+class StdSortTest : public TestWithParam<Vec> {};
+INSTANTIATE_TEST_CASE_P(VectorBool, StdSortTest, Values(
+  Vec(0)
+  ,Vec{ true }
+  ,Vec{ false }
+  ,Vec{ true, false }
+  ,Vec{ false, true }
+  ,Vec{ true, false, true }
+  ,Vec{ false, true, false }
+  ,Vec( 31, false )
+  ,Vec( 31, true )
+  ,Vec( 32, false )
+  ,Vec( 32, true )
+  ,Vec( 33, false )
+  ,Vec( 33, true )
+  ,make_singly_true_vec(31, 0)
+  ,make_singly_true_vec(32, 0)
+  ,make_singly_true_vec(33, 0)
+  ,make_singly_true_vec(31, 1)
+  ,make_singly_true_vec(32, 1)
+  ,make_singly_true_vec(33, 1)
+  ,make_singly_true_vec(64, 31)
+  ,make_singly_true_vec(64, 32)
+  ,make_singly_true_vec(64, 33)
+  ,make_singly_true_vec(65, 62)
+  ,make_singly_true_vec(65, 63)
+  ,make_singly_true_vec(65, 64)
+  ,Vec({ // 31
+    true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false, true, false, true, false, true, false, true
+  })
+  ,Vec({ // 31
+    true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
+    true, false, true, false, true, false, true, false, true, false, true, false, true, false, true
+  })
+  ,Vec({ // 32
+    true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false
+  })
+  ,Vec({ // 32
+    true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
+    true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false
+  })
+  ,Vec({ // 33
+    true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false,
+    true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true
+  })
+  ,Vec({ // 33
+    true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
+    true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true
+  })
+));
+TEST_P(StdSortTest, StdSort) {
+  Vec vector = GetParam();
+  const size_t size = vector.size();
+  const size_t weight = vector.weight();
+
+  std::sort(vector.begin(), vector.end());
+
+  EXPECT_EQ(size, vector.size());
+  EXPECT_EQ(weight, vector.weight());
+
+  const size_t flip_index = size - weight;
+  for(size_t i = 0; i < flip_index; ++i) {
+    EXPECT_FALSE(vector[i]) << "Expected index " << i << " to be " << false << ", but vector was " << vector;
+  }
+  for(size_t i = flip_index; i < size; ++i) {
+    EXPECT_TRUE(vector[i]) << "Expected index " << i << " to be " << true << ", but vector was " << vector;
+  }
+}
+
 class BoolTest : public TestWithParam<bool> {};
 INSTANTIATE_TEST_CASE_P(VectorBool, BoolTest, Bool());
 TEST_P(BoolTest, SortUnique) {
@@ -886,20 +966,94 @@ TEST_P(AlternatingVectorsTest, ForwardIteratorAgreesWithIndexOperator) {
   Vec v = GetParam();
 
   Vec::iterator it = v.begin();
-  for (size_t i = 0; i < v.size() && it != v.end(); ++i, ++it) {
+  for (size_t i = 0; i < v.size(); ++i, ++it) {
     EXPECT_EQ(v[i], *it);
   }
   EXPECT_EQ(v.end(), it);
+}
+
+TEST_P(AlternatingVectorsTest, BackwardIteratorAgreesWithIndexOperator) {
+  Vec v = GetParam();
+
+  Vec::iterator it = v.end();
+  for (size_t i = 0; i < v.size(); ++i) {
+    EXPECT_EQ(v[v.size() - i - 1], *(--it));
+  }
+  EXPECT_EQ(v.begin(), it);
+}
+
+TEST_P(AlternatingVectorsTest, RandomAccessIteratorAgreesWithIndexOperator) {
+  Vec v = GetParam();
+  const Vec::iterator b = v.begin();
+  const Vec::iterator e = v.end();
+
+  for (size_t i = 0; i < v.size(); ++i) {
+    EXPECT_EQ(v[i], *(b + i));
+    EXPECT_EQ(v[v.size() - i - 1], *(e - i - 1));
+  }
+}
+
+TEST_P(AlternatingVectorsTest, RandomAccessIteratorAgreesWithIndexOperatorAfterTraversingEntireVector) {
+  Vec v = GetParam();
+
+  Vec::iterator it = v.begin();
+
+  while(it < v.end()) { ++it; }
+  while(it > v.begin()) { --it; }
+
+  for(size_t i = 0; i < v.size(); ++i) {
+    EXPECT_EQ(v[i], *(it++));
+  }
+  for(size_t i = 0; i < v.size(); ++i) {
+    EXPECT_EQ(v[v.size() - i - 1], *(--it));
+  }
 }
 
 TEST_P(AlternatingVectorsTest, ForwardConstIteratorAgreesWithIndexOperator) {
   const Vec v = GetParam();
 
   Vec::const_iterator it = v.begin();
-  for (size_t i = 0; i < v.size() && it != v.end(); ++i, ++it) {
+  for (size_t i = 0; i < v.size(); ++i, ++it) {
     EXPECT_EQ(v[i], *it);
   }
   EXPECT_EQ(v.end(), it);
+}
+
+TEST_P(AlternatingVectorsTest, BackwardConstIteratorAgreesWithIndexOperator) {
+  const Vec v = GetParam();
+
+  Vec::const_iterator it = v.end();
+  for (size_t i = 0; i < v.size(); ++i) {
+    EXPECT_EQ(v[v.size() - i - 1], *(--it));
+  }
+  EXPECT_EQ(v.begin(), it);
+}
+
+TEST_P(AlternatingVectorsTest, RandomAccessConstIteratorAgreesWithIndexOperator) {
+  const Vec v = GetParam();
+  const Vec::const_iterator b = v.begin();
+  const Vec::const_iterator e = v.end();
+
+  for (size_t i = 0; i < v.size(); ++i) {
+    EXPECT_EQ(v[i], *(b + i));
+    EXPECT_EQ(v[v.size() - i - 1], *(e - i - 1));
+  }
+}
+
+TEST_P(AlternatingVectorsTest, RandomAccessConstIteratorAgreesWithIndexOperatorAfterTraversingEntireVector) {
+  const Vec v = GetParam();
+
+  Vec::const_iterator it = v.begin();
+
+  while(it < v.end()) { ++it; }
+  while(it > v.begin()) { --it; }
+
+  for(size_t i = 0; i < v.size(); ++i) {
+    EXPECT_EQ(v[i], *(it++));
+  }
+  for(size_t i = 0; i < v.size(); ++i) {
+    EXPECT_EQ(v[v.size() - i - 1], *(--it));
+  }
 }
 
 TEST_P(AlternatingVectorsTest, ItrBeginEnd) {
@@ -958,6 +1112,224 @@ TEST_P(AlternatingVectorsTest, ItrRCBeginEnd) {
   }
 }
 
+TEST_P(SizeTest, ItrCompareLess) {
+  const size_t size = GetParam();
+  Vec v(size);
+  const Vec::iterator b = v.begin();
+
+  for(size_t i = 0; i <= size; ++i) {
+    for(size_t j = 0; j <= size; ++j) {
+      if(i < j) {
+        EXPECT_TRUE(b + i < b + j);
+        EXPECT_FALSE(b + j < b + i);
+      } else if (j < i) {
+        EXPECT_TRUE(b + j < b + i);
+        EXPECT_FALSE(b + i < b + j);
+      }
+    }
+  }
+}
+
+TEST_P(SizeTest, ItrCompareLessEqual) {
+  const size_t size = GetParam();
+  Vec v(size);
+  const Vec::iterator b = v.begin();
+
+  for(size_t i = 0; i <= size; ++i) {
+    for(size_t j = 0; j <= size; ++j) {
+      if(i <= j) {
+        EXPECT_TRUE(b + i <= b + j);
+      } else if (j <= i) {
+        EXPECT_TRUE(b + j <= b + i);
+      }
+    }
+  }
+}
+
+TEST_P(SizeTest, ItrCompareGreater) {
+  const size_t size = GetParam();
+  Vec v(size);
+  const Vec::iterator b = v.begin();
+
+  for(size_t i = 0; i <= size; ++i) {
+    for(size_t j = 0; j <= size; ++j) {
+      if(i > j) {
+        EXPECT_TRUE(b + i > b + j);
+        EXPECT_FALSE(b + j > b + i);
+      } else if (j > i) {
+        EXPECT_TRUE(b + j > b + i);
+        EXPECT_FALSE(b + i > b + j);
+      }
+    }
+  }
+}
+
+TEST_P(SizeTest, ItrCompareGreaterEqual) {
+  const size_t size = GetParam();
+  Vec v(size);
+  const Vec::iterator b = v.begin();
+
+  for(size_t i = 0; i <= size; ++i) {
+    for(size_t j = 0; j <= size; ++j) {
+      if(i >= j) {
+        EXPECT_TRUE(b + i >= b + j);
+      } else if (j >= i) {
+        EXPECT_TRUE(b + j >= b + i);
+      }
+    }
+  }
+}
+
+TEST_P(SizeTest, ItrCompareEqual) {
+  const size_t size = GetParam();
+  Vec v(size);
+  const Vec::iterator b = v.begin();
+
+  for(size_t i = 0; i <= size; ++i) {
+    for(size_t j = 0; j <= size; ++j) {
+      if(i == j) {
+        EXPECT_TRUE(b + i == b + j);
+      } else {
+        EXPECT_FALSE(b + i == b + j);
+      }
+    }
+  }
+}
+
+TEST_P(SizeTest, ItrCompareNotEqual) {
+  const size_t size = GetParam();
+  Vec v(size);
+  const Vec::iterator b = v.begin();
+
+  for(size_t i = 0; i <= size; ++i) {
+    for(size_t j = 0; j <= size; ++j) {
+      if(i == j) {
+        EXPECT_FALSE(b + i != b + j);
+      } else {
+        EXPECT_TRUE(b + i != b + j);
+      }
+    }
+  }
+}
+
+TEST_P(SizeTest, ItrCCompareLess) {
+  const size_t size = GetParam();
+  const Vec v(size);
+  const Vec::const_iterator b = v.begin();
+
+  for(size_t i = 0; i <= size; ++i) {
+    for(size_t j = 0; j <= size; ++j) {
+      if(i < j) {
+        EXPECT_TRUE(b + i < b + j);
+        EXPECT_FALSE(b + j < b + i);
+      } else if (j < i) {
+        EXPECT_TRUE(b + j < b + i);
+        EXPECT_FALSE(b + i < b + j);
+      }
+    }
+  }
+}
+
+TEST_P(SizeTest, ItrCCompareLessEqual) {
+  const size_t size = GetParam();
+  const Vec v(size);
+  const Vec::const_iterator b = v.begin();
+
+  for(size_t i = 0; i <= size; ++i) {
+    for(size_t j = 0; j <= size; ++j) {
+      if(i <= j) {
+        EXPECT_TRUE(b + i <= b + j);
+      } else if (j <= i) {
+        EXPECT_TRUE(b + j <= b + i);
+      }
+    }
+  }
+}
+
+TEST_P(SizeTest, ItrCCompareGreater) {
+  const size_t size = GetParam();
+  const Vec v(size);
+  const Vec::const_iterator b = v.begin();
+
+  for(size_t i = 0; i <= size; ++i) {
+    for(size_t j = 0; j <= size; ++j) {
+      if(i > j) {
+        EXPECT_TRUE(b + i > b + j);
+        EXPECT_FALSE(b + j > b + i);
+      } else if (j > i) {
+        EXPECT_TRUE(b + j > b + i);
+        EXPECT_FALSE(b + i > b + j);
+      }
+    }
+  }
+}
+
+TEST_P(SizeTest, ItrCCompareGreaterEqual) {
+  const size_t size = GetParam();
+  const Vec v(size);
+  const Vec::const_iterator b = v.begin();
+
+  for(size_t i = 0; i <= size; ++i) {
+    for(size_t j = 0; j <= size; ++j) {
+      if(i >= j) {
+        EXPECT_TRUE(b + i >= b + j);
+      } else if (j >= i) {
+        EXPECT_TRUE(b + j >= b + i);
+      }
+    }
+  }
+}
+
+TEST_P(SizeTest, ItrCCompareEqual) {
+  const size_t size = GetParam();
+  const Vec v(size);
+  const Vec::const_iterator b = v.begin();
+
+  for(size_t i = 0; i <= size; ++i) {
+    for(size_t j = 0; j <= size; ++j) {
+      if(i == j) {
+        EXPECT_TRUE(b + i == b + j);
+      } else {
+        EXPECT_FALSE(b + i == b + j);
+      }
+    }
+  }
+}
+
+TEST_P(SizeTest, ItrCCompareNotEqual) {
+  const size_t size = GetParam();
+  const Vec v(size);
+  const Vec::const_iterator b = v.begin();
+
+  for(size_t i = 0; i <= size; ++i) {
+    for(size_t j = 0; j <= size; ++j) {
+      if(i == j) {
+        EXPECT_FALSE(b + i != b + j);
+      } else {
+        EXPECT_TRUE(b + i != b + j);
+      }
+    }
+  }
+}
+
+TEST_P(SizeTest, ItrCopyConstruct) {
+  Vec vector(GetParam());
+
+  for(Vec::iterator i = vector.begin(); i < vector.end(); ++i) {
+    Vec::iterator it(i);
+    EXPECT_EQ(it, i);
+  }
+}
+
+TEST_P(SizeTest, ItrCCopyConstruct) {
+  const Vec vector(GetParam());
+
+  for(Vec::const_iterator i = vector.begin(); i < vector.end(); ++i) {
+    Vec::const_iterator it(i);
+    EXPECT_EQ(it, i);
+  }
+}
+
 TEST_P(SizeTest, ItrCopyAssign) {
   Vec vector(GetParam());
 
@@ -1000,6 +1372,78 @@ TEST_P(SizeTest, ItrOperatorPlusAdvancesThatManySteps) {
     EXPECT_TRUE(*((true_index - v.size()) + e));
     EXPECT_TRUE(*(true_index + bc));
     EXPECT_TRUE(*((true_index - vc.size()) + ec));
+  }
+}
+
+TEST_P(SizeTest, ItrOperatorDereferenceExtractsTheRightBit) {
+  const size_t true_index = GetParam();
+  const size_t size = true_index + 17;
+
+  const Vec vc = [size, true_index]() { Vec v(size, false); v[true_index] = true; return v; }();
+  Vec v = vc;
+
+  const Vec::const_iterator bc = vc.begin();
+  const Vec::iterator b = v.begin(); // Make sure we call the non-const begin() method
+
+  for(size_t i = 0; i < size; ++i) {
+    EXPECT_EQ(i == true_index, *(bc + i));
+    EXPECT_EQ(i == true_index, *(b + i));
+  }
+}
+
+TEST_P(SizeTest, ItrOperatorDereferenceWritesTheRightBit) {
+  const size_t true_index = GetParam();
+  const size_t size = true_index + 17;
+
+  Vec vb(size, false);
+  Vec::iterator b = vb.begin(); // Make sure we call the non-const begin() method
+  *(b + true_index) = true;
+
+  Vec ve(size, false);
+  Vec::iterator e = ve.end(); // Make sure we call the non-const begin() method
+  *(e + true_index - size) = true;
+
+  for(size_t i = 0; i < size; ++i) {
+    EXPECT_EQ(i == true_index, vb[i]);
+    EXPECT_EQ(i == true_index, ve[i]);
+  }
+}
+
+TEST_P(SizeTest, ItrOperatorIndexExtractsTheRightBit) {
+  const size_t true_index = GetParam();
+  const size_t size = true_index + 17;
+
+  const Vec vc = [size, true_index]() { Vec v(size, false); v[true_index] = true; return v; }();
+  Vec v = vc;
+
+  const Vec::const_iterator bc = vc.begin();
+  const Vec::const_iterator ec = vc.end();
+  const Vec::iterator b = v.begin(); // Make sure we call the non-const begin() method
+  const Vec::iterator e = v.end(); // Make sure we call the non-const end() method
+
+  for(size_t i = 0; i < size; ++i) {
+    EXPECT_EQ(i == true_index, static_cast<bool>(bc[i])) << "Failed for i=" << i;
+    EXPECT_EQ(i == true_index, static_cast<bool>(b[i])) << "Failed for i=" << i;
+    EXPECT_EQ(i == true_index, static_cast<bool>(ec[i - size])) << "Failed for i=" << i;
+    EXPECT_EQ(i == true_index, static_cast<bool>(e[i - size])) << "Failed for i=" << i;
+  }
+}
+
+TEST_P(SizeTest, ItrOperatorIndexWritesTheRightBit) {
+  const size_t true_index = GetParam();
+  const size_t size = true_index + 17;
+
+  Vec vb(size, false);
+  Vec::iterator b = vb.begin(); // Make sure we call the non-const begin() method
+  b[true_index] = true;
+
+  Vec ve(size, false);
+  Vec::iterator e = ve.end(); // Make sure we call the non-const begin() method
+  e[true_index - size] = true;
+
+  for(size_t i = 0; i < size; ++i) {
+    EXPECT_EQ(i == true_index, vb[i]);
+    EXPECT_EQ(i == true_index, ve[i]);
   }
 }
 
@@ -1273,5 +1717,143 @@ TEST_P(IntegerInputTest, ConvertFromUnsignedIntegerAndBackAgain) {
 }
 
 TEST(VectorBool, StreamInput) {
-  std::cout << Vec({true, false, true, false, false, true, true, false}) << std::endl;
+  std::stringstream ss;
+  ss << Vec({true, false, true, false, false, true, true, false});
+  EXPECT_EQ("[1, 0, 1, 0, 0, 1, 1, 0]", ss.str());
+}
+
+TEST_P(SizeSizeTest, SwapSwapsTheRightBitsWithinVector) {
+  const size_t index_start = std::get<0>(GetParam());
+  const size_t index_end = std::get<1>(GetParam());
+  const size_t index_inbetween = (index_start + index_end) / 2;
+  const size_t size = max(index_start, index_end) + 1;
+
+  Vec v(size, false);
+  v[index_start] = true;
+
+  swap(v[index_start], v[index_inbetween]);
+  for(size_t i = 0; i < size; ++i) {
+    EXPECT_EQ(i == index_inbetween, v[i]);
+  }
+
+  swap(v[index_inbetween], v[index_end]);
+  for(size_t i = 0; i < size; ++i) {
+    EXPECT_EQ(i == index_end, v[i]);
+  }
+
+  v[index_start] = true;
+  swap(v[index_start], v[index_end]);
+  for(size_t i = 0; i < size; ++i) {
+    EXPECT_EQ(i == index_start || i == index_end, v[i]);
+  }
+}
+
+TEST_P(SizeSizeTest, SwapSwapsTheRightBitsBetweenTwoVectors) {
+  const size_t swap_index_1 = std::get<0>(GetParam());
+  const size_t swap_index_2 = std::get<1>(GetParam());
+  const size_t size = max(swap_index_1, swap_index_2) + 1;
+
+  Vec v_t(size, true);
+  Vec v_f(size, false);
+
+  swap(v_t[swap_index_1], v_f[swap_index_2]);
+
+  for(size_t i = 0; i < size; ++i) {
+    EXPECT_EQ(i != swap_index_1, v_t[i]);
+    EXPECT_EQ(i == swap_index_2, v_f[i]);
+  }
+}
+
+TEST_P(SizeSizeTest, IterSwapSwapsTheRightBitsWithinVector) {
+  const size_t index_start = std::get<0>(GetParam());
+  const size_t index_end = std::get<1>(GetParam());
+  const size_t index_inbetween = (index_start + index_end) / 2;
+  const size_t size = max(index_start, index_end) + 1;
+
+  Vec v(size, false);
+  v[index_start] = true;
+  const Vec::iterator b = v.begin();
+
+  iter_swap(b + index_start, b + index_inbetween);
+  for(size_t i = 0; i < size; ++i) {
+    EXPECT_EQ(i == index_inbetween, v[i]);
+  }
+
+  iter_swap(b + index_inbetween, b + index_end);
+  for(size_t i = 0; i < size; ++i) {
+    EXPECT_EQ(i == index_end, v[i]);
+  }
+
+  v[index_start] = true;
+  iter_swap(b + index_start, b + index_end);
+  for(size_t i = 0; i < size; ++i) {
+    EXPECT_EQ(i == index_start || i == index_end, v[i]);
+  }
+}
+
+TEST_P(SizeSizeTest, IterSwapSwapsTheRightBitsBetweenTwoVectors) {
+  const size_t swap_index_1 = std::get<0>(GetParam());
+  const size_t swap_index_2 = std::get<1>(GetParam());
+  const size_t size = max(swap_index_1, swap_index_2) + 1;
+
+  Vec v_t(size, true);
+  Vec v_f(size, false);
+
+  iter_swap(v_t.begin() + swap_index_1, v_f.begin() + swap_index_2);
+
+  for(size_t i = 0; i < size; ++i) {
+    EXPECT_EQ(i != swap_index_1, v_t[i]);
+    EXPECT_EQ(i == swap_index_2, v_f[i]);
+  }
+}
+
+TEST(VectorBool, ProxyCompare) {
+  Vec v{true, false, true, false};
+  const VectorBoolProxy
+    p_t1 = v[0],
+    p_f1 = v[1],
+    p_t2 = v[2],
+    p_f2 = v[3]
+  ;
+
+  EXPECT_TRUE (p_t1 >  p_f1);
+  EXPECT_FALSE(p_t1 <  p_f1);
+  EXPECT_TRUE (p_t1 >= p_f1);
+  EXPECT_FALSE(p_t1 <= p_f1);
+
+  EXPECT_TRUE (p_f1 <  p_t1);
+  EXPECT_TRUE (p_f1 <= p_t1);
+  EXPECT_FALSE(p_f1 >  p_t1);
+  EXPECT_FALSE(p_f1 >= p_t1);
+
+  EXPECT_TRUE (p_t1 == p_t2);
+  EXPECT_TRUE (p_f1 == p_f2);
+  EXPECT_TRUE (p_t2 == p_t1);
+  EXPECT_TRUE (p_f2 == p_f1);
+
+  EXPECT_FALSE(p_t1 == p_f1);
+  EXPECT_FALSE(p_f1 == p_t1);
+  EXPECT_FALSE(p_t2 == p_f2);
+  EXPECT_FALSE(p_f2 == p_t2);
+
+  EXPECT_FALSE(p_t1 != p_t2);
+  EXPECT_FALSE(p_f1 != p_f2);
+  EXPECT_FALSE(p_t2 != p_t1);
+  EXPECT_FALSE(p_f2 != p_f1);
+
+  EXPECT_TRUE (p_t1 != p_f1);
+  EXPECT_TRUE (p_f1 != p_t1);
+  EXPECT_TRUE (p_t2 != p_f2);
+  EXPECT_TRUE (p_f2 != p_t2);
+}
+
+TEST(VectorBool, AutoItAssignedToDecrementEndWritesCorrectly) {
+  Vec v(64);
+  auto it = --v.end();
+  *it = true;
+
+  for(size_t i = 0; i < 63; ++i) {
+    EXPECT_FALSE(v[i]);
+  }
+  EXPECT_TRUE(v[63]);
 }

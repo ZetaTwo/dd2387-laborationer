@@ -57,6 +57,7 @@ public:
 
   //Iterators
 public:
+  typedef bool value_type;
   typedef VectorBoolConstIterator const_iterator; friend class VectorBoolConstIterator;
   typedef VectorBoolIterator iterator; friend class VectorBoolIterator;
   typedef std::reverse_iterator<iterator> reverse_iterator;
@@ -101,9 +102,13 @@ private:
   subindex_type index;
 public:
   VectorBoolProxy(storage_type* element, subindex_type index);
+  VectorBoolProxy(const VectorBoolProxy& other);
+  VectorBoolProxy& operator=(const VectorBoolProxy& other);
+  VectorBoolProxy& operator=(VectorBoolProxy&& other);
   VectorBoolProxy& operator=(const bool value);
   operator const bool () const;
 };
+void swap(VectorBoolProxy p1, VectorBoolProxy p2);
 
 class VectorBoolConstIterator : public std::iterator<std::random_access_iterator_tag, const bool> {
 protected:
@@ -120,11 +125,11 @@ public:
   VectorBoolConstIterator& operator=(const VectorBoolConstIterator& mit);
   VectorBoolConstIterator& operator++();
   VectorBoolConstIterator operator++(int);
-  VectorBoolConstIterator& operator+=(difference_type);
+  VectorBoolConstIterator& operator+=(difference_type distance);
   VectorBoolConstIterator& operator--();
   VectorBoolConstIterator operator--(int);
-  VectorBoolConstIterator& operator-=(difference_type);
-  VectorBoolConstIterator operator+(difference_type) const;
+  VectorBoolConstIterator& operator-=(difference_type distance);
+  VectorBoolConstIterator operator+(difference_type offset) const;
   VectorBoolConstIterator operator-(difference_type offset) const;
   difference_type operator-(const VectorBoolConstIterator& other) const;
   bool operator==(const VectorBoolConstIterator& rhs) const;
@@ -133,7 +138,7 @@ public:
   bool operator>(const VectorBoolConstIterator& rhs) const;
   bool operator>=(const VectorBoolConstIterator& rhs) const;
   bool operator<=(const VectorBoolConstIterator& rhs) const;
-  value_type operator[](difference_type index) const;
+  value_type operator[](difference_type offset) const;
   value_type operator*() const;
 };
 
@@ -151,17 +156,17 @@ public:
   VectorBoolIterator& operator=(const VectorBoolIterator& mit);
   VectorBoolIterator& operator++();
   VectorBoolIterator operator++(int);
-  VectorBoolIterator& operator+=(difference_type);
+  VectorBoolIterator& operator+=(difference_type distance);
   VectorBoolIterator& operator--();
   VectorBoolIterator operator--(int);
-  VectorBoolIterator& operator-=(difference_type);
+  VectorBoolIterator& operator-=(difference_type distance);
   VectorBoolIterator operator+(difference_type offset) const;
   VectorBoolIterator operator-(difference_type offset) const;
   difference_type operator-(const VectorBoolIterator& other) const;
-  bool operator==(const VectorBoolIterator& rhs) const;
-  bool operator!=(const VectorBoolIterator& rhs) const;
-  reference operator[](difference_type index) const;
-  reference operator*() const;
+  value_type operator[](difference_type offset) const;
+  value_type operator*() const;
+  reference operator[](difference_type offset);
+  reference operator*();
 };
 
 VectorBoolIterator operator+(const VectorBoolIterator::difference_type&, const VectorBoolIterator& it);

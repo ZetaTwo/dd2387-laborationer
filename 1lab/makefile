@@ -153,3 +153,6 @@ autotest_buggies:
 
 kattis:
 	$(KATTISSUBMIT) -f -p kth:cprog:lab1:templatecontainer -l c++ $(TEMPLATE_VECTOR_HEADER)
+
+redovisning: test_vector_bool.cpp $(TEMPLATE_VECTOR_HEADER) $(EX15DIR)/kth_cprog_vektor_bool.h build/$(EX15DIR)/kth_cprog_vektor_bool.o build/$(EX15DIR)/kth_cprog_vektor_bool_iterator.o
+	$(MAKE_EXECUTABLE)

@@ -1,6 +1,10 @@
 #include <gtest/gtest.h>
 #include "kth_cprog_vektor_bool.h"
 
+using std::is_copy_assignable;
+using std::is_copy_constructible;
+using std::is_move_assignable;
+using std::is_move_constructible;
 using std::iterator_traits;
 using std::move;
 using std::swap;
@@ -154,6 +158,8 @@ TEST_F(VectorBoolIteratorFixture, IsCopyConstructible) {
   It it1 = b;
   It it2(b);
   It it3{b};
+
+  EXPECT_TRUE(is_copy_constructible<It>::value);
 }
 
 // MoveConstructible
@@ -162,6 +168,8 @@ TEST_F(VectorBoolIteratorFixture, IsMoveConstructible) {
   It it1 = move(It{});
   It it2(move(It{}));
   It it3{move(It{})};
+
+  EXPECT_TRUE(is_move_constructible<It>::value);
 }
 
 // CopyAssignable
@@ -169,6 +177,8 @@ TEST_F(VectorBoolIteratorFixture, IsMoveConstructible) {
 TEST_F(VectorBoolIteratorFixture, IsCopyAssignable) {
   It it;
   it = b;
+
+  EXPECT_TRUE(is_copy_assignable<It>::value);
 }
 
 // MoveAssignable
@@ -176,6 +186,8 @@ TEST_F(VectorBoolIteratorFixture, IsCopyAssignable) {
 TEST_F(VectorBoolIteratorFixture, IsMoveAssignable) {
   It it;
   it = std::move(It{});
+
+  EXPECT_TRUE(is_move_assignable<It>::value);
 }
 
 // Destructible
@@ -307,6 +319,8 @@ TEST_F(VectorBoolConstIteratorFixture, IsCopyConstructible) {
   It it1 = b;
   It it2(b);
   It it3{b};
+
+  EXPECT_TRUE(is_copy_constructible<It>::value);
 }
 
 // MoveConstructible
@@ -315,6 +329,8 @@ TEST_F(VectorBoolConstIteratorFixture, IsMoveConstructible) {
   It it1 = move(It{});
   It it2(move(It{}));
   It it3{move(It{})};
+
+  EXPECT_TRUE(is_move_constructible<It>::value);
 }
 
 // CopyAssignable
@@ -322,6 +338,8 @@ TEST_F(VectorBoolConstIteratorFixture, IsMoveConstructible) {
 TEST_F(VectorBoolConstIteratorFixture, IsCopyAssignable) {
   It it;
   it = b;
+
+  EXPECT_TRUE(is_copy_assignable<It>::value);
 }
 
 // MoveAssignable
@@ -329,6 +347,8 @@ TEST_F(VectorBoolConstIteratorFixture, IsCopyAssignable) {
 TEST_F(VectorBoolConstIteratorFixture, IsMoveAssignable) {
   It it;
   it = std::move(It{});
+
+  EXPECT_TRUE(is_move_assignable<It>::value);
 }
 
 // Destructible
@@ -347,4 +367,22 @@ TEST_F(VectorBoolConstIteratorFixture, IsSwappable) {
 
 TEST_F(VectorBoolConstIteratorFixture, IsEqualityComparable) {
   bool a = b == e;
+}
+
+// VectorBoolProxy
+
+TEST(VectorBoolProxySyntax, IsCopyConstructible) {
+  EXPECT_TRUE(std::is_copy_constructible<VectorBoolProxy>::value);
+}
+
+TEST(VectorBoolProxySyntax, IsCopyAssignable) {
+  EXPECT_TRUE(std::is_copy_assignable<VectorBoolProxy>::value);
+}
+
+TEST(VectorBoolProxySyntax, IsMoveConstructible) {
+  EXPECT_TRUE(std::is_move_constructible<VectorBoolProxy>::value);
+}
+
+TEST(VectorBoolProxySyntax, IsMoveAssignable) {
+  EXPECT_TRUE(std::is_move_assignable<VectorBoolProxy>::value);
 }
