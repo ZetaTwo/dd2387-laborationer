@@ -57,6 +57,7 @@ public:
 
   //Iterators
 public:
+  typedef bool value_type;
   typedef VectorBoolConstIterator const_iterator; friend class VectorBoolConstIterator;
   typedef VectorBoolIterator iterator; friend class VectorBoolIterator;
   typedef std::reverse_iterator<iterator> reverse_iterator;
