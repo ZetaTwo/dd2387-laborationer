@@ -70,15 +70,14 @@ private:
   size_t count; //Actual number of elements in the vector
   size_t max_size; //Allocated memory for elements. Will be 2^n for some n
 
-  static void deleter(T*) {};
-  typedef std::unique_ptr<T[], void(*)(T*)> data_ptr;
+  static void release(T* del, std::allocator<T>& allocator, size_t count, size_t max_size);
+  typedef std::unique_ptr<T[], std::function<void(T*)>> data_ptr;
 
-  //TODO: Better release management in deleter
-  data_ptr data; //A pointer to the vector data
   std::allocator<T> allocator;
-
+  data_ptr data; //A pointer to the vector data
+ 
   static void increase_memory(Vector<T>& vector, size_t num_elements, bool copy = true); //Increases memory to fit at least num_elements number of elements
-  static void release(Vector<T>& vector, data_ptr& data, size_t count, size_t max_size);
+  //static void release(Vector<T>& vector, data_ptr& data, size_t count, size_t max_size);
 };
 
 template<typename T>
@@ -86,18 +85,18 @@ std::ostream& operator<<(std::ostream& os, const Vector<T>& vector);
 
 //Member implementations
 template<typename T>
-Vector<T>::Vector() : count(0), max_size(DEFAULT_SIZE), data(allocator.allocate(max_size), deleter) {
+Vector<T>::Vector() : count(0), max_size(DEFAULT_SIZE), data(allocator.allocate(max_size), std::function<void(T*)>([&](T* d) { release(d, allocator, count, max_size); })) {
 }
 
 template<typename T>
-Vector<T>::Vector(const Vector<T>& other) : count(other.count), max_size(other.max_size), data(allocator.allocate(max_size), deleter) {
+Vector<T>::Vector(const Vector<T>& other) : count(other.count), max_size(other.max_size), data(allocator.allocate(max_size), std::function<void(T*)>([&](T* d) { release(d, allocator, count, max_size); })) {
   for(size_t i = 0; i < count; ++i) {
     allocator.construct(&data[i], other.data[i]);
   }
 }
 
 template<typename T>
-Vector<T>::Vector(const std::initializer_list<T>& list) : count(list.size()), max_size(1 << static_cast<int>(ceil(log2(count)))), data(allocator.allocate(max_size), deleter) {
+Vector<T>::Vector(const std::initializer_list<T>& list) : count(list.size()), max_size(1 << static_cast<int>(ceil(log2(count)))), data(allocator.allocate(max_size), std::function<void(T*)>([&](T* d) { release(d, allocator, count, max_size); })) {
   size_t i;
   typename std::initializer_list<T>::iterator item;
   for(i = 0, item = list.begin(); item != list.end(); ++i, ++item) {
@@ -107,19 +106,22 @@ Vector<T>::Vector(const std::initializer_list<T>& list) : count(list.size()), ma
 
 template<typename T>
 Vector<T>::Vector(Vector<T>&& other) : data(std::move(other.data)), count(other.count), max_size(other.max_size) {
+  //TODO: Is this really the best way?
+  data = data_ptr(data.release(), std::function<void(T*)>([&](T* d) { release(d, allocator, count, max_size); }));
+
   other.count = 0;
   other.max_size = 0;
 }
 
 template<typename T>
-Vector<T>::Vector(size_t size) : count(size), max_size(1 << static_cast<int>(ceil(log2(count)))), data(allocator.allocate(max_size), deleter) {
+Vector<T>::Vector(size_t size) : count(size), max_size(1 << static_cast<int>(ceil(log2(count)))), data(allocator.allocate(max_size), std::function<void(T*)>([&](T* d) { release(d, allocator, count, max_size); })) {
   for(size_t i = 0; i < count; ++i) {
     allocator.construct(&data[i], T{});
   }
 }
 
 template<typename T>
-Vector<T>::Vector(size_t size, const T& element) : count(size), max_size(1 << static_cast<int>(ceil(log2(count)))), data(allocator.allocate(max_size), deleter) {
+Vector<T>::Vector(size_t size, const T& element) : count(size), max_size(1 << static_cast<int>(ceil(log2(count)))), data(allocator.allocate(max_size), std::function<void(T*)>([&](T* d) { release(d, allocator, count, max_size); })) {
   for(size_t i = 0; i < count; ++i) {
     allocator.construct(&data[i], element);
   }
@@ -127,19 +129,14 @@ Vector<T>::Vector(size_t size, const T& element) : count(size), max_size(1 << st
 
 template<typename T>
 Vector<T>::~Vector() {
-  release(*this, data, count, max_size);
-  count = 0;
-  max_size = 0;
 }
 
-//TODO: Work into unique_ptr deleter and remove
 template<typename T>
-void Vector<T>::release(Vector<T>& vector, data_ptr& data, size_t count, size_t max_size) {
-  for (size_t i = 0; i < vector.count; ++i) {
-    vector.allocator.destroy(&vector.data[i]);
+void Vector<T>::release(T* data, std::allocator<T>& allocator, size_t count, size_t max_size) {
+  for (size_t i = 0; i < count; ++i) {
+    allocator.destroy(&data[i]);
   }
-  vector.allocator.deallocate(vector.data.get(), vector.max_size);
-  vector.data.release();
+  allocator.deallocate(data, max_size);
 }
 
 template<typename T>
@@ -200,8 +197,10 @@ Vector<T>& Vector<T>::operator=(Vector<T>&& other) {
     return *this;
   }
 
-  release(*this, data, count, max_size);
+  //TODO: Is this really the best way?
   data = std::move(other.data);
+  data = data_ptr(data.release(), std::function<void(T*)>([&](T* d) { release(d, allocator, count, max_size); }));
+
   count = other.count;
   max_size = other.max_size;
 
@@ -484,17 +483,18 @@ void Vector<T>::increase_memory(Vector<T>& vector, size_t num_elements, bool cop
     throw std::invalid_argument("Vector already large enough");
   }
 
-  //TODO: Fix leak
-  std::unique_ptr<T> new_data(vector.allocator.allocate(new_max_size), deleter);
+  size_t copied = 0;
+  data_ptr new_data(vector.allocator.allocate(new_max_size), std::function<void(T*)>([&](T* d) { vector.release(d, vector.allocator, copied, vector.max_size); }));
 
   if(copy) {
-    for (size_t i = 0; i < vector.count; i++) {
-      vector.allocator.construct(&new_data[i], std::move_if_noexcept(vector.data[i]));
+    for (; copied < vector.count; copied++) {
+      vector.allocator.construct(&new_data[copied], std::move_if_noexcept(vector.data[copied]));
     }
   }
 
-  release(vector, vector.data, vector.count, vector.max_size);
-  vector.data.reset(new_data.release());
+  //TODO: Is this really the best way?
+  vector.data = data_ptr(new_data.release(), std::function<void(T*)>([&](T* d) { vector.release(d, vector.allocator, vector.count, vector.max_size); }));
+
   vector.max_size = new_max_size;
 }
 
