@@ -75,6 +75,7 @@ flags = [
 './ClangCompleter',
 '-I', '1lab/0.7_the_template_vector',
 '-I', '1lab/1.1_the_matrix',
+'-I', '1lab/1.5_space_is_not_infinite',
 '-I', '2lab',
 '-I', '2lab/kurskatalog',
 '-I', '3lab',
