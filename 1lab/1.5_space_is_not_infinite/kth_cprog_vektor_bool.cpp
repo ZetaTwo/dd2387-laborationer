@@ -485,6 +485,10 @@ VectorBoolProxy::VectorBoolProxy(storage_type* element, subindex_type index) :
   element(element),
   index(index) {}
 
+VectorBoolProxy& VectorBoolProxy::operator=(VectorBoolProxy&& other) {
+  return (*this) = static_cast<bool>(other);
+}
+
 VectorBoolProxy& VectorBoolProxy::operator=(const bool value) {
   if(value) {
     *element |= 1 << index;

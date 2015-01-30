@@ -102,6 +102,9 @@ private:
   subindex_type index;
 public:
   VectorBoolProxy(storage_type* element, subindex_type index);
+  VectorBoolProxy(const VectorBoolProxy& other);
+  VectorBoolProxy& operator=(const VectorBoolProxy& other);
+  VectorBoolProxy& operator=(VectorBoolProxy&& other);
   VectorBoolProxy& operator=(const bool value);
   operator const bool () const;
 };
