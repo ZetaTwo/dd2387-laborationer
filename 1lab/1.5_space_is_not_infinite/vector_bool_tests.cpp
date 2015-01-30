@@ -1359,6 +1359,24 @@ TEST_P(SizeTest, ItrOperatorDereferenceExtractsTheRightBit) {
   }
 }
 
+TEST_P(SizeTest, ItrOperatorDereferenceWritesTheRightBit) {
+  const size_t true_index = GetParam();
+  const size_t size = true_index + 17;
+
+  Vec vb(size, false);
+  Vec::iterator b = vb.begin(); // Make sure we call the non-const begin() method
+  *(b + true_index) = true;
+
+  Vec ve(size, false);
+  Vec::iterator e = ve.end(); // Make sure we call the non-const begin() method
+  *(e + true_index - size) = true;
+
+  for(size_t i = 0; i < size; ++i) {
+    EXPECT_EQ(i == true_index, vb[i]);
+    EXPECT_EQ(i == true_index, ve[i]);
+  }
+}
+
 TEST_P(SizeTest, ItrOperatorIndexExtractsTheRightBit) {
   const size_t true_index = GetParam();
   const size_t size = true_index + 17;
@@ -1376,6 +1394,24 @@ TEST_P(SizeTest, ItrOperatorIndexExtractsTheRightBit) {
     EXPECT_EQ(i == true_index, static_cast<bool>(b[i])) << "Failed for i=" << i;
     EXPECT_EQ(i == true_index, static_cast<bool>(ec[i - size])) << "Failed for i=" << i;
     EXPECT_EQ(i == true_index, static_cast<bool>(e[i - size])) << "Failed for i=" << i;
+  }
+}
+
+TEST_P(SizeTest, ItrOperatorIndexWritesTheRightBit) {
+  const size_t true_index = GetParam();
+  const size_t size = true_index + 17;
+
+  Vec vb(size, false);
+  Vec::iterator b = vb.begin(); // Make sure we call the non-const begin() method
+  b[true_index] = true;
+
+  Vec ve(size, false);
+  Vec::iterator e = ve.end(); // Make sure we call the non-const begin() method
+  e[true_index - size] = true;
+
+  for(size_t i = 0; i < size; ++i) {
+    EXPECT_EQ(i == true_index, vb[i]);
+    EXPECT_EQ(i == true_index, ve[i]);
   }
 }
 
