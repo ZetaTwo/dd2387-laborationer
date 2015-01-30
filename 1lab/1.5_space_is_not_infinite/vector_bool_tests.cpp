@@ -1700,17 +1700,20 @@ TEST_P(SizeSizeTest, SwapSwapsTheRightBitsWithinVector) {
   v[index_start] = true;
 
   swap(v[index_start], v[index_inbetween]);
-  EXPECT_EQ(index_start == index_inbetween, v[index_start]);
-  EXPECT_TRUE(v[index_inbetween]);
+  for(size_t i = 0; i < size; ++i) {
+    EXPECT_EQ(i == index_inbetween, v[i]);
+  }
 
   swap(v[index_inbetween], v[index_end]);
-  EXPECT_EQ(index_inbetween == index_end, v[index_inbetween]);
-  EXPECT_TRUE(v[index_end]);
+  for(size_t i = 0; i < size; ++i) {
+    EXPECT_EQ(i == index_end, v[i]);
+  }
 
   v[index_start] = true;
   swap(v[index_start], v[index_end]);
-  EXPECT_TRUE(v[index_start]);
-  EXPECT_TRUE(v[index_end]);
+  for(size_t i = 0; i < size; ++i) {
+    EXPECT_EQ(i == index_start || i == index_end, v[i]);
+  }
 }
 
 TEST_P(SizeSizeTest, SwapSwapsTheRightBitsBetweenTwoVectors) {
@@ -1740,17 +1743,20 @@ TEST_P(SizeSizeTest, IterSwapSwapsTheRightBitsWithinVector) {
   const Vec::iterator b = v.begin();
 
   iter_swap(b + index_start, b + index_inbetween);
-  EXPECT_EQ(index_start == index_inbetween, v[index_start]);
-  EXPECT_TRUE(v[index_inbetween]);
+  for(size_t i = 0; i < size; ++i) {
+    EXPECT_EQ(i == index_inbetween, v[i]);
+  }
 
   iter_swap(b + index_inbetween, b + index_end);
-  EXPECT_EQ(index_inbetween == index_end, v[index_inbetween]);
-  EXPECT_TRUE(v[index_end]);
+  for(size_t i = 0; i < size; ++i) {
+    EXPECT_EQ(i == index_end, v[i]);
+  }
 
   v[index_start] = true;
   iter_swap(b + index_start, b + index_end);
-  EXPECT_TRUE(v[index_start]);
-  EXPECT_TRUE(v[index_end]);
+  for(size_t i = 0; i < size; ++i) {
+    EXPECT_EQ(i == index_start || i == index_end, v[i]);
+  }
 }
 
 TEST_P(SizeSizeTest, IterSwapSwapsTheRightBitsBetweenTwoVectors) {
