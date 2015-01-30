@@ -172,12 +172,20 @@ VectorBoolIterator::difference_type VectorBoolIterator::operator-(const VectorBo
   return Vector<bool>::STORAGE_BLOCK_SIZE * (element - other.element) + (index - other.index);
 }
 
-VectorBoolIterator::reference VectorBoolIterator::operator[](const difference_type offset) const {
+VectorBoolIterator::reference VectorBoolIterator::operator[](const difference_type offset) {
   return *(*this + offset);
 }
 
-VectorBoolIterator::reference VectorBoolIterator::operator*() const {
+VectorBoolIterator::reference VectorBoolIterator::operator*() {
   return reference(element, index);
+}
+
+VectorBoolIterator::value_type VectorBoolIterator::operator[](const difference_type offset) const {
+  return *(*this + offset);
+}
+
+VectorBoolIterator::value_type VectorBoolIterator::operator*() const {
+  return *(static_cast<const VectorBoolConstIterator&>(*this));
 }
 
 VectorBoolIterator operator+(const VectorBoolIterator::difference_type& distance, const VectorBoolIterator& it) {
