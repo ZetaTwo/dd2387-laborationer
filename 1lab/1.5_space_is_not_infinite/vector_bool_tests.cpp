@@ -1280,6 +1280,24 @@ TEST_P(SizeTest, ItrCCompareNotEqual) {
   }
 }
 
+TEST_P(SizeTest, ItrCopyConstruct) {
+  Vec vector(GetParam());
+
+  for(Vec::iterator i = vector.begin(); i < vector.end(); ++i) {
+    Vec::iterator it(i);
+    EXPECT_EQ(it, i);
+  }
+}
+
+TEST_P(SizeTest, ItrCCopyConstruct) {
+  const Vec vector(GetParam());
+
+  for(Vec::const_iterator i = vector.begin(); i < vector.end(); ++i) {
+    Vec::const_iterator it(i);
+    EXPECT_EQ(it, i);
+  }
+}
+
 TEST_P(SizeTest, ItrCopyAssign) {
   Vec vector(GetParam());
 
