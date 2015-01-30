@@ -1846,3 +1846,14 @@ TEST(VectorBool, ProxyCompare) {
   EXPECT_TRUE (p_t2 != p_f2);
   EXPECT_TRUE (p_f2 != p_t2);
 }
+
+TEST(VectorBool, AutoItAssignedToDecrementEndWritesCorrectly) {
+  Vec v(64);
+  auto it = --v.end();
+  *it = true;
+
+  for(size_t i = 0; i < 63; ++i) {
+    EXPECT_FALSE(v[i]);
+  }
+  EXPECT_TRUE(v[63]);
+}
