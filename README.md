@@ -1,8 +1,14 @@
-dd2387-laborationer
+DD2387 - Lab assignments
 ===================
 
-KTH - DD2387 - Laborationer
+This is my laboratory assignments for the KTH course DD2387 - Program System Construction Using C++.
 
+Note
+----
+
+If you are taking this course, please turn back now.
+By looking at this material you may be making yourself guilty of cheating.
+For further information please consult [KTH's page on cheating and plagiarism](http://www.kth.se/en/student/studentliv/studentratt/fusk-och-plagiering-1.323885)
 
 Status
 ------
